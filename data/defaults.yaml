@@ -1,0 +1,241 @@
+#
+# Some generic defaults used in multiple places
+#
+ora_profile::database::dbname:         DB01
+ora_profile::database::version:        12.2.0.1
+ora_profile::database::os_user:        oracle
+ora_profile::database::dba_group:      dba
+ora_profile::database::install_group:  oinstall
+ora_profile::database::source:         puppet:///modules/software
+ora_profile::database::oracle_base:    /u01/app/oracle
+ora_profile::database::oracle_home:    "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1"
+ora_profile::database::version:        12.2.0.1
+#------------------------------------------------------------------------------
+#
+# Groups to create
+#
+#------------------------------------------------------------------------------
+ora_profile::database::groups_and_users::groups:
+  "%{lookup('ora_profile::database::install_group')}":
+    gid:  54321,
+  "%{lookup('ora_profile::database::dba_group')}":
+    gid:  54322,
+  oper:
+    gid:  54323,
+#
+# Users to create
+#
+ora_profile::database::groups_and_users::users:
+  "%{lookup('ora_profile::database::os_user')}":
+    uid:        54321
+    gid:        "%{lookup('ora_profile::database::install_group')}"
+    groups:
+    - "%{lookup('ora_profile::database::install_group')}"
+    - "%{lookup('ora_profile::database::dba_group')}"
+    - oper
+    shell:      /bin/bash
+    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
+    home:       /home/oracle
+    comment:    This user oracle was created by Puppet
+    managehome: true
+
+#------------------------------------------------------------------------------
+#
+# Packages Oracle needs
+#
+#------------------------------------------------------------------------------
+ora_profile::database::packages::list:
+- binutils.x86_64
+- compat-libcap1.x86_64
+- compat-libstdc++-33.i686
+- compat-libstdc++-33.x86_64
+- gcc.x86_64
+- gcc-c++.x86_64
+- glibc.i686
+- glibc.x86_64
+- glibc-devel.i686
+- glibc-devel.x86_64
+- ksh
+- libaio.i686
+- libaio.x86_64
+- libaio-devel.i686
+- libaio-devel.x86_64
+- libgcc.i686
+- libgcc.x86_64
+- libstdc++.i686
+- libstdc++.x86_64
+- libstdc++-devel.i686
+- libstdc++-devel.x86_64
+- libXi.i686
+- libXi.x86_64
+- libXtst.i686
+- libXtst.x86_64
+- make.x86_64
+- sysstat.x86_64
+#------------------------------------------------------------------------------
+#
+# Limits
+#
+#------------------------------------------------------------------------------
+ora_profile::database::limits::list:
+  '*/nofile':
+    soft: 2048
+    hard: 8192
+  "%{lookup('ora_profile::database::os_user')}/nofile":
+    soft: 65536
+    hard: 65536
+  "%{lookup('ora_profile::database::os_user')}/nproc":
+    soft: 2048
+    hard: 16384
+  "%{lookup('ora_profile::database::os_user')}/stack":
+    soft: 10240
+    hard: 32768
+#------------------------------------------------------------------------------
+#
+# Sysctl
+#
+#------------------------------------------------------------------------------
+ora_profile::database::sysctl::list:
+  'kernel.msgmnb':
+    value:  65536
+  'kernel.msgmax':
+    value:  65536
+  'kernel.shmmax':
+    value:  4398046511104
+  'kernel.shmall':
+    value:  4294967296
+  'fs.file-max':
+    value:  6815744
+  'kernel.shmmni':
+    value:  4096
+  'fs.aio-max-nr':
+    value:  1048576
+  'kernel.sem':
+    value:  '250 32000 100 128'
+  'net.ipv4.ip_local_port_range':
+    value:  '9000 65500'
+  'net.core.rmem_default':
+    value:  262144
+  'net.core.rmem_max':
+    value:  4194304
+  'net.core.wmem_default':
+    value:  262144
+  'net.core.wmem_max':
+    value:  1048576
+  'kernel.panic_on_oops':
+    value:  1
+#------------------------------------------------------------------------------
+#
+#  Settings for db_software
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_software::dirs:
+  - /u02
+  - /u03
+  - /u02/oradata
+  - /u03/fast_recovery_area
+
+ora_profile::database::db_software::dba_group:      "%{lookup('ora_profile::database::dba_group')}"
+ora_profile::database::db_software::install_group:  "%{lookup('ora_profile::database::install_group')}"
+ora_profile::database::db_software::os_user:        "%{lookup('ora_profile::database::os_user')}"
+ora_profile::database::db_software::version:        "%{lookup('ora_profile::database::version')}"
+ora_profile::database::db_software::database_type:  SE2
+ora_profile::database::db_software::oracle_base:    "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::database::db_software::oracle_home:    "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_software::source:         "%{lookup('ora_profile::database::source')}"
+ora_profile::database::db_software::file_name:      linuxx64_12201_database
+#------------------------------------------------------------------------------
+#
+# db_patches
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_patches::patch_file:      p6880880_121010_Linux-x86-64_12.1.0.1.10
+ora_profile::database::db_patches::opversion:       12.1.0.1.10
+ora_profile::database::db_patches::install_group:   "%{lookup('ora_profile::database::install_group')}"
+ora_profile::database::db_patches::os_user:         "%{lookup('ora_profile::database::os_user')}"
+ora_profile::database::db_patches::source:          "%{lookup('ora_profile::database::source')}"
+ora_profile::database::db_patches::oracle_home:     "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_patches::patch_list:      {}
+  # "%{lookup('ora_profile::database::oracle_home')}:27010872":
+  #   source:              "%{lookup('ora_profile::database::source')}/p27010872_121020_Linux-x86-64.zip"
+  #   sub_patches:        ['26925218', '26925311']
+#------------------------------------------------------------------------------
+#
+# db_definition
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_definition::dbname:                    "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_definition::oracle_base:               "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::database::db_definition::oracle_home:               "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_definition::version:                   "%{lookup('ora_profile::database::version')}"
+ora_profile::database::db_definition::log_size:                  100M
+ora_profile::database::db_definition::user_tablespace_size:      5M
+ora_profile::database::db_definition::system_tablespace_size:    50M
+ora_profile::database::db_definition::temporary_tablespace_size: 50M
+ora_profile::database::db_definition::undo_tablespace_size:      50M
+ora_profile::database::db_definition::sysaux_tablespace_size:    50M
+ora_profile::database::db_definition::container_database:        enabled
+ora_profile::database::db_definition::system_password:           Welcome01
+ora_profile::database::db_definition::sys_password:              Change_on_1nstall
+ora_profile::database::db_definition::init_ora_template:         ora_profile/init.ora.erb
+#------------------------------------------------------------------------------
+#
+# Settings for db_listener
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_listener::oracle_base:               "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::database::db_listener::oracle_home:               "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_listener::sqlnet_version:            '12.2'
+#------------------------------------------------------------------------------
+#
+# Settings for db_services
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_services::dbname:               "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_services::domain_name:          ~
+#------------------------------------------------------------------------------
+#
+# Settings for db_startup
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_startup::dbname:               "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_startup::oracle_home:          "%{lookup('ora_profile::database::oracle_home')}"
+#------------------------------------------------------------------------------
+#
+# Settings for db_tablespaces
+#
+# This is a simple way to get started. It is easy to get started, but
+# soon your hiera yaml become a nigtmare. Our advise is when you need
+# to let puppet manage your oracle tablespaces, to override this class and 
+# add your own puppet implementation. This is much better maintainable
+# and adds more consistency,
+#
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_tablespaces::list:          {}
+#------------------------------------------------------------------------------
+#
+# Settings for db_users
+#
+#
+# This is a simple way to get started. It is easy to get started, but
+# soon your hiera yaml become a nigtmare. Our advise is when you need
+# to let puppet manage your oracle users, to override this class and 
+# add your own puppet implementation. This is much better maintainable
+# and adds more consistency,
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_users::list:          {}
+#------------------------------------------------------------------------------
+#
+# Settings for db_profiles
+#
+#
+# This is a simple way to get started. It is easy to get started, but
+# soon your hiera yaml become a nigtmare. Our advise is when you need
+# to let puppet manage your oracle profiles, to override this class and 
+# add your own puppet implementation. This is much better maintainable
+# and adds more consistency,
+#
+#------------------------------------------------------------------------------
+ora_profile::database::db_profiles::list:          {}
