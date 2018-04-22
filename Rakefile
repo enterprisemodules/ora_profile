@@ -23,6 +23,9 @@ if defined?(RSpec)
   end
 end
 
+@module_name = 'ora_profile'
+
+
 if defined?(PuppetLint)
   PuppetLint.configuration.send("disable_140chars")
   # PuppetLint.configuration.send("disable_right_to_left_relationship")
