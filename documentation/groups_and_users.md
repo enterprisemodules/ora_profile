@@ -28,8 +28,6 @@ Attribute Name                     | Short Description                        |
 
 ### users<a name='groups_and_users_users'>
 
-
-
 The OS users to create for Oracle.
 
 The default value is:
@@ -49,12 +47,13 @@ ora_profile::database::groups_and_users::users:
     comment:    This user oracle was created by Puppet
     managehome: true
 ```
+Type: `'user',`
+
+
+
 [Back to overview of groups_and_users](#attributes)
 
-
 ### groups<a name='groups_and_users_groups'>
-
-
 
 The list of groups to create for Oracle.
 
@@ -71,5 +70,8 @@ ora_profile::database::groups_and_users::groups:
 
 ```
 
-[Back to overview of groups_and_users](#attributes)
+Type: `Hash`
 
+
+
+[Back to overview of groups_and_users](#attributes)

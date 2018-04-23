@@ -27,8 +27,6 @@ Attribute Name       | Short Description                          |
 
 ### list<a name='sysctl_list'>
 
-
-
 The required sysctl parameters for Oracle.
 
 The defaults are:
@@ -64,5 +62,6 @@ ora_profile::database::sysctl::list:
   'kernel.panic_on_oops':
     value:  1
 ```
-[Back to overview of sysctl](#attributes)
 
+
+[Back to overview of sysctl](#attributes)

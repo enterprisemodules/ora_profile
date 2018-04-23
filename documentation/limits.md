@@ -27,8 +27,6 @@ Attribute Name       | Short Description                 |
 
 ### list<a name='limits_list'>
 
-
-
 The OS limits created for Oracle.
 
 The defaults are:
@@ -48,5 +46,6 @@ ora_profile::database::limits::list:
     soft: 10240
     hard: 32768
 ```
-[Back to overview of limits](#attributes)
 
+
+[Back to overview of limits](#attributes)

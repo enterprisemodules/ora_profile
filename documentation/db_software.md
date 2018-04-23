@@ -36,30 +36,30 @@ Attribute Name                              | Short Description                 
 
 ### version<a name='db_software_version'>
 
-
-
 The version of Oracle you want to install.
 
 The default is : `12.2.0.1`
 
 To customize this consistenly use the hiera key `ora_profile::database::version`.
 
+Type: `Any`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### database_type<a name='db_software_database_type'>
-
-
 
 The type of database to define. 
 
 The default value is: `SE2`.
+Type: `Any`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### dirs<a name='db_software_dirs'>
-
-
 
 The directories to create as part of the installation.
 
@@ -73,12 +73,13 @@ ora_profile::database::db_software::dirs:
   - /u03/fast_recovery_area
 
 ```
+Type: `Any`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### dba_group<a name='db_software_dba_group'>
-
-
 
 The group to use for Oracle DBA users.
 
@@ -86,12 +87,13 @@ The default is : `dba`
 
 To customize this consistenly use the hiera key `ora_profile::database::dba_group`.
 
+Type: `String[1]`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### install_group<a name='db_software_install_group'>
-
-
 
 The group to use for Oracle install.
 
@@ -99,12 +101,13 @@ The default is : `oinstall`
 
 To customize this consistenly use the hiera key `ora_profile::database::install_group`.
 
+Type: `String[1]`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### os_user<a name='db_software_os_user'>
-
-
 
 The OS user to use for Oracle install.
 
@@ -112,12 +115,13 @@ The default is : `oracle`
 
 To customize this consistenly use the hiera key `ora_profile::database::os_user`.
 
+Type: `String[1]`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### oracle_base<a name='db_software_oracle_base'>
-
-
 
 The base firectory to use for the Oracle installation.
 
@@ -126,12 +130,13 @@ The default is : `/u01/app/oracle`
 To customize this consistenly use the hiera key `ora_profile::database::install_group`.
 
 
+Type: `Any`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### oracle_home<a name='db_software_oracle_home'>
-
-
 
 The home firectory to use for the Oracle installation.
 
@@ -140,12 +145,13 @@ The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
 
 
+Type: `Any`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### source<a name='db_software_source'>
-
-
 
 The location where the classes can find the software. 
 
@@ -155,15 +161,19 @@ The default is : `puppet:///modules/software/`
 
 To customize this consistenly use the hiera key `ora_profile::database::source`.
 
+Type: `String[1]`
+
+
+
 [Back to overview of db_software](#attributes)
 
-
 ### file_name<a name='db_software_file_name'>
-
-
 
 The file name containing the Oracle database software kit.
 
 The default is: `linuxx64_12201_database`
-[Back to overview of db_software](#attributes)
+Type: `String[1]`
 
+
+
+[Back to overview of db_software](#attributes)

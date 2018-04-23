@@ -132,8 +132,6 @@ Attribute Name                                               | Short Description
 
 ### sysctl<a name='database_sysctl'>
 
-
-
 Use this value if you want to skip or use your own class for stage `sysctl`.
 
 ## Use your own class
@@ -152,12 +150,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::sysctl:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### limits<a name='database_limits'>
-
-
 
 Use this value if you want to skip or use your own class for stage `limits`.
 
@@ -177,12 +177,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::limits:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### packages<a name='database_packages'>
-
-
 
 Use this value if you want to skip or use your own class for stage `packages`.
 
@@ -202,12 +204,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::packages:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### groups_and_users<a name='database_groups_and_users'>
-
-
 
 Use this value if you want to skip or use your own class for stage `groups_and_users`.
 
@@ -227,12 +231,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::groups_and_users:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### firewall<a name='database_firewall'>
-
-
 
 Use this value if you want to skip or use your own class for stage `firewall`.
 
@@ -252,12 +258,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::firewall:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_software<a name='database_db_software'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_software`.
 
@@ -277,12 +285,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_software:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_patches<a name='database_db_patches'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_patches`.
 
@@ -302,12 +312,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_patches:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_definition<a name='database_db_definition'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_definition`.
 
@@ -327,12 +339,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_definition:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_listener<a name='database_db_listener'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_listener`.
 
@@ -352,12 +366,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_listener:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_services<a name='database_db_services'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_services`.
 
@@ -377,12 +393,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_services:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_tablespaces<a name='database_db_tablespaces'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_tablespaces`.
 
@@ -402,12 +420,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_tablespaces:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_profiles<a name='database_db_profiles'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_profiles`.
 
@@ -427,12 +447,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_profiles:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_users<a name='database_db_users'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_users`.
 
@@ -452,12 +474,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_users:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### db_startup<a name='database_db_startup'>
-
-
 
 Use this value if you want to skip or use your own class for stage `db_startup`.
 
@@ -477,12 +501,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::db_startup:  skip
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_sysctl<a name='database_before_sysctl'>
-
-
 
 The name of the class you want to execute directly **before** the `sysctl` class.
 
@@ -492,12 +518,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_sysctl:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_limits<a name='database_before_limits'>
-
-
 
 The name of the class you want to execute directly **before** the `limits` class.
 
@@ -507,12 +535,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_limits:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_packages<a name='database_before_packages'>
-
-
 
 The name of the class you want to execute directly **before** the `packages` class.
 
@@ -522,12 +552,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_packages:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_groups_and_users<a name='database_before_groups_and_users'>
-
-
 
 The name of the class you want to execute directly **before** the `groups_and_users` class.
 
@@ -537,12 +569,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_groups_and_users:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_firewall<a name='database_before_firewall'>
-
-
 
 The name of the class you want to execute directly **before** the `firewall` class.
 
@@ -552,12 +586,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_firewall:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_software<a name='database_before_db_software'>
-
-
 
 The name of the class you want to execute directly **before** the `db_software` class.
 
@@ -567,12 +603,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_software:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_patches<a name='database_before_db_patches'>
-
-
 
 The name of the class you want to execute directly **before** the `db_patches` class.
 
@@ -582,12 +620,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_patches:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_definition<a name='database_before_db_definition'>
-
-
 
 The name of the class you want to execute directly **before** the `limits` class.
 
@@ -597,12 +637,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_limits:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_listener<a name='database_before_db_listener'>
-
-
 
 The name of the class you want to execute directly **before** the `db_listener` class.
 
@@ -612,12 +654,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_listener:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_services<a name='database_before_db_services'>
-
-
 
 The name of the class you want to execute directly **before** the `db_services` class.
 
@@ -627,12 +671,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_services:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_tablespaces<a name='database_before_db_tablespaces'>
-
-
 
 The name of the class you want to execute directly **before** the `db_tablespaces` class.
 
@@ -642,12 +688,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_tablespaces:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_profiles<a name='database_before_db_profiles'>
-
-
 
 The name of the class you want to execute directly **before** the `db_profiles` class.
 
@@ -657,12 +705,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_profiles:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_users<a name='database_before_db_users'>
-
-
 
 The name of the class you want to execute directly **before** the `db_users` class.
 
@@ -672,12 +722,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_users:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### before_db_startup<a name='database_before_db_startup'>
-
-
 
 The name of the class you want to execute directly **before** the `db_startup` class.
 
@@ -687,12 +739,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::before_db_startup:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_sysctl<a name='database_after_sysctl'>
-
-
 
 The name of the class you want to execute directly **after** the `sysctl` class.
 
@@ -702,12 +756,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_sysctl:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_limits<a name='database_after_limits'>
-
-
 
 The name of the class you want to execute directly **after** the `limits` class.
 
@@ -717,12 +773,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_limits:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_packages<a name='database_after_packages'>
-
-
 
 The name of the class you want to execute directly **after** the `packages` class.
 
@@ -732,12 +790,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_packages:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_groups_and_users<a name='database_after_groups_and_users'>
-
-
 
 The name of the class you want to execute directly **after** the `groups_and_users` class.
 
@@ -747,12 +807,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_groups_and_users:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_firewall<a name='database_after_firewall'>
-
-
 
 The name of the class you want to execute directly **after** the `firewall` class.
 
@@ -762,12 +824,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_firewall:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_software<a name='database_after_db_software'>
-
-
 
 The name of the class you want to execute directly **after** the `db_software` class.
 
@@ -778,12 +842,14 @@ ora_profile::database::after_db_software:  my_module::my_class
 ```
 
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_patches<a name='database_after_db_patches'>
-
-
 
 The name of the class you want to execute directly **after** the `db_patches` class.
 
@@ -793,12 +859,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_patches:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_definition<a name='database_after_db_definition'>
-
-
 
 The name of the class you want to execute directly **after** the `db_definition` class.
 
@@ -808,12 +876,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_definition:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_listener<a name='database_after_db_listener'>
-
-
 
 The name of the class you want to execute directly **after** the `db_listener` class.
 
@@ -823,12 +893,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_listener:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_services<a name='database_after_db_services'>
-
-
 
 The name of the class you want to execute directly **after** the `db_services` class.
 
@@ -838,12 +910,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_services:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_tablespaces<a name='database_after_db_tablespaces'>
-
-
 
 The name of the class you want to execute directly **after** the `db_tablespaces` class.
 
@@ -853,12 +927,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_tablespaces:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_profiles<a name='database_after_db_profiles'>
-
-
 
 The name of the class you want to execute directly **after** the `db_profiles` class.
 
@@ -868,12 +944,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_profiles:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_users<a name='database_after_db_users'>
-
-
 
 The name of the class you want to execute directly **after** the `db_users` class.
 
@@ -883,12 +961,14 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_users:  my_module::my_class
 ```
 
+Type: `Optional[String]`
+
+Default:`undef`
+
+
 [Back to overview of database](#attributes)
 
-
 ### after_db_startup<a name='database_after_db_startup'>
-
-
 
 The name of the class you want to execute directly **after** the `db_startup` class.
 
@@ -898,5 +978,9 @@ You can use hiera to set this value. Here is an example:
 ora_profile::database::after_db_startup:  my_module::my_class
 ```
 
-[Back to overview of database](#attributes)
+Type: `Optional[String]`
 
+Default:`undef`
+
+
+[Back to overview of database](#attributes)

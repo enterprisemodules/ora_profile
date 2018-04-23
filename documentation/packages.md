@@ -27,8 +27,6 @@ Attribute Name         | Short Description                                      
 
 ### list<a name='packages_list'>
 
-
-
 The required packages for a succesfull Oracle installation.
 
 The defaults are:
@@ -63,5 +61,8 @@ ora_profile::database::packages::list:
 - make.x86_64
 - sysstat.x86_64
 ```
-[Back to overview of packages](#attributes)
+Type: `Array[String[1]]`
 
+
+
+[Back to overview of packages](#attributes)

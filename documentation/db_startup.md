@@ -28,8 +28,6 @@ Attribute Name                         | Short Description                      
 
 ### oracle_home<a name='db_startup_oracle_home'>
 
-
-
 The home firectory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
@@ -37,17 +35,21 @@ The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
 
 
+Type: `Any`
+
+
+
 [Back to overview of db_startup](#attributes)
 
-
 ### dbname<a name='db_startup_dbname'>
-
-
 
 The name of the database.
 
 The default is `DB01`
 
 To customize this consistenly use the hiera key `ora_profile::database::dbname`.
-[Back to overview of db_startup](#attributes)
+Type: `String[1]`
 
+
+
+[Back to overview of db_startup](#attributes)

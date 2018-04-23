@@ -39,20 +39,19 @@ Attribute Name                                                        | Short De
 
 ### version<a name='db_definition_version'>
 
-
-
 The version of Oracle you want to install.
 
 The default is : `12.2.0.1`
 
 To customize this consistenly use the hiera key `ora_profile::database::version`.
 
+Type: `Any`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### oracle_home<a name='db_definition_oracle_home'>
-
-
 
 The home firectory to use for the Oracle installation.
 
@@ -61,12 +60,13 @@ The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
 
 
+Type: `Any`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### oracle_base<a name='db_definition_oracle_base'>
-
-
 
 The base firectory to use for the Oracle installation.
 
@@ -75,108 +75,121 @@ The default is : `/u01/app/oracle`
 To customize this consistenly use the hiera key `ora_profile::database::install_group`.
 
 
+Type: `Any`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### dbname<a name='db_definition_dbname'>
-
-
 
 The name of the database.
 
 The default is `DB01`
 
 To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### log_size<a name='db_definition_log_size'>
-
-
 
 The log ize to use.
 
 The default is : `100M`
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### user_tablespace_size<a name='db_definition_user_tablespace_size'>
-
-
 
 The size for the `USER` tablespace.
 
 The default value is `50M`
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### system_tablespace_size<a name='db_definition_system_tablespace_size'>
-
-
 
 The size for the `SYSTEM` tablespace.
 
 The default value is `50M`
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### temporary_tablespace_size<a name='db_definition_temporary_tablespace_size'>
-
-
 
 The size for the `TEMP` tablespace.
 
 The default value is `50M`
 
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### undo_tablespace_size<a name='db_definition_undo_tablespace_size'>
-
-
 
 The size for the `UNDO` tablespace.
 
 The default value is `50M`
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### sysaux_tablespace_size<a name='db_definition_sysaux_tablespace_size'>
-
-
 
 The size for the `SYSAUX` tablespace.
 
 The default value is `50M`
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### system_password<a name='db_definition_system_password'>
-
-
 
 The `system` password to use for the database. 
 
 The default value is: `Welcome01`
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### sys_password<a name='db_definition_sys_password'>
-
-
 
 The `sys` password to use for the database. 
 
 The default value is: `Change_on_1nstall`
+Type: `String[1]`
+
+
+
 [Back to overview of db_definition](#attributes)
 
-
 ### init_ora_template<a name='db_definition_init_ora_template'>
-
-
 
 The template to use for the init.ora parameters.
 
 The default value is: 'ora_profile/init.ora.erb'
-[Back to overview of db_definition](#attributes)
+Type: `String[1]`
 
+
+
+[Back to overview of db_definition](#attributes)

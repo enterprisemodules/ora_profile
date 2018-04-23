@@ -29,20 +29,22 @@ Attribute Name                          | Short Description         |
 
 ### dbname<a name='db_services_dbname'>
 
-
-
 The name of the database.
 
 The default is `DB01`
 
 To customize this consistenly use the hiera key `ora_profile::database::dbname`.
-[Back to overview of db_services](#attributes)
+Type: `String[1]`
 
+
+
+[Back to overview of db_services](#attributes)
 
 ### domain_name<a name='db_services_domain_name'>
 
 
+Type: `Any`
+
 
 
 [Back to overview of db_services](#attributes)
-
