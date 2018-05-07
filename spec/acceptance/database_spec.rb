@@ -1,10 +1,8 @@
 require_relative '../spec_helper_acceptance'
 
 describe 'ora_profile::database' do
+
   manifest = <<-MANIFEST
-    class {'ora_profile::database':
-      source => '/software'
-    }
     contain ora_profile::database
   MANIFEST
 
@@ -15,7 +13,7 @@ describe 'ora_profile::database' do
   #
   # The database directory should be made
   #
-  describe file(into) do
+  describe file('/u01/app/oracle') do
     it { should be_directory }
     it { should be_owned_by('oracle') }
     it { should be_grouped_into('oinstall') }
@@ -29,9 +27,9 @@ describe 'ora_profile::database' do
     it { should be_owned_by('oracle') }
     it { should be_mode(775)}
     it { should be_grouped_into('dba') }
-    it { should contain('ORACLE_BASE=/oracle') }
-    it { should contain("ORACLE_HOME=/u01/app/oracle") }
-    it { should contain("SQLPLUS_HOME=/u01/app/oracle") }
+    it { should contain('ORACLE_BASE=/u01/app/oracle') }
+    it { should contain("ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/db_home1") }
+    it { should contain("SQLPLUS_HOME=/u01/app/oracle/product/12.2.0.1/db_home1") }
   end
 
   it 'is idempotent on second run' do

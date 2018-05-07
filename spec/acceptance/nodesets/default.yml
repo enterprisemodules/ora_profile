@@ -13,7 +13,7 @@ HOSTS:
         host_path: software
         container_path: /software
 CONFIG:
-  type: foss
+  type: aio
   # log_level: debug
   log_level: info
 ssh:

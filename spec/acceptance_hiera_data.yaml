@@ -1,0 +1,3 @@
+---
+ora_profile::database::source:  /software
+ora_profile::database::sysctl:  skip    # Docker doesn't allow this
