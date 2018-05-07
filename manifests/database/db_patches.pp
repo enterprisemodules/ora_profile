@@ -44,7 +44,6 @@ class ora_profile::database::db_patches(
     #
     # No support yet for patching a running database
     #
-    
     #
     #
     # Some patches need to be installed

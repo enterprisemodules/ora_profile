@@ -15,12 +15,14 @@ class ora_profile::database::db_startup(
 
   # In RHEL7.2 RemoveIPC defaults to true, which will cause the database and ASM to crash
   if $::os['release']['major'] == '7' and $::os['release']['minor'] == '2' {
+    # lint:ignore:double_quoted_strings
     file_line { 'Do not remove ipc':
       path   => '/etc/systemd/logind.conf',
       line   => 'RemoveIPC=no',
       match  => "^#RemoveIPC.*$",
       notify => Exec['systemctl daemon-reload'],
     }
+    # lint:endignore:double_quoted_strings
     ->exec { 'systemctl daemon-reload':
       command     => '/bin/systemctl daemon-reload',
       refreshonly => true,
