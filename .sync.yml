@@ -1,0 +1,71 @@
+---
+# Exact stucture of file
+.overcommit.yml:
+  CommitMsg:
+    CapitalizedSubject:
+      enabled: false
+    EmptyMessage:
+      enabled: false
+    TrailingPeriod:
+      enabled: true
+    TextWidth:
+      enabled: false
+  PreCommit:
+    ALL:
+      on_warn: fail
+    PuppetMetadataJsonLint:
+      enabled: true
+    RakeTarget:
+      enabled: false
+      description: Puppet lint with excludes
+      targets:
+      - 'lint'
+    AuthorEmail:
+      enabled: true
+    AuthorName:
+      enabled: true
+    MergeConflicts:
+      enabled: true
+    CaseConflicts:
+      enabled: false
+    PuppetLint:
+      enabled: true
+    YamlSyntax:
+      enabled: true
+    BundleCheck:
+      enabled: true
+    RuboCop:
+      enabled: false
+    Fasterer:
+      enabled: true
+    BundleAudit:
+      enabled: true
+    Brakeman:
+      enabled: true
+  PrePush:
+    RakeTarget:
+      enabled: true
+      description: Run RSpec tests
+      targets:
+      - 'spec'
+
+.fixtures.yml:
+  fixtures:
+    forge_modules:
+      stdlib:
+        repo: "puppetlabs/stdlib"
+        ref: '>= 4.13.0'
+      limits:
+        repo: "saz-limits"
+        ref: '2.5.0'
+      augeasproviders:
+        repo: "herculesteam-augeasproviders"
+        ref: "2.1.3"
+      archive:
+        repo: 'puppet-archive'
+        ref: '>= 2.0.0'
+    repositories:
+      easy_type:
+        repo: 'git@github.com:enterprisemodules/easy_type.git'
+        scm: git
+        branch: master
