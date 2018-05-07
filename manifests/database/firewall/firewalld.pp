@@ -11,6 +11,11 @@ class ora_profile::database::firewall::firewalld(
   Array[Integer]  $udp_ports,
   Boolean         $manage_service,
 ) {
+  unless defined(Package['firewalld']) {
+    package {'firewalld':
+      ensure => 'present',
+    }
+  }
   $tcp_ports.each |$port| {
     firewalld_port { "500 accept tcp port ${port} for Oracle":
       ensure   => present,
