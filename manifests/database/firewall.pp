@@ -6,23 +6,38 @@
 #
 # @example
 #   include ora_profile::database::firewall
-class ora_profile::database::firewall {
-  echo {'Firewall':}
+class ora_profile::database::firewall(
+  Array[Integer]  $tcp_ports,
+  Array[Integer]  $udp_ports,
+  Boolean         $manage_service,
+) {
+  echo {"Firewall: opening tcp ports ${tcp_ports.join(',')} and udp_ports ${udp_ports.join(',')}":}
 
-  case ($::os['family']) {
-    'RedHat': {
+  case  $::operatingsystem {
+    'RedHat', 'CentOS', 'OracleLinux': {
       case ($::os['release']['major']) {
-        '4','5','6': { $firewall_service = 'iptables'}
-        '7': { $firewall_service = 'firewalld' }
-        default: { fail 'unsupported RedHat version when checking firewall service'}
+        '4','5','6': {
+          class {'ora_profile::database::firewall::iptables':
+            tcp_ports      => $tcp_ports,
+            udp_ports      => $udp_ports,
+            manage_service => $manage_service,
+          }
+        }
+        '7': {
+          class {'ora_profile::database::firewall::firewalld':
+            tcp_ports      => $tcp_ports,
+            udp_ports      => $udp_ports,
+            manage_service => $manage_service,
+          }
+        }
+        default: { fail 'unsupported OS version when checking firewall service'}
       }
     }
-    default: {}
+    'Solaris':{
+      warning 'No firewall rules added on Solaris.'
+    }
+    default: {
+        fail "${::operatingsystem} is not supported."
+    }
   }
-  service { $firewall_service:
-      ensure    => false,
-      enable    => false,
-      hasstatus => true,
-  }
-
 }
