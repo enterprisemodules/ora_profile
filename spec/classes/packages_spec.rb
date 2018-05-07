@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ora_profile::packages' do
+describe 'ora_profile::database::packages' do
   on_supported_os(facterversion: '2.4').each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ora_profile::groups_and_users' do
+describe 'ora_profile::database::groups_and_users' do
   on_supported_os(facterversion: '2.4').each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

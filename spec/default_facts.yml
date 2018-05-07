@@ -6,3 +6,9 @@ concat_basedir: "/tmp"
 ipaddress: "172.16.254.254"
 is_pe: false
 macaddress: "AA:AA:AA:AA:AA:AA"
+ora_install_homes:
+  /oracle/product/11.2/db:
+    product_version:  11.2.0.4.0
+    opatch_version:   11.2.0.3.4
+    installed_patches: []
+ 

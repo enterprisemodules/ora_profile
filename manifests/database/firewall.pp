@@ -9,12 +9,16 @@
 class ora_profile::database::firewall {
   echo {'Firewall':}
 
-  case ($::os['release']['major']) {
-    '4','5','6': { $firewall_service = 'iptables'}
-    '7': { $firewall_service = 'firewalld' }
-    default: { fail 'unsupported OS version when checking firewall service'}
+  case ($::os['family']) {
+    'RedHat': {
+      case ($::os['release']['major']) {
+        '4','5','6': { $firewall_service = 'iptables'}
+        '7': { $firewall_service = 'firewalld' }
+        default: { fail 'unsupported RedHat version when checking firewall service'}
+      }
+    }
+    default: {}
   }
-
   service { $firewall_service:
       ensure    => false,
       enable    => false,

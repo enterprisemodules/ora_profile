@@ -1,3 +1,7 @@
+RSpec.configure do |c|
+  c.mock_with :rspec
+end
+
 require 'puppetlabs_spec_helper/module_spec_helper'
 require 'rspec-puppet-facts'
 include RspecPuppetFacts
@@ -17,6 +21,7 @@ end
 if File.exist?(default_module_facts_path) && File.readable?(default_module_facts_path)
   default_facts.merge!(YAML.safe_load(File.read(default_module_facts_path)))
 end
+
 
 RSpec.configure do |c|
   c.default_facts = default_facts
