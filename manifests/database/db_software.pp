@@ -25,6 +25,12 @@ class ora_profile::database::db_software(
 ) {
   echo {'DB software':}
 
+  unless defined(Package['unzip']) {
+    package { 'unzip':
+      ensure => 'present',
+    }
+  }
+
   file{$dirs:
     ensure  => directory,
     owner   => $os_user,
@@ -42,6 +48,7 @@ class ora_profile::database::db_software(
     oracle_base               => $oracle_base,
     oracle_home               => $oracle_home,
     puppet_download_mnt_point => $source,
+    require                   => Package['unzip'],
   }
 
   -> file {"${oracle_base}/admin":
