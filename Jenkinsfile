@@ -25,10 +25,10 @@ pipeline {
         )
       }
     }
-    // stage('Acceptance Stage') {
-    //   steps {
-    //     ParallelAcceptanceTests()
-    //   }
-    // }
+    stage('Acceptance Stage') {
+      steps {
+        ParallelAcceptanceTests()
+      }
+    }
   }
 }
