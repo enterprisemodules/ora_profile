@@ -65,7 +65,39 @@ This mechanism can be used for all named stages and makes it easy to move from a
 
 Look at the description of the stages and their properties.
 
+At this level you can also customize some generic settings. Check the settings for:
+
+- `version`
+- `dbname`
+- `os_user`
+- `dba_group`
+- `install_group`
+- `source`
+- `oracle_base`
+- `oracle_home`
+
+Here is an example on how you can do this:
+
+```puppet
+
+class {'ora_profile::database':
+  dbname  => 'EM',
+  source  => 'http://www.example.com/database_files',
+  version => '11.2.0.3',
+}
+
+```
+
+
 <%- include_attributes [
+  :version,
+  :dbname,
+  :os_user,
+  :dba_group,
+  :install_group,
+  :source,
+  :oracle_base,
+  :oracle_home,
   :sysctl,
   :limits,
   :packages,
