@@ -45,7 +45,6 @@ To customize this consistenly use the hiera key `ora_profile::database::version`
 Type: `Any`
 
 
-
 [Back to overview of db_software](#attributes)
 
 ### database_type<a name='db_software_database_type'>
@@ -53,8 +52,7 @@ Type: `Any`
 The type of database to define. 
 
 The default value is: `SE2`.
-Type: `Any`
-
+Type: `Enum['SE2', 'SE', 'EE', 'SEONE']`
 
 
 [Back to overview of db_software](#attributes)
@@ -76,7 +74,6 @@ ora_profile::database::db_software::dirs:
 Type: `Any`
 
 
-
 [Back to overview of db_software](#attributes)
 
 ### dba_group<a name='db_software_dba_group'>
@@ -88,7 +85,6 @@ The default is : `dba`
 To customize this consistenly use the hiera key `ora_profile::database::dba_group`.
 
 Type: `String[1]`
-
 
 
 [Back to overview of db_software](#attributes)
@@ -104,7 +100,6 @@ To customize this consistenly use the hiera key `ora_profile::database::install_
 Type: `String[1]`
 
 
-
 [Back to overview of db_software](#attributes)
 
 ### os_user<a name='db_software_os_user'>
@@ -116,7 +111,6 @@ The default is : `oracle`
 To customize this consistenly use the hiera key `ora_profile::database::os_user`.
 
 Type: `String[1]`
-
 
 
 [Back to overview of db_software](#attributes)
@@ -133,7 +127,6 @@ To customize this consistenly use the hiera key `ora_profile::database::install_
 Type: `Any`
 
 
-
 [Back to overview of db_software](#attributes)
 
 ### oracle_home<a name='db_software_oracle_home'>
@@ -146,7 +139,6 @@ To customize this consistenly use the hiera key `ora_profile::database::oracle_h
 
 
 Type: `Any`
-
 
 
 [Back to overview of db_software](#attributes)
@@ -164,7 +156,6 @@ To customize this consistenly use the hiera key `ora_profile::database::source`.
 Type: `String[1]`
 
 
-
 [Back to overview of db_software](#attributes)
 
 ### file_name<a name='db_software_file_name'>
@@ -173,7 +164,6 @@ The file name containing the Oracle database software kit.
 
 The default is: `linuxx64_12201_database`
 Type: `String[1]`
-
 
 
 [Back to overview of db_software](#attributes)

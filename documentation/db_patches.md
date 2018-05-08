@@ -40,7 +40,6 @@ The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
 Type: `String[1]`
 
 
-
 [Back to overview of db_patches](#attributes)
 
 ### oracle_home<a name='db_patches_oracle_home'>
@@ -55,7 +54,6 @@ To customize this consistenly use the hiera key `ora_profile::database::oracle_h
 Type: `Any`
 
 
-
 [Back to overview of db_patches](#attributes)
 
 ### opversion<a name='db_patches_opversion'>
@@ -64,7 +62,6 @@ The version of OPatch that is needed. If it is not installed, Puppet will instal
 
 The default value is: `12.1.0.1.10`
 Type: `String[1]`
-
 
 
 [Back to overview of db_patches](#attributes)
@@ -80,7 +77,6 @@ To customize this consistenly use the hiera key `ora_profile::database::install_
 Type: `String[1]`
 
 
-
 [Back to overview of db_patches](#attributes)
 
 ### os_user<a name='db_patches_os_user'>
@@ -92,7 +88,6 @@ The default is : `oracle`
 To customize this consistenly use the hiera key `ora_profile::database::os_user`.
 
 Type: `String[1]`
-
 
 
 [Back to overview of db_patches](#attributes)
@@ -110,7 +105,6 @@ To customize this consistenly use the hiera key `ora_profile::database::source`.
 Type: `String[1]`
 
 
-
 [Back to overview of db_patches](#attributes)
 
 ### patch_list<a name='db_patches_patch_list'>
@@ -121,7 +115,6 @@ The default value is : `{}`
 
 
 Type: `Hash`
-
 
 
 [Back to overview of db_patches](#attributes)

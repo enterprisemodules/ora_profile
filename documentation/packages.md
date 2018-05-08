@@ -64,5 +64,4 @@ ora_profile::database::packages::list:
 Type: `Array[String[1]]`
 
 
-
 [Back to overview of packages](#attributes)

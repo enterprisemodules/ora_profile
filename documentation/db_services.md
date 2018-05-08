@@ -37,14 +37,12 @@ To customize this consistenly use the hiera key `ora_profile::database::dbname`.
 Type: `String[1]`
 
 
-
 [Back to overview of db_services](#attributes)
 
 ### domain_name<a name='db_services_domain_name'>
 
 
-Type: `Any`
-
+Type: `Optional[String[1]]`
 
 
 [Back to overview of db_services](#attributes)

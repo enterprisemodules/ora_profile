@@ -46,6 +46,7 @@ ora_profile::database::limits::list:
     soft: 10240
     hard: 32768
 ```
+Type: `Hash`
 
 
 [Back to overview of limits](#attributes)

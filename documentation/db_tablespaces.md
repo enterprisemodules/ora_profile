@@ -37,5 +37,4 @@ and adds more consistency.
 Type: `Hash`
 
 
-
 [Back to overview of db_tablespaces](#attributes)

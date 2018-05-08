@@ -48,7 +48,6 @@ To customize this consistenly use the hiera key `ora_profile::database::version`
 Type: `Any`
 
 
-
 [Back to overview of db_definition](#attributes)
 
 ### oracle_home<a name='db_definition_oracle_home'>
@@ -61,7 +60,6 @@ To customize this consistenly use the hiera key `ora_profile::database::oracle_h
 
 
 Type: `Any`
-
 
 
 [Back to overview of db_definition](#attributes)
@@ -78,7 +76,6 @@ To customize this consistenly use the hiera key `ora_profile::database::install_
 Type: `Any`
 
 
-
 [Back to overview of db_definition](#attributes)
 
 ### dbname<a name='db_definition_dbname'>
@@ -91,7 +88,6 @@ To customize this consistenly use the hiera key `ora_profile::database::dbname`.
 Type: `String[1]`
 
 
-
 [Back to overview of db_definition](#attributes)
 
 ### log_size<a name='db_definition_log_size'>
@@ -100,7 +96,6 @@ The log ize to use.
 
 The default is : `100M`
 Type: `String[1]`
-
 
 
 [Back to overview of db_definition](#attributes)
@@ -113,7 +108,6 @@ The default value is `50M`
 Type: `String[1]`
 
 
-
 [Back to overview of db_definition](#attributes)
 
 ### system_tablespace_size<a name='db_definition_system_tablespace_size'>
@@ -122,7 +116,6 @@ The size for the `SYSTEM` tablespace.
 
 The default value is `50M`
 Type: `String[1]`
-
 
 
 [Back to overview of db_definition](#attributes)
@@ -136,7 +129,6 @@ The default value is `50M`
 Type: `String[1]`
 
 
-
 [Back to overview of db_definition](#attributes)
 
 ### undo_tablespace_size<a name='db_definition_undo_tablespace_size'>
@@ -145,7 +137,6 @@ The size for the `UNDO` tablespace.
 
 The default value is `50M`
 Type: `String[1]`
-
 
 
 [Back to overview of db_definition](#attributes)
@@ -158,7 +149,6 @@ The default value is `50M`
 Type: `String[1]`
 
 
-
 [Back to overview of db_definition](#attributes)
 
 ### system_password<a name='db_definition_system_password'>
@@ -167,7 +157,6 @@ The `system` password to use for the database.
 
 The default value is: `Welcome01`
 Type: `String[1]`
-
 
 
 [Back to overview of db_definition](#attributes)
@@ -180,7 +169,6 @@ The default value is: `Change_on_1nstall`
 Type: `String[1]`
 
 
-
 [Back to overview of db_definition](#attributes)
 
 ### init_ora_template<a name='db_definition_init_ora_template'>
@@ -189,7 +177,6 @@ The template to use for the init.ora parameters.
 
 The default value is: 'ora_profile/init.ora.erb'
 Type: `String[1]`
-
 
 
 [Back to overview of db_definition](#attributes)

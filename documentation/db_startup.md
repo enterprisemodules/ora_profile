@@ -38,7 +38,6 @@ To customize this consistenly use the hiera key `ora_profile::database::oracle_h
 Type: `Any`
 
 
-
 [Back to overview of db_startup](#attributes)
 
 ### dbname<a name='db_startup_dbname'>
@@ -49,7 +48,6 @@ The default is `DB01`
 
 To customize this consistenly use the hiera key `ora_profile::database::dbname`.
 Type: `String[1]`
-
 
 
 [Back to overview of db_startup](#attributes)

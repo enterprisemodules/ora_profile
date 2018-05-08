@@ -47,8 +47,7 @@ ora_profile::database::groups_and_users::users:
     comment:    This user oracle was created by Puppet
     managehome: true
 ```
-Type: `'user',`
-
+Type: `Hash`
 
 
 [Back to overview of groups_and_users](#attributes)
@@ -71,7 +70,6 @@ ora_profile::database::groups_and_users::groups:
 ```
 
 Type: `Hash`
-
 
 
 [Back to overview of groups_and_users](#attributes)

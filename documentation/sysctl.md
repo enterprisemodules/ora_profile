@@ -62,6 +62,7 @@ ora_profile::database::sysctl::list:
   'kernel.panic_on_oops':
     value:  1
 ```
+Type: `Hash`
 
 
 [Back to overview of sysctl](#attributes)

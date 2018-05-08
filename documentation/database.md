@@ -74,6 +74,30 @@ This mechanism can be used for all named stages and makes it easy to move from a
 
 Look at the description of the stages and their properties.
 
+At this level you can also customize some generic settings. Check the settings for:
+
+- `version`
+- `dbname`
+- `os_user`
+- `dba_group`
+- `install_group`
+- `source`
+- `oracle_base`
+- `oracle_home`
+
+Here is an example on how you can do this:
+
+```puppet
+
+class {'ora_profile::database':
+  dbname  => 'EM',
+  source  => 'http://www.example.com/database_files',
+  version => '11.2.0.3',
+}
+
+```
+
+
 
 
 
@@ -121,14 +145,129 @@ Attribute Name                                               | Short Description
 [db_startup](#database_db_startup)                           | Use this value if you want to skip or use your own class for stage `db_startup`.            |
 [db_tablespaces](#database_db_tablespaces)                   | Use this value if you want to skip or use your own class for stage `db_tablespaces`.        |
 [db_users](#database_db_users)                               | Use this value if you want to skip or use your own class for stage `db_users`.              |
+[dba_group](#database_dba_group)                             | The group to use for Oracle DBA users.                                                      |
+[dbname](#database_dbname)                                   | The name of the database.                                                                   |
 [firewall](#database_firewall)                               | Use this value if you want to skip or use your own class for stage `firewall`.              |
 [groups_and_users](#database_groups_and_users)               | Use this value if you want to skip or use your own class for stage `groups_and_users`.      |
+[install_group](#database_install_group)                     | The group to use for Oracle install.                                                        |
 [limits](#database_limits)                                   | Use this value if you want to skip or use your own class for stage `limits`.                |
+[oracle_base](#database_oracle_base)                         | The base firectory to use for the Oracle installation.                                      |
+[oracle_home](#database_oracle_home)                         | The home firectory to use for the Oracle installation.                                      |
+[os_user](#database_os_user)                                 | The OS user to use for Oracle install.                                                      |
 [packages](#database_packages)                               | Use this value if you want to skip or use your own class for stage `packages`.              |
+[source](#database_source)                                   | The location where the classes can find the software.                                       |
 [sysctl](#database_sysctl)                                   | Use this value if you want to skip or use your own class for stage `sysctl`.                |
+[version](#database_version)                                 | The version of Oracle you want to install.                                                  |
 
 
 
+
+### version<a name='database_version'>
+
+The version of Oracle you want to install.
+
+The default is : `12.2.0.1`
+
+To customize this consistenly use the hiera key `ora_profile::database::version`.
+
+Type: `Any`
+
+
+[Back to overview of database](#attributes)
+
+### dbname<a name='database_dbname'>
+
+The name of the database.
+
+The default is `DB01`
+
+To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+Type: `String[1]`
+
+
+[Back to overview of database](#attributes)
+
+### os_user<a name='database_os_user'>
+
+The OS user to use for Oracle install.
+
+The default is : `oracle`
+
+To customize this consistenly use the hiera key `ora_profile::database::os_user`.
+
+Type: `String[1]`
+
+
+[Back to overview of database](#attributes)
+
+### dba_group<a name='database_dba_group'>
+
+The group to use for Oracle DBA users.
+
+The default is : `dba`
+
+To customize this consistenly use the hiera key `ora_profile::database::dba_group`.
+
+Type: `String[1]`
+
+
+[Back to overview of database](#attributes)
+
+### install_group<a name='database_install_group'>
+
+The group to use for Oracle install.
+
+The default is : `oinstall`
+
+To customize this consistenly use the hiera key `ora_profile::database::install_group`.
+
+Type: `String[1]`
+
+
+[Back to overview of database](#attributes)
+
+### source<a name='database_source'>
+
+The location where the classes can find the software. 
+
+You can specify a local directory, a Puppet url or an http url.
+
+The default is : `puppet:///modules/software/`
+
+To customize this consistenly use the hiera key `ora_profile::database::source`.
+
+Type: `String[1]`
+
+
+[Back to overview of database](#attributes)
+
+### oracle_base<a name='database_oracle_base'>
+
+The base firectory to use for the Oracle installation.
+
+The default is : `/u01/app/oracle`
+
+To customize this consistenly use the hiera key `ora_profile::database::install_group`.
+
+
+Type: `Any`
+
+
+[Back to overview of database](#attributes)
+
+### oracle_home<a name='database_oracle_home'>
+
+The home firectory to use for the Oracle installation.
+
+The default is : `/u01/app/oracle/product/#{version}/db_home1`
+
+To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
+
+
+Type: `Any`
+
+
+[Back to overview of database](#attributes)
 
 ### sysctl<a name='database_sysctl'>
 
@@ -153,7 +292,6 @@ ora_profile::database::sysctl:  skip
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -181,7 +319,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### packages<a name='database_packages'>
@@ -207,7 +344,6 @@ ora_profile::database::packages:  skip
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -235,7 +371,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### firewall<a name='database_firewall'>
@@ -261,7 +396,6 @@ ora_profile::database::firewall:  skip
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -289,7 +423,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### db_patches<a name='database_db_patches'>
@@ -315,7 +448,6 @@ ora_profile::database::db_patches:  skip
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -343,7 +475,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### db_listener<a name='database_db_listener'>
@@ -369,7 +500,6 @@ ora_profile::database::db_listener:  skip
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -397,7 +527,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### db_tablespaces<a name='database_db_tablespaces'>
@@ -423,7 +552,6 @@ ora_profile::database::db_tablespaces:  skip
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -451,7 +579,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### db_users<a name='database_db_users'>
@@ -477,7 +604,6 @@ ora_profile::database::db_users:  skip
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -505,7 +631,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### before_sysctl<a name='database_before_sysctl'>
@@ -521,7 +646,6 @@ ora_profile::database::before_sysctl:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -539,7 +663,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### before_packages<a name='database_before_packages'>
@@ -555,7 +678,6 @@ ora_profile::database::before_packages:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -573,7 +695,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### before_firewall<a name='database_before_firewall'>
@@ -589,7 +710,6 @@ ora_profile::database::before_firewall:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -607,7 +727,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### before_db_patches<a name='database_before_db_patches'>
@@ -623,7 +742,6 @@ ora_profile::database::before_db_patches:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -641,7 +759,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### before_db_listener<a name='database_before_db_listener'>
@@ -657,7 +774,6 @@ ora_profile::database::before_db_listener:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -675,7 +791,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### before_db_tablespaces<a name='database_before_db_tablespaces'>
@@ -691,7 +806,6 @@ ora_profile::database::before_db_tablespaces:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -709,7 +823,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### before_db_users<a name='database_before_db_users'>
@@ -725,7 +838,6 @@ ora_profile::database::before_db_users:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -743,7 +855,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_sysctl<a name='database_after_sysctl'>
@@ -759,7 +870,6 @@ ora_profile::database::after_sysctl:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -777,7 +887,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_packages<a name='database_after_packages'>
@@ -793,7 +902,6 @@ ora_profile::database::after_packages:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -811,7 +919,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_firewall<a name='database_after_firewall'>
@@ -827,7 +934,6 @@ ora_profile::database::after_firewall:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -846,7 +952,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_db_patches<a name='database_after_db_patches'>
@@ -862,7 +967,6 @@ ora_profile::database::after_db_patches:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -880,7 +984,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_db_listener<a name='database_after_db_listener'>
@@ -896,7 +999,6 @@ ora_profile::database::after_db_listener:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -914,7 +1016,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_db_tablespaces<a name='database_after_db_tablespaces'>
@@ -930,7 +1031,6 @@ ora_profile::database::after_db_tablespaces:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)
 
@@ -948,7 +1048,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_db_users<a name='database_after_db_users'>
@@ -965,7 +1064,6 @@ Type: `Optional[String]`
 
 Default:`undef`
 
-
 [Back to overview of database](#attributes)
 
 ### after_db_startup<a name='database_after_db_startup'>
@@ -981,6 +1079,5 @@ ora_profile::database::after_db_startup:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
-
 
 [Back to overview of database](#attributes)

@@ -40,7 +40,6 @@ To customize this consistenly use the hiera key `ora_profile::database::oracle_h
 Type: `Any`
 
 
-
 [Back to overview of db_listener](#attributes)
 
 ### oracle_base<a name='db_listener_oracle_base'>
@@ -55,7 +54,6 @@ To customize this consistenly use the hiera key `ora_profile::database::install_
 Type: `Any`
 
 
-
 [Back to overview of db_listener](#attributes)
 
 ### sqlnet_version<a name='db_listener_sqlnet_version'>
@@ -64,7 +62,6 @@ The SQLnet version to use.
 
 The default is: 12.2
 Type: `String[1]`
-
 
 
 [Back to overview of db_listener](#attributes)
