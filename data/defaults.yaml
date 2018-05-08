@@ -128,9 +128,8 @@ ora_profile::database::sysctl::list:
 #  Settings for firewall
 #
 #------------------------------------------------------------------------------
-ora_profile::database::firewall::tcp_ports:
+ora_profile::database::firewall::ports:
   - 1521
-ora_profile::database::firewall::udp_ports:       []
 ora_profile::database::firewall::manage_service:  true
 #------------------------------------------------------------------------------
 #

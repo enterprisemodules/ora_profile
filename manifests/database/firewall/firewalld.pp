@@ -7,8 +7,7 @@
 # @example
 #   include ora_profile::database::firewall::iptables
 class ora_profile::database::firewall::firewalld(
-  Array[Integer]  $tcp_ports,
-  Array[Integer]  $udp_ports,
+  Array[Integer]  $ports,
   Boolean         $manage_service,
 ) {
   unless defined(Package['firewalld']) {
@@ -16,7 +15,7 @@ class ora_profile::database::firewall::firewalld(
       ensure => 'present',
     }
   }
-  $tcp_ports.each |$port| {
+  $ports.each |$port| {
     firewalld_port { "500 accept tcp port ${port} for Oracle":
       ensure   => present,
       zone     => 'public',
@@ -25,14 +24,6 @@ class ora_profile::database::firewall::firewalld(
     }
   }
 
-  $udp_ports.each |$port| {
-    firewalld_port { "500 accept udp port ${port} for Oracle":
-      ensure   => present,
-      zone     => 'public',
-      port     => $port,
-      protocol => 'ucp',
-    }
-  }
   if $manage_service {
     service { 'firewalld':
         ensure    => true,

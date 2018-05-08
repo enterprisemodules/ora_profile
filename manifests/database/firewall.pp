@@ -7,26 +7,26 @@
 # @example
 #   include ora_profile::database::firewall
 class ora_profile::database::firewall(
-  Array[Integer]  $tcp_ports,
-  Array[Integer]  $udp_ports,
+  Array[Integer]  $ports,
   Boolean         $manage_service,
 ) inherits ora_profile::database {
-  echo {"Firewall: opening tcp ports ${tcp_ports.join(',')} and udp_ports ${udp_ports.join(',')}":}
+
+  echo {"Firewall: ensuring tcp port(s) ${ports.join(',')} are open.":
+    withpath => false,
+  }
 
   case  $::operatingsystem {
     'RedHat', 'CentOS', 'OracleLinux': {
       case ($::os['release']['major']) {
         '4','5','6': {
           class {'ora_profile::database::firewall::iptables':
-            tcp_ports      => $tcp_ports,
-            udp_ports      => $udp_ports,
+            ports          => $ports,
             manage_service => $manage_service,
           }
         }
         '7': {
           class {'ora_profile::database::firewall::firewalld':
-            tcp_ports      => $tcp_ports,
-            udp_ports      => $udp_ports,
+            ports          => $ports,
             manage_service => $manage_service,
           }
         }
