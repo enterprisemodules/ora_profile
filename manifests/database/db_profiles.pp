@@ -9,7 +9,12 @@
 class ora_profile::database::db_profiles(
   Hash $list
 ) inherits ora_profile::database {
-  echo {'DB profiles':}
+
+  if $list.keys.size > 0 {
+    echo {"Ensure DB profile(s) ${list.keys.join(',')}":
+      withpath => false,
+    }
+  }
   #
   # This is a simple way to get started. It is easy to get started, but
   # soon your hiera yaml become a nigtmare. Our advise is when you need

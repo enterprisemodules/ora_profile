@@ -10,7 +10,11 @@ class ora_profile::database::groups_and_users(
   Hash  $users,
   Hash  $groups,
 ) inherits ora_profile::database {
-  echo {'Groups and Users':}
+
+  echo {'Ensuring Groups and Users':
+    withpath => false,
+  }
+
   $defaults = { 'ensure' => 'present'}
   create_resources('user', $users, $defaults )
   create_resources('group', $groups, $defaults)

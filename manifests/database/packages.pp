@@ -9,7 +9,12 @@
 class ora_profile::database::packages(
   Array[String[1]] $list,
 ) inherits ora_profile::database {
-  echo {'Packages':}
+
+  if $list.size > 0 {
+    echo {"Ensure DB packages(s) ${list.join(',')}":
+      withpath => false,
+    }
+  }
 
   package { $list:
     ensure  => present,

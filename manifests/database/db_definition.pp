@@ -24,7 +24,10 @@ class ora_profile::database::db_definition(
   String[1] $sys_password,
   String[1] $init_ora_template,
 ) inherits ora_profile::database {
-  echo {'DB definition':}
+
+  echo {"DB definition for database ${dbname} in ${oracle_home}":
+    withpath => false,
+  }
   #
   # All standard values fetched in data function
   #

@@ -11,7 +11,10 @@ class ora_profile::database::db_startup(
             $oracle_home,
   String[1] $dbname,
 ) inherits ora_profile::database {
-  echo {'DB Startup':}
+
+  echo {"Ensure DB Startup for ${dbname} in ${oracle_home}":
+    withpath => false,
+  }
 
   # In RHEL7.2 RemoveIPC defaults to true, which will cause the database and ASM to crash
   if $::os['release']['major'] == '7' and $::os['release']['minor'] == '2' {

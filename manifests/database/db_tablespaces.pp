@@ -9,7 +9,12 @@
 class ora_profile::database::db_tablespaces(
   Hash  $list,
 ) inherits ora_profile::database {
-  echo {'DB tablespaces':}
+
+  if $list.keys.size > 0 {
+    echo {"Ensure DB tablespace(s) ${list.keys.join(',')}":
+      withpath => false,
+    }
+  }
   #
   # This is a simple way to get started. It is easy to get started, but
   # soon your hiera yaml become a nigtmare. Our advise is when you need

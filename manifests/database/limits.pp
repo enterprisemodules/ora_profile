@@ -9,6 +9,12 @@
 class ora_profile::database::limits(
   Hash $list
 ) inherits ora_profile::database {
-  echo {'Limits':}
+
+  if $list.keys.size > 0 {
+    echo {"Ensure DB limit(s) ${list.keys.join(',')}":
+      withpath => false,
+    }
+  }
+
   create_resources(limits::limits, $list)
 }

@@ -11,9 +11,13 @@ class ora_profile::database::db_services(
   Optional[String[1]]
             $domain_name,
 ) inherits ora_profile::database {
-  echo {'DB services':}
 
   if $domain_name == undef { $service_name = $dbname} else {$service_name = "${dbname}.${domain_name}" }
+
+  echo {"Ensuring DB service ${service_name}":
+    withpath => false,
+  }
+
 
   ora_service {"${service_name}@${dbname}":       # Create a service with a name equal to the database
     ensure => 'present',

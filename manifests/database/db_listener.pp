@@ -14,7 +14,10 @@ class ora_profile::database::db_listener(
   String[1] $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
-  echo {'DB listener':}
+
+  echo {"DB listener for ${dbname} in ${oracle_home}":
+    withpath => false,
+  }
 
   ora_install::net{ 'config net8':
     oracle_home  => $oracle_home,

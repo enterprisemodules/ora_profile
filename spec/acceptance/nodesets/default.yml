@@ -14,8 +14,8 @@ HOSTS:
         container_path: /software
 CONFIG:
   type: aio
-  # log_level: debug
-  log_level: info
+  log_level: debug
+  # log_level: info
 ssh:
   password: root
   # auth_methods: ["password"]
