@@ -2,13 +2,12 @@
 # Some generic defaults used in multiple places
 #
 ora_profile::database::dbname:         DB01
-ora_profile::database::version:        12.2.0.1
 ora_profile::database::os_user:        oracle
 ora_profile::database::dba_group:      dba
 ora_profile::database::install_group:  oinstall
 ora_profile::database::source:         puppet:///modules/software
 ora_profile::database::oracle_base:    /u01/app/oracle
-ora_profile::database::oracle_home:    "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1"
+ora_profile::database::oracle_home:    "/u01/app/oracle/product/12.2.0.1/db_home1"
 ora_profile::database::version:        12.2.0.1
 #------------------------------------------------------------------------------
 #
@@ -16,9 +15,9 @@ ora_profile::database::version:        12.2.0.1
 #
 #------------------------------------------------------------------------------
 ora_profile::database::groups_and_users::groups:
-  "%{lookup('ora_profile::database::install_group')}":
+  "%{::ora_profile::database::install_group}":
     gid:  54321,
-  "%{lookup('ora_profile::database::dba_group')}":
+  "%{::ora_profile::database::dba_group}":
     gid:  54322,
   oper:
     gid:  54323,
@@ -26,12 +25,12 @@ ora_profile::database::groups_and_users::groups:
 # Users to create
 #
 ora_profile::database::groups_and_users::users:
-  "%{lookup('ora_profile::database::os_user')}":
+  "%{::ora_profile::database::os_user}":
     uid:        54321
-    gid:        "%{lookup('ora_profile::database::install_group')}"
+    gid:        "%{::ora_profile::database::install_group}"
     groups:
-    - "%{lookup('ora_profile::database::install_group')}"
-    - "%{lookup('ora_profile::database::dba_group')}"
+    - "%{::ora_profile::database::install_group}"
+    - "%{::ora_profile::database::dba_group}"
     - oper
     shell:      /bin/bash
     password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
@@ -81,13 +80,13 @@ ora_profile::database::limits::list:
   '*/nofile':
     soft: 2048
     hard: 8192
-  "%{lookup('ora_profile::database::os_user')}/nofile":
+  "%{::ora_profile::database::os_user}/nofile":
     soft: 65536
     hard: 65536
-  "%{lookup('ora_profile::database::os_user')}/nproc":
+  "%{::ora_profile::database::os_user}/nproc":
     soft: 2048
     hard: 16384
-  "%{lookup('ora_profile::database::os_user')}/stack":
+  "%{::ora_profile::database::os_user}/stack":
     soft: 10240
     hard: 32768
 #------------------------------------------------------------------------------
@@ -144,14 +143,14 @@ ora_profile::database::db_software::dirs:
   - /u02/oradata
   - /u03/fast_recovery_area
 
-ora_profile::database::db_software::dba_group:      "%{lookup('ora_profile::database::dba_group')}"
-ora_profile::database::db_software::install_group:  "%{lookup('ora_profile::database::install_group')}"
-ora_profile::database::db_software::os_user:        "%{lookup('ora_profile::database::os_user')}"
-ora_profile::database::db_software::version:        "%{lookup('ora_profile::database::version')}"
+ora_profile::database::db_software::dba_group:      "%{::ora_profile::database::dba_group}"
+ora_profile::database::db_software::install_group:  "%{::ora_profile::database::install_group}"
+ora_profile::database::db_software::os_user:        "%{::ora_profile::database::os_user}"
+ora_profile::database::db_software::version:        "%{::ora_profile::database::version}"
 ora_profile::database::db_software::database_type:  SE2
-ora_profile::database::db_software::oracle_base:    "%{lookup('ora_profile::database::oracle_base')}"
-ora_profile::database::db_software::oracle_home:    "%{lookup('ora_profile::database::oracle_home')}"
-ora_profile::database::db_software::source:         "%{lookup('ora_profile::database::source')}"
+ora_profile::database::db_software::oracle_base:    "%{::ora_profile::database::oracle_base}"
+ora_profile::database::db_software::oracle_home:    "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_software::source:         "%{::ora_profile::database::source}"
 ora_profile::database::db_software::file_name:      linuxx64_12201_database
 #------------------------------------------------------------------------------
 #
@@ -160,23 +159,23 @@ ora_profile::database::db_software::file_name:      linuxx64_12201_database
 #------------------------------------------------------------------------------
 ora_profile::database::db_patches::patch_file:      p6880880_121010_Linux-x86-64_12.1.0.1.10
 ora_profile::database::db_patches::opversion:       12.1.0.1.10
-ora_profile::database::db_patches::install_group:   "%{lookup('ora_profile::database::install_group')}"
-ora_profile::database::db_patches::os_user:         "%{lookup('ora_profile::database::os_user')}"
-ora_profile::database::db_patches::source:          "%{lookup('ora_profile::database::source')}"
-ora_profile::database::db_patches::oracle_home:     "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_patches::install_group:   "%{::ora_profile::database::install_group}"
+ora_profile::database::db_patches::os_user:         "%{::ora_profile::database::os_user}"
+ora_profile::database::db_patches::source:          "%{::ora_profile::database::source}"
+ora_profile::database::db_patches::oracle_home:     "%{::ora_profile::database::oracle_home}"
 ora_profile::database::db_patches::patch_list:      {}
-  # "%{lookup('ora_profile::database::oracle_home')}:27010872":
-  #   source:              "%{lookup('ora_profile::database::source')}/p27010872_121020_Linux-x86-64.zip"
+  # "%{::ora_profile::database::oracle_home}:27010872":
+  #   source:              "%{::ora_profile::database::source}/p27010872_121020_Linux-x86-64.zip"
   #   sub_patches:        ['26925218', '26925311']
 #------------------------------------------------------------------------------
 #
 # db_definition
 #
 #------------------------------------------------------------------------------
-ora_profile::database::db_definition::dbname:                    "%{lookup('ora_profile::database::dbname')}"
-ora_profile::database::db_definition::oracle_base:               "%{lookup('ora_profile::database::oracle_base')}"
-ora_profile::database::db_definition::oracle_home:               "%{lookup('ora_profile::database::oracle_home')}"
-ora_profile::database::db_definition::version:                   "%{lookup('ora_profile::database::version')}"
+ora_profile::database::db_definition::dbname:                    "%{::ora_profile::database::dbname}"
+ora_profile::database::db_definition::oracle_base:               "%{::ora_profile::database::oracle_base}"
+ora_profile::database::db_definition::oracle_home:               "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_definition::version:                   "%{::ora_profile::database::version}"
 ora_profile::database::db_definition::log_size:                  100M
 ora_profile::database::db_definition::user_tablespace_size:      5M
 ora_profile::database::db_definition::system_tablespace_size:    50M
@@ -192,23 +191,24 @@ ora_profile::database::db_definition::init_ora_template:         ora_profile/ini
 # Settings for db_listener
 #
 #------------------------------------------------------------------------------
-ora_profile::database::db_listener::oracle_base:               "%{lookup('ora_profile::database::oracle_base')}"
-ora_profile::database::db_listener::oracle_home:               "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_listener::dbname:                    "%{::ora_profile::database::dbname}"
+ora_profile::database::db_listener::oracle_base:               "%{::ora_profile::database::oracle_base}"
+ora_profile::database::db_listener::oracle_home:               "%{::ora_profile::database::oracle_home}"
 ora_profile::database::db_listener::sqlnet_version:            '12.2'
 #------------------------------------------------------------------------------
 #
 # Settings for db_services
 #
 #------------------------------------------------------------------------------
-ora_profile::database::db_services::dbname:               "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_services::dbname:               "%{::ora_profile::database::dbname}"
 ora_profile::database::db_services::domain_name:          ~
 #------------------------------------------------------------------------------
 #
 # Settings for db_startup
 #
 #------------------------------------------------------------------------------
-ora_profile::database::db_startup::dbname:               "%{lookup('ora_profile::database::dbname')}"
-ora_profile::database::db_startup::oracle_home:          "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_startup::dbname:               "%{::ora_profile::database::dbname}"
+ora_profile::database::db_startup::oracle_home:          "%{::ora_profile::database::oracle_home}"
 #------------------------------------------------------------------------------
 #
 # Settings for db_tablespaces

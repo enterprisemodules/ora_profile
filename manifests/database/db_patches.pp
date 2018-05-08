@@ -15,7 +15,7 @@ class ora_profile::database::db_patches(
   String[1] $os_user,
   String[1] $source,
   Hash      $patch_list,
-) {
+) inherits ora_profile::database {
   echo {'DB patches':}
 
   #

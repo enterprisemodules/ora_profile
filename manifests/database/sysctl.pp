@@ -8,7 +8,7 @@
 #   include ora_profile::database::sysctl
 class ora_profile::database::sysctl(
   Hash $list
-) {
+) inherits ora_profile::database {
   echo {'Sysctl':}
   $defaults = {
     ensure  => 'present',

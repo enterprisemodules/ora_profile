@@ -12,7 +12,8 @@ class ora_profile::database::db_listener(
   Stdlib::Absolutepath
             $oracle_base,
   String[1] $sqlnet_version,
-) {
+  String[1] $dbname,
+) inherits ora_profile::database {
   echo {'DB listener':}
 
   ora_install::net{ 'config net8':
@@ -21,7 +22,7 @@ class ora_profile::database::db_listener(
     download_dir => '/tmp',
   }
 
-  -> ora_install::listener{'start listener':
+  -> ora_install::listener{$dbname:
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
     action      => 'start',

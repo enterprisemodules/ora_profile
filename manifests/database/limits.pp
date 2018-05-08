@@ -8,7 +8,7 @@
 #   include ora_profile::database::limits
 class ora_profile::database::limits(
   Hash $list
-) {
+) inherits ora_profile::database {
   echo {'Limits':}
   create_resources(limits::limits, $list)
 }

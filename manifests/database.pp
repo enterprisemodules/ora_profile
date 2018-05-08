@@ -7,6 +7,20 @@
 # @example
 #   ora_profile::database { 'database_name': }
 class ora_profile::database(
+  Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']
+            $version,
+  String[1] $dbname,
+  String[1] $os_user,
+  String[1] $dba_group,
+  String[1] $install_group,
+  String[1] $source,
+  Stdlib::Absolutepath
+            $oracle_base,
+  Stdlib::Absolutepath
+            $oracle_home,
+#
+# Optional settings
+#  
   Optional[String] $sysctl = undef,
   Optional[String] $limits = undef,
   Optional[String] $packages = undef,

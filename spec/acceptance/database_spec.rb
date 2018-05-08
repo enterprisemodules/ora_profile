@@ -3,6 +3,10 @@ require_relative '../spec_helper_acceptance'
 describe 'ora_profile::database' do
 
   manifest = <<-MANIFEST
+    class {'ora_profile::database':
+      source => '/software',
+      sysctl => 'skip',
+    }
     contain ora_profile::database
   MANIFEST
 

@@ -8,7 +8,7 @@
 #   include ora_profile::database::db_tablespaces
 class ora_profile::database::db_tablespaces(
   Hash  $list,
-) {
+) inherits ora_profile::database {
   echo {'DB tablespaces':}
   #
   # This is a simple way to get started. It is easy to get started, but

@@ -8,7 +8,7 @@
 #   include ora_profile::database::packages
 class ora_profile::database::packages(
   Array[String[1]] $list,
-) {
+) inherits ora_profile::database {
   echo {'Packages':}
 
   package { $list:

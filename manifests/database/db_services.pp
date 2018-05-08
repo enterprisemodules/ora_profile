@@ -10,7 +10,7 @@ class ora_profile::database::db_services(
   String[1] $dbname,
   Optional[String[1]]
             $domain_name,
-) {
+) inherits ora_profile::database {
   echo {'DB services':}
 
   if $domain_name == undef { $service_name = $dbname} else {$service_name = "${dbname}.${domain_name}" }

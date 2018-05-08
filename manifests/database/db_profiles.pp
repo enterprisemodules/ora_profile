@@ -8,7 +8,7 @@
 #   include ora_profile::database::db_profiles
 class ora_profile::database::db_profiles(
   Hash $list
-) {
+) inherits ora_profile::database {
   echo {'DB profiles':}
   #
   # This is a simple way to get started. It is easy to get started, but

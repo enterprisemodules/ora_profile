@@ -37,9 +37,9 @@ RSpec.configure do |c|
                            :target_module_path => '/etc/puppetlabs/code/environments/production/modules',
                            :module_name => 'ora_profile')
 
-    on(master, "mkdir -p /etc/puppetlabs/puppet/data")
-    scp_to(master, "#{proj_root}/spec/hiera.yaml",'/etc/puppetlabs/puppet/hiera.yaml',  )
-    scp_to(master, "#{proj_root}/spec/acceptance_hiera_data.yaml",'/etc/puppetlabs/puppet/data')
+    # on(master, "mkdir -p /etc/puppetlabs/puppet/data")
+    # scp_to(master, "#{proj_root}/spec/hiera.yaml",'/etc/puppetlabs/puppet/hiera.yaml',  )
+    # scp_to(master, "#{proj_root}/spec/acceptance_hiera_data.yaml",'/etc/puppetlabs/puppet/data')
     #
     # Install required modules
     #

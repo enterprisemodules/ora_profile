@@ -10,7 +10,7 @@ class ora_profile::database::firewall(
   Array[Integer]  $tcp_ports,
   Array[Integer]  $udp_ports,
   Boolean         $manage_service,
-) {
+) inherits ora_profile::database {
   echo {"Firewall: opening tcp ports ${tcp_ports.join(',')} and udp_ports ${udp_ports.join(',')}":}
 
   case  $::operatingsystem {

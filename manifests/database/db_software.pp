@@ -22,7 +22,7 @@ class ora_profile::database::db_software(
             $oracle_home,
   String[1] $source,
   String[1] $file_name,
-) {
+) inherits ora_profile::database {
   echo {'DB software':}
 
   unless defined(Package['unzip']) {
