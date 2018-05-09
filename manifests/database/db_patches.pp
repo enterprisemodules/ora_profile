@@ -53,7 +53,6 @@ class ora_profile::database::db_patches(
     #
     $defaults = {
       ensure  => 'present',
-      tmp_dir => '/tmp',
     }
     create_resources('ora_opatch', $patch_list, $defaults)
   }
