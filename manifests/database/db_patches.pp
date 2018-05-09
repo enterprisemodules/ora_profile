@@ -53,6 +53,7 @@ class ora_profile::database::db_patches(
     #
     $defaults = {
       ensure  => 'present',
+      require => Ora_install::Opatchupgrade[$patch_file],
     }
     create_resources('ora_opatch', $patch_list, $defaults)
   }
