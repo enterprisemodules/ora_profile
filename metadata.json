@@ -6,16 +6,50 @@
   "license": "proprietary",
   "source": "https://github.com/enterprisemodules/ora_profile",
   "dependencies": [
-    {"name":"enterprisemodules/easy_type","version_requirement":">= 2.4.2 < 4.0.0"},
-    {"name":"enterprisemodules/ora_config","version_requirement":">= 2.5.2 < 3.0.0"},
-    {"name":"enterprisemodules/ora_install","version_requirement":">= 3.0.10 < 4.0.0"},
-    {"name":"ipcrm-echo","version_requirement":">= 0.1.5 < 1.0.0"},
-    {"name":"herculesteam-augeasproviders_core","version_requirement":">= 2.1.4 < 3.0.0"},
-    {"name":"herculesteam-augeasproviders_sysctl","version_requirement":">= 2.2.0 < 3.0.0"},
-    {"name":"saz-limits","version_requirement":">= 3.0.2 < 4.0.0"},
-    {"name":"puppetlabs-firewall","version_requirement":">= 1.12.0 < 2.0.0"},
-    {"name":"crayfishx-firewalld","version_requirement":">= 3.4.0 < 4.0.0"},
-    {"name":"puppetlabs-stdlib","version_requirement":">= 4.25.0 < 5.0.0"}
+    {
+      "name": "enterprisemodules/easy_type",
+      "version_requirement": ">= 2.4.2 < 4.0.0"
+    },
+    {
+      "name": "enterprisemodules/ora_config",
+      "version_requirement": ">= 2.5.2 < 3.0.0"
+    },
+    {
+      "name": "enterprisemodules/ora_install",
+      "version_requirement": ">= 3.0.10 < 4.0.0"
+    },
+    {
+      "name": "enterprisemodules/ora_cis",
+      "version_requirement": ">= 1.0.6 < 2.0.0"
+    },
+    {
+      "name": "ipcrm-echo",
+      "version_requirement": ">= 0.1.5 < 1.0.0"
+    },
+    {
+      "name": "herculesteam-augeasproviders_core",
+      "version_requirement": ">= 2.1.4 < 3.0.0"
+    },
+    {
+      "name": "herculesteam-augeasproviders_sysctl",
+      "version_requirement": ">= 2.2.0 < 3.0.0"
+    },
+    {
+      "name": "saz-limits",
+      "version_requirement": ">= 3.0.2 < 4.0.0"
+    },
+    {
+      "name": "puppetlabs-firewall",
+      "version_requirement": ">= 1.12.0 < 2.0.0"
+    },
+    {
+      "name": "crayfishx-firewalld",
+      "version_requirement": ">= 3.4.0 < 4.0.0"
+    },
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.25.0 < 5.0.0"
+    }
   ],
   "operatingsystem_support": [
     {

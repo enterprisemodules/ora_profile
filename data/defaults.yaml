@@ -250,3 +250,16 @@ ora_profile::database::db_users::list:          {}
 #
 #------------------------------------------------------------------------------
 ora_profile::database::db_profiles::list:          {}
+#------------------------------------------------------------------------------
+#
+# Settings for cis_rules
+#
+#------------------------------------------------------------------------------
+ora_profile::database::cis_rules::ignore:
+  - r_1_1
+  - r_2_1_1
+  - r_2_1_2
+  - r_2_1_3
+  - r_2_1_4
+ora_profile::database::cis_rules::dbname:   "%{::ora_profile::database::dbname}"
+

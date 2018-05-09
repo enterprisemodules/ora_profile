@@ -5,6 +5,7 @@ fixtures:
   forge_modules:
     easy_type:              enterprisemodules/easy_type
     ora_install:            enterprisemodules/ora_install
+    ora_cis:                enterprisemodules/ora_cis
     ora_config:             enterprisemodules/ora_config
     stdlib:                 puppetlabs/stdlib
     echo:                   ipcrm/echo
