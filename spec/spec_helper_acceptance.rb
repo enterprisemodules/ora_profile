@@ -24,8 +24,8 @@ RSpec.configure do |c|
   # Readable test descriptions
   c.formatter = :documentation
   c.order     = :defined
+  c.mock_with :rspec
   c.include Helpers
-
   # Copy module root and easy_type to docker container
   c.before :suite do
     # em_license_file = ENV['EM_LICENSE_FILE']
