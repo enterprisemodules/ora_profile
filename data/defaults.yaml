@@ -71,6 +71,9 @@ ora_profile::database::packages::list:
 - libXtst.x86_64
 - make.x86_64
 - sysstat.x86_64
+- unzip.x86_64
+- psmisc
+
 #------------------------------------------------------------------------------
 #
 # Limits
@@ -156,16 +159,16 @@ ora_profile::database::db_software::file_name:      linuxx64_12201_database
 # db_patches
 #
 #------------------------------------------------------------------------------
-ora_profile::database::db_patches::patch_file:      p6880880_121010_Linux-x86-64_12.1.0.1.10
-ora_profile::database::db_patches::opversion:       12.1.0.1.10
+ora_profile::database::db_patches::patch_file:      p6880880_122010_Linux-x86-64
+ora_profile::database::db_patches::opversion:       12.2.0.1.13
 ora_profile::database::db_patches::install_group:   "%{::ora_profile::database::install_group}"
 ora_profile::database::db_patches::os_user:         "%{::ora_profile::database::os_user}"
 ora_profile::database::db_patches::source:          "%{::ora_profile::database::source}"
 ora_profile::database::db_patches::oracle_home:     "%{::ora_profile::database::oracle_home}"
 ora_profile::database::db_patches::patch_list:      {}
-  # "%{::ora_profile::database::oracle_home}:27010872":
-  #   source:              "%{::ora_profile::database::source}/p27010872_121020_Linux-x86-64.zip"
-  #   sub_patches:        ['26925218', '26925311']
+  # "%{::ora_profile::database::oracle_home}:27468969":
+  #   source:              "%{::ora_profile::database::source}/p27468969_122010_Linux-x86-64.zip"
+  #   sub_patches:        ['27674384', '27464465']
 #------------------------------------------------------------------------------
 #
 # db_definition
