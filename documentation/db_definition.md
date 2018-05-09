@@ -45,7 +45,7 @@ The default is : `12.2.0.1`
 
 To customize this consistenly use the hiera key `ora_profile::database::version`.
 
-Type: `Any`
+Type: `Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']`
 
 
 [Back to overview of db_definition](#attributes)
@@ -59,7 +59,7 @@ The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
 
 
-Type: `Any`
+Type: `Stdlib::Absolutepath`
 
 
 [Back to overview of db_definition](#attributes)
@@ -73,7 +73,7 @@ The default is : `/u01/app/oracle`
 To customize this consistenly use the hiera key `ora_profile::database::install_group`.
 
 
-Type: `Any`
+Type: `Stdlib::Absolutepath`
 
 
 [Back to overview of db_definition](#attributes)

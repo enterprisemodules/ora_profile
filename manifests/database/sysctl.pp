@@ -7,7 +7,7 @@
 # @example
 #   include ora_profile::database::sysctl
 class ora_profile::database::sysctl(
-  Hash $list
+  Hash $list,
 ) inherits ora_profile::database {
 
   if $list.keys.size > 0 {

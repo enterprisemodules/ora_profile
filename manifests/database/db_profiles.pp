@@ -7,7 +7,7 @@
 # @example
 #   include ora_profile::database::db_profiles
 class ora_profile::database::db_profiles(
-  Hash $list
+  Hash $list,
 ) inherits ora_profile::database {
 
   if $list.keys.size > 0 {
