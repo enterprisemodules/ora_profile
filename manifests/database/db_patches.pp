@@ -7,6 +7,7 @@
 # @example
 #   include ora_profile::database::db_patches
 class ora_profile::database::db_patches(
+  String[1] $dbname,
   String[1] $patch_file,
   Stdlib::Absolutepath
             $oracle_home,
@@ -23,7 +24,7 @@ class ora_profile::database::db_patches(
 
   #
   # First make sure the correct version of opatch is installed
-  #  
+  #
   ora_install::opatchupgrade{$patch_file:
     oracle_home               => $oracle_home,
     patch_file                => "${patch_file}.zip",
@@ -44,17 +45,61 @@ class ora_profile::database::db_patches(
       withpath => false,
     }
   } else {
-    #
-    # No support yet for patching a running database
-    #
-    #
+    $version_data = $::ora_version.filter |$data| {$data['sid'] == '$dbname'}
+    if $version_data != [] {
+      #
+      # The idea here is that when the fact ora_version for current instance is filled,
+      # the database is up and running. We want to stop the database before applying the patches.
+      #  So that is why we stop the database
+      #
+      echo {"Stopping and starting database to apply DB patches on ${oracle_home}":
+        withpath => false,
+      }
+
+      db_control {'database stop':
+        ensure                  => 'stop',
+        instance_name           => $dbname,
+        oracle_product_home_dir => $oracle_home,
+        os_user                 => $os_user,
+        before                  => Ora_opatch[$patch_list.keys]
+      }
+
+      db_listener {'listener stop':
+        ensure          => 'stop',
+        oracle_home_dir => $oracle_home,
+        os_user         => $os_user,
+        before          => Ora_opatch[$patch_list.keys],
+      }
+    }
     #
     # Some patches need to be installed
     #
     $defaults = {
-      ensure  => 'present',
-      require => Ora_install::Opatchupgrade[$patch_file],
+      ensure     => 'present',
+      require    => Ora_install::Opatchupgrade[$patch_file],
     }
     create_resources('ora_opatch', $patch_list, $defaults)
+
+    if $version_data != [] {
+      #
+      # Oracle was running before. We stopped it to do the patching. Now
+      # we need to restart it again.
+      #
+      db_control {'database start':
+        ensure                  => 'start',
+        instance_name           => $dbname,
+        oracle_product_home_dir => $oracle_home,
+        os_user                 => $os_user,
+        require                 => Ora_opatch[$patch_list.keys]
+      }
+
+      db_listener {'listener start':
+        ensure          => 'start',
+        oracle_home_dir => $oracle_home,
+        os_user         => $os_user,
+        require         => Ora_opatch[$patch_list.keys]
+      }
+    }
   }
+
 }

@@ -87,9 +87,16 @@ class ora_profile::database::db_definition(
   #
   # Database is done. Now start it
   #
-  -> ora_install::dbactions{ "start_${dbname}":
-    oracle_home => $oracle_home,
-    db_name     => $dbname,
+  ->db_control {'database started':
+    ensure                  => 'start',
+    provider                => 'sqlplus',
+    oracle_product_home_dir => $oracle_home,
+    # os_user                 => $os_user,
   }
+
+  # -> ora_install::dbactions{ "start_${dbname}":
+  #   oracle_home => $oracle_home,
+  #   db_name     => $dbname,
+  # }
 
 }
