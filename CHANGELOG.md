@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.3.0
+
+- [db_patches] Add support for patching when the database is running
+- [db_patches] Apply default patches
+- [docs] Update description
+- [spec] Remove deprecation messages
+- [db_patches] Remove tmp_dir property
+- [secured_database] Add initial implementation and docs
+- [specs] Move unit specs to correct directory
+- [core] Some minor fixes: added required packages for installation and patching (unzip, psmisc) and set the correct patches for a 12.2 release (current patch is April 2018)
+
+**Features**
+
+- Added `ora_profile::secure_database` for having a CIS secured database
+- Added support for automatic patches
+
+**Bugfixes**
+
+- Fixed some missing packages
+
 ## Release 0.2.0
 
 - [core] Provide better messages on what’s going on.

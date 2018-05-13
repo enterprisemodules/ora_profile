@@ -1,6 +1,6 @@
 {
   "name": "enterprisemodules-ora_profile",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Enterprise Modules",
   "summary": "Puppet profiles for installing Oracle Database software and creating and managing  databases",
   "license": "proprietary",
@@ -8,7 +8,7 @@
   "dependencies": [
     {
       "name": "enterprisemodules/easy_type",
-      "version_requirement": ">= 2.4.2 < 4.0.0"
+      "version_requirement": ">= 2.4.3 < 4.0.0"
     },
     {
       "name": "enterprisemodules/ora_config",
