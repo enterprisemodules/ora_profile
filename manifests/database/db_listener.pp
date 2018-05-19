@@ -25,7 +25,7 @@ class ora_profile::database::db_listener(
     download_dir => '/tmp',
   }
 
-  -> ora_install::listener{$dbname:
+  -> ora_install::listener{"start_${dbname}":
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
     action      => 'start',
