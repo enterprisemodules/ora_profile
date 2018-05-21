@@ -2,6 +2,8 @@
 # See https://github.com/puppetlabs/puppetlabs_spec_helper#using-fixtures for details
 ---
 fixtures:
+  symlinks:
+    ora_profile: "#{source_dir}"
   forge_modules:
     easy_type:              enterprisemodules/easy_type
     ora_install:            enterprisemodules/ora_install

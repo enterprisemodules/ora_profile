@@ -1,11 +1,21 @@
-# ora_profile::database::startup
+#++--++
 #
-# A description of what this class does
+# ora_profile::db_startup
 #
-# @summary A short summary of the purpose of this class
+# @summary This class contains the definition for the auto startup of Oracle after a system reboot.
+# When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @example
-#   include ora_profile::database::db_startup
+# @param [Stdlib::Absolutepath] oracle_home
+#    The home firectory to use for the Oracle installation.
+#    The default is : `/u01/app/oracle/product/#{version}/db_home1`
+#    To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
+#
+# @param [String[1]] dbname
+#    The name of the database.
+#    The default is `DB01`
+#    To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+#
+#--++--
 class ora_profile::database::db_startup(
   Stdlib::Absolutepath
             $oracle_home,
