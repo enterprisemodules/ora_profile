@@ -13,7 +13,7 @@ optional_require 'puppet-syntax/tasks/puppet-syntax'
 optional_require 'puppetlabs_spec_helper/rake_tasks'
 optional_require 'puppet_blacksmith/rake_tasks'
 
-Dir.glob('../easy_type/lib/tasks/*.rake').each { |r| load r}
+Dir.glob('../easy_type_src/lib/tasks/*.rake').each { |r| load r}
 
 if defined?(RSpec)
   desc "Run the tests"
