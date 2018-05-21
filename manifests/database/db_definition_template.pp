@@ -1,11 +1,5 @@
-# ora_profile::database::db_definition
-#
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
-#   include ora_profile::database::db_definition_template
+#++--++
+#--++--
 class ora_profile::database::db_definition_template(
   Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']
                       $version,

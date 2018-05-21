@@ -1,11 +1,19 @@
-# ora_profile::database::db_services
+#++--++
 #
-# A description of what this class does
+# ora_profile::db_services
 #
-# @summary A short summary of the purpose of this class
+# @summary This class contains the definition of all the database services you'd like on your system.
+# When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @example
-#   include ora_profile::database::db_services
+# @param [String[1]] dbname
+#    The name of the database.
+#    The default is `DB01`
+#    To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+#
+# @param [Optional[String[1]]] domain_name
+#    
+#
+#--++--
 class ora_profile::database::db_services(
   String[1] $dbname,
   Optional[String[1]]
