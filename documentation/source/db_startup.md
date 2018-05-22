@@ -5,4 +5,5 @@ When these customizations aren't enough, you can replace the class with your own
 <%- include_attributes [
   :oracle_home,
   :dbname,
+  :db_type,
 ]%>

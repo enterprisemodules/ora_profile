@@ -14,7 +14,7 @@
 # @param [Stdlib::Absolutepath] oracle_home
 #    The home firectory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle/product/#{version}/db_home1`
-#    To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
+#    To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 #
 # @param [String[1]] opversion
 #    The version of OPatch that is needed.
@@ -24,18 +24,18 @@
 # @param [String[1]] install_group
 #    The group to use for Oracle install.
 #    The default is : `oinstall`
-#    To customize this consistenly use the hiera key `ora_profile::database::install_group`.
+#    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
 # @param [String[1]] os_user
 #    The OS user to use for Oracle install.
 #    The default is : `oracle`
-#    To customize this consistenly use the hiera key `ora_profile::database::os_user`.
+#    To customize this consistently use the hiera key `ora_profile::database::os_user`.
 #
 # @param [String[1]] source
 #    The location where the classes can find the software.
 #    You can specify a local directory, a Puppet url or an http url.
 #    The default is : `puppet:///modules/software/`
-#    To customize this consistenly use the hiera key `ora_profile::database::source`.
+#    To customize this consistently use the hiera key `ora_profile::database::source`.
 #
 # @param [Hash] patch_list
 #    The list of patches to apply.

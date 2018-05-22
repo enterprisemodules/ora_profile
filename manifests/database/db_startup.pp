@@ -8,18 +8,27 @@
 # @param [Stdlib::Absolutepath] oracle_home
 #    The home firectory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle/product/#{version}/db_home1`
-#    To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
+#    To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 #
 # @param [String[1]] dbname
 #    The name of the database.
 #    The default is `DB01`
-#    To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+#    To customize this consistently use the hiera key `ora_profile::database::dbname`.
+#
+# @param [Optional[Enum['database', 'grid']]] db_type
+#    The type of the database used to specify if the database should be started by an init script or srvctl.
+#    Valid values are:
+#    - `grid`
+#    - `database`
+#    The default value is: 'database'
 #
 #--++--
 class ora_profile::database::db_startup(
   Stdlib::Absolutepath
             $oracle_home,
   String[1] $dbname,
+  Optional[Enum['database','grid']]
+            $db_type = 'database',
 ) inherits ora_profile::database {
 
   echo {"Ensure DB Startup for ${dbname} in ${oracle_home}":
@@ -52,6 +61,7 @@ class ora_profile::database::db_startup(
   ora_install::autostartdatabase{ "autostart ${dbname}":
     oracle_home => $oracle_home,
     db_name     => $dbname,
+    db_type     => $db_type,
   }
 
 }
