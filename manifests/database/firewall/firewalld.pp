@@ -18,7 +18,7 @@ class ora_profile::database::firewall::firewalld(
   $ports.each |$port| {
     firewalld_port { "500 accept tcp port ${port} for Oracle":
       ensure   => present,
-      zone     => 'public',
+      zone     => 'external',
       port     => $port,
       protocol => 'tcp',
     }
