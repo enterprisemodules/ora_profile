@@ -31,5 +31,8 @@ ora_proxy_users: []
 ora_roles: []
 ora_users: []
 ora_users_with_default_profile: []
-ora_version: []
+ora_version:
+  -
+    sid:   DB01
+    name:   12.2.0.1.0
 
