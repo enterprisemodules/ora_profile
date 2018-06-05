@@ -140,5 +140,6 @@ class {'ora_profile::database':
   :after_db_profiles,
   :after_db_users,
   :after_db_startup,
+  :db_control_provider,
 ]%>
 

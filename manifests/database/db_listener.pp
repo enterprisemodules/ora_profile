@@ -31,7 +31,7 @@ class ora_profile::database::db_listener(
   String[1] $dbname,
 ) inherits ora_profile::database {
 
-  echo {"DB listener for ${dbname} in ${oracle_home}":
+  echo {"Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,
   }
 

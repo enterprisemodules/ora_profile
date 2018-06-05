@@ -102,12 +102,12 @@ class ora_profile::database::db_definition_template(
   String[1]           $puppet_download_mnt_point,
   String[1]           $system_password,
   String[1]           $sys_password,
-  Optional[Enum['SINGLE','RAC','RACONE']]
-                      $db_conf_type = 'SINGLE',
-  Optional[String[1]] $cluster_nodes = undef,
+  Enum['SINGLE','RAC','RACONE']
+                      $db_conf_type,
+  Optional[String[1]] $cluster_nodes,
 ) inherits ora_profile::database {
 
-  echo {"DB definition from template for database ${dbname} in ${oracle_home}":
+  echo {"Ensure DB definition from template for database ${dbname} in ${oracle_home}":
     withpath => false,
   }
   #
@@ -144,7 +144,8 @@ class ora_profile::database::db_definition_template(
   #
   -> db_control {'database started':
     ensure                  => 'start',
-    provider                => 'sqlplus',
+    provider                => $ora_profile::database::db_control_provider,
+    instance_name           => $dbname,
     oracle_product_home_dir => $oracle_home,
   }
 

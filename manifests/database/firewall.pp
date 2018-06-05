@@ -21,7 +21,7 @@ class ora_profile::database::firewall(
   Boolean         $manage_service,
 ) inherits ora_profile::database {
 
-  echo {"Firewall: ensuring tcp port(s) ${ports.join(',')} are open.":
+  echo {"Ensure Firewall port(s) ${ports.join(',')} are open.":
     withpath => false,
   }
 

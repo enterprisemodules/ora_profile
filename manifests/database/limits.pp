@@ -30,7 +30,7 @@ class ora_profile::database::limits(
 ) inherits ora_profile::database {
 
   if $list.keys.size > 0 {
-    echo {"Ensure DB limit(s) ${list.keys.join(',')}":
+    echo {"Ensure Limit(s) ${list.keys.join(',')}":
       withpath => false,
     }
   }

@@ -22,10 +22,9 @@ class ora_profile::database::db_services(
 
   if $domain_name == undef { $service_name = $dbname} else {$service_name = "${dbname}.${domain_name}" }
 
-  echo {"Ensuring DB service ${service_name}":
+  echo {"Ensure DB service(s) ${service_name}":
     withpath => false,
   }
-
 
   ora_service {"${service_name}@${dbname}":       # Create a service with a name equal to the database
     ensure => 'present',

@@ -23,6 +23,15 @@ class ora_profile::database::firewall::iptables(
     }
   }
 
+  firewall { '900 log dropped input chain':
+    chain      => 'INPUT',
+    jump       => 'LOG',
+    log_level  => '6',
+    log_prefix => ' ## IPTABLES DROPPED ## ',
+    proto      => 'all',
+    before     => undef,
+  }
+
   if $manage_service {
     service { 'iptables':
         ensure    => true,

@@ -27,8 +27,8 @@ class ora_profile::database::db_startup(
   Stdlib::Absolutepath
             $oracle_home,
   String[1] $dbname,
-  Optional[Enum['database','grid']]
-            $db_type = 'database',
+  Enum['database','grid']
+            $db_type,
 ) inherits ora_profile::database {
 
   echo {"Ensure DB Startup for ${dbname} in ${oracle_home}":
