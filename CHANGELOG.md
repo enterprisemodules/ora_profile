@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.4.0
+
+- [database] Fix resource type
+- [asm] Fix document generation
+- [core] Add code to install ASM
+- [spec] Fix unittests when used with latest version of ora_cis
+- [db_definition_template] Add docs for db_definition_template manifest
+- [firewalld] Use correct zone
+- [docs] Add generated docs to some more classes
+- [docs] Update source docs
+- [db_definition_template] Add code to create database from template
+
+**Features**
+
+- Added initial support for asm 
+
+**Bugfixes**
+
+- Fixed creating oracle users
+
 ## Release 0.3.0
 
 - [db_patches] Add support for patching when the database is running
