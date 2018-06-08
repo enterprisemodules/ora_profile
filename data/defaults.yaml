@@ -209,6 +209,7 @@ ora_profile::database::db_definition_template::storage_type:              ASM
 ora_profile::database::db_definition_template::puppet_download_mnt_point: 'ora_profile'
 ora_profile::database::db_definition_template::system_password:           Welcome01
 ora_profile::database::db_definition_template::sys_password:              Change_on_1nstall
+# ora_profile::database::db_definition_template::db_conf_type:              'SINGLE'
 # ora_profile::database::db_definition_template::cluster_nodes:             ''
 # ------------------------------------------------------------------------------
 #

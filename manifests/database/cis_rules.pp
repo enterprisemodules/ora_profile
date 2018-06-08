@@ -11,7 +11,7 @@
 # @param [String[1]] dbname
 #    The name of the database.
 #    The default is `DB01`
-#    To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+#    To customize this consistently use the hiera key `ora_profile::database::dbname`.
 #
 # @param [Array[String[1]]] ignore
 #    Name the CIS rules you don't want to apply (e.

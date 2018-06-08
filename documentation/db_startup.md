@@ -18,10 +18,11 @@ When these customizations aren't enough, you can replace the class with your own
 
 
 
-Attribute Name                         | Short Description                                      |
--------------------------------------- | ------------------------------------------------------ |
-[dbname](#db_startup_dbname)           | The name of the database.                              |
-[oracle_home](#db_startup_oracle_home) | The home firectory to use for the Oracle installation. |
+Attribute Name                         | Short Description                                                                                       |
+-------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+[db_type](#db_startup_db_type)         | The type of the database used to specify if the database should be started by an init script or srvctl. |
+[dbname](#db_startup_dbname)           | The name of the database.                                                                               |
+[oracle_home](#db_startup_oracle_home) | The home firectory to use for the Oracle installation.                                                  |
 
 
 
@@ -32,7 +33,7 @@ The home firectory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
-To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
+To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
 
 Type: `Stdlib::Absolutepath`
@@ -46,8 +47,24 @@ The name of the database.
 
 The default is `DB01`
 
-To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+To customize this consistently use the hiera key `ora_profile::database::dbname`.
 Type: `String[1]`
 
+
+[Back to overview of db_startup](#attributes)
+
+### db_type<a name='db_startup_db_type'>
+
+The type of the database used to specify if the database should be started by an init script or srvctl.
+
+Valid values are:
+- `grid`
+- `database`
+
+The default value is: 'database'
+
+Type: `Optional[Enum['database','grid']]`
+
+Default:`'database'`
 
 [Back to overview of db_startup](#attributes)

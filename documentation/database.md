@@ -168,7 +168,7 @@ The version of Oracle you want to install.
 
 The default is : `12.2.0.1`
 
-To customize this consistenly use the hiera key `ora_profile::database::version`.
+To customize this consistently use the hiera key `ora_profile::database::version`.
 
 Type: `Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']`
 
@@ -181,7 +181,7 @@ The name of the database.
 
 The default is `DB01`
 
-To customize this consistenly use the hiera key `ora_profile::database::dbname`.
+To customize this consistently use the hiera key `ora_profile::database::dbname`.
 Type: `String[1]`
 
 
@@ -193,7 +193,7 @@ The OS user to use for Oracle install.
 
 The default is : `oracle`
 
-To customize this consistenly use the hiera key `ora_profile::database::os_user`.
+To customize this consistently use the hiera key `ora_profile::database::os_user`.
 
 Type: `String[1]`
 
@@ -206,7 +206,7 @@ The group to use for Oracle DBA users.
 
 The default is : `dba`
 
-To customize this consistenly use the hiera key `ora_profile::database::dba_group`.
+To customize this consistently use the hiera key `ora_profile::database::dba_group`.
 
 Type: `String[1]`
 
@@ -219,7 +219,7 @@ The group to use for Oracle install.
 
 The default is : `oinstall`
 
-To customize this consistenly use the hiera key `ora_profile::database::install_group`.
+To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
 Type: `String[1]`
 
@@ -234,7 +234,7 @@ You can specify a local directory, a Puppet url or an http url.
 
 The default is : `puppet:///modules/software/`
 
-To customize this consistenly use the hiera key `ora_profile::database::source`.
+To customize this consistently use the hiera key `ora_profile::database::source`.
 
 Type: `String[1]`
 
@@ -247,7 +247,7 @@ The base firectory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle`
 
-To customize this consistenly use the hiera key `ora_profile::database::install_group`.
+To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
 
 Type: `Stdlib::Absolutepath`
@@ -261,7 +261,7 @@ The home firectory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
-To customize this consistenly use the hiera key `ora_profile::database::oracle_home`.
+To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
 
 Type: `Stdlib::Absolutepath`
