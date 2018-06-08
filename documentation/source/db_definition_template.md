@@ -22,5 +22,6 @@ When these customizations aren't enough, you can replace the class with your own
   :puppet_download_mnt_point,
   :system_password,
   :sys_password,
+  :db_conf_type,
   :cluster_nodes,
 ]%>

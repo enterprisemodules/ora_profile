@@ -2,14 +2,17 @@
 #
 # Some generic defaults used in multiple places
 #
-ora_profile::database::dbname:         DB01
-ora_profile::database::os_user:        oracle
-ora_profile::database::dba_group:      dba
-ora_profile::database::install_group:  oinstall
-ora_profile::database::source:         puppet:///modules/software
-ora_profile::database::oracle_base:    /u01/app/oracle
-ora_profile::database::oracle_home:    "/u01/app/oracle/product/12.2.0.1/db_home1"
-ora_profile::database::version:        12.2.0.1
+ora_profile::database::dbname:              DB01
+ora_profile::database::os_user:             oracle
+ora_profile::database::dba_group:           dba
+ora_profile::database::install_group:       oinstall
+ora_profile::database::source:              puppet:///modules/software
+ora_profile::database::oracle_base:         /u01/app/oracle
+ora_profile::database::oracle_home:         /u01/app/oracle/product/12.2.0.1/db_home1
+ora_profile::database::version:             12.2.0.1
+ora_profile::database::db_control_provider: sqlplus
+
+
 # ------------------------------------------------------------------------------
 #
 # Groups to create
@@ -45,35 +48,35 @@ ora_profile::database::groups_and_users::users:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::packages::list:
-- binutils.x86_64
-- compat-libcap1.x86_64
-- compat-libstdc++-33.i686
-- compat-libstdc++-33.x86_64
-- gcc.x86_64
-- gcc-c++.x86_64
-- glibc.i686
-- glibc.x86_64
-- glibc-devel.i686
-- glibc-devel.x86_64
-- ksh
-- libaio.i686
-- libaio.x86_64
-- libaio-devel.i686
-- libaio-devel.x86_64
-- libgcc.i686
-- libgcc.x86_64
-- libstdc++.i686
-- libstdc++.x86_64
-- libstdc++-devel.i686
-- libstdc++-devel.x86_64
-- libXi.i686
-- libXi.x86_64
-- libXtst.i686
-- libXtst.x86_64
-- make.x86_64
-- sysstat.x86_64
-- unzip.x86_64
-- psmisc
+  binutils.x86_64: {}
+  compat-libcap1.x86_64: {}
+  compat-libstdc++-33.i686: {}
+  compat-libstdc++-33.x86_64: {}
+  gcc.x86_64: {}
+  gcc-c++.x86_64: {}
+  glibc.i686: {}
+  glibc.x86_64: {}
+  glibc-devel.i686: {}
+  glibc-devel.x86_64: {}
+  ksh: {}
+  libaio.i686: {}
+  libaio.x86_64: {}
+  libaio-devel.i686: {}
+  libaio-devel.x86_64: {}
+  libgcc.i686: {}
+  libgcc.x86_64: {}
+  libstdc++.i686: {}
+  libstdc++.x86_64: {}
+  libstdc++-devel.i686: {}
+  libstdc++-devel.x86_64: {}
+  libXi.i686: {}
+  libXi.x86_64: {}
+  libXtst.i686: {}
+  libXtst.x86_64: {}
+  make.x86_64: {}
+  sysstat.x86_64: {}
+  unzip.x86_64: {}
+  psmisc: {}
 
 # ------------------------------------------------------------------------------
 #
@@ -135,6 +138,60 @@ ora_profile::database::sysctl::list:
 ora_profile::database::firewall::ports:
   - 1521
 ora_profile::database::firewall::manage_service:  true
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for asm_storage
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_storage::storage_type:    nfs
+ora_profile::database::asm_storage::grid_user:       grid
+ora_profile::database::asm_storage::grid_admingroup: asmadmin
+ora_profile::database::asm_storage::nfs_files:
+- /home/nfs_server_data/asm_sda_nfs_b1
+- /home/nfs_server_data/asm_sda_nfs_b2
+- /home/nfs_server_data/asm_sda_nfs_b3
+- /home/nfs_server_data/asm_sda_nfs_b4
+ora_profile::database::asm_storage::nfs_mointpoint:  /nfs_client
+ora_profile::database::asm_storage::nfs_export:      /home/nfs_server_data
+ora_profile::database::asm_storage::nfs_server:      localhost
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for asm_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_software::version:       12.2.0.1
+ora_profile::database::asm_software::dirs:
+- /u01
+- /u01/app/grid
+- /u01/app/grid/admin
+- /u01/app/grid/product
+ora_profile::database::asm_software::grid_user:               grid
+ora_profile::database::asm_software::grid_group:              oinstall
+ora_profile::database::asm_software::grid_base:               /u01/app/grid/admin
+ora_profile::database::asm_software::grid_home:               /u01/app/grid/product/12.2.0.1/grid_home1
+ora_profile::database::asm_software::source:                  puppet:///modules/software
+ora_profile::database::asm_software::file_name:               linuxx64_12201_grid_home
+ora_profile::database::asm_software::asm_sys_password:        Welcome01
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for asm_diskgroups
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_diskgroup::disks:
+  DATA:
+    - diskname: 'DATA_0000'
+      path: '/nfs_client/asm_sda_nfs_b1'
+    - diskname: 'DATA_0001'
+      path: '/nfs_client/asm_sda_nfs_b2'
+  RECO:
+    - diskname: 'RECO_0000'
+      path: '/nfs_client/asm_sda_nfs_b3'
+    - diskname: 'RECO_0001'
+      path: '/nfs_client/asm_sda_nfs_b4'
+
 # ------------------------------------------------------------------------------
 #
 #  Settings for db_software
@@ -209,8 +266,8 @@ ora_profile::database::db_definition_template::storage_type:              ASM
 ora_profile::database::db_definition_template::puppet_download_mnt_point: 'ora_profile'
 ora_profile::database::db_definition_template::system_password:           Welcome01
 ora_profile::database::db_definition_template::sys_password:              Change_on_1nstall
-# ora_profile::database::db_definition_template::db_conf_type:              'SINGLE'
-# ora_profile::database::db_definition_template::cluster_nodes:             ''
+ora_profile::database::db_definition_template::db_conf_type:              'SINGLE'
+ora_profile::database::db_definition_template::cluster_nodes:             ~
 # ------------------------------------------------------------------------------
 #
 # Settings for db_listener
@@ -234,6 +291,7 @@ ora_profile::database::db_services::domain_name:          ~
 # ------------------------------------------------------------------------------
 ora_profile::database::db_startup::dbname:               "%{::ora_profile::database::dbname}"
 ora_profile::database::db_startup::oracle_home:          "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_startup::db_type:              database
 # ------------------------------------------------------------------------------
 #
 # Settings for db_tablespaces

@@ -533,6 +533,7 @@ class ora_profile::database(
             $oracle_base,
   Stdlib::Absolutepath
             $oracle_home,
+  String[1] $db_control_provider,
 #
 # Optional settings
 #
@@ -541,6 +542,9 @@ class ora_profile::database(
   Optional[String] $packages = undef,
   Optional[String] $groups_and_users = undef,
   Optional[String] $firewall = undef,
+  Optional[String] $asm_storage = 'skip',
+  Optional[String] $asm_software = 'skip',
+  Optional[String] $asm_diskgroup = 'skip',
   Optional[String] $db_software = undef,
   Optional[String] $db_patches = undef,
   Optional[String] $db_definition = undef,
@@ -555,6 +559,9 @@ class ora_profile::database(
   Optional[String] $before_packages = undef,
   Optional[String] $before_groups_and_users = undef,
   Optional[String] $before_firewall = undef,
+  Optional[String] $before_asm_storage = undef,
+  Optional[String] $before_asm_software = undef,
+  Optional[String] $before_asm_diskgroup = undef,
   Optional[String] $before_db_software = undef,
   Optional[String] $before_db_patches = undef,
   Optional[String] $before_db_definition = undef,
@@ -569,6 +576,9 @@ class ora_profile::database(
   Optional[String] $after_packages = undef,
   Optional[String] $after_groups_and_users = undef,
   Optional[String] $after_firewall = undef,
+  Optional[String] $after_asm_storage = undef,
+  Optional[String] $after_asm_software = undef,
+  Optional[String] $after_asm_diskgroup = undef,
   Optional[String] $after_db_software = undef,
   Optional[String] $after_db_patches = undef,
   Optional[String] $after_db_definition = undef,
@@ -583,9 +593,12 @@ class ora_profile::database(
   easy_type::staged_contain([
     'ora_profile::database::sysctl',
     'ora_profile::database::limits',
-    'ora_profile::database::packages',
     'ora_profile::database::groups_and_users',
+    'ora_profile::database::packages',
     'ora_profile::database::firewall',
+    'ora_profile::database::asm_storage',
+    'ora_profile::database::asm_software',
+    'ora_profile::database::asm_diskgroup',
     'ora_profile::database::db_software',
     'ora_profile::database::db_patches',
     'ora_profile::database::db_definition',

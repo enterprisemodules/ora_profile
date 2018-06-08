@@ -84,7 +84,7 @@ class ora_profile::database::db_definition(
   String[1] $init_ora_template,
 ) inherits ora_profile::database {
 
-  echo {"DB definition for database ${dbname} in ${oracle_home}":
+  echo {"Ensure DB definition for database ${dbname} in ${oracle_home}":
     withpath => false,
   }
   #
@@ -148,7 +148,7 @@ class ora_profile::database::db_definition(
   #
   ->db_control {'database started':
     ensure                  => 'start',
-    provider                => 'sqlplus',
+    provider                => $ora_profile::database::db_control_provider,
     oracle_product_home_dir => $oracle_home,
     # os_user                 => $os_user,
   }

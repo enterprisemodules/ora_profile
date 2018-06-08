@@ -41,16 +41,15 @@
 #
 #--++--
 class ora_profile::database::packages(
-  Array[String[1]] $list,
+  Hash $list,
 ) inherits ora_profile::database {
 
   if $list.size > 0 {
-    echo {"Ensure DB packages(s) ${list.join(',')}":
+    $packages = $list.keys
+    echo {"Ensure Packages(s) ${packages.join(',')}":
       withpath => false,
     }
   }
 
-  package { $list:
-    ensure  => present,
-  }
+  create_resources('package', $list)
 }

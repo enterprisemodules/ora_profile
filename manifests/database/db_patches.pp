@@ -54,7 +54,7 @@ class ora_profile::database::db_patches(
   Hash      $patch_list,
 ) inherits ora_profile::database {
 
-  echo {"DB patches on ${oracle_home}":
+  echo {"Ensure Patch(es) on ${oracle_home}":
     withpath => false,
   }
 

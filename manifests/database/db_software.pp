@@ -79,7 +79,7 @@ class ora_profile::database::db_software(
   String[1] $file_name,
 ) inherits ora_profile::database {
 
-  echo {"DB software ${version} ${database_type} in ${oracle_home}":
+  echo {"Ensure DB software ${version} ${database_type} in ${oracle_home}":
     withpath => false,
   }
 

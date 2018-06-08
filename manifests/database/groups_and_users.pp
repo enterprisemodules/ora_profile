@@ -43,8 +43,18 @@ class ora_profile::database::groups_and_users(
   Hash  $groups,
 ) inherits ora_profile::database {
 
-  echo {'Ensuring Groups and Users':
-    withpath => false,
+  if $groups.size > 0 {
+    $groups_list = $groups.keys
+    echo {"Ensure Group(s) ${groups_list.join(',')}":
+      withpath => false,
+    }
+  }
+
+  if $users.size > 0 {
+    $users_list = $users.keys
+    echo {"Ensure User(s) ${users_list.join(',')}":
+      withpath => false,
+    }
   }
 
   $defaults = { 'ensure' => 'present'}
