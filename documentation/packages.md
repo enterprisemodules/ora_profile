@@ -61,7 +61,7 @@ ora_profile::database::packages::list:
 - make.x86_64
 - sysstat.x86_64
 ```
-Type: `Array[String[1]]`
+Type: `Hash`
 
 
 [Back to overview of packages](#attributes)

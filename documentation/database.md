@@ -136,6 +136,7 @@ Attribute Name                                               | Short Description
 [before_limits](#database_before_limits)                     | The name of the class you want to execute directly **before** the `limits` class.           |
 [before_packages](#database_before_packages)                 | The name of the class you want to execute directly **before** the `packages` class.         |
 [before_sysctl](#database_before_sysctl)                     | The name of the class you want to execute directly **before** the `sysctl` class.           |
+[db_control_provider](#database_db_control_provider)         | Which provider should be used for the type db_control.                                      |
 [db_definition](#database_db_definition)                     | Use this value if you want to skip or use your own class for stage `db_definition`.         |
 [db_listener](#database_db_listener)                         | Use this value if you want to skip or use your own class for stage `db_listener`.           |
 [db_patches](#database_db_patches)                           | Use this value if you want to skip or use your own class for stage `db_patches`.            |
@@ -1079,5 +1080,15 @@ ora_profile::database::after_db_startup:  my_module::my_class
 Type: `Optional[String]`
 
 Default:`undef`
+
+[Back to overview of database](#attributes)
+
+### db_control_provider<a name='database_db_control_provider'>
+
+Which provider should be used for the type db_control.
+
+The default value is: `sqlplus`
+Type: `String[1]`
+
 
 [Back to overview of database](#attributes)

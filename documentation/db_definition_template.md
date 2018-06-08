@@ -27,6 +27,7 @@ Attribute Name                                                                 |
 ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
 [cluster_nodes](#db_definition_template_cluster_nodes)                         | A comma seperated list of nodes in your cluster, for RAC databases. |
 [data_file_destination](#db_definition_template_data_file_destination)         | The location where you want to store your database files.           |
+[db_conf_type](#db_definition_template_db_conf_type)                           | What type of database should be created.                            |
 [dbname](#db_definition_template_dbname)                                       | The name of the database.                                           |
 [memory_mgmt_type](#db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                          |
 [oracle_base](#db_definition_template_oracle_base)                             | The base firectory to use for the Oracle installation.              |
@@ -199,6 +200,16 @@ Type: `String[1]`
 
 [Back to overview of db_definition_template](#attributes)
 
+### db_conf_type<a name='db_definition_template_db_conf_type'>
+
+What type of database should be created.
+
+The default value is `SINGLE`
+Type: `Enum['SINGLE','RAC','RACONE']`
+
+
+[Back to overview of db_definition_template](#attributes)
+
 ### cluster_nodes<a name='db_definition_template_cluster_nodes'>
 
 A comma seperated list of nodes in your cluster, for RAC databases.
@@ -206,6 +217,5 @@ A comma seperated list of nodes in your cluster, for RAC databases.
 The default value is `undef`
 Type: `Optional[String[1]]`
 
-Default:`undef`
 
 [Back to overview of db_definition_template](#attributes)

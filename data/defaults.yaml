@@ -152,7 +152,7 @@ ora_profile::database::asm_storage::nfs_files:
 - /home/nfs_server_data/asm_sda_nfs_b2
 - /home/nfs_server_data/asm_sda_nfs_b3
 - /home/nfs_server_data/asm_sda_nfs_b4
-ora_profile::database::asm_storage::nfs_mointpoint:  /nfs_client
+ora_profile::database::asm_storage::nfs_mountpoint:  /nfs_client
 ora_profile::database::asm_storage::nfs_export:      /home/nfs_server_data
 ora_profile::database::asm_storage::nfs_server:      localhost
 

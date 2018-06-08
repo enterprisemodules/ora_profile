@@ -12,7 +12,7 @@ class ora_profile::database::asm_storage::nfs(
   Array[Stdlib::Absolutepath]
             $nfs_files,
   Stdlib::Absolutepath
-            $nfs_mointpoint,
+            $nfs_mountpoint,
   Stdlib::Absolutepath
             $nfs_export,
   String[1] $nfs_server,
@@ -57,7 +57,7 @@ class ora_profile::database::asm_storage::nfs(
     clients     => '192.168.253.0/24(rw,insecure,async,no_root_squash) localhost(rw)',
   }
 
-  -> file { $nfs_mointpoint:
+  -> file { $nfs_mountpoint:
     ensure  => directory,
     recurse => false,
     replace => false,
@@ -66,7 +66,7 @@ class ora_profile::database::asm_storage::nfs(
     group   => $grid_admingroup,
   }
 
-  -> nfs::client::mount { $nfs_mointpoint:
+  -> nfs::client::mount { $nfs_mountpoint:
     server      => $nfs_server,
     share       => $nfs_export,
     remounts    => true,

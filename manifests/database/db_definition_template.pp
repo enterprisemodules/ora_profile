@@ -75,6 +75,10 @@
 #    The `sys` password to use for the database.
 #    The default value is: `Change_on_1nstall`
 #
+# @param [Enum['SINGLE', 'RAC', 'RACONE']] db_conf_type
+#    What type of database should be created.
+#    The default value is `SINGLE`
+#
 # @param [Optional[String[1]]] cluster_nodes
 #    A comma seperated list of nodes in your cluster, for RAC databases.
 #    The default value is `undef`

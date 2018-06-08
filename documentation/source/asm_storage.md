@@ -9,7 +9,7 @@ When these customizations aren't enough, you can replace the class with your own
   :grid_user,
   :grid_admingroup,
   :nfs_files,
-  :nfs_mointpoint,
+  :nfs_mountpoint,
   :nfs_export,
   :nfs_server,
 ]%>

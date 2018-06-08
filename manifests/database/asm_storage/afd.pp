@@ -4,9 +4,7 @@
 #
 # @example
 #   include ora_profile::database::asm_storage::afd
-class ora_profile::database::asm_storage::afd(
-
-)
+class ora_profile::database::asm_storage::afd
 {
 
 }

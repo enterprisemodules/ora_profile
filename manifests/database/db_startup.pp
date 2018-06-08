@@ -15,7 +15,7 @@
 #    The default is `DB01`
 #    To customize this consistently use the hiera key `ora_profile::database::dbname`.
 #
-# @param [Optional[Enum['database', 'grid']]] db_type
+# @param [Enum['database', 'grid']] db_type
 #    The type of the database used to specify if the database should be started by an init script or srvctl.
 #    Valid values are:
 #    - `grid`

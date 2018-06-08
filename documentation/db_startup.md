@@ -63,8 +63,7 @@ Valid values are:
 
 The default value is: 'database'
 
-Type: `Optional[Enum['database','grid']]`
+Type: `Enum['database','grid']`
 
-Default:`'database'`
 
 [Back to overview of db_startup](#attributes)
