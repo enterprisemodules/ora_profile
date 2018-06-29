@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.5.0
+
+- [core] Add multiple storage options for asm and integrate RAC
+
 ## Release 0.4.0
 
 - [database] Fix resource type
