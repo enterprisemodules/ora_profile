@@ -48,8 +48,6 @@
 class ora_profile::database::asm_storage(
   Enum['nfs','asmlib','afd']
             $storage_type,
-  String[1] $grid_user,
-  String[1] $grid_admingroup,
   Array[Stdlib::Absolutepath]
             $nfs_files,
   Stdlib::Absolutepath
@@ -57,6 +55,10 @@ class ora_profile::database::asm_storage(
   Stdlib::Absolutepath
             $nfs_export,
   String[1] $nfs_server,
+  Variant[Hash,Undef]
+            $disk_devices,
+  Optional[String[1]]
+            $scan_exclude,
 ) inherits ora_profile::database {
 
   echo {"Ensure ASM storage setup using ${storage_type}":
@@ -64,6 +66,7 @@ class ora_profile::database::asm_storage(
   }
   case $storage_type {
     'nfs': {
+      contain ora_profile::database::asm_storage::nfs
       class {'ora_profile::database::asm_storage::nfs':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
@@ -74,13 +77,38 @@ class ora_profile::database::asm_storage(
       }
     }
     'asmlib': {
-      echo {"Storage type ${storage_type} not implemented yet":
-        withpath => false,
+      class {'ora_profile::database::asm_storage::udev':
+        grid_user       => $grid_user,
+        grid_admingroup => $grid_admingroup,
+        disk_devices    => $disk_devices,
+        before          => [
+          Class['ora_profile::database::asm_storage::asmlib'],
+          Ora_profile::Database::Asm_storage::Partition[$disk_devices.keys]
+        ],
       }
+      $disk_devices.each |$device, $attributes| {
+        Ora_profile::Database::Asm_storage::Partition {$device:
+          raw_device      => "/dev/${device}:1",
+          table_type      => 'gpt',
+          wait_for_device => false,
+          before          => Class['ora_profile::database::asm_storage::asmlib'],
+        }
+      }
+      class {'ora_profile::database::asm_storage::asmlib':
+        grid_user       => $grid_user,
+        grid_admingroup => $grid_admingroup,
+        scan_exclude    => $scan_exclude,
+        disk_devices    => $disk_devices,
+      }
+      contain ora_profile::database::asm_storage::udev
+      contain ora_profile::database::asm_storage::asmlib
     }
     'afd': {
-      echo {"Storage type ${storage_type} not implemented yet":
-        withpath => false,
+      contain ora_profile::database::asm_storage::udev
+      class {'ora_profile::database::asm_storage::udev':
+        grid_user       => $grid_user,
+        grid_admingroup => $grid_admingroup,
+        disk_devices    => $disk_devices,
       }
     }
     default: {}

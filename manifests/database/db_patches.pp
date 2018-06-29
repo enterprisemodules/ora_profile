@@ -97,6 +97,7 @@ class ora_profile::database::db_patches(
         instance_name           => $dbname,
         oracle_product_home_dir => $oracle_home,
         os_user                 => $os_user,
+        provider                => $db_control_provider,
         before                  => Ora_opatch[$patch_list.keys]
       }
 
@@ -111,8 +112,9 @@ class ora_profile::database::db_patches(
     # Some patches need to be installed
     #
     $defaults = {
-      ensure     => 'present',
-      require    => Ora_install::Opatchupgrade[$patch_file],
+      ensure  => 'present',
+      require => Ora_install::Opatchupgrade[$patch_file],
+      tmp_dir => '/install/tmp'
     }
     create_resources('ora_opatch', $patch_list, $defaults)
 

@@ -6,12 +6,18 @@ ora_profile::database::dbname:              DB01
 ora_profile::database::os_user:             oracle
 ora_profile::database::dba_group:           dba
 ora_profile::database::install_group:       oinstall
+ora_profile::database::grid_user:           grid
+ora_profile::database::grid_admingroup:     asmadmin
+ora_profile::database::grid_base:           /u01/app/grid/admin
+ora_profile::database::grid_home:           /u01/app/grid/product/12.2.0.1/grid_home1
 ora_profile::database::source:              puppet:///modules/software
 ora_profile::database::oracle_base:         /u01/app/oracle
 ora_profile::database::oracle_home:         /u01/app/oracle/product/12.2.0.1/db_home1
 ora_profile::database::version:             12.2.0.1
 ora_profile::database::db_control_provider: sqlplus
-
+ora_profile::database::cluster_nodes:       ~
+ora_profile::database::ora_inventory_dir:   /u01/app/oracle/admin
+ora_profile::database::download_dir:        /install
 
 # ------------------------------------------------------------------------------
 #
@@ -136,8 +142,18 @@ ora_profile::database::sysctl::list:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::firewall::ports:
-  - 1521
-ora_profile::database::firewall::manage_service:  true
+  'Allow SQLNET on port 1521':
+    port: 1521
+ora_profile::database::firewall::manage_service:      true
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for authenticated_nodes
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::authenticated_nodes::keys:     ~
+
 
 # ------------------------------------------------------------------------------
 #
@@ -145,7 +161,6 @@ ora_profile::database::firewall::manage_service:  true
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_storage::storage_type:    nfs
-ora_profile::database::asm_storage::grid_user:       grid
 ora_profile::database::asm_storage::grid_admingroup: asmadmin
 ora_profile::database::asm_storage::nfs_files:
 - /home/nfs_server_data/asm_sda_nfs_b1
@@ -155,6 +170,8 @@ ora_profile::database::asm_storage::nfs_files:
 ora_profile::database::asm_storage::nfs_mountpoint:  /nfs_client
 ora_profile::database::asm_storage::nfs_export:      /home/nfs_server_data
 ora_profile::database::asm_storage::nfs_server:      localhost
+ora_profile::database::asm_storage::disk_devices:    ~
+ora_profile::database::asm_storage::scan_exclude:    ~
 
 # ------------------------------------------------------------------------------
 #
@@ -163,17 +180,26 @@ ora_profile::database::asm_storage::nfs_server:      localhost
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_software::version:       12.2.0.1
 ora_profile::database::asm_software::dirs:
-- /u01
-- /u01/app/grid
-- /u01/app/grid/admin
-- /u01/app/grid/product
-ora_profile::database::asm_software::grid_user:               grid
-ora_profile::database::asm_software::grid_group:              oinstall
-ora_profile::database::asm_software::grid_base:               /u01/app/grid/admin
-ora_profile::database::asm_software::grid_home:               /u01/app/grid/product/12.2.0.1/grid_home1
-ora_profile::database::asm_software::source:                  puppet:///modules/software
+  - /u01
+  - /u01/app/grid
+  - /u01/app/grid/admin
+  - /u01/app/grid/product
+ora_profile::database::asm_software::source:                  "%{::ora_profile::database::source}"
 ora_profile::database::asm_software::file_name:               linuxx64_12201_grid_home
 ora_profile::database::asm_software::asm_sys_password:        Welcome01
+ora_profile::database::asm_software::disk_discovery_string:   '/nfs_client/asm*'
+ora_profile::database::asm_software::asm_diskgroup:           DATA
+ora_profile::database::asm_software::asm_disks:               '/nfs_client/asm_sda_nfs_b1,/nfs_client/asm_sda_nfs_b2'
+ora_profile::database::asm_software::disks_failgroup_names:   '/nfs_client/asm_sda_nfs_b1,'
+ora_profile::database::asm_software::configure_afd:            false
+ora_profile::database::asm_software::grid_type:                HA_CONFIG
+ora_profile::database::asm_software::cluster_node_types:       ~
+ora_profile::database::asm_software::cluster_name:             ~
+ora_profile::database::asm_software::scan_name:                ~
+ora_profile::database::asm_software::scan_port:                ~
+ora_profile::database::asm_software::network_interface_list:   ~
+ora_profile::database::asm_software::storage_option:           ~
+
 
 # ------------------------------------------------------------------------------
 #
@@ -198,6 +224,7 @@ ora_profile::database::asm_diskgroup::disks:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::db_software::dirs:
+  - /u01/app/oracle
   - /u02
   - /u03
   - /u02/oradata

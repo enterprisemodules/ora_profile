@@ -62,68 +62,118 @@ class ora_profile::database::asm_software(
             $version,
   Array[Stdlib::Absolutepath]
             $dirs,
-  String[1] $grid_user,
-  String[1] $grid_group,
-  Stdlib::Absolutepath
-            $grid_base,
-  Stdlib::Absolutepath
-            $grid_home,
   String[1] $source,
   String[1] $file_name,
   String[1] $asm_sys_password,
+  String[1] $disk_discovery_string,
+  String[1] $asm_diskgroup,
+  String[1] $asm_disks,
+  Boolean   $configure_afd,
+  Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
+            $grid_type,
+  Optional[String[1]]
+            $disks_failgroup_names,
+  Optional[String[1]]
+            $cluster_name,
+  Optional[String[1]]
+            $scan_name,
+  Optional[Integer]
+            $scan_port,
+  Optional[String[1]]
+            $cluster_node_types,
+  Optional[String[1]]
+            $network_interface_list,
+  Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]
+            $storage_option,
 ) inherits ora_profile::database {
 
   echo {"Ensure ASM software ${version} in ${grid_home}":
     withpath => false,
   }
 
-  $configure_afd = false
-
   file{ $dirs:
     ensure => directory,
     owner  => $grid_user,
-    group  => $grid_group,
+    group  => $install_group,
     mode   => '0755',
   }
 
   file{ '/u01/app':
     ensure => directory,
     owner  => $grid_user,
-    group  => $grid_group,
+    group  => $install_group,
     mode   => '0775',
   }
 
-  -> ora_install::installasm{ $file_name:
-    version                   => $version,
-    file                      => $file_name,
-    grid_base                 => $grid_base,
-    grid_home                 => $grid_home,
-    puppet_download_mnt_point => $source,
-    sys_asm_password          => $asm_sys_password,
-    asm_monitor_password      => $asm_sys_password,
-    asm_diskgroup             => 'DATA',
-    disk_discovery_string     => case $configure_afd {
-      true:  { '/dev/data*,/dev/reco*' }
-      false: { '/nfs_client/asm*' }
-      default: {}
-    },
-    disks                     => case $configure_afd {
-      true:  { '/dev/data01' }
-      false: { '/nfs_client/asm_sda_nfs_b1,/nfs_client/asm_sda_nfs_b2' }
-      default: {}
-    },
-    disks_failgroup_names     => case $configure_afd {
-      true:  { '/dev/data01,' }
-      false: { '/nfs_client/asm_sda_nfs_b1,' }
-      default: {}
-    },
-    disk_redundancy           => 'EXTERNAL',
-    disk_au_size              => '4',
-    configure_afd             => $configure_afd,
-    user                      => $grid_user,
+  -> file {$download_dir:
+    ensure  => directory,
+    owner   => $os_user,
+    group   => $install_group,
+    seltype => 'default_t',
+    mode    => '0775',
   }
 
-  -> ora_setting{ '+ASM':
+  if ( $master_node == $facts['hostname'] ) {
+    # Ora_install::installasm[$file_name] -> Ora_setting[$asm_instance_name]
+
+    ora_install::installasm{ $file_name:
+      version                   => $version,
+      file                      => $file_name,
+      grid_base                 => $grid_base,
+      grid_home                 => $grid_home,
+      puppet_download_mnt_point => $source,
+      sys_asm_password          => $asm_sys_password,
+      asm_monitor_password      => $asm_sys_password,
+      asm_diskgroup             => $asm_diskgroup,
+      disk_discovery_string     => $disk_discovery_string,
+      disks                     => $asm_disks,
+      disks_failgroup_names     => $disks_failgroup_names,
+      disk_redundancy           => 'EXTERNAL',
+      disk_au_size              => '4',
+      configure_afd             => $configure_afd,
+      grid_type                 => $grid_type,
+      user                      => $grid_user,
+      cluster_nodes             => $cluster_node_types,
+      cluster_name              => $cluster_name,
+      scan_name                 => $scan_name,
+      scan_port                 => $scan_port,
+      network_interface_list    => $network_interface_list,
+      storage_option            => $storage_option,
+      before                    => Ora_setting[$asm_instance_name],
+    }
+  } else {
+    echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
+      withpath => false,
+    }
+
+    Exec['register_grid_node'] -> Ora_setting[$asm_instance_name]
+
+    case $version {
+      '12.2.0.1': {
+        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
+      }
+      default: {
+        notice('Version not supported yet')
+      }
+    }
+    exec{'add_grid_node':
+      timeout => 0,
+      user    => $grid_user,
+      command => "/usr/bin/ssh ${grid_user}@${master_node} \"${add_node_command}\"",
+      creates => "${grid_home}/root.sh",
+    }
+
+    -> exec{'register_grid_node':
+      timeout => 0,
+      user    => 'root',
+      creates => "${grid_base}/${facts['hostname']}",
+      returns => [0,25],
+      command => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
+      before  => Ora_setting[$asm_instance_name],
+    }
+  }
+
+  ora_setting{ $asm_instance_name:
     default     => false,
     user        => 'sys',
     syspriv     => 'sysasm',
@@ -132,7 +182,8 @@ class ora_profile::database::asm_software(
   }
 
   -> file_line{ 'add_asm_to_oratab':
-    path => '/etc/oratab',
-    line => "+ASM:${grid_home}:N",
+    path  => '/etc/oratab',
+    line  => "${asm_instance_name}:${grid_home}:N",
+    match => "^${asm_instance_name}:${grid_home}:N.*",
   }
 }
