@@ -45,6 +45,7 @@
 #    The default value is: `localhost`.
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::asm_storage(
   Enum['nfs','asmlib','afd']
             $storage_type,
@@ -114,3 +115,4 @@ class ora_profile::database::asm_storage(
     default: {}
   }
 }
+# lint:endignore

@@ -25,6 +25,7 @@
 #    ```
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::asm_diskgroup(
   Hash    $disks         = {},
 ) inherits ora_profile::database {
@@ -50,3 +51,4 @@ class ora_profile::database::asm_diskgroup(
   }
 
 }
+# lint:endignore

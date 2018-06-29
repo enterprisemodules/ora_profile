@@ -6,6 +6,7 @@
 #
 # @example
 #   include ora_profile::database::firewall::iptables
+# lint:ignore:variable_scope
 class ora_profile::database::firewall::firewalld(
   Hash    $ports,
   Boolean $manage_service,
@@ -52,3 +53,4 @@ class ora_profile::database::firewall::firewalld(
   }
 
 }
+# lint:endignore
