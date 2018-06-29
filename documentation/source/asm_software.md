@@ -6,10 +6,6 @@ When these customizations aren't enough, you can replace the class with your own
 <%- include_attributes [
   :version,
   :dirs,
-  :grid_user,
-  :grid_group,
-  :grid_base,
-  :grid_home,
   :source,
   :file_name,
   :asm_sys_password,

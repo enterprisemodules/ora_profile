@@ -27,8 +27,8 @@
 #--++--
 class ora_profile::database::asm_diskgroup(
   Hash    $disks         = {},
-)
-{
+) inherits ora_profile::database {
+
   $disk_list = $disks.keys
   echo {"Ensure ASM diskgroup(s) ${disk_list.join(',')}":
     withpath => false,
@@ -37,7 +37,7 @@ class ora_profile::database::asm_diskgroup(
   $asm_version = $ora_profile::database::asm_software::version
 
   $disks.each |$diskgroup, $devices| {
-    ora_asm_diskgroup { "${diskgroup}@+ASM":
+    ora_asm_diskgroup { "${diskgroup}@${asm_instance_name}":
       ensure            => 'present',
       au_size           => '4',
       redundancy_type   => 'EXTERN',

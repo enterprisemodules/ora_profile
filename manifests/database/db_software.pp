@@ -92,24 +92,65 @@ class ora_profile::database::db_software(
   file{$dirs:
     ensure  => directory,
     owner   => $os_user,
-    group   => $dba_group,
+    group   => $install_group,
     seltype => 'default_t',
-    mode    => '0744',
+    mode    => '0754',
   }
 
   -> file{'/tmp': ensure => 'directory'}
 
-  -> ora_install::installdb{$file_name:
-    version                   => $version,
-    file                      => $file_name,
-    database_type             => $database_type,
-    oracle_base               => $oracle_base,
-    oracle_home               => $oracle_home,
-    puppet_download_mnt_point => $source,
-    require                   => Package['unzip'],
+  if ( $master_node == $facts['hostname'] ) {
+    if ( empty($cluster_nodes) ) {
+      $installdb_cluster_nodes = undef
+    } else {
+      $installdb_cluster_nodes = $master_node
+    }
+    ora_install::installdb{$file_name:
+      version                   => $version,
+      file                      => $file_name,
+      database_type             => $database_type,
+      oracle_base               => $oracle_base,
+      oracle_home               => $oracle_home,
+      puppet_download_mnt_point => $source,
+      cluster_nodes             => $installdb_cluster_nodes,
+      ora_inventory_dir         => $ora_inventory_dir,
+      require                   => [
+        Package['unzip'],
+        File[$download_dir],
+      ],
+    }
+  } else {
+    echo {"This is not the master node. Clone ORACLE_HOME from ${master_node}":
+      withpath => false,
+    }
+
+    case $version {
+      '12.2.0.1': {
+        $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
+      }
+      default: {
+        notice('Version not supported yet')
+      }
+    }
+
+    exec{'add_oracle_node':
+      timeout   => 0,
+      user      => $os_user,
+      command   => "/usr/bin/ssh ${os_user}@${master_node} \"${add_node_command}\"",
+      logoutput => on_failure,
+      creates   => "${oracle_home}/root.sh",
+    }
+
+    ~> exec{'register_oracle_node':
+      refreshonly => true,
+      timeout     => 0,
+      user        => 'root',
+      command     => "/bin/sh ${$ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${oracle_home}/root.sh",
+      logoutput   => on_failure,
+    }
   }
 
-  -> file {"${oracle_base}/admin":
+  file {"${oracle_base}/admin":
     ensure => 'directory',
     owner  => $os_user,
     group  => $install_group,

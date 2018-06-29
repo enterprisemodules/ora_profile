@@ -532,15 +532,27 @@ class ora_profile::database(
   String[1] $os_user,
   String[1] $dba_group,
   String[1] $install_group,
+  String[1] $grid_user,
+  String[1] $grid_admingroup,
   String[1] $source,
   Stdlib::Absolutepath
             $oracle_base,
   Stdlib::Absolutepath
             $oracle_home,
+  Stdlib::Absolutepath
+            $ora_inventory_dir,
+  Stdlib::Absolutepath
+            $grid_base,
+  Stdlib::Absolutepath
+            $grid_home,
   String[1] $db_control_provider,
+  Stdlib::Absolutepath
+            $download_dir,
 #
 # Optional settings
 #
+  Optional[String] $master_node = $facts['hostname'],
+  Optional[Array]  $cluster_nodes = undef,
   Optional[String] $sysctl = undef,
   Optional[String] $limits = undef,
   Optional[String] $packages = undef,
@@ -594,6 +606,11 @@ class ora_profile::database(
   Optional[String] $after_db_startup = undef,
 )
 {
+  $asm_instance_name = set_param('instance_name', '+ASM', $cluster_nodes)
+  $db_instance_name = set_param('instance_name', $dbname, $cluster_nodes)
+  $instance_number = set_param('instance_number', $dbname, $cluster_nodes)
+  $thread_number = set_param('instance_number', $dbname, $cluster_nodes)
+
   easy_type::staged_contain([
     'ora_profile::database::sysctl',
     'ora_profile::database::limits',
@@ -603,14 +620,14 @@ class ora_profile::database(
     'ora_profile::database::asm_storage',
     'ora_profile::database::asm_software',
     'ora_profile::database::asm_diskgroup',
-    'ora_profile::database::db_software',
-    'ora_profile::database::db_patches',
-    'ora_profile::database::db_definition',
-    'ora_profile::database::db_listener',
-    'ora_profile::database::db_services',
-    'ora_profile::database::db_tablespaces',
-    'ora_profile::database::db_profiles',
-    'ora_profile::database::db_users',
-    'ora_profile::database::db_startup',
+    # 'ora_profile::database::db_software',
+    # 'ora_profile::database::db_patches',
+    # 'ora_profile::database::db_definition',
+    # 'ora_profile::database::db_listener',
+    # 'ora_profile::database::db_services',
+    # 'ora_profile::database::db_tablespaces',
+    # 'ora_profile::database::db_profiles',
+    # 'ora_profile::database::db_users',
+    # 'ora_profile::database::db_startup',
   ])
 }

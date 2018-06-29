@@ -20,13 +20,30 @@ class ora_profile::database::db_services(
             $domain_name,
 ) inherits ora_profile::database {
 
-  if $domain_name == undef { $service_name = $dbname} else {$service_name = "${dbname}.${domain_name}" }
+  if $domain_name == undef { $service_name = "${dbname}_APP" } else { $service_name = "${dbname}_APP.${domain_name}" }
 
   echo {"Ensure DB service(s) ${service_name}":
     withpath => false,
   }
 
-  ora_service {"${service_name}@${dbname}":       # Create a service with a name equal to the database
-    ensure => 'present',
+  if $ora_profile::database::cluster_nodes {
+
+    $preferred_instances = $ora_profile::database::cluster_nodes.map |$index, $_node| {
+      $number = $index + 1
+      "${dbname}${number}"
+    }
+
+    ora_service {"${service_name}@${db_instance_name}":
+      ensure              => 'present',
+      preferred_instances => $preferred_instances,
+    }
+
+  } else {
+
+    ora_service {"${service_name}@${dbname}":
+      ensure => 'present',
+    }
+
   }
+
 }

@@ -98,6 +98,10 @@ class {'ora_profile::database':
   :source,
   :oracle_base,
   :oracle_home,
+  :grid_user,
+  :grid_admingroup
+  :grid_base,
+  :grid_home,
   :sysctl,
   :limits,
   :packages,

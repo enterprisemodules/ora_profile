@@ -44,14 +44,9 @@ class ora_profile::database::asm_storage::nfs(
     }
   }
 
-  class { '::nfs':
-    server_enabled => true,
-    client_enabled => true,
-    nfs_v4         => false,
-    nfs_v4_client  => false,
-  }
+  contain ::nfs
 
-  -> nfs::server::export{ $nfs_export:
+  nfs::server::export{ $nfs_export:
     ensure      => 'mounted',
     options_nfs => 'rw sync no_wdelay insecure_locks no_root_squash',
     clients     => '192.168.253.0/24(rw,insecure,async,no_root_squash) localhost(rw)',
@@ -71,7 +66,8 @@ class ora_profile::database::asm_storage::nfs(
     share       => $nfs_export,
     remounts    => true,
     atboot      => true,
+    nfs_v4      => false,
     options_nfs => '_netdev,rw,bg,hard,nointr,rsize=65536,wsize=65536,tcp,timeo=600,noatime',
-    before      => Class['ora_profile::database::asm_software'],
+    # before      => Class['ora_profile::database::asm_software'],
   }
 }

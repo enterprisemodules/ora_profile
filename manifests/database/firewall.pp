@@ -17,12 +17,18 @@
 #
 #--++--
 class ora_profile::database::firewall(
-  Array[Integer]  $ports,
-  Boolean         $manage_service,
+  Hash    $ports,
+  Boolean $manage_service,
 ) inherits ora_profile::database {
 
-  echo {"Ensure Firewall port(s) ${ports.join(',')} are open.":
-    withpath => false,
+  if $ora_profile::database::cluster_nodes {
+    echo {'Ensure Firewall is disabled for RAC installation':
+      withpath => false,
+    }
+  } else {
+    echo {"Ensure Firewall port(s) ${ports.keys.join(',')} are open":
+      withpath => false,
+    }
   }
 
   case  $::operatingsystem {
