@@ -111,6 +111,7 @@
 #    The default value is: `undef`
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::asm_software(
   Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.4']
             $version,
@@ -246,3 +247,4 @@ class ora_profile::database::asm_software(
     match => "^${asm_instance_name}:${grid_home}:N.*",
   }
 }
+# lint:endignore

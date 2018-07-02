@@ -61,6 +61,7 @@
 #    The default is: `linuxx64_12201_database`
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::db_software(
   Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']
             $version,
@@ -162,3 +163,4 @@ class ora_profile::database::db_software(
   }
 
 }
+# lint:endignore

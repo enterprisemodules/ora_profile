@@ -14,6 +14,7 @@
 #    
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::db_services(
   String[1] $dbname,
   Optional[String[1]]
@@ -47,3 +48,4 @@ class ora_profile::database::db_services(
   }
 
 }
+# lint:endignore

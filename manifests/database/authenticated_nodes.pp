@@ -1,6 +1,7 @@
 #++--++
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::authenticated_nodes (
   String[1] $oracle_private_key,
   String[1] $grid_private_key,
@@ -23,3 +24,4 @@ class ora_profile::database::authenticated_nodes (
     private_key => $grid_private_key,
   }
 }
+# lint:endignore

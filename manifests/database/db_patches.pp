@@ -42,6 +42,7 @@
 #    The default value is : `{}`
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::db_patches(
   String[1] $dbname,
   String[1] $patch_file,
@@ -141,3 +142,4 @@ class ora_profile::database::db_patches(
   }
 
 }
+# lint:endignore
