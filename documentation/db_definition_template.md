@@ -27,7 +27,7 @@ Attribute Name                                                                 |
 ------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
 [cluster_nodes](#db_definition_template_cluster_nodes)                         | A comma seperated list of nodes in your cluster, for RAC databases. |
 [data_file_destination](#db_definition_template_data_file_destination)         | The location where you want to store your database files.           |
-[db_conf_type](#db_definition_template_db_conf_type)                           | What type of database should be created.                            |
+[db_conf_type](#db_definition_template_db_conf_type)                           | The type of database that needs to be installed.                    |
 [dbname](#db_definition_template_dbname)                                       | The name of the database.                                           |
 [memory_mgmt_type](#db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                          |
 [oracle_base](#db_definition_template_oracle_base)                             | The base firectory to use for the Oracle installation.              |
@@ -202,7 +202,12 @@ Type: `String[1]`
 
 ### db_conf_type<a name='db_definition_template_db_conf_type'>
 
-What type of database should be created.
+The type of database that needs to be installed.
+
+Valid values are:
+- `SINGLE`
+- `RAC`
+- `RACONE`
 
 The default value is `SINGLE`
 Type: `Enum['SINGLE','RAC','RACONE']`

@@ -6,10 +6,9 @@ When these customizations aren't enough, you can replace the class with your own
 
 <%- include_attributes [
   :storage_type,
-  :grid_user,
-  :grid_admingroup,
   :nfs_files,
   :nfs_mountpoint,
   :nfs_export,
   :nfs_server,
+  :scan_exclude,
 ]%>

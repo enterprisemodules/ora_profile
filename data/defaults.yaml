@@ -161,7 +161,6 @@ ora_profile::database::authenticated_nodes::keys:     ~
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_storage::storage_type:    nfs
-ora_profile::database::asm_storage::grid_admingroup: asmadmin
 ora_profile::database::asm_storage::nfs_files:
 - /home/nfs_server_data/asm_sda_nfs_b1
 - /home/nfs_server_data/asm_sda_nfs_b2
@@ -170,7 +169,6 @@ ora_profile::database::asm_storage::nfs_files:
 ora_profile::database::asm_storage::nfs_mountpoint:  /nfs_client
 ora_profile::database::asm_storage::nfs_export:      /home/nfs_server_data
 ora_profile::database::asm_storage::nfs_server:      localhost
-ora_profile::database::asm_storage::disk_devices:    ~
 ora_profile::database::asm_storage::scan_exclude:    ~
 
 # ------------------------------------------------------------------------------

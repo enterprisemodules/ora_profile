@@ -35,6 +35,9 @@ The `ora_profile::database` class contains all the Puppet code to install, creat
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
 - `firewall`         (Open required firewall rules)
+- `asm_storage`      (Setup storage for use with ASM (skipped by default))
+- `asm_software`     (Install Grid Infrastructure/ASM (skipped by default))
+- `asm_diskgroup`    (Define all requires ASM diskgroups (skipped by default))
 - `db_software`      (Install required Oracle database software)
 - `db_patches`       (Install specified Opatch version and install specified patches)
 - `db_definition`    (Define the database)
@@ -112,8 +115,13 @@ To get started, include the `ora_profile::database` class in your role, make sur
 
 - linuxx64_12201_database.zip
 - p6880880_122010_Linux-x86-64_12.2.0.1.12.zip (OPatch)
+- p27468969_122010_Linux-x86-64.zip (GI APR 2018 RELEASE UPDATE 12.2.0.1.180417)
 
-You can download this file from
+If you also want to install ASM, the file below also needs to be placed in the `files` directory:
+
+- linuxx64_12201_grid_home
+
+You can download these files from
 [here](http://support.oracle.com)
 or
 [here](http://www.oracle.com/technetwork/database/enterprise-edition/downloads/oracle12c-linux-12201-3608234.html)

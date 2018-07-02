@@ -97,8 +97,6 @@ class ora_profile::database::db_software(
     mode    => '0754',
   }
 
-  -> file{'/tmp': ensure => 'directory'}
-
   if ( $master_node == $facts['hostname'] ) {
     if ( empty($cluster_nodes) ) {
       $installdb_cluster_nodes = undef
@@ -127,6 +125,12 @@ class ora_profile::database::db_software(
     case $version {
       '12.2.0.1': {
         $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
+      }
+      '12.1.0.2': {
+        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
+      }
+      '11.2.0.4': {
+        $add_node_command = "${grid_home}/oui/bin/addNode.sh -ignorePrereq \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
       }
       default: {
         notice('Version not supported yet')

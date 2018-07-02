@@ -20,15 +20,14 @@ When these customizations aren't enough, you can replace the class with your own
 
 
 
-Attribute Name                                  | Short Description                                                    |
------------------------------------------------ | -------------------------------------------------------------------- |
-[grid_admingroup](#asm_storage_grid_admingroup) | This is the name of the group that will have the NFS files for ASM.  |
-[grid_user](#asm_storage_grid_user)             | The name of the user that owns the Grid Infrastructure installation. |
-[nfs_export](#asm_storage_nfs_export)           | The name of the NFS volume that will be mounted to nfs_mountpoint.   |
-[nfs_files](#asm_storage_nfs_files)             | This is an array of NFS files that will be used as ASM disks.        |
-[nfs_mountpoint](#asm_storage_nfs_mountpoint)   | The mountpoint where the NFS volume will be mounted.                 |
-[nfs_server](#asm_storage_nfs_server)           | The name of the NFS server.                                          |
-[storage_type](#asm_storage_storage_type)       | The type of ASM storage to use.                                      |
+Attribute Name                                | Short Description                                                  |
+--------------------------------------------- | ------------------------------------------------------------------ |
+[nfs_export](#asm_storage_nfs_export)         | The name of the NFS volume that will be mounted to nfs_mountpoint. |
+[nfs_files](#asm_storage_nfs_files)           | This is an array of NFS files that will be used as ASM disks.      |
+[nfs_mountpoint](#asm_storage_nfs_mountpoint) | The mountpoint where the NFS volume will be mounted.               |
+[nfs_server](#asm_storage_nfs_server)         | The name of the NFS server.                                        |
+[scan_exclude](#asm_storage_scan_exclude)     | Specify which devices to exclude from scanning for ASMLib.         |
+[storage_type](#asm_storage_storage_type)     | The type of ASM storage to use.                                    |
 
 
 
@@ -36,30 +35,14 @@ Attribute Name                                  | Short Description             
 ### storage_type<a name='asm_storage_storage_type'>
 
 The type of ASM storage to use.
-Currently only NFS is supported, ASMLIB and AFD will be added in a future release.
+
+Valid values are:
+- `nfs`
+- `asmlib`
+- `afd`
 
 The default value is: `nfs`.
 Type: `Enum['nfs','asmlib','afd']`
-
-
-[Back to overview of asm_storage](#attributes)
-
-### grid_user<a name='asm_storage_grid_user'>
-
-The name of the user that owns the Grid Infrastructure installation.
-
-The default value is: `grid`.
-Type: `String[1]`
-
-
-[Back to overview of asm_storage](#attributes)
-
-### grid_admingroup<a name='asm_storage_grid_admingroup'>
-
-This is the name of the group that will have the NFS files for ASM.
-
-The default value is: `asmadmin`.
-Type: `String[1]`
 
 
 [Back to overview of asm_storage](#attributes)
@@ -77,6 +60,7 @@ ora_profile::database::asm_storage::nfs_files:
 - /home/nfs_server_data/asm_sda_nfs_b3
 - /home/nfs_server_data/asm_sda_nfs_b4
 ```
+
 Type: `Array[Stdlib::Absolutepath]`
 
 
@@ -108,6 +92,17 @@ The name of the NFS server.
 
 The default value is: `localhost`.
 Type: `String[1]`
+
+
+[Back to overview of asm_storage](#attributes)
+
+### scan_exclude<a name='asm_storage_scan_exclude'>
+
+Specify which devices to exclude from scanning for ASMLib.
+
+The default value is: `undef`
+
+Type: `Optional[String[1]]`
 
 
 [Back to overview of asm_storage](#attributes)
