@@ -17,6 +17,9 @@ Defining and starting an Oracle database on you system goes through several stag
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
 - `firewall`         (Open required firewall rules)
+- `asm_storage`      (Setup storage for use with ASM (skipped by default))
+- `asm_software`     (Install Grid Infrastructure/ASM (skipped by default))
+- `asm_diskgroup`    (Define all requires ASM diskgroups (skipped by default))
 - `db_software`      (Install required Oracle database software)
 - `db_patches`       (Install specified Opatch version and install specified patches)
 - `db_definition`    (Define the database)
@@ -99,7 +102,7 @@ class {'ora_profile::database':
   :oracle_base,
   :oracle_home,
   :grid_user,
-  :grid_admingroup
+  :grid_admingroup,
   :grid_base,
   :grid_home,
   :sysctl,

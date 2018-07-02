@@ -10,16 +10,11 @@
 #
 # @param [Enum['nfs', 'asmlib', 'afd']] storage_type
 #    The type of ASM storage to use.
-#    Currently only NFS is supported, ASMLIB and AFD will be added in a future release.
+#    Valid values are:
+#    - `nfs`
+#    - `asmlib`
+#    - `afd`
 #    The default value is: `nfs`.
-#
-# @param [String[1]] grid_user
-#    The name of the user that owns the Grid Infrastructure installation.
-#    The default value is: `grid`.
-#
-# @param [String[1]] grid_admingroup
-#    This is the name of the group that will have the NFS files for ASM.
-#    The default value is: `asmadmin`.
 #
 # @param [Array[Stdlib::Absolutepath]] nfs_files
 #    This is an array of NFS files that will be used as ASM disks.
@@ -43,6 +38,10 @@
 # @param [String[1]] nfs_server
 #    The name of the NFS server.
 #    The default value is: `localhost`.
+#
+# @param [Optional[String[1]]] scan_exclude
+#    Specify which devices to exclude from scanning for ASMLib.
+#    The default value is: `undef`
 #
 #--++--
 # lint:ignore:variable_scope
@@ -105,12 +104,12 @@ class ora_profile::database::asm_storage(
       contain ora_profile::database::asm_storage::asmlib
     }
     'afd': {
-      contain ora_profile::database::asm_storage::udev
       class {'ora_profile::database::asm_storage::udev':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
         disk_devices    => $disk_devices,
       }
+      contain ora_profile::database::asm_storage::udev
     }
     default: {}
   }

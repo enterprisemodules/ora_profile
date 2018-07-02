@@ -30,6 +30,9 @@
 # - `packages`         (Install all required packages)
 # - `groups_and_users` (Create required groups and users)
 # - `firewall`         (Open required firewall rules)
+# - `asm_storage`      (Setup storage for use with ASM (skipped by default))
+# - `asm_software`     (Install Grid Infrastructure/ASM (skipped by default))
+# - `asm_diskgroup`    (Define all requires ASM diskgroups (skipped by default))
 # - `db_software`      (Install required Oracle database software)
 # - `db_patches`       (Install specified Opatch version and install specified patches)
 # - `db_definition`    (Define the database)
@@ -141,6 +144,22 @@
 #    The home firectory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle/product/#{version}/db_home1`
 #    To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
+#
+# @param [String[1]] grid_user
+#    The name of the user that owns the Grid Infrastructure installation.
+#    The default value is: `grid`.
+#
+# @param [String[1]] grid_admingroup
+#    The OS group to use for ASM admin.
+#    The default value is: `asmadmin`
+#
+# @param [Stdlib::Absolutepath] grid_base
+#    The directory to use as grid base.
+#    The default value is: `/u01/app/grid/admin`
+#
+# @param [Stdlib::Absolutepath] grid_home
+#    The oracle home directory to use for the GRID software.
+#    The default value is: `/u01/app/grid/product/12.2.0.1/grid_home1`
 #
 # @param [Optional[String]] sysctl
 #    Use this value if you want to skip or use your own class for stage `sysctl`.

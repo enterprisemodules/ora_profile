@@ -26,6 +26,9 @@ Defining and starting an Oracle database on you system goes through several stag
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
 - `firewall`         (Open required firewall rules)
+- `asm_storage`      (Setup storage for use with ASM (skipped by default))
+- `asm_software`     (Install Grid Infrastructure/ASM (skipped by default))
+- `asm_diskgroup`    (Define all requires ASM diskgroups (skipped by default))
 - `db_software`      (Install required Oracle database software)
 - `db_patches`       (Install specified Opatch version and install specified patches)
 - `db_definition`    (Define the database)
@@ -149,6 +152,10 @@ Attribute Name                                               | Short Description
 [dba_group](#database_dba_group)                             | The group to use for Oracle DBA users.                                                      |
 [dbname](#database_dbname)                                   | The name of the database.                                                                   |
 [firewall](#database_firewall)                               | Use this value if you want to skip or use your own class for stage `firewall`.              |
+[grid_admingroup](#database_grid_admingroup)                 | The OS group to use for ASM admin.                                                          |
+[grid_base](#database_grid_base)                             | The directory to use as grid base.                                                          |
+[grid_home](#database_grid_home)                             | The oracle home directory to use for the GRID software.                                     |
+[grid_user](#database_grid_user)                             | The name of the user that owns the Grid Infrastructure installation.                        |
 [groups_and_users](#database_groups_and_users)               | Use this value if you want to skip or use your own class for stage `groups_and_users`.      |
 [install_group](#database_install_group)                     | The group to use for Oracle install.                                                        |
 [limits](#database_limits)                                   | Use this value if you want to skip or use your own class for stage `limits`.                |
@@ -264,6 +271,49 @@ The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
+
+Type: `Stdlib::Absolutepath`
+
+
+[Back to overview of database](#attributes)
+
+### grid_user<a name='database_grid_user'>
+
+The name of the user that owns the Grid Infrastructure installation.
+
+The default value is: `grid`.
+Type: `String[1]`
+
+
+[Back to overview of database](#attributes)
+
+### grid_admingroup<a name='database_grid_admingroup'>
+
+The OS group to use for ASM admin.
+
+The default value is: `asmadmin`
+
+Type: `String[1]`
+
+
+[Back to overview of database](#attributes)
+
+### grid_base<a name='database_grid_base'>
+
+The directory to use as grid base.
+
+The default value is: `/u01/app/grid/admin`
+
+Type: `Stdlib::Absolutepath`
+
+
+[Back to overview of database](#attributes)
+
+### grid_home<a name='database_grid_home'>
+
+The oracle home directory to use for the GRID software.
+
+The default value is: `/u01/app/grid/product/12.2.0.1/grid_home1`
 
 Type: `Stdlib::Absolutepath`
 
