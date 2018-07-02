@@ -90,6 +90,12 @@ class ora_profile::database::db_software(
     }
   }
 
+  unless defined(File[$download_dir]) {
+    file { $download_dir:
+      ensure => 'directory',
+    }
+  }
+
   file{$dirs:
     ensure  => directory,
     owner   => $os_user,
