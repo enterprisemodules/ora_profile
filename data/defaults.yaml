@@ -142,7 +142,7 @@ ora_profile::database::sysctl::list:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::firewall::ports:
-  'Allow SQLNET on port 1521':
+  '300 Allow SQLNET on port 1521':
     port: 1521
 ora_profile::database::firewall::manage_service:      true
 
