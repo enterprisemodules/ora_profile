@@ -545,6 +545,7 @@
 #
 #--++--
 class ora_profile::database(
+  Enum['local','asm'] $storage,
   Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']
             $version,
   String[1] $dbname,
@@ -572,14 +573,19 @@ class ora_profile::database(
 #
   Optional[String] $master_node = $facts['hostname'],
   Optional[Array]  $cluster_nodes = undef,
+  Optional[String] $asm_sysctl = undef,
+  Optional[String] $asm_limits = undef,
+  Optional[String] $asm_groups_and_users = undef,
+  Optional[String] $asm_packages = undef,
+  Optional[String] $asm_listener = undef,
   Optional[String] $sysctl = undef,
   Optional[String] $limits = undef,
   Optional[String] $packages = undef,
   Optional[String] $groups_and_users = undef,
   Optional[String] $firewall = undef,
-  Optional[String] $asm_storage = 'skip',
-  Optional[String] $asm_software = 'skip',
-  Optional[String] $asm_diskgroup = 'skip',
+  Optional[String] $asm_storage = undef,
+  Optional[String] $asm_software = undef,
+  Optional[String] $asm_diskgroup = undef,
   Optional[String] $db_software = undef,
   Optional[String] $db_patches = undef,
   Optional[String] $db_definition = undef,
@@ -589,6 +595,11 @@ class ora_profile::database(
   Optional[String] $db_profiles = undef,
   Optional[String] $db_users = undef,
   Optional[String] $db_startup = undef,
+  Optional[String] $before_asm_sysctl = undef,
+  Optional[String] $before_asm_limits = undef,
+  Optional[String] $before_asm_groups_and_users = undef,
+  Optional[String] $before_asm_packages = undef,
+  Optional[String] $before_asm_listener = undef,
   Optional[String] $before_sysctl = undef,
   Optional[String] $before_limits = undef,
   Optional[String] $before_packages = undef,
@@ -606,6 +617,11 @@ class ora_profile::database(
   Optional[String] $before_db_profiles = undef,
   Optional[String] $before_db_users = undef,
   Optional[String] $before_db_startup = undef,
+  Optional[String] $after_asm_sysctl = undef,
+  Optional[String] $after_asm_limits = undef,
+  Optional[String] $after_asm_groups_and_users = undef,
+  Optional[String] $after_asm_packages = undef,
+  Optional[String] $after_asm_listener = undef,
   Optional[String] $after_sysctl = undef,
   Optional[String] $after_limits = undef,
   Optional[String] $after_packages = undef,
@@ -630,23 +646,51 @@ class ora_profile::database(
   $instance_number = set_param('instance_number', $dbname, $cluster_nodes)
   $thread_number = set_param('instance_number', $dbname, $cluster_nodes)
 
-  easy_type::staged_contain([
-    'ora_profile::database::sysctl',
-    'ora_profile::database::limits',
-    'ora_profile::database::groups_and_users',
-    'ora_profile::database::packages',
-    'ora_profile::database::firewall',
-    'ora_profile::database::asm_storage',
-    'ora_profile::database::asm_software',
-    'ora_profile::database::asm_diskgroup',
-    'ora_profile::database::db_software',
-    'ora_profile::database::db_patches',
-    'ora_profile::database::db_definition',
-    'ora_profile::database::db_listener',
-    'ora_profile::database::db_services',
-    'ora_profile::database::db_tablespaces',
-    'ora_profile::database::db_profiles',
-    'ora_profile::database::db_users',
-    'ora_profile::database::db_startup',
-  ])
+  case $storage {
+    'local': {
+      easy_type::staged_contain([
+        'ora_profile::database::sysctl',
+        'ora_profile::database::limits',
+        'ora_profile::database::groups_and_users',
+        'ora_profile::database::packages',
+        'ora_profile::database::firewall',
+        'ora_profile::database::db_software',
+        'ora_profile::database::db_patches',
+        'ora_profile::database::db_definition',
+        'ora_profile::database::db_listener',
+        'ora_profile::database::db_services',
+        'ora_profile::database::db_tablespaces',
+        'ora_profile::database::db_profiles',
+        'ora_profile::database::db_users',
+        'ora_profile::database::db_startup',
+      ])
+    }
+    'asm' : {
+      easy_type::staged_contain([
+        'ora_profile::database::sysctl',
+        'ora_profile::database::limits',
+        'ora_profile::database::packages',
+        'ora_profile::database::firewall',
+        'ora_profile::database::asm_sysctl',
+        'ora_profile::database::asm_limits',
+        'ora_profile::database::asm_groups_and_users', # Also includes database users
+        'ora_profile::database::asm_packages',
+        'ora_profile::database::asm_storage',
+        'ora_profile::database::asm_software',
+        'ora_profile::database::asm_diskgroup',
+        'ora_profile::database::db_software',
+        'ora_profile::database::db_patches',
+        'ora_profile::database::db_definition',
+        'ora_profile::database::asm_listener',
+        'ora_profile::database::db_services',
+        'ora_profile::database::db_tablespaces',
+        'ora_profile::database::db_profiles',
+        'ora_profile::database::db_users',
+        'ora_profile::database::db_startup',
+      ])
+    }
+    default: {
+      fail 'Unknown storage type'
+    }
+  }
 }

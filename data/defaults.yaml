@@ -3,6 +3,7 @@
 # Some generic defaults used in multiple places
 #
 ora_profile::database::dbname:              DB01
+ora_profile::database::storage:             local
 ora_profile::database::os_user:             oracle
 ora_profile::database::dba_group:           dba
 ora_profile::database::install_group:       oinstall
@@ -182,14 +183,11 @@ ora_profile::database::asm_software::dirs:
   - /u01/app/grid
   - /u01/app/grid/admin
   - /u01/app/grid/product
-ora_profile::database::asm_software::source:                  "%{::ora_profile::database::source}"
+  - /u01/app/grid/product/12.2.0.1
+ora_profile::database::asm_software::grid_home:               "%{ora_profile::database::grid_home}"
 ora_profile::database::asm_software::file_name:               linuxx64_12201_grid_home
-ora_profile::database::asm_software::asm_sys_password:        Welcome01
-ora_profile::database::asm_software::disk_discovery_string:   '/nfs_client/asm*'
+ora_profile::database::asm_software::asm_sys_password:        Change_on_1nstall
 ora_profile::database::asm_software::asm_diskgroup:           DATA
-ora_profile::database::asm_software::asm_disks:               '/nfs_client/asm_sda_nfs_b1,/nfs_client/asm_sda_nfs_b2'
-ora_profile::database::asm_software::disks_failgroup_names:   '/nfs_client/asm_sda_nfs_b1,'
-ora_profile::database::asm_software::configure_afd:            false
 ora_profile::database::asm_software::grid_type:                HA_CONFIG
 ora_profile::database::asm_software::cluster_node_types:       ~
 ora_profile::database::asm_software::cluster_name:             ~
@@ -222,10 +220,12 @@ ora_profile::database::asm_diskgroup::disks:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::db_software::dirs:
+  - /u01
+  - /u01/app
   - /u01/app/oracle
   - /u02
-  - /u03
   - /u02/oradata
+  - /u03
   - /u03/fast_recovery_area
 
 ora_profile::database::db_software::dba_group:      "%{::ora_profile::database::dba_group}"
@@ -368,3 +368,88 @@ ora_profile::database::cis_rules::ignore:
   - r_2_1_3
   - r_2_1_4
 ora_profile::database::cis_rules::dbname:   "%{::ora_profile::database::dbname}"
+#------------------------------------------------------------------------------
+#
+# Groups to create
+#
+#------------------------------------------------------------------------------
+ora_profile::database::asm_groups_and_users::groups:
+  "%{::ora_profile::database::install_group}":
+    gid:  54321,
+  "%{::ora_profile::database::dba_group}":
+    gid:  54322,
+  oper:
+    gid:  54323,
+  asmdba:
+    gid:  54324
+  asmadmin:
+    gid:  54325
+  asmoper:
+    gid:  54326
+#
+# Users to create
+#
+ora_profile::database::asm_groups_and_users::users:
+  "%{::ora_profile::database::os_user}":
+    uid:        54321
+    gid:        "%{::ora_profile::database::install_group}"
+    groups:
+    - "%{::ora_profile::database::install_group}"
+    - "%{::ora_profile::database::dba_group}"
+    - oper
+    - asmdba
+    shell:      /bin/bash
+    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
+    home:       /home/oracle
+    comment:    This user oracle was created by Puppet
+    managehome: true
+  "%{ora_profile::database::grid_user}":
+    uid:        54322
+    gid:        "%{::ora_profile::database::install_group}"
+    groups:
+    - "%{::ora_profile::database::install_group}"
+    - "%{::ora_profile::database::dba_group}"
+    - asmadmin
+    - asmdba
+    - asmoper
+    shell:      /bin/bash
+    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
+    home:       /home/grid
+    comment:    This user grid was created by Puppet
+    managehome: true
+# ------------------------------------------------------------------------------
+#
+#  Settings for asm_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_software::disk_discovery_string:   '/dev/asm_data*,/dev/asm_reco*'
+ora_profile::database::asm_software::asm_disks:               /dev/asm_data01
+ora_profile::database::asm_software::disks_failgroup_names:   '/dev/asm_data01,'
+ora_profile::database::asm_software::configure_afd:           true
+# ------------------------------------------------------------------------------
+#
+# ASM Sysctl
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_sysctl::list: {} # No ASM specifics
+# ------------------------------------------------------------------------------
+#
+# ASM limits
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_limits::list: {} # No ASM specifics
+# ------------------------------------------------------------------------------
+#
+# ASM packages
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_packages::list:
+  smartmontools: {}
+#
+# asm_listener 
+#
+ora_profile::database::asm_listener::dbname:              "%{::ora_profile::database::dbname}"
+ora_profile::database::asm_listener::oracle_home:         "%{::ora_profile::database::asm_software::grid_home}"
+ora_profile::database::asm_listener::oracle_base:         "%{::ora_profile::database::oracle_base}"
+ora_profile::database::asm_listener::sqlnet_version:      '12.2'
+

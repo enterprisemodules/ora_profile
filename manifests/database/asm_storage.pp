@@ -66,7 +66,6 @@ class ora_profile::database::asm_storage(
   }
   case $storage_type {
     'nfs': {
-      contain ora_profile::database::asm_storage::nfs
       class {'ora_profile::database::asm_storage::nfs':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
@@ -75,6 +74,7 @@ class ora_profile::database::asm_storage(
         nfs_export      => $nfs_export,
         nfs_server      => $nfs_server,
       }
+      contain ora_profile::database::asm_storage::nfs
     }
     'asmlib': {
       class {'ora_profile::database::asm_storage::udev':
@@ -87,7 +87,7 @@ class ora_profile::database::asm_storage(
         ],
       }
       $disk_devices.each |$device, $attributes| {
-        Ora_profile::Database::Asm_storage::Partition {$device:
+        ora_profile::database::asm_storage::partition {$device:
           raw_device      => "/dev/${device}:1",
           table_type      => 'gpt',
           wait_for_device => false,
