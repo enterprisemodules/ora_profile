@@ -1,28 +1,87 @@
 ---
+# ------------------------------------------------------------------------------
 #
-# Some generic defaults used in multiple places
+#  Settings for database
 #
-ora_profile::database::dbname:              DB01
-ora_profile::database::storage:             local
-ora_profile::database::os_user:             oracle
-ora_profile::database::dba_group:           dba
-ora_profile::database::install_group:       oinstall
-ora_profile::database::grid_user:           grid
-ora_profile::database::grid_admingroup:     asmadmin
-ora_profile::database::grid_base:           /u01/app/grid/admin
-ora_profile::database::grid_home:           /u01/app/grid/product/12.2.0.1/grid_home1
-ora_profile::database::source:              puppet:///modules/software
-ora_profile::database::oracle_base:         /u01/app/oracle
-ora_profile::database::oracle_home:         /u01/app/oracle/product/12.2.0.1/db_home1
-ora_profile::database::version:             12.2.0.1
-ora_profile::database::db_control_provider: sqlplus
-ora_profile::database::cluster_nodes:       ~
-ora_profile::database::ora_inventory_dir:   /u01/app/oracle/admin
-ora_profile::database::download_dir:        /install
+# ------------------------------------------------------------------------------
+ora_profile::database::dbname:                                            DB01
+ora_profile::database::storage:                                           local
+ora_profile::database::os_user:                                           oracle
+ora_profile::database::dba_group:                                         dba
+ora_profile::database::install_group:                                     oinstall
+ora_profile::database::grid_user:                                         grid
+ora_profile::database::grid_admingroup:                                   asmadmin
+ora_profile::database::grid_base:                                         /u01/app/grid/admin
+ora_profile::database::grid_home:                                         /u01/app/grid/product/12.2.0.1/grid_home1
+ora_profile::database::source:                                            puppet:///modules/software
+ora_profile::database::oracle_base:                                       /u01/app/oracle
+ora_profile::database::oracle_home:                                       /u01/app/oracle/product/12.2.0.1/db_home1
+ora_profile::database::version:                                           12.2.0.1
+ora_profile::database::db_control_provider:                               sqlplus
+ora_profile::database::cluster_nodes:                                     ~
+ora_profile::database::ora_inventory_dir:                                 /u01/app/oracle/admin
+ora_profile::database::download_dir:                                      /install
+
 
 # ------------------------------------------------------------------------------
 #
-# Groups to create
+# Settings for database::sysctl
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::sysctl::list:
+  'kernel.msgmnb':
+    value:  65536
+  'kernel.msgmax':
+    value:  65536
+  'kernel.shmmax':
+    value:  4398046511104
+  'kernel.shmall':
+    value:  4294967296
+  'fs.file-max':
+    value:  6815744
+  'kernel.shmmni':
+    value:  4096
+  'fs.aio-max-nr':
+    value:  1048576
+  'kernel.sem':
+    value:  '250 32000 100 128'
+  'net.ipv4.ip_local_port_range':
+    value:  '9000 65500'
+  'net.core.rmem_default':
+    value:  262144
+  'net.core.rmem_max':
+    value:  4194304
+  'net.core.wmem_default':
+    value:  262144
+  'net.core.wmem_max':
+    value:  1048576
+  'kernel.panic_on_oops':
+    value:  1
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for database::limits
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::limits::list:
+  '*/nofile':
+    soft: 2048
+    hard: 8192
+  "%{::ora_profile::database::os_user}/nofile":
+    soft: 65536
+    hard: 65536
+  "%{::ora_profile::database::os_user}/nproc":
+    soft: 2048
+    hard: 16384
+  "%{::ora_profile::database::os_user}/stack":
+    soft: 10240
+    hard: 32768
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for database::groups_and_users
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::groups_and_users::groups:
@@ -32,9 +91,6 @@ ora_profile::database::groups_and_users::groups:
     gid:  54322,
   oper:
     gid:  54323,
-#
-# Users to create
-#
 ora_profile::database::groups_and_users::users:
   "%{::ora_profile::database::os_user}":
     uid:        54321
@@ -49,9 +105,10 @@ ora_profile::database::groups_and_users::users:
     comment:    This user oracle was created by Puppet
     managehome: true
 
+
 # ------------------------------------------------------------------------------
 #
-# Packages Oracle needs
+# Settings for database::packages
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::packages::list:
@@ -87,290 +144,34 @@ ora_profile::database::packages::list:
 
 # ------------------------------------------------------------------------------
 #
-# Limits
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::limits::list:
-  '*/nofile':
-    soft: 2048
-    hard: 8192
-  "%{::ora_profile::database::os_user}/nofile":
-    soft: 65536
-    hard: 65536
-  "%{::ora_profile::database::os_user}/nproc":
-    soft: 2048
-    hard: 16384
-  "%{::ora_profile::database::os_user}/stack":
-    soft: 10240
-    hard: 32768
-# ------------------------------------------------------------------------------
-#
-# Sysctl
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::sysctl::list:
-  'kernel.msgmnb':
-    value:  65536
-  'kernel.msgmax':
-    value:  65536
-  'kernel.shmmax':
-    value:  4398046511104
-  'kernel.shmall':
-    value:  4294967296
-  'fs.file-max':
-    value:  6815744
-  'kernel.shmmni':
-    value:  4096
-  'fs.aio-max-nr':
-    value:  1048576
-  'kernel.sem':
-    value:  '250 32000 100 128'
-  'net.ipv4.ip_local_port_range':
-    value:  '9000 65500'
-  'net.core.rmem_default':
-    value:  262144
-  'net.core.rmem_max':
-    value:  4194304
-  'net.core.wmem_default':
-    value:  262144
-  'net.core.wmem_max':
-    value:  1048576
-  'kernel.panic_on_oops':
-    value:  1
-# ------------------------------------------------------------------------------
-#
-#  Settings for firewall
+#  Settings for database::firewall
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::firewall::ports:
   '300 Allow SQLNET on port 1521':
     port: 1521
-ora_profile::database::firewall::manage_service:      true
+ora_profile::database::firewall::manage_service:                          true
 
 
 # ------------------------------------------------------------------------------
 #
-#  Settings for authenticated_nodes
+# Settings for database::asm_sysctl
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::authenticated_nodes::keys:     ~
+ora_profile::database::asm_sysctl::list:                                  {} # No ASM specifics
 
 
 # ------------------------------------------------------------------------------
 #
-#  Settings for asm_storage
+# Settings for database::asm_limits
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_storage::storage_type:    nfs
-ora_profile::database::asm_storage::nfs_files:
-- /home/nfs_server_data/asm_sda_nfs_b1
-- /home/nfs_server_data/asm_sda_nfs_b2
-- /home/nfs_server_data/asm_sda_nfs_b3
-- /home/nfs_server_data/asm_sda_nfs_b4
-ora_profile::database::asm_storage::nfs_mountpoint:  /nfs_client
-ora_profile::database::asm_storage::nfs_export:      /home/nfs_server_data
-ora_profile::database::asm_storage::nfs_server:      localhost
-ora_profile::database::asm_storage::scan_exclude:    ~
-
-# ------------------------------------------------------------------------------
-#
-#  Settings for asm_software
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::asm_software::version:       12.2.0.1
-ora_profile::database::asm_software::dirs:
-  - /u01
-  - /u01/app/grid
-  - /u01/app/grid/admin
-  - /u01/app/grid/product
-  - /u01/app/grid/product/12.2.0.1
-ora_profile::database::asm_software::grid_home:               "%{ora_profile::database::grid_home}"
-ora_profile::database::asm_software::file_name:               linuxx64_12201_grid_home
-ora_profile::database::asm_software::asm_sys_password:        Change_on_1nstall
-ora_profile::database::asm_software::asm_diskgroup:           DATA
-ora_profile::database::asm_software::grid_type:                HA_CONFIG
-ora_profile::database::asm_software::cluster_node_types:       ~
-ora_profile::database::asm_software::cluster_name:             ~
-ora_profile::database::asm_software::scan_name:                ~
-ora_profile::database::asm_software::scan_port:                ~
-ora_profile::database::asm_software::network_interface_list:   ~
-ora_profile::database::asm_software::storage_option:           ~
+ora_profile::database::asm_limits::list:                                  {} # No ASM specifics
 
 
-# ------------------------------------------------------------------------------
-#
-#  Settings for asm_diskgroups
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::asm_diskgroup::disks:
-  DATA:
-    - diskname: 'DATA_0000'
-      path: '/nfs_client/asm_sda_nfs_b1'
-    - diskname: 'DATA_0001'
-      path: '/nfs_client/asm_sda_nfs_b2'
-  RECO:
-    - diskname: 'RECO_0000'
-      path: '/nfs_client/asm_sda_nfs_b3'
-    - diskname: 'RECO_0001'
-      path: '/nfs_client/asm_sda_nfs_b4'
-
-# ------------------------------------------------------------------------------
-#
-#  Settings for db_software
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_software::dirs:
-  - /u01
-  - /u01/app
-  - /u01/app/oracle
-  - /u02
-  - /u02/oradata
-  - /u03
-  - /u03/fast_recovery_area
-
-ora_profile::database::db_software::dba_group:      "%{::ora_profile::database::dba_group}"
-ora_profile::database::db_software::install_group:  "%{::ora_profile::database::install_group}"
-ora_profile::database::db_software::os_user:        "%{::ora_profile::database::os_user}"
-ora_profile::database::db_software::version:        "%{::ora_profile::database::version}"
-ora_profile::database::db_software::database_type:  SE2
-ora_profile::database::db_software::oracle_base:    "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_software::oracle_home:    "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_software::source:         "%{::ora_profile::database::source}"
-ora_profile::database::db_software::file_name:      linuxx64_12201_database
-# ------------------------------------------------------------------------------
-#
-# db_patches
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_patches::patch_file:      p6880880_122010_Linux-x86-64
-ora_profile::database::db_patches::opversion:       12.2.0.1.13
-ora_profile::database::db_patches::dbname:          "%{::ora_profile::database::dbname}"
-ora_profile::database::db_patches::install_group:   "%{::ora_profile::database::install_group}"
-ora_profile::database::db_patches::os_user:         "%{::ora_profile::database::os_user}"
-ora_profile::database::db_patches::source:          "%{::ora_profile::database::source}"
-ora_profile::database::db_patches::oracle_home:     "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_patches::patch_list:
-  "%{::ora_profile::database::oracle_home}:27468969":
-    source:              "%{::ora_profile::database::source}/p27468969_122010_Linux-x86-64.zip"
-    sub_patches:        ['27674384', '27464465']
-# ------------------------------------------------------------------------------
-#
-# db_definition
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_definition::dbname:                    "%{::ora_profile::database::dbname}"
-ora_profile::database::db_definition::oracle_base:               "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_definition::oracle_home:               "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_definition::version:                   "%{::ora_profile::database::version}"
-ora_profile::database::db_definition::log_size:                  100M
-ora_profile::database::db_definition::user_tablespace_size:      5M
-ora_profile::database::db_definition::system_tablespace_size:    50M
-ora_profile::database::db_definition::temporary_tablespace_size: 50M
-ora_profile::database::db_definition::undo_tablespace_size:      50M
-ora_profile::database::db_definition::sysaux_tablespace_size:    50M
-ora_profile::database::db_definition::container_database:        enabled
-ora_profile::database::db_definition::system_password:           Welcome01
-ora_profile::database::db_definition::sys_password:              Change_on_1nstall
-ora_profile::database::db_definition::init_ora_template:         ora_profile/init.ora.erb
-# ------------------------------------------------------------------------------
-#
-# db_definition_template
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_definition_template::dbname:                    "%{::ora_profile::database::dbname}"
-ora_profile::database::db_definition_template::oracle_base:               "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_definition_template::oracle_home:               "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_definition_template::version:                   "%{::ora_profile::database::version}"
-ora_profile::database::db_definition_template::template_name:             "General_Purpose.%{::ora_profile::database::version}"
-ora_profile::database::db_definition_template::template_type:             seed
-ora_profile::database::db_definition_template::data_file_destination:     +DATA
-ora_profile::database::db_definition_template::recovery_area_destination: +RECO
-ora_profile::database::db_definition_template::sample_schema:             'FALSE'
-ora_profile::database::db_definition_template::memory_mgmt_type:          AUTO_SGA
-ora_profile::database::db_definition_template::storage_type:              ASM
-ora_profile::database::db_definition_template::puppet_download_mnt_point: 'ora_profile'
-ora_profile::database::db_definition_template::system_password:           Welcome01
-ora_profile::database::db_definition_template::sys_password:              Change_on_1nstall
-ora_profile::database::db_definition_template::db_conf_type:              'SINGLE'
-ora_profile::database::db_definition_template::cluster_nodes:             ~
-# ------------------------------------------------------------------------------
-#
-# Settings for db_listener
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_listener::dbname:                    "%{::ora_profile::database::dbname}"
-ora_profile::database::db_listener::oracle_base:               "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_listener::oracle_home:               "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_listener::sqlnet_version:            '12.2'
-# ------------------------------------------------------------------------------
-#
-# Settings for db_services
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_services::dbname:               "%{::ora_profile::database::dbname}"
-ora_profile::database::db_services::domain_name:          ~
-# ------------------------------------------------------------------------------
-#
-# Settings for db_startup
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_startup::dbname:               "%{::ora_profile::database::dbname}"
-ora_profile::database::db_startup::oracle_home:          "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_startup::db_type:              database
-# ------------------------------------------------------------------------------
-#
-# Settings for db_tablespaces
-#
-# This is a simple way to get started. It is easy to get started, but
-# soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle tablespaces, to override this class and 
-# add your own puppet implementation. This is much better maintainable
-# and adds more consistency,
-#
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_tablespaces::list:          {}
-# ------------------------------------------------------------------------------
-#
-# Settings for db_users
-#
-#
-# This is a simple way to get started. It is easy to get started, but
-# soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle users, to override this class and 
-# add your own puppet implementation. This is much better maintainable
-# and adds more consistency,
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_users::list:          {}
-# ------------------------------------------------------------------------------
-#
-# Settings for db_profiles
-#
-#
-# This is a simple way to get started. It is easy to get started, but
-# soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle profiles, to override this class and 
-# add your own puppet implementation. This is much better maintainable
-# and adds more consistency,
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::db_profiles::list:          {}
-# ------------------------------------------------------------------------------
-#
-# Settings for cis_rules
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::cis_rules::ignore:
-  - r_1_1
-  - r_2_1_1
-  - r_2_1_2
-  - r_2_1_3
-  - r_2_1_4
-ora_profile::database::cis_rules::dbname:   "%{::ora_profile::database::dbname}"
 #------------------------------------------------------------------------------
 #
-# Groups to create
+# Settings for database::asm_groups_and_users
 #
 #------------------------------------------------------------------------------
 ora_profile::database::asm_groups_and_users::groups:
@@ -386,9 +187,6 @@ ora_profile::database::asm_groups_and_users::groups:
     gid:  54325
   asmoper:
     gid:  54326
-#
-# Users to create
-#
 ora_profile::database::asm_groups_and_users::users:
   "%{::ora_profile::database::os_user}":
     uid:        54321
@@ -417,39 +215,269 @@ ora_profile::database::asm_groups_and_users::users:
     home:       /home/grid
     comment:    This user grid was created by Puppet
     managehome: true
+
+
 # ------------------------------------------------------------------------------
 #
-#  Settings for asm_software
+#  Settings for database::rac::authenticated_nodes
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_software::disk_discovery_string:   '/dev/asm_data*,/dev/asm_reco*'
-ora_profile::database::asm_software::asm_disks:               /dev/asm_data01
-ora_profile::database::asm_software::disks_failgroup_names:   '/dev/asm_data01,'
-ora_profile::database::asm_software::configure_afd:           true
+ora_profile::database::rac::authenticated_nodes::keys:                         ~
+
+
 # ------------------------------------------------------------------------------
 #
-# ASM Sysctl
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::asm_sysctl::list: {} # No ASM specifics
-# ------------------------------------------------------------------------------
-#
-# ASM limits
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::asm_limits::list: {} # No ASM specifics
-# ------------------------------------------------------------------------------
-#
-# ASM packages
+# Settings for database::asm_packages
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_packages::list:
   smartmontools: {}
+
+
+# ------------------------------------------------------------------------------
 #
-# asm_listener 
+#  Settings for database::asm_storage
 #
-ora_profile::database::asm_listener::dbname:              "%{::ora_profile::database::dbname}"
-ora_profile::database::asm_listener::oracle_home:         "%{::ora_profile::database::asm_software::grid_home}"
-ora_profile::database::asm_listener::oracle_base:         "%{::ora_profile::database::oracle_base}"
-ora_profile::database::asm_listener::sqlnet_version:      '12.2'
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_storage::storage_type:                         nfs
+ora_profile::database::asm_storage::nfs_files:
+- /home/nfs_server_data/asm_sda_nfs_b1
+- /home/nfs_server_data/asm_sda_nfs_b2
+- /home/nfs_server_data/asm_sda_nfs_b3
+- /home/nfs_server_data/asm_sda_nfs_b4
+ora_profile::database::asm_storage::nfs_mountpoint:                       /nfs_client
+ora_profile::database::asm_storage::nfs_export:                           /home/nfs_server_data
+ora_profile::database::asm_storage::nfs_server:                           localhost
+ora_profile::database::asm_storage::disk_devices:                         ~
+ora_profile::database::asm_storage::scan_exclude:                         ~
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_software::version:                             12.2.0.1
+ora_profile::database::asm_software::dirs:
+  - /u01
+  - /u01/app/grid
+  - /u01/app/grid/admin
+  - /u01/app/grid/product
+ora_profile::database::asm_software::grid_home:                           "%{ora_profile::database::grid_home}"
+ora_profile::database::asm_software::file_name:                           linuxx64_12201_grid_home
+ora_profile::database::asm_software::asm_sys_password:                    Change_on_1nstall
+ora_profile::database::asm_software::asm_diskgroup:                       DATA
+ora_profile::database::asm_software::grid_type:                           HA_CONFIG
+ora_profile::database::asm_software::cluster_node_types:                  ~
+ora_profile::database::asm_software::cluster_name:                        ~
+ora_profile::database::asm_software::scan_name:                           ~
+ora_profile::database::asm_software::scan_port:                           ~
+ora_profile::database::asm_software::network_interface_list:              ~
+ora_profile::database::asm_software::storage_option:                      ~
+ora_profile::database::asm_software::disk_discovery_string:               '/dev/asm_data*,/dev/asm_reco*'
+ora_profile::database::asm_software::asm_disks:                           /dev/asm_data01
+ora_profile::database::asm_software::disks_failgroup_names:               '/dev/asm_data01,'
+ora_profile::database::asm_software::configure_afd:                       true
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_diskgroups
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_diskgroup::disks:
+  DATA:
+    - diskname: 'DATA_0000'
+      path: '/nfs_client/asm_sda_nfs_b1'
+    - diskname: 'DATA_0001'
+      path: '/nfs_client/asm_sda_nfs_b2'
+  RECO:
+    - diskname: 'RECO_0000'
+      path: '/nfs_client/asm_sda_nfs_b3'
+    - diskname: 'RECO_0001'
+      path: '/nfs_client/asm_sda_nfs_b4'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_software::dirs:
+  - /u01
+  - /u01/app
+  - /u01/app/oracle
+  - /u02
+  - /u02/oradata
+  - /u03
+  - /u03/fast_recovery_area
+ora_profile::database::db_software::dba_group:                            "%{::ora_profile::database::dba_group}"
+ora_profile::database::db_software::install_group:                        "%{::ora_profile::database::install_group}"
+ora_profile::database::db_software::os_user:                              "%{::ora_profile::database::os_user}"
+ora_profile::database::db_software::version:                              "%{::ora_profile::database::version}"
+ora_profile::database::db_software::database_type:                        SE2
+ora_profile::database::db_software::oracle_base:                          "%{::ora_profile::database::oracle_base}"
+ora_profile::database::db_software::oracle_home:                          "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_software::source:                               "%{::ora_profile::database::source}"
+ora_profile::database::db_software::file_name:                            linuxx64_12201_database
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_patches
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_patches::patch_file:                            p6880880_122010_Linux-x86-64
+ora_profile::database::db_patches::opversion:                             12.2.0.1.13
+ora_profile::database::db_patches::dbname:                                "%{::ora_profile::database::dbname}"
+ora_profile::database::db_patches::install_group:                         "%{::ora_profile::database::install_group}"
+ora_profile::database::db_patches::os_user:                               "%{::ora_profile::database::os_user}"
+ora_profile::database::db_patches::source:                                "%{::ora_profile::database::source}"
+ora_profile::database::db_patches::oracle_home:                           "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_patches::patch_list:
+  "%{::ora_profile::database::oracle_home}:27468969":
+    source:              "%{::ora_profile::database::source}/p27468969_122010_Linux-x86-64.zip"
+    sub_patches:        ['27674384', '27464465']
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_definition
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_definition::dbname:                             "%{::ora_profile::database::dbname}"
+ora_profile::database::db_definition::oracle_base:                        "%{::ora_profile::database::oracle_base}"
+ora_profile::database::db_definition::oracle_home:                        "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_definition::version:                            "%{::ora_profile::database::version}"
+ora_profile::database::db_definition::log_size:                           100M
+ora_profile::database::db_definition::user_tablespace_size:               5M
+ora_profile::database::db_definition::system_tablespace_size:             50M
+ora_profile::database::db_definition::temporary_tablespace_size:          50M
+ora_profile::database::db_definition::undo_tablespace_size:               50M
+ora_profile::database::db_definition::sysaux_tablespace_size:             50M
+ora_profile::database::db_definition::container_database:                 enabled
+ora_profile::database::db_definition::system_password:                    Welcome01
+ora_profile::database::db_definition::sys_password:                       Change_on_1nstall
+ora_profile::database::db_definition::init_ora_template:                  ora_profile/init.ora.erb
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_definition_template
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_definition_template::dbname:                    "%{::ora_profile::database::dbname}"
+ora_profile::database::db_definition_template::oracle_base:               "%{::ora_profile::database::oracle_base}"
+ora_profile::database::db_definition_template::oracle_home:               "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_definition_template::version:                   "%{::ora_profile::database::version}"
+ora_profile::database::db_definition_template::template_name:             "General_Purpose.%{::ora_profile::database::version}"
+ora_profile::database::db_definition_template::template_type:             seed
+ora_profile::database::db_definition_template::data_file_destination:     +DATA
+ora_profile::database::db_definition_template::recovery_area_destination: +RECO
+ora_profile::database::db_definition_template::sample_schema:             'FALSE'
+ora_profile::database::db_definition_template::memory_mgmt_type:          AUTO_SGA
+ora_profile::database::db_definition_template::storage_type:              ASM
+ora_profile::database::db_definition_template::puppet_download_mnt_point: 'ora_profile'
+ora_profile::database::db_definition_template::system_password:           Welcome01
+ora_profile::database::db_definition_template::sys_password:              Change_on_1nstall
+ora_profile::database::db_definition_template::db_conf_type:              'SINGLE'
+ora_profile::database::db_definition_template::cluster_nodes:             ~
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_listener
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_listener::dbname:                               "%{::ora_profile::database::dbname}"
+ora_profile::database::db_listener::oracle_base:                          "%{::ora_profile::database::oracle_base}"
+ora_profile::database::db_listener::oracle_home:                          "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_listener::sqlnet_version:                       '12.2'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_listener
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_listener::dbname:                              "%{::ora_profile::database::dbname}"
+ora_profile::database::asm_listener::oracle_home:                         "%{::ora_profile::database::grid_home}"
+ora_profile::database::asm_listener::oracle_base:                         "%{::ora_profile::database::oracle_base}"
+ora_profile::database::asm_listener::sqlnet_version:                      '12.2'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_services
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_services::dbname:                               "%{::ora_profile::database::dbname}"
+ora_profile::database::db_services::domain_name:                          ~
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_tablespaces
+#
+# This is a simple way to get started. It is easy to get started, but
+# soon your hiera yaml become a nigtmare. Our advise is when you need
+# to let puppet manage your oracle tablespaces, to override this class and 
+# add your own puppet implementation. This is much better maintainable
+# and adds more consistency.
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_tablespaces::list:                              {}
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_profiles
+#
+#
+# This is a simple way to get started. It is easy to get started, but
+# soon your hiera yaml become a nigtmare. Our advise is when you need
+# to let puppet manage your oracle profiles, to override this class and 
+# add your own puppet implementation. This is much better maintainable
+# and adds more consistency,
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_profiles::list:                                 {}
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_users
+#
+# This is a simple way to get started. It is easy to get started, but
+# soon your hiera yaml become a nigtmare. Our advise is when you need
+# to let puppet manage your oracle users, to override this class and 
+# add your own puppet implementation. This is much better maintainable
+# and adds more consistency,
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_users::list:                                    {}
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_startup
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_startup::dbname:                                "%{::ora_profile::database::dbname}"
+ora_profile::database::db_startup::oracle_home:                           "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_startup::db_type:                               database
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::cis_rules
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::cis_rules::ignore:
+  - r_1_1
+  - r_2_1_1
+  - r_2_1_2
+  - r_2_1_3
+  - r_2_1_4
+ora_profile::database::cis_rules::dbname:                                 "%{::ora_profile::database::dbname}"
 
