@@ -48,14 +48,15 @@
 class ora_profile::database::asm_storage(
   Enum['nfs','asmlib','afd']
             $storage_type,
-  Array[Stdlib::Absolutepath]
+  Optional[Array[Stdlib::Absolutepath]]
             $nfs_files,
-  Stdlib::Absolutepath
+  Optional[Stdlib::Absolutepath]
             $nfs_mountpoint,
-  Stdlib::Absolutepath
+  Optional[Stdlib::Absolutepath]
             $nfs_export,
-  String[1] $nfs_server,
-  Variant[Hash,Undef]
+  Optional[String[1]]
+            $nfs_server,
+  Optional[Hash]
             $disk_devices,
   Optional[String[1]]
             $scan_exclude,
@@ -66,6 +67,9 @@ class ora_profile::database::asm_storage(
   }
   case $storage_type {
     'nfs': {
+      unless ( $nfs_files or $nfs_mountpoint or $nfs_export or $nfs_server) {
+        fail 'Parameters nfs_files, nfs_mountpoint, nfs_export and nfs_server should all be specified'
+      }
       class {'ora_profile::database::asm_storage::nfs':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
@@ -77,6 +81,9 @@ class ora_profile::database::asm_storage(
       contain ora_profile::database::asm_storage::nfs
     }
     'asmlib': {
+      unless ( $disk_devices ) {
+        fail 'Parameters disk_devices should be specified'
+      }
       class {'ora_profile::database::asm_storage::udev':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
@@ -104,6 +111,9 @@ class ora_profile::database::asm_storage(
       contain ora_profile::database::asm_storage::asmlib
     }
     'afd': {
+      unless ( $disk_devices ) {
+        fail 'Parameters disk_devices should be specified'
+      }
       class {'ora_profile::database::asm_storage::udev':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,

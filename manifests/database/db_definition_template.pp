@@ -119,6 +119,7 @@ class ora_profile::database::db_definition_template(
   echo {"Ensure DB definition from template for database ${dbname} in ${oracle_home}":
     withpath => false,
   }
+
   #
   # All standard values fetched in data function
   #

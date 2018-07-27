@@ -145,11 +145,16 @@ class ora_profile::database::asm_software(
     withpath => false,
   }
 
-  file{ $dirs:
-    ensure => directory,
-    owner  => $grid_user,
-    group  => $install_group,
-    mode   => '0755',
+  $dirs.each |$dir| {
+    unless defined(File[$dir]) {
+      file{$dir:
+        ensure  => directory,
+        owner   => $grid_user,
+        group   => $install_group,
+        seltype => 'default_t',
+        mode    => '0770',
+      }
+    }
   }
 
   file{ '/u01/app':
@@ -210,7 +215,7 @@ class ora_profile::database::asm_software(
         $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
       }
       '11.2.0.4': {
-        $add_node_command = "${grid_home}/oui/bin/addNode.sh -ignorePrereq \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
+        $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${grid_home}/oui/bin/addNode.sh -silent -ignorePrereq -ignoreSysPrereqs \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
       }
       default: {
         notice('Version not supported yet')

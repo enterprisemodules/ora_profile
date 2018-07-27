@@ -55,9 +55,10 @@ define ora_profile::database::rac::instance(
       content => template('ora_profile/add_logfiles.sql.erb')
     }
 
-    ~> ora_exec {"@/install/add_logfiles_${thread}.sql@${on}":
-      refreshonly => true,
-      require     => File["/install/add_logfiles_${thread}.sql"],
+    -> ora_exec {"@/install/add_logfiles_${thread}.sql@${on}":
+      unless  => "select count(9) from gv\$log where thread# = ${thread} having count(9) >= 3",
+      require => File["/install/add_logfiles_${thread}.sql"],
+      before  => Ora_thread["${thread}@${on}"],
     }
   }
 
