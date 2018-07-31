@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.6.0
+
+- [database] Use conditional staged_contain
+- [database] Add code for deploying RAC
+- [asm] refacter to have easier hiera
+- [firewalld] Fix description of rule
+- [db_software] Small fix in requires
+- [core] Update documentation and some small fixes
+
 ## Release 0.5.0
 
 - [core] Add multiple storage options for asm and integrate RAC
