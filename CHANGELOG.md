@@ -1,6 +1,14 @@
 # Changelog
 
+
 All notable changes to this project will be documented in this file.
+
+## Release 0.6.1
+
+**Bugfixes**
+
+- [asm_storage] Some new documentation generated
+- [db_software] Use the passed dba_group, install_group and os_user correct
 
 ## Release 0.6.0
 
