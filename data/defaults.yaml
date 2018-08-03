@@ -101,8 +101,8 @@ ora_profile::database::groups_and_users::users:
     - oper
     shell:      /bin/bash
     password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
-    home:       /home/oracle
-    comment:    This user oracle was created by Puppet
+    home:       "/home/%{::ora_profile::database::os_user}"
+    comment:    This user was created by Puppet
     managehome: true
 
 
@@ -348,6 +348,8 @@ ora_profile::database::db_patches::patch_list:
 ora_profile::database::db_definition::dbname:                             "%{::ora_profile::database::dbname}"
 ora_profile::database::db_definition::oracle_base:                        "%{::ora_profile::database::oracle_base}"
 ora_profile::database::db_definition::oracle_home:                        "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_definition::os_user:                           "%{::ora_profile::database::os_user}"
+ora_profile::database::db_definition::install_group:                      "%{::ora_profile::database::install_group}"
 ora_profile::database::db_definition::version:                            "%{::ora_profile::database::version}"
 ora_profile::database::db_definition::log_size:                           100M
 ora_profile::database::db_definition::user_tablespace_size:               5M
@@ -393,8 +395,8 @@ ora_profile::database::db_listener::dbname:                               "%{::o
 ora_profile::database::db_listener::oracle_base:                          "%{::ora_profile::database::oracle_base}"
 ora_profile::database::db_listener::oracle_home:                          "%{::ora_profile::database::oracle_home}"
 ora_profile::database::db_listener::sqlnet_version:                       '12.2'
-
-
+ora_profile::database::db_listener::os_user:                              "%{::ora_profile::database::os_user}"
+ora_profile::database::db_listener::dba_group:                            "%{::ora_profile::database::dba_group}"
 # ------------------------------------------------------------------------------
 #
 #  Settings for database::asm_listener

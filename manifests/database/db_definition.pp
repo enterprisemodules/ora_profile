@@ -72,6 +72,8 @@ class ora_profile::database::db_definition(
             $oracle_home,
   Stdlib::Absolutepath
             $oracle_base,
+  String[1] $os_user,
+  String[1] $install_group,
   String[1] $dbname,
   String[1] $log_size,
   String[1] $user_tablespace_size,
@@ -95,6 +97,8 @@ class ora_profile::database::db_definition(
     init_ora_content             => template($init_ora_template),
     oracle_base                  => $oracle_base,
     oracle_home                  => $oracle_home,
+    oracle_user                  => $os_user,
+    install_group                => $install_group,
     system_password              => $system_password,
     sys_password                 => $sys_password,
     character_set                => 'AL32UTF8',
@@ -150,12 +154,7 @@ class ora_profile::database::db_definition(
     ensure                  => 'start',
     provider                => $ora_profile::database::db_control_provider,
     oracle_product_home_dir => $oracle_home,
-    # os_user                 => $os_user,
+    os_user                 => $os_user,
   }
-
-  # -> ora_install::dbactions{ "start_${dbname}":
-  #   oracle_home => $oracle_home,
-  #   db_name     => $dbname,
-  # }
 
 }

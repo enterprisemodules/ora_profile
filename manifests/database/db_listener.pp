@@ -27,6 +27,8 @@ class ora_profile::database::db_listener(
             $oracle_home,
   Stdlib::Absolutepath
             $oracle_base,
+  String[1] $os_user,
+  String[1] $dba_group,
   String[1] $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
@@ -39,12 +41,16 @@ class ora_profile::database::db_listener(
     oracle_home  => $oracle_home,
     version      => $sqlnet_version,        # Different version then the oracle version
     download_dir => '/tmp',
+    user         => $os_user,
+    group        => $dba_group
   }
+
 
   -> ora_install::listener{"start_${dbname}":
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
+    user        => $os_user,
+    group       => $dba_group,
     action      => 'start',
   }
-
 }

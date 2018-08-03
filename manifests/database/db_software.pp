@@ -121,6 +121,9 @@ class ora_profile::database::db_software(
       oracle_base               => $oracle_base,
       oracle_home               => $oracle_home,
       puppet_download_mnt_point => $source,
+      group                     => $dba_group,
+      group_install             => $install_group,
+      user                      => $os_user,
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
       require                   => [
