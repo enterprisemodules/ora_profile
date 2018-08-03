@@ -16,7 +16,7 @@
 #    - `afd`
 #    The default value is: `nfs`.
 #
-# @param [Array[Stdlib::Absolutepath]] nfs_files
+# @param [Optional[Array[Stdlib::Absolutepath]]] nfs_files
 #    This is an array of NFS files that will be used as ASM disks.
 #    The default value is:
 #    ```yaml
@@ -27,15 +27,15 @@
 #    - /home/nfs_server_data/asm_sda_nfs_b4
 #    ```
 #
-# @param [Stdlib::Absolutepath] nfs_mountpoint
+# @param [Optional[Stdlib::Absolutepath]] nfs_mountpoint
 #    The mountpoint where the NFS volume will be mounted.
 #    The default value is: `/nfs_client`.
 #
-# @param [Stdlib::Absolutepath] nfs_export
+# @param [Optional[Stdlib::Absolutepath]] nfs_export
 #    The name of the NFS volume that will be mounted to nfs_mountpoint.
 #    The default value is: `/home/nfs_server_data`.
 #
-# @param [String[1]] nfs_server
+# @param [Optional[String[1]]] nfs_server
 #    The name of the NFS server.
 #    The default value is: `localhost`.
 #

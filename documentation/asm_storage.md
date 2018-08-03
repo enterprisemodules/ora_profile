@@ -61,7 +61,7 @@ ora_profile::database::asm_storage::nfs_files:
 - /home/nfs_server_data/asm_sda_nfs_b4
 ```
 
-Type: `Array[Stdlib::Absolutepath]`
+Type: `Optional[Array[Stdlib::Absolutepath]]`
 
 
 [Back to overview of asm_storage](#attributes)
@@ -71,7 +71,7 @@ Type: `Array[Stdlib::Absolutepath]`
 The mountpoint where the NFS volume will be mounted.
 
 The default value is: `/nfs_client`.
-Type: `Stdlib::Absolutepath`
+Type: `Optional[Stdlib::Absolutepath]`
 
 
 [Back to overview of asm_storage](#attributes)
@@ -81,7 +81,7 @@ Type: `Stdlib::Absolutepath`
 The name of the NFS volume that will be mounted to nfs_mountpoint.
 
 The default value is: `/home/nfs_server_data`.
-Type: `Stdlib::Absolutepath`
+Type: `Optional[Stdlib::Absolutepath]`
 
 
 [Back to overview of asm_storage](#attributes)
@@ -91,7 +91,7 @@ Type: `Stdlib::Absolutepath`
 The name of the NFS server.
 
 The default value is: `localhost`.
-Type: `String[1]`
+Type: `Optional[String[1]]`
 
 
 [Back to overview of asm_storage](#attributes)

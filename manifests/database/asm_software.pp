@@ -1,6 +1,6 @@
 #++--++
 #
-# ora_profile::asm::software
+# ora_profile::asm_software
 #
 # @summary This class contains the code to install Oracle Grid Infrastructure.
 # Here you can customize some of the attributes of your database.
