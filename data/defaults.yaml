@@ -263,6 +263,7 @@ ora_profile::database::asm_software::dirs:
   - /u01/app/grid
   - /u01/app/grid/admin
   - /u01/app/grid/product
+  - "/u01/app/grid/product/%{lookup('ora_profile::database::asm_software::version')}"
 ora_profile::database::asm_software::grid_home:                           "%{ora_profile::database::grid_home}"
 ora_profile::database::asm_software::file_name:                           linuxx64_12201_grid_home
 ora_profile::database::asm_software::asm_sys_password:                    Change_on_1nstall
