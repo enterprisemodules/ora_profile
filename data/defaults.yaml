@@ -239,15 +239,11 @@ ora_profile::database::asm_packages::list:
 #  Settings for database::asm_storage
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_storage::storage_type:                         nfs
-ora_profile::database::asm_storage::nfs_files:
-- /home/nfs_server_data/asm_sda_nfs_b1
-- /home/nfs_server_data/asm_sda_nfs_b2
-- /home/nfs_server_data/asm_sda_nfs_b3
-- /home/nfs_server_data/asm_sda_nfs_b4
-ora_profile::database::asm_storage::nfs_mountpoint:                       /nfs_client
-ora_profile::database::asm_storage::nfs_export:                           /home/nfs_server_data
-ora_profile::database::asm_storage::nfs_server:                           localhost
+ora_profile::database::asm_storage::storage_type:                         afd
+ora_profile::database::asm_storage::nfs_files:                            ~
+ora_profile::database::asm_storage::nfs_mountpoint:                       ~
+ora_profile::database::asm_storage::nfs_export:                           ~
+ora_profile::database::asm_storage::nfs_server:                           ~
 ora_profile::database::asm_storage::disk_devices:                         ~
 ora_profile::database::asm_storage::scan_exclude:                         ~
 
@@ -283,20 +279,22 @@ ora_profile::database::asm_software::configure_afd:                       true
 
 # ------------------------------------------------------------------------------
 #
-#  Settings for database::asm_diskgroups
+#  Settings for asm_diskgroup
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_diskgroup::disks:
   DATA:
-    - diskname: 'DATA_0000'
-      path: '/nfs_client/asm_sda_nfs_b1'
-    - diskname: 'DATA_0001'
-      path: '/nfs_client/asm_sda_nfs_b2'
+    - diskname: 'DATA1'
+      path: 'AFD:DATA1'
+    - diskname: 'DATA2'
+      path: 'AFD:DATA2'
+    - diskname: 'DATA3'
+      path: 'AFD:DATA3'
   RECO:
-    - diskname: 'RECO_0000'
-      path: '/nfs_client/asm_sda_nfs_b3'
-    - diskname: 'RECO_0001'
-      path: '/nfs_client/asm_sda_nfs_b4'
+    - diskname: 'RECO1'
+      path: 'AFD:RECO1'
+    - diskname: 'RECO2'
+      path: 'AFD:RECO2'
 
 
 # ------------------------------------------------------------------------------
