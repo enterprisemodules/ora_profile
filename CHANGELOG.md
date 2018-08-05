@@ -3,6 +3,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.6.2
+
+**Bugfixes**
+
+- [asm_storage] Remove some NFS defaults and add some afd defaults
+- [asm_software] Add extra dir
+
 ## Release 0.6.1
 
 **Bugfixes**
