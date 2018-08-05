@@ -575,6 +575,7 @@ class ora_profile::database(
   Optional[Array]  $cluster_nodes = undef,
   Optional[String] $asm_sysctl = undef,
   Optional[String] $asm_limits = undef,
+  Optional[String] $authenticated_nodes = undef,
   Optional[String] $asm_groups_and_users = undef,
   Optional[String] $asm_packages = undef,
   Optional[String] $asm_listener = undef,
@@ -597,6 +598,7 @@ class ora_profile::database(
   Optional[String] $db_startup = undef,
   Optional[String] $before_asm_sysctl = undef,
   Optional[String] $before_asm_limits = undef,
+  Optional[String] $before_authenticated_nodes = undef,
   Optional[String] $before_asm_groups_and_users = undef,
   Optional[String] $before_asm_packages = undef,
   Optional[String] $before_asm_listener = undef,
@@ -619,6 +621,7 @@ class ora_profile::database(
   Optional[String] $before_db_startup = undef,
   Optional[String] $after_asm_sysctl = undef,
   Optional[String] $after_asm_limits = undef,
+  Optional[String] $after_authenticated_nodes = undef,
   Optional[String] $after_asm_groups_and_users = undef,
   Optional[String] $after_asm_packages = undef,
   Optional[String] $after_asm_listener = undef,
@@ -642,30 +645,32 @@ class ora_profile::database(
 )
 {
   $asm_instance_name = set_param('instance_name', '+ASM', $cluster_nodes)
-  $db_instance_name = set_param('instance_name', $dbname, $cluster_nodes)
-  $instance_number = set_param('instance_number', $dbname, $cluster_nodes)
-  $thread_number = set_param('instance_number', $dbname, $cluster_nodes)
+  $db_instance_name  = set_param('instance_name', $dbname, $cluster_nodes)
+  $instance_number   = set_param('instance_number', $dbname, $cluster_nodes)
+  $thread_number     = set_param('instance_number', $dbname, $cluster_nodes)
 
   $use_asm = $storage == 'asm'
+  $is_rac  = !empty($cluster_nodes)
 
   easy_type::staged_contain([
     'ora_profile::database::sysctl',
     'ora_profile::database::limits',
-    ['ora_profile::database::groups_and_users',     !$use_asm],
+    ['ora_profile::database::groups_and_users',         !$use_asm],
     'ora_profile::database::packages',
     'ora_profile::database::firewall',
-    ['ora_profile::database::asm_sysctl',           $use_asm],
-    ['ora_profile::database::asm_limits',           $use_asm],
-    ['ora_profile::database::asm_groups_and_users', $use_asm],
-    ['ora_profile::database::asm_packages',         $use_asm],
-    ['ora_profile::database::asm_storage',          $use_asm],
-    ['ora_profile::database::asm_software',         $use_asm],
-    ['ora_profile::database::asm_diskgroup',        $use_asm],
+    ['ora_profile::database::asm_sysctl',               $use_asm],
+    ['ora_profile::database::asm_limits',               $use_asm],
+    ['ora_profile::database::asm_groups_and_users',     $use_asm],
+    ['ora_profile::database::rac::authenticated_nodes', $is_rac],
+    ['ora_profile::database::asm_packages',             $use_asm],
+    ['ora_profile::database::asm_storage',              $use_asm],
+    ['ora_profile::database::asm_software',             $use_asm],
+    ['ora_profile::database::asm_diskgroup',            $use_asm],
     'ora_profile::database::db_software',
     'ora_profile::database::db_patches',
     'ora_profile::database::db_definition',
-    ['ora_profile::database::db_listener',          !$use_asm],
-    ['ora_profile::database::asm_listener',         $use_asm],
+    ['ora_profile::database::db_listener',              !$use_asm],
+    ['ora_profile::database::asm_listener',             $use_asm],
     'ora_profile::database::db_services',
     'ora_profile::database::db_tablespaces',
     'ora_profile::database::db_profiles',
