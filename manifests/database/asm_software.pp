@@ -198,6 +198,7 @@ class ora_profile::database::asm_software(
       scan_port                 => $scan_port,
       network_interface_list    => $network_interface_list,
       storage_option            => $storage_option,
+      ora_inventory_dir         => $ora_inventory_dir,
       before                    => Ora_setting[$asm_instance_name],
     }
   } else {

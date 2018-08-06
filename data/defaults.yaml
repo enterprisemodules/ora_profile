@@ -19,7 +19,7 @@ ora_profile::database::oracle_home:                                       /u01/a
 ora_profile::database::version:                                           12.2.0.1
 ora_profile::database::db_control_provider:                               sqlplus
 ora_profile::database::cluster_nodes:                                     ~
-ora_profile::database::ora_inventory_dir:                                 /u01/app/oracle/admin
+ora_profile::database::ora_inventory_dir:                                 /u01/app/inventory
 ora_profile::database::download_dir:                                      /install
 
 
@@ -314,7 +314,7 @@ ora_profile::database::db_software::dba_group:                            "%{::o
 ora_profile::database::db_software::install_group:                        "%{::ora_profile::database::install_group}"
 ora_profile::database::db_software::os_user:                              "%{::ora_profile::database::os_user}"
 ora_profile::database::db_software::version:                              "%{::ora_profile::database::version}"
-ora_profile::database::db_software::database_type:                        SE2
+ora_profile::database::db_software::database_type:                        EE
 ora_profile::database::db_software::oracle_base:                          "%{::ora_profile::database::oracle_base}"
 ora_profile::database::db_software::oracle_home:                          "%{::ora_profile::database::oracle_home}"
 ora_profile::database::db_software::source:                               "%{::ora_profile::database::source}"
