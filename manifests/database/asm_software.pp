@@ -7,7 +7,7 @@
 # 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @param [Enum['12.2.0.1', '12.1.0.1', '12.1.0.2', '11.2.0.4']] version
+# @param [Enum['11.2.0.4', '12.1.0.1', '12.2.0.1', '12.1.0.2', '18.0.0.0']] version
 #    The version of Oracle Grid Infrastructure you want to install.
 #    The default is : `12.2.0.1`
 #    To customize this consistently use the hiera key `ora_profile::database::asm_software::version`.
@@ -113,7 +113,7 @@
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::asm_software(
-  Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.4']
+  Enum['11.2.0.4','12.1.0.1','12.2.0.1','12.1.0.2','18.0.0.0']
             $version,
   Array[Stdlib::Absolutepath]
             $dirs,

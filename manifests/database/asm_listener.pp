@@ -27,7 +27,8 @@ class ora_profile::database::asm_listener(
             $oracle_home,
   Stdlib::Absolutepath
             $oracle_base,
-  String[1] $sqlnet_version,
+  Enum['11.2','12.1','12.2','18.0']
+            $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
 

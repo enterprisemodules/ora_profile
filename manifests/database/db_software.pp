@@ -5,7 +5,13 @@
 # @summary This class contains the definition of the Oracle software you want to use on this system.
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @param [Enum['12.2.0.1', '12.1.0.1', '12.1.0.2', '11.2.0.3', '11.2.0.4', '11.2.0.1']] version
+# @param [Enum['11.2.0.1',
+#     '11.2.0.3',
+#     '11.2.0.4',
+#     '12.1.0.1',
+#     '12.1.0.2',
+#     '12.2.0.1',
+#     '18.0.0.0']] version
 #    The version of Oracle you want to install.
 #    The default is : `12.2.0.1`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
@@ -63,7 +69,7 @@
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::db_software(
-  Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']
+  Enum['11.2.0.1','11.2.0.3','11.2.0.4','12.1.0.1','12.1.0.2','12.2.0.1','18.0.0.0']
             $version,
   Enum['SE2', 'SE', 'EE', 'SEONE']
             $database_type,
