@@ -22,6 +22,8 @@ The `ora_profile` module allows an easy path from first simple installation to a
 - [ora_cis](https://www.enterprisemodules.com/shop/products/puppet-oracle-security-module) To secure your databases according to the CIS benchmarks.
 - [ora_rac](https://forge.puppet.com/enterprisemodules/ora_rac) To use Puppet to create and manage Oracle RAC installations.
 
+This module support Oracle 10, 11, 12 and 18
+
 ## License
 
 Most of the [Enterprise Modules](https://www.enterprisemodules.com) modules are commercial modules. This one is **NOT**. It is an Open Source module. You are free to use it any way you like. It, however, is based on our commercial Puppet Oracle modules.

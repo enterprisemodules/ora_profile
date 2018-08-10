@@ -3,6 +3,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.7.0
+
+**New features**
+
+- Add support for Oracle 18
+
 ## Release 0.6.2
 
 **Bugfixes**
