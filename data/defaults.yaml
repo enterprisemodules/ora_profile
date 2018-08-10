@@ -19,7 +19,7 @@ ora_profile::database::oracle_home:                                       /u01/a
 ora_profile::database::version:                                           12.2.0.1
 ora_profile::database::db_control_provider:                               sqlplus
 ora_profile::database::cluster_nodes:                                     ~
-ora_profile::database::ora_inventory_dir:                                 /u01/app/inventory
+ora_profile::database::ora_inventory_dir:                                 /u01/app
 ora_profile::database::download_dir:                                      /install
 
 

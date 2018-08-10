@@ -40,7 +40,7 @@ Puppet::Functions.create_function(:'set_param') do
         index = 0
         instance_number = cluster_nodes.map do |node|
           index = index + 1
-          if node == hostname 
+          if node == hostname
             index
           end
         end.flatten.join
