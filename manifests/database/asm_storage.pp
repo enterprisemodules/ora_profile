@@ -46,7 +46,7 @@
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::asm_storage(
-  Enum['nfs','asmlib','afd']
+  Enum['nfs','asmlib','afd','raw']
             $storage_type,
   Optional[Array[Stdlib::Absolutepath]]
             $nfs_files,
@@ -62,7 +62,7 @@ class ora_profile::database::asm_storage(
             $scan_exclude,
 ) inherits ora_profile::database {
 
-  echo {"Ensure ASM storage setup using ${storage_type}":
+  echo {"Ensure ASM storage setup using ${storage_type} disk devices":
     withpath => false,
   }
   case $storage_type {
@@ -111,6 +111,17 @@ class ora_profile::database::asm_storage(
       contain ora_profile::database::asm_storage::asmlib
     }
     'afd': {
+      unless ( $disk_devices ) {
+        fail 'Parameters disk_devices should be specified'
+      }
+      class {'ora_profile::database::asm_storage::udev':
+        grid_user       => $grid_user,
+        grid_admingroup => $grid_admingroup,
+        disk_devices    => $disk_devices,
+      }
+      contain ora_profile::database::asm_storage::udev
+    }
+    'raw': {
       unless ( $disk_devices ) {
         fail 'Parameters disk_devices should be specified'
       }
