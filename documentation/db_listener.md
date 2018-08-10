@@ -61,7 +61,7 @@ Type: `Stdlib::Absolutepath`
 The SQLnet version to use.
 
 The default is: 12.2
-Type: `String[1]`
+Type: `Enum['11.2','12.1','12.2','18.0']`
 
 
 [Back to overview of db_listener](#attributes)

@@ -17,7 +17,7 @@
 #    The default is : `/u01/app/oracle`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
-# @param [String[1]] sqlnet_version
+# @param [Enum['11.2', '12.1', '12.2', '18.0']] sqlnet_version
 #    The SQLnet version to use.
 #    The default is: 12.2
 #
@@ -29,7 +29,8 @@ class ora_profile::database::db_listener(
             $oracle_base,
   String[1] $os_user,
   String[1] $dba_group,
-  String[1] $sqlnet_version,
+  Enum['11.2','12.1','12.2','18.0']
+            $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
 

@@ -49,7 +49,7 @@ The default is : `12.2.0.1`
 
 To customize this consistently use the hiera key `ora_profile::database::asm_software::version`.
 
-Type: `Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.4']`
+Type: `Enum['11.2.0.4','12.1.0.1','12.2.0.1','12.1.0.2','18.0.0.0']`
 
 
 [Back to overview of asm_software](#attributes)

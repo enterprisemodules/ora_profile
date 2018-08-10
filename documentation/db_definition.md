@@ -45,7 +45,7 @@ The default is : `12.2.0.1`
 
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
-Type: `Enum['12.2.0.1','12.1.0.1','12.1.0.2','11.2.0.3','11.2.0.4', '11.2.0.1']`
+Type: `Enum['11.2.0.1','11.2.0.3','11.2.0.4','12.1.0.1','12.1.0.2','12.2.0.1','18.0.0.0']`
 
 
 [Back to overview of db_definition](#attributes)

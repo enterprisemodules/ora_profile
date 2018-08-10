@@ -42,7 +42,7 @@ Valid values are:
 - `afd`
 
 The default value is: `nfs`.
-Type: `Enum['nfs','asmlib','afd']`
+Type: `Enum['nfs','asmlib','afd','raw']`
 
 
 [Back to overview of asm_storage](#attributes)
