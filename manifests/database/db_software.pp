@@ -133,6 +133,7 @@ class ora_profile::database::db_software(
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
       require                   => [
+        File[$dirs],
         Package['unzip'],
         File[$download_dir],
       ],

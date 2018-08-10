@@ -15,8 +15,8 @@ ora_profile::database::grid_base:                                         /u01/a
 ora_profile::database::grid_home:                                         /u01/app/grid/product/12.2.0.1/grid_home1
 ora_profile::database::source:                                            puppet:///modules/software
 ora_profile::database::oracle_base:                                       /u01/app/oracle
-ora_profile::database::oracle_home:                                       /u01/app/oracle/product/12.2.0.1/db_home1
 ora_profile::database::version:                                           12.2.0.1
+ora_profile::database::oracle_home:                                       /u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1
 ora_profile::database::db_control_provider:                               sqlplus
 ora_profile::database::cluster_nodes:                                     ~
 ora_profile::database::ora_inventory_dir:                                 /u01/app
@@ -306,6 +306,8 @@ ora_profile::database::db_software::dirs:
   - /u01
   - /u01/app
   - /u01/app/oracle
+  - /u01/app/oracle/product
+  - "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}"
   - /u02
   - /u02/oradata
   - /u03
