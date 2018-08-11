@@ -3,6 +3,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.7.1
+
+**Bug fixes**
+
+-  [db_software] Small fixes in ordering and dirs
+
 ## Release 0.7.0
 
 **New features**
