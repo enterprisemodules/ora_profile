@@ -4,11 +4,11 @@ require 'beaker-rspec/spec_helper'
 require 'beaker/puppet_install_helper'
 require 'beaker/module_install_helper'
 require 'easy_type_helpers/acceptance'
-Dir["./spec/support/acceptance/**/*.rb"].sort.each { |f| require f }
+Dir['./spec/support/acceptance/**/*.rb'].sort.each { |f| require f }
 
 unless ENV['RS_PROVISION'] == 'no'
   run_puppet_install_helper
-  install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ %r{pe}i
+  install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ /pe/i
 
   hosts.each do |host|
     on host, 'rm -rf /etc/puppetlabs/code/environments/production/modules'
@@ -33,7 +33,7 @@ RSpec.configure do |c|
     em_license_file = '/software/Universal.entitlements'
     on(master, "cp #{em_license_file} /etc/puppetlabs/puppet/")
     copy_module_to(master, :source => proj_root,
-                           :ignore_list => ['software', 'log', 'junit'],
+                           :ignore_list => %w[software log junit],
                            :target_module_path => '/etc/puppetlabs/code/environments/production/modules',
                            :module_name => 'ora_profile')
     # Now we don't use hiera any more. This code is needed when we want to use hiera to specify any stuff
@@ -60,7 +60,6 @@ RSpec.configure do |c|
       'crayfishx-firewalld'
     ]
 
-    modules.each { |module_name | on(master, "puppet module install #{module_name} --force")}
-
+    modules.each { |module_name| on(master, "puppet module install #{module_name} --force") }
   end
 end

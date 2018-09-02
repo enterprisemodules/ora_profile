@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'ora_profile::secured_database' do
-  on_supported_os(facterversion: '2.4').each do |os, os_facts|
+  on_supported_os(:facterversion => '2.4').each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
 

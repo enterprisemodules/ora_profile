@@ -3,7 +3,12 @@
 #
 # Returns the the installed Opatch version for a specfied Oracle home
 #
-Puppet::Functions.create_function(:'set_param') do
+# rubocop: disable Metrics/AbcSize
+# rubocop: disable Metrics/CyclomaticComplexity
+# rubocop: disable Metrics/PerceivedComplexity
+# rubocop: disable Metrics/MethodLength
+
+Puppet::Functions.create_function(:set_param) do
   dispatch :set_string_param do
     param 'String', :param_name
     param 'String', :dbname
@@ -39,10 +44,8 @@ Puppet::Functions.create_function(:'set_param') do
       if cluster_nodes && dbname
         index = 0
         instance_number = cluster_nodes.map do |node|
-          index = index + 1
-          if node == hostname
-            index
-          end
+          index += 1
+          index if node == hostname
         end.flatten.join
         return_value = "#{dbname}#{instance_number}"
       elsif dbname
@@ -55,10 +58,8 @@ Puppet::Functions.create_function(:'set_param') do
       if cluster_nodes && dbname
         index = 0
         instance_number = cluster_nodes.map do |node|
-          index = index + 1
-          if node == hostname 
-            index
-          end
+          index += 1
+          index if node == hostname
         end.flatten.join
         return_value = instance_number
       elsif dbname
@@ -73,3 +74,7 @@ Puppet::Functions.create_function(:'set_param') do
     return_value
   end
 end
+# rubocop: enable Metrics/AbcSize
+# rubocop: enable Metrics/CyclomaticComplexity
+# rubocop: enable Metrics/PerceivedComplexity
+# rubocop: enable Metrics/MethodLength
