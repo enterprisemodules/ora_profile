@@ -21,7 +21,8 @@ pipeline {
           "Ruby 2.4.0 - Puppet 5.2.0": { UnitTests('2.4.0', '5.2.0') },
           "Ruby 2.4.0 - Puppet 5.3.5": { UnitTests('2.4.0', '5.3.5') },
           "Ruby 2.4.0 - Puppet 5.4.0": { UnitTests('2.4.0', '5.4.0') },
-          "Ruby 2.4.0 - Puppet 5.5.0": { UnitTests('2.4.0', '5.5.0') }
+          "Ruby 2.4.0 - Puppet 5.5.6": { UnitTests('2.4.0', '5.5.6') },
+          "Ruby 2.4.0 - Puppet 6.0.0": { UnitTests('2.4.0', '6.0.0') }
         )
       }
     }
