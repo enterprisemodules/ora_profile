@@ -153,14 +153,4 @@ class ora_profile::database::db_definition(
     },
     timezone                     => '+01:00',
   }
-  #
-  # Database is done. Now start it
-  #
-  ->db_control {'database started':
-    ensure                  => 'start',
-    provider                => $ora_profile::database::db_control_provider,
-    oracle_product_home_dir => $oracle_home,
-    os_user                 => $os_user,
-  }
-
 }
