@@ -573,7 +573,7 @@ class ora_profile::database(
             $grid_home,
   String[1] $db_control_provider,
   Stdlib::Absolutepath
-            $download_dir,
+          $download_dir,
 #
 # Optional settings
 #
@@ -655,15 +655,17 @@ class ora_profile::database(
   $instance_number   = set_param('instance_number', $dbname, $cluster_nodes)
   $thread_number     = set_param('instance_number', $dbname, $cluster_nodes)
 
-  $use_asm = $storage == 'asm'
-  $is_rac  = !empty($cluster_nodes)
+  $is_linux   = $::kernel == 'Linux'
+  $is_windows = $::kernel == 'Windows'
+  $use_asm    = $storage == 'asm'
+  $is_rac     = !empty($cluster_nodes)
 
   easy_type::staged_contain([
-    'ora_profile::database::sysctl',
-    'ora_profile::database::limits',
+    ['ora_profile::database::sysctl',                   $is_linux],
+    ['ora_profile::database::limits',                   $is_linux],
     ['ora_profile::database::groups_and_users',         !$use_asm],
-    'ora_profile::database::packages',
-    'ora_profile::database::firewall',
+    ['ora_profile::database::packages',                 $is_linux],
+    ['ora_profile::database::firewall',                 $is_linux],
     ['ora_profile::database::asm_sysctl',               $use_asm],
     ['ora_profile::database::asm_limits',               $use_asm],
     ['ora_profile::database::asm_groups_and_users',     $use_asm],

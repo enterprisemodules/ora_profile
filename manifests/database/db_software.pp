@@ -90,9 +90,13 @@ class ora_profile::database::db_software(
     withpath => false,
   }
 
-  unless defined(Package['unzip']) {
+  #
+  # On non-windows systems , ensure the unzip package is installed
+  #
+  if !defined(Package['unzip']) and $::kernel != 'Windows'  {
     package { 'unzip':
       ensure => 'present',
+      before => Ora_install::Installdb[$file_name],
     }
   }
 
@@ -127,6 +131,7 @@ class ora_profile::database::db_software(
       oracle_base               => $oracle_base,
       oracle_home               => $oracle_home,
       puppet_download_mnt_point => $source,
+      download_dir              => $download_dir,
       group                     => $dba_group,
       group_install             => $install_group,
       user                      => $os_user,
@@ -134,7 +139,6 @@ class ora_profile::database::db_software(
       ora_inventory_dir         => $ora_inventory_dir,
       require                   => [
         File[$dirs],
-        Package['unzip'],
         File[$download_dir],
       ],
     }

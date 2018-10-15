@@ -22,7 +22,6 @@ ora_profile::database::cluster_nodes:                                     ~
 ora_profile::database::ora_inventory_dir:                                 /u01/app
 ora_profile::database::download_dir:                                      /install
 
-
 # ------------------------------------------------------------------------------
 #
 # Settings for database::sysctl

@@ -1,0 +1,48 @@
+---
+lookup_options:
+  ora_profile::database::db_software::dirs:
+    merge: first
+  ora_profile::database::packages:
+    merge: first
+  ora_profile::database::groups_and_users::groups:
+    merge: first
+  ora_profile::database::groups_and_users::users:
+    merge: first
+
+ora_profile::database::oracle_base:                                       c:/u01/app/oracle
+ora_profile::database::oracle_home:                                       c:/u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1
+ora_profile::database::ora_inventory_dir:                                 c:/u01/app
+ora_profile::database::download_dir:                                      c:/install
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_software::dirs:
+  - c:/u01
+  - c:/u01/app
+  - c:/u01/app/oracle
+  - c:/u01/app/oracle/product
+  - "c:/u01/app/oracle/product/%{lookup('ora_profile::database::version')}"
+  - c:/u02
+  - c:/u02/oradata
+  - c:/u03
+  - c:/u03/fast_recovery_area
+# ------------------------------------------------------------------------------
+#
+# Settings for database::groups_and_users
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::groups_and_users::groups:
+  "%{::ora_profile::database::install_group}":  {}
+  "%{::ora_profile::database::dba_group}":      {}
+  oper:                                         {}
+ora_profile::database::groups_and_users::users:
+  "%{::ora_profile::database::os_user}":
+    groups:
+    - "%{::ora_profile::database::install_group}"
+    - "%{::ora_profile::database::dba_group}"
+    - oper
+    comment:    This user was created by Puppet
+    # managehome: true
