@@ -35,4 +35,6 @@ ora_version:
   -
     sid:   DB01
     name:   12.2.0.1.0
-
+dmi:
+  product:
+    uuid: 'AAA-AAAA-BBBB-CCCC'

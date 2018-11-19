@@ -8,6 +8,8 @@ HOSTS:
     image: centos:7
     docker_preserve_image: true
     docker_cmd: '["/sbin/init"]'
+    docker_image_commands:
+      - 'yum remove puppet-agent puppet5-release -y'  # The rpm is still there, but the files not
     mount_folders:
       software:
         host_path: software

@@ -87,8 +87,10 @@ class ora_profile::database::db_definition(
   String[1] $temporary_tablespace_size,
   String[1] $undo_tablespace_size,
   String[1] $sysaux_tablespace_size,
-  String[1] $system_password,
-  String[1] $sys_password,
+  Easy_type::Password
+            $system_password,
+  Easy_type::Password
+            $sys_password,
   String[1] $init_ora_template,
 ) inherits ora_profile::database {
 
@@ -105,8 +107,8 @@ class ora_profile::database::db_definition(
     oracle_home                  => $oracle_home,
     oracle_user                  => $os_user,
     install_group                => $install_group,
-    system_password              => $system_password,
-    sys_password                 => $sys_password,
+    system_password              => unwrap($system_password),
+    sys_password                 => unwrap($sys_password),
     character_set                => 'AL32UTF8',
     national_character_set       => 'AL16UTF16',
     extent_management            => 'local',

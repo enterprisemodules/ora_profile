@@ -21,8 +21,18 @@ ora_profile::database::db_control_provider:                               sqlplu
 ora_profile::database::cluster_nodes:                                     ~
 ora_profile::database::ora_inventory_dir:                                 /u01/app
 ora_profile::database::download_dir:                                      /install
-
-
+# ------------------------------------------------------------------------------
+#
+# Conversions
+#
+# ------------------------------------------------------------------------------
+lookup_options:
+  '^ora_profile::.*::system_password':
+    convert_to: 'Sensitive'
+  '^ora_profile::.*::sys_password':
+    convert_to: 'Sensitive'
+  '^ora_profile::.*::asm_sys_password':
+    convert_to: 'Sensitive'
 # ------------------------------------------------------------------------------
 #
 # Settings for database::sysctl

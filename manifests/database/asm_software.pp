@@ -118,7 +118,8 @@ class ora_profile::database::asm_software(
   Array[Stdlib::Absolutepath]
             $dirs,
   String[1] $file_name,
-  String[1] $asm_sys_password,
+  Easy_type::Password
+            $asm_sys_password,
   String[1] $disk_discovery_string,
   String[1] $asm_diskgroup,
   String[1] $asm_disks,
@@ -181,8 +182,8 @@ class ora_profile::database::asm_software(
       grid_base                 => $grid_base,
       grid_home                 => $grid_home,
       puppet_download_mnt_point => $source,
-      sys_asm_password          => $asm_sys_password,
-      asm_monitor_password      => $asm_sys_password,
+      sys_asm_password          => unwrap($asm_sys_password),
+      asm_monitor_password      => unwrap($asm_sys_password),
       asm_diskgroup             => $asm_diskgroup,
       disk_discovery_string     => $disk_discovery_string,
       disks                     => $asm_disks,

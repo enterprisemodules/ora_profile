@@ -23,3 +23,16 @@ default_facts.merge!(YAML.safe_load(File.read(default_module_facts_path))) if Fi
 RSpec.configure do |c|
   c.default_facts = default_facts
 end
+
+RSpec.shared_context 'specify passwords' do
+
+  let(:pre_condition) { 
+    """
+      class { 'ora_profile::database::db_definition':
+        system_password => Sensitive('Welcome01!'),
+        sys_password    => Sensitive('Welcome01!'),
+      }
+    """
+  }
+
+end
