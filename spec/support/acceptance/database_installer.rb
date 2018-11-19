@@ -14,6 +14,8 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
       'ora_profile::database::db_definition_template::recovery_area_destination' => '/u03/fast_recovery_area',
       'ora_profile::database::db_definition_template::storage_type'              => 'FS',
+      'ora_profile::database::db_definition_template::system_password'           => 'Welcome01',
+      'ora_profile::database::db_definition_template::sys_password'              => 'Welcome01',
       'ora_profile::database::db_definition'                                     => 'ora_profile::database::db_definition_template',
       'ora_profile::database::db_tablespaces::list'                              => {'TEST_TS' => {
           'ensure'            => 'present',
@@ -46,8 +48,8 @@ shared_examples "a database installer" do | settings|
           'password_verify_function'  => 'ORA12C_STRONG_VERIFY_FUNCTION',
           # 'private_sga'               => 'UNLIMITED', # Not idempotent for now
           'sessions_per_user'         => 10,
-        } 
-      },   
+        }
+      },
       'ora_profile::database::db_users::list'                                   => {'USER_TEST' => {
             'ensure'               => 'present',
             'default_tablespace'   => 'SYSTEM',

@@ -26,6 +26,18 @@ ora_profile::database::temp_dir:                                          /tmp
 
 # ------------------------------------------------------------------------------
 #
+# Conversions
+#
+# ------------------------------------------------------------------------------
+lookup_options:
+  '^ora_profile::.*::system_password':
+    convert_to: 'Sensitive'
+  '^ora_profile::.*::sys_password':
+    convert_to: 'Sensitive'
+  '^ora_profile::.*::asm_sys_password':
+    convert_to: 'Sensitive'
+# ------------------------------------------------------------------------------
+#
 # Settings for database::sysctl
 #
 # ------------------------------------------------------------------------------
