@@ -100,7 +100,7 @@ ora_profile::database::groups_and_users::users:
     - "%{::ora_profile::database::dba_group}"
     - oper
     shell:      /bin/bash
-    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
+    password:   "%{lookup('ora_profile::database::os_user_password')}"
     home:       "/home/%{::ora_profile::database::os_user}"
     comment:    This user was created by Puppet
     managehome: true
@@ -197,7 +197,7 @@ ora_profile::database::asm_groups_and_users::users:
     - oper
     - asmdba
     shell:      /bin/bash
-    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
+    password:   "%{lookup('ora_profile::database::os_user_password')}"
     home:       /home/oracle
     comment:    This user oracle was created by Puppet
     managehome: true
@@ -211,7 +211,7 @@ ora_profile::database::asm_groups_and_users::users:
     - asmdba
     - asmoper
     shell:      /bin/bash
-    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
+    password:   "%{lookup('ora_profile::database::grid_user_password')}"
     home:       /home/grid
     comment:    This user grid was created by Puppet
     managehome: true
@@ -262,7 +262,6 @@ ora_profile::database::asm_software::dirs:
   - "/u01/app/grid/product/%{lookup('ora_profile::database::asm_software::version')}"
 ora_profile::database::asm_software::grid_home:                           "%{ora_profile::database::grid_home}"
 ora_profile::database::asm_software::file_name:                           linuxx64_12201_grid_home
-ora_profile::database::asm_software::asm_sys_password:                    Change_on_1nstall
 ora_profile::database::asm_software::asm_diskgroup:                       DATA
 ora_profile::database::asm_software::grid_type:                           HA_CONFIG
 ora_profile::database::asm_software::cluster_node_types:                  ~
@@ -359,8 +358,6 @@ ora_profile::database::db_definition::temporary_tablespace_size:          50M
 ora_profile::database::db_definition::undo_tablespace_size:               50M
 ora_profile::database::db_definition::sysaux_tablespace_size:             50M
 ora_profile::database::db_definition::container_database:                 enabled
-ora_profile::database::db_definition::system_password:                    Welcome01
-ora_profile::database::db_definition::sys_password:                       Change_on_1nstall
 ora_profile::database::db_definition::init_ora_template:                  ora_profile/init.ora.erb
 
 
@@ -381,8 +378,6 @@ ora_profile::database::db_definition_template::sample_schema:             'FALSE
 ora_profile::database::db_definition_template::memory_mgmt_type:          AUTO_SGA
 ora_profile::database::db_definition_template::storage_type:              ASM
 ora_profile::database::db_definition_template::puppet_download_mnt_point: 'ora_profile'
-ora_profile::database::db_definition_template::system_password:           Welcome01
-ora_profile::database::db_definition_template::sys_password:              Change_on_1nstall
 ora_profile::database::db_definition_template::db_conf_type:              'SINGLE'
 ora_profile::database::db_definition_template::cluster_nodes:             ~
 
