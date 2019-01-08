@@ -50,7 +50,7 @@ The `ora_profile::database` class contains all the Puppet code to install, creat
 - `db_users`         (Define all required Oracle users)
 - `db_startup`       (Make sure the database restarts after a reboot)
 
-All these stages have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
+All these stages have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file.
 
 But sometimes this is not enough and you would like to add some extra definitions, you can, for example, add a Puppet class to be executed after the `systctl` stage is done and before the `limits` is done. You can do this by adding the next line to your yaml data:
 
@@ -87,6 +87,14 @@ The [`ora_profile`](https://www.enterprisemodules.com/shop/products/puppet-ora_c
 - Puppet module [`enterprisemodules-ora_config`](https://forge.puppet.com/enterprisemodules/ora_config) installed.
 - Puppet module [`enterprisemodules-ora_install`](https://forge.puppet.com/enterprisemodules/ora_install) installed.
 - Puppet module [`enterprisemodules-easy_type`](https://forge.puppet.com/enterprisemodules/easy_type) installed.
+- Puppet module [`enterprisemodules/ora_cis`](https://forge.puppet.com/enterprisemodules/ora_cis) installed.
+- Puppet module [`ipcrm-echo`](https://forge.puppet.com/ipcrm/echo) installed.
+- Puppet module [`herculesteam-augeasproviders_core`](https://forge.puppet.com/herculesteam/augeasproviders_core) installed.
+- Puppet module [`herculesteam-augeasproviders_sysctl`](https://forge.puppet.com/herculesteam/augeasproviders_sysctl) installed.
+- Puppet module [`saz-limits`](https://forge.puppet.com/saz/limits) installed.
+- Puppet module [`puppetlabs-firewall`](https://forge.puppet.com/puppetlabs/firewall) installed.
+- Puppet module [`crayfishx-firewalld`](https://forge.puppet.com/crayfishx/firewalld) installed.
+- Puppet module [`puppetlabs-stdlib`](https://forge.puppet.com/puppetlabs/stdlib) installed.
 - Puppet version 4.0 or higher. Can be Puppet Enterprise or Puppet Open Source
 - Oracle 11 higher
 - A valid Oracle license
