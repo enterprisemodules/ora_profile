@@ -35,18 +35,23 @@ class ora_profile::database::asm_diskgroup(
     withpath => false,
   }
 
-  $asm_version = $ora_profile::database::asm_software::version
+  $asm_version = lookup('ora_profile::database::asm_software::version')
 
-  $disks.each |$diskgroup, $devices| {
-    ora_asm_diskgroup { "${diskgroup}@${asm_instance_name}":
-      ensure            => 'present',
-      au_size           => '4',
-      redundancy_type   => 'EXTERN',
-      compat_asm        => $asm_version,
-      compat_rdbms      => $asm_version,
-      diskgroup_state   => 'MOUNTED',
-      allow_disk_update => true,
-      disks             => $devices,
+  $diskgroups = suffix($disks, "@${asm_instance_name}")
+
+  $diskgroups.each |String $diskgroup, Hash $diskgroup_props = {}| {
+    ora_asm_diskgroup {
+      default:
+        ensure            => present,
+        allow_disk_update => true,
+        au_size           => 4,
+        compat_asm        => $asm_version,
+        compat_rdbms      => $asm_version,
+        diskgroup_state   => 'MOUNTED',
+        redundancy_type   => 'EXTERNAL',
+      ;
+      $diskgroup:
+        * => $diskgroup_props,
     }
   }
 

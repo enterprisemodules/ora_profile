@@ -125,6 +125,8 @@ class ora_profile::database::asm_software(
   Boolean   $configure_afd,
   Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
             $grid_type,
+  Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
+            $disk_redundancy,
   Optional[String[1]]
             $disks_failgroup_names,
   Optional[String[1]]
@@ -187,7 +189,7 @@ class ora_profile::database::asm_software(
       disk_discovery_string     => $disk_discovery_string,
       disks                     => $asm_disks,
       disks_failgroup_names     => $disks_failgroup_names,
-      disk_redundancy           => 'EXTERNAL',
+      disk_redundancy           => $disk_redundancy,
       disk_au_size              => '4',
       configure_afd             => $configure_afd,
       grid_type                 => $grid_type,

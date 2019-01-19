@@ -29,6 +29,7 @@ Attribute Name                                                 | Short Descripti
 [configure_afd](#asm_software_configure_afd)                   | Specify whether or not to configure ASM Filter Driver instead of ASMLib. |
 [dirs](#asm_software_dirs)                                     | The directories to create as part of the installation.                   |
 [disk_discovery_string](#asm_software_disk_discovery_string)   | The disk discovery string for ASM.                                       |
+[disk_redundancy](#asm_software_disk_redundancy)               | The disk redundancy for the initial diskgroup to setup ASM.              |
 [disks_failgroup_names](#asm_software_disks_failgroup_names)   | A comma seperated list of device and failure group name.                 |
 [file_name](#asm_software_file_name)                           | The file name containing the Oracle Grid Infrastructure software kit.    |
 [grid_type](#asm_software_grid_type)                           | The type of grid.                                                        |
@@ -91,7 +92,7 @@ Type: `String[1]`
 The `sys` password to use for ASM.
 
 The default is: `Welcome01`
-Type: `String[1]`
+Type: `Easy_type::Password`
 
 
 [Back to overview of asm_software](#attributes)
@@ -270,6 +271,25 @@ Valid values are:
 The default value is: `undef`
 
 Type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
+
+
+[Back to overview of asm_software](#attributes)
+
+### disk_redundancy<a name='asm_software_disk_redundancy'>
+
+The disk redundancy for the initial diskgroup to setup ASM.
+
+Valid values are:
+
+- `EXTENDED`
+- `EXTERNAL`
+- `FLEX`
+- `HIGH`
+- `NORMAL`
+
+The default value is: `EXTERNAL`
+
+Type: `Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']`
 
 
 [Back to overview of asm_software](#attributes)
