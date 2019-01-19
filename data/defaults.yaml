@@ -96,11 +96,11 @@ ora_profile::database::limits::list:
 # ------------------------------------------------------------------------------
 ora_profile::database::groups_and_users::groups:
   "%{::ora_profile::database::install_group}":
-    gid:  54321,
+    gid:  54321
   "%{::ora_profile::database::dba_group}":
-    gid:  54322,
+    gid:  54322
   oper:
-    gid:  54323,
+    gid:  54323
 ora_profile::database::groups_and_users::users:
   "%{::ora_profile::database::os_user}":
     uid:        54321
@@ -186,11 +186,11 @@ ora_profile::database::asm_limits::list:                                  {} # N
 #------------------------------------------------------------------------------
 ora_profile::database::asm_groups_and_users::groups:
   "%{::ora_profile::database::install_group}":
-    gid:  54321,
+    gid:  54321
   "%{::ora_profile::database::dba_group}":
-    gid:  54322,
+    gid:  54322
   oper:
-    gid:  54323,
+    gid:  54323
   asmdba:
     gid:  54324
   asmadmin:
@@ -284,6 +284,7 @@ ora_profile::database::asm_software::disk_discovery_string:               '/dev/
 ora_profile::database::asm_software::asm_disks:                           /dev/asm_data01
 ora_profile::database::asm_software::disks_failgroup_names:               '/dev/asm_data01,'
 ora_profile::database::asm_software::configure_afd:                       true
+ora_profile::database::asm_software::redundancy_type:                     EXTERNAL
 
 
 # ------------------------------------------------------------------------------
@@ -293,6 +294,7 @@ ora_profile::database::asm_software::configure_afd:                       true
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_diskgroup::disks:
   DATA:
+    disks:
     - diskname: 'DATA1'
       path: 'AFD:DATA1'
     - diskname: 'DATA2'
@@ -300,6 +302,7 @@ ora_profile::database::asm_diskgroup::disks:
     - diskname: 'DATA3'
       path: 'AFD:DATA3'
   RECO:
+    disks:
     - diskname: 'RECO1'
       path: 'AFD:RECO1'
     - diskname: 'RECO2'
