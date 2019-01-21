@@ -1,8 +1,15 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
-puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "= #{ENV['PUPPET_GEM_VERSION']}" :  '>= 4.0'
+puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "#{ENV['PUPPET_GEM_VERSION']}" :  '4.10.8'
 
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
+if Gem::Version.new(puppetversion) > Gem::Version.new('5.0.0')
+  #
+  # PDK 1.8 doesn't include dot files. We MUST have those. Until 1.9 is released
+  # we fetch it from the master of the github
+  #
+  gem 'pdk', :git => 'https://github.com/puppetlabs/pdk.git'
+end
 
 group :unit_test do
   gem 'hiera-puppet-helper'
