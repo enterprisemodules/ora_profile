@@ -5,6 +5,8 @@
   "summary": "Puppet profiles for installing Oracle Database software and creating and managing  databases",
   "license": "proprietary",
   "source": "https://github.com/enterprisemodules/ora_profile",
+  "project_page": "https://github.com/enterprisemodules/ora_profile",
+  "issues_url": "https://github.com/enterprisemodules/ora_profile/issues",
   "dependencies": [
     {
       "name": "enterprisemodules/easy_type",
