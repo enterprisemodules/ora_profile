@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.1
+
+**Bug fixes**
+
+- [asm_software] / [asm_diskgroup] make redundancy configurable
+- [docs] update readme with all dependencies
 
 ## Release 0.8.0
 
