@@ -198,7 +198,7 @@ ora_profile::database::asm_groups_and_users::users:
     - asmdba
     shell:      /bin/bash
     password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
-    home:       /home/oracle
+    home:       "/home/%{::ora_profile::database::os_user}"
     comment:    This user oracle was created by Puppet
     managehome: true
   "%{ora_profile::database::grid_user}":
@@ -212,9 +212,10 @@ ora_profile::database::asm_groups_and_users::users:
     - asmoper
     shell:      /bin/bash
     password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
-    home:       /home/grid
+    home:       "/home/%{ora_profile::database::grid_user}"
     comment:    This user grid was created by Puppet
     managehome: true
+
 
 
 # ------------------------------------------------------------------------------
