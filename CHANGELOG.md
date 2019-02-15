@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.2
+
+**Bug fixes**
+
+- [asm_groups_and_users] Fix used home when not default
+
 ## Release 0.8.1
 
 **Bug fixes**
