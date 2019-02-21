@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.3
+
+**Bug fixes**
+
+- [asm_storage] Fix timing issues with ASMlib disks
+
 ## Release 0.8.2
 
 **Bug fixes**
