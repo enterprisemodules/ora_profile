@@ -29,7 +29,8 @@ define ora_profile::database::asm_storage::partition(
   }
 
   partition_table { $device:
-    ensure  => $table_type,
+    ensure => $table_type,
+    notify => Exec["apply_udev_rules_partition_${device}"],
   }
 
   -> partition { $raw_device:

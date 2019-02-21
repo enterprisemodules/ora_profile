@@ -35,7 +35,7 @@ class ora_profile::database::asm_storage::asmlib(
   $disk_devices.each |$device, $values| {
     exec { "add asm label ${values['label']} to device /dev/${device}":
       command => "/usr/sbin/oracleasm createdisk ${values['label']} /dev/${device}_1",
-      unless  => "/usr/sbin/oracleasm querydisk -v /dev/${device}_1",
+      unless  => "/bin/bash -c \"while [ ! -e /dev/${device}_1 ]; do sleep 1 ;done\";/usr/sbin/oracleasm querydisk -v /dev/${device}_1",
       require => [
         Service['oracleasm'],
         Partition["/dev/${device}:1"],
