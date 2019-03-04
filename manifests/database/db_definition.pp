@@ -89,6 +89,8 @@ class ora_profile::database::db_definition(
   String[1] $sysaux_tablespace_size,
   String[1] $system_password,
   String[1] $sys_password,
+  Enum['enabled','disabled']
+            $container_database,
   String[1] $init_ora_template,
 ) inherits ora_profile::database {
 
@@ -109,6 +111,7 @@ class ora_profile::database::db_definition(
     sys_password                 => $sys_password,
     character_set                => 'AL32UTF8',
     national_character_set       => 'AL16UTF16',
+    container_database           => $container_database,
     extent_management            => 'local',
     logfile_groups               => [
         {group => 10, size => $log_size},
