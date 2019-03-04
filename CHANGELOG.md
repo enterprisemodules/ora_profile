@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.4
+
+**New features**
+
+- [db_definition] Add support for container databases
+
 ## Release 0.8.3
 
 **Bug fixes**
