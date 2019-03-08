@@ -91,6 +91,8 @@ class ora_profile::database::db_definition(
   String[1] $sys_password,
   Enum['enabled','disabled']
             $container_database,
+  Enum['enabled','disabled']
+            $archivelog,
   String[1] $init_ora_template,
   String[1] $data_file_destination,
   String[1] $db_recovery_file_dest,
@@ -116,12 +118,10 @@ class ora_profile::database::db_definition(
     $db_cluster_nodes = undef
   }
 
-  file { '/install/effe.ora':
-    content => template($init_ora_template),
-  }
   if ( $master_node == $facts['hostname'] ) {
     ora_database{$dbname:
       ensure                       => present,
+      archivelog                   => $archivelog,
       init_ora_content             => template($init_ora_template),
       oracle_base                  => $oracle_base,
       oracle_home                  => $oracle_home,
@@ -223,6 +223,11 @@ class ora_profile::database::db_definition(
       command     => "${oracle_home}/bin/srvctl start instance -d ${dbname} -i ${db_instance_name}",
       onlyif      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name} | grep not",
       logoutput   => on_failure,
+    }
+
+    -> ora_setting { $db_instance_name:
+      default     => true,
+      oracle_home => $oracle_home,
     }
   }
 
