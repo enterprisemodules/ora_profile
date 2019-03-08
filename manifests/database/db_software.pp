@@ -115,10 +115,10 @@ class ora_profile::database::db_software(
   }
 
   if ( $master_node == $facts['hostname'] ) {
-    if ( empty($cluster_nodes) ) {
-      $installdb_cluster_nodes = undef
-    } else {
+    if ( $is_rac ) {
       $installdb_cluster_nodes = $master_node
+    } else {
+      $installdb_cluster_nodes = undef
     }
     ora_install::installdb{$file_name:
       version                   => $version,
