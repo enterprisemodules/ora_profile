@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.6
+
+**New features**
+
+-  [db_definition] archivelog configurable
+-  [db_definition] add support for RAC
+-  [instance] pass log_size and use it
+
+**Bug fixes**
+
+-  [db_definition_template] properly add line to oratab
+-  [data] add more defaults
+-  [asm_software] properly add line to oratab
+
 ## Release 0.8.5
 
 **Bug fixes**
