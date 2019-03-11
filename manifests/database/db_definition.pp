@@ -71,6 +71,7 @@
 #    The default value is: 'ora_profile/init.ora.erb'
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::db_definition(
   Enum['11.2.0.1','11.2.0.3','11.2.0.4','12.1.0.1','12.1.0.2','12.2.0.1','18.0.0.0']
             $version,
@@ -258,3 +259,4 @@ class ora_profile::database::db_definition(
     }
   }
 }
+# lint:endignore
