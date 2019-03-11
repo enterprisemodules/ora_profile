@@ -252,7 +252,7 @@ class ora_profile::database::asm_software(
   -> file_line{ 'add_asm_to_oratab':
     path  => '/etc/oratab',
     line  => "${asm_instance_name}:${grid_home}:N",
-    match => "^${asm_instance_name}:${grid_home}:N.*",
+    match => "^\\${asm_instance_name}:${grid_home}:.*\$",
   }
 }
 # lint:endignore

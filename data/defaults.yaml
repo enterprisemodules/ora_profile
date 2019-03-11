@@ -276,8 +276,7 @@ ora_profile::database::asm_software::disk_discovery_string:               '/dev/
 ora_profile::database::asm_software::asm_disks:                           /dev/asm_data01
 ora_profile::database::asm_software::disks_failgroup_names:               '/dev/asm_data01,'
 ora_profile::database::asm_software::configure_afd:                       true
-ora_profile::database::asm_software::redundancy_type:                     EXTERNAL
-
+ora_profile::database::asm_software::disk_redundancy:                     EXTERNAL
 
 # ------------------------------------------------------------------------------
 #
@@ -366,7 +365,9 @@ ora_profile::database::db_definition::container_database:                 disabl
 ora_profile::database::db_definition::system_password:                    Welcome01
 ora_profile::database::db_definition::sys_password:                       Change_on_1nstall
 ora_profile::database::db_definition::init_ora_template:                  ora_profile/init.ora.erb
-
+ora_profile::database::db_definition::data_file_destination:              +DATA
+ora_profile::database::db_definition::db_recovery_file_dest:              +RECO
+ora_profile::database::db_definition::archivelog:                         disabled
 
 # ------------------------------------------------------------------------------
 #
@@ -428,7 +429,7 @@ ora_profile::database::db_services::domain_name:                          ~
 #
 # This is a simple way to get started. It is easy to get started, but
 # soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle tablespaces, to override this class and 
+# to let puppet manage your oracle tablespaces, to override this class and
 # add your own puppet implementation. This is much better maintainable
 # and adds more consistency.
 #
@@ -443,7 +444,7 @@ ora_profile::database::db_tablespaces::list:                              {}
 #
 # This is a simple way to get started. It is easy to get started, but
 # soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle profiles, to override this class and 
+# to let puppet manage your oracle profiles, to override this class and
 # add your own puppet implementation. This is much better maintainable
 # and adds more consistency,
 #
@@ -457,7 +458,7 @@ ora_profile::database::db_profiles::list:                                 {}
 #
 # This is a simple way to get started. It is easy to get started, but
 # soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle users, to override this class and 
+# to let puppet manage your oracle users, to override this class and
 # add your own puppet implementation. This is much better maintainable
 # and adds more consistency,
 #
@@ -487,4 +488,3 @@ ora_profile::database::cis_rules::ignore:
   - r_2_1_3
   - r_2_1_4
 ora_profile::database::cis_rules::dbname:                                 "%{::ora_profile::database::dbname}"
-
