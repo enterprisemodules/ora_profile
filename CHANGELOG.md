@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.5
+
+**Bug fixes**
+
+- [db_definition] Container disabled by default
+
 ## Release 0.8.4
 
 **New features**
