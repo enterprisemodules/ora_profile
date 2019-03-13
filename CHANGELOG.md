@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.7
+
+**New features**
+
+- [db_software] allow usage of bash_profile for db_software
+- [db_definition] Fix lint errors
+- [docs] reword db_tablespaces::list
+
 ## Release 0.8.6
 
 **New features**
