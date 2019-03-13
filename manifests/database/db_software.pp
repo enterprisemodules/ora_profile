@@ -78,6 +78,7 @@ class ora_profile::database::db_software(
   String[1] $dba_group,
   String[1] $install_group,
   String[1] $os_user,
+  Boolean   $bash_profile,
   Stdlib::Absolutepath
             $oracle_base,
   Stdlib::Absolutepath
@@ -127,6 +128,7 @@ class ora_profile::database::db_software(
       oracle_base               => $oracle_base,
       oracle_home               => $oracle_home,
       puppet_download_mnt_point => $source,
+      bash_profile              => $bash_profile,
       group                     => $dba_group,
       group_install             => $install_group,
       user                      => $os_user,
