@@ -180,10 +180,11 @@ class ora_profile::database::db_definition_template(
     oracle_home => $oracle_home,
   }
 
-  -> file_line{ "add_${db_instance_name}_to_oratab":
-    path  => '/etc/oratab',
-    line  => "${db_instance_name}:${oracle_home}:N",
-    match => "^${db_instance_name}:${oracle_home}:.*\$",
+  -> ora_tab_entry{ $db_instance_name:
+    ensure      => 'present',
+    oracle_home => $oracle_home,
+    startup     => 'N',
+    comment     => 'Database instance added by Puppet',
   }
 
   #
