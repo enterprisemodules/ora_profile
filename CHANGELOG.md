@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.8
+
+**New features**
+
+- [release] Use correct version of ora_install
+- [asm_software] Use new ora_tab_entry type
+- [db_definition] Use new ora_tab_entry type
+
 ## Release 0.8.7
 
 **New features**
