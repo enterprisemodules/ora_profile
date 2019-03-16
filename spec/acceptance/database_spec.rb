@@ -6,7 +6,7 @@ describe 'ora_profile::database' do
       source => '/software',
       sysctl => 'skip',
     }
-    contain ora_profile::secured_database
+    contain ora_profile::database
   MANIFEST
 
   it 'installs the oracle software' do
