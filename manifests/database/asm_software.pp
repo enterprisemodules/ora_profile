@@ -249,10 +249,11 @@ class ora_profile::database::asm_software(
     os_user     => $grid_user,
   }
 
-  -> file_line{ 'add_asm_to_oratab':
-    path  => '/etc/oratab',
-    line  => "${asm_instance_name}:${grid_home}:N",
-    match => "^\\${asm_instance_name}:${grid_home}:.*\$",
+  -> ora_tab_entry{ $asm_instance_name:
+    ensure      => 'present',
+    oracle_home => $grid_home,
+    startup     => 'N',
+    comment     => 'Grid instance added by Puppet',
   }
 }
 # lint:endignore
