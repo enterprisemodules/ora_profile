@@ -55,5 +55,5 @@ class ora_profile::database::sysctl(
     ensure  => 'present',
     persist => true,
   }
-  create_resources(sysctl, $list, $defaults)
+  ensure_resources(sysctl, $list, $defaults)
 }

@@ -12,7 +12,7 @@ class ora_profile::database::rac::authenticated_nodes (
     withpath => false,
   }
 
-  create_resources('ssh_authorized_key', $keys)
+  ensure_resources('ssh_authorized_key', $keys)
 
   ora_profile::database::authenticated_nodes::user_equivalence{$os_user:
     nodes       => $ora_profile::database::cluster_nodes,

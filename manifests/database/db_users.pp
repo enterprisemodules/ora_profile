@@ -28,5 +28,5 @@ class ora_profile::database::db_users(
   # add your own puppet implementation. This is much better maintainable
   # and adds more consistency,
   #
-  create_resources(ora_user, $list)
+  ensure_resources(ora_user, $list)
 }

@@ -35,5 +35,5 @@ class ora_profile::database::limits(
     }
   }
 
-  create_resources(limits::limits, $list)
+  ensure_resources(limits::limits, $list)
 }

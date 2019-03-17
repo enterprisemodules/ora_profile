@@ -117,7 +117,7 @@ class ora_profile::database::db_patches(
       require => Ora_install::Opatchupgrade[$patch_file],
       tmp_dir => "${download_dir}/patches",               # always use subdir, the whole directory will be removed when done
     }
-    create_resources('ora_opatch', $patch_list, $defaults)
+    ensure_resources('ora_opatch', $patch_list, $defaults)
 
     if $version_data != [] {
       #

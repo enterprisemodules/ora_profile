@@ -29,7 +29,7 @@ class ora_profile::database::firewall::iptables(
       action => 'accept',
       proto  => 'tcp'
     }
-    create_resources('firewall', $ports, $defaults)
+    ensure_resources('firewall', $ports, $defaults)
 
     firewall { '900 log dropped input chain':
       chain      => 'INPUT',

@@ -28,5 +28,5 @@ class ora_profile::database::db_tablespaces(
   # add your own puppet implementation. This is much better maintainable
   # and adds more consistency,
   #
-  create_resources(ora_tablespace, $list)
+  ensure_resources(ora_tablespace, $list)
 }
