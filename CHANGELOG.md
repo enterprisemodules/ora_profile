@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.9
+
+**Bug fixes**
+
+[core] Use ensure_resources in steda of create_resources to make manifests more resilient
+
 ## Release 0.8.8
 
 **New features**
