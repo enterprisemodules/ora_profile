@@ -184,7 +184,6 @@ class ora_profile::database::db_definition_template(
     ensure      => 'present',
     oracle_home => $oracle_home,
     startup     => 'N',
-    comment     => 'Database instance added by Puppet',
   }
 
   #

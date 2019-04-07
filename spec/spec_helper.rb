@@ -22,4 +22,8 @@ default_facts.merge!(YAML.safe_load(File.read(default_module_facts_path))) if Fi
 
 RSpec.configure do |c|
   c.default_facts = default_facts
+  # c.before(:each) do
+  #   Puppet::Util::Log.level = :debug
+  #   Puppet::Util::Log.newdestination(:console)
+  # end
 end
