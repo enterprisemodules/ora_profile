@@ -82,7 +82,12 @@ class ora_profile::database::db_patches(
       withpath => false,
     }
   } else {
-    $version_data = $::ora_version.filter |$data| {$data['sid'] == '$dbname'}
+    if $::ora_version {
+      $version = $::ora_version
+    } else {
+      $version = []
+    }
+    $version_data = $version.filter |$data| {$data['sid'] == $dbname}
     if $version_data != [] {
       #
       # The idea here is that when the fact ora_version for current instance is filled,
