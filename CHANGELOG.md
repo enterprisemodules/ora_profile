@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.8.11
+
+**Bug fixes**
+
+- [asm_listener] Call classes with user and group parameters. Closes #26
+- [asm_software] Add parameter bash_profile. Closes #23
+- [db_software] Add oper_group parameter
+- [asm_software] Make OS groups configurable. Closes #19
+- [authenticated_nodes] Fix issue when os_user and grid_user are the same. Closes #18
+- [db_patches] Fix detection of running database on initial run
+
 ## Release 0.8.10
 
 **Bug fixes**
