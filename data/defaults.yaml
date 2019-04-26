@@ -317,6 +317,7 @@ ora_profile::database::db_software::dirs:
   - /u03/fast_recovery_area
 ora_profile::database::db_software::dba_group:                            "%{::ora_profile::database::dba_group}"
 ora_profile::database::db_software::install_group:                        "%{::ora_profile::database::install_group}"
+ora_profile::database::db_software::oper_group:                           oper
 ora_profile::database::db_software::os_user:                              "%{::ora_profile::database::os_user}"
 ora_profile::database::db_software::version:                              "%{::ora_profile::database::version}"
 ora_profile::database::db_software::database_type:                        EE
@@ -325,6 +326,7 @@ ora_profile::database::db_software::oracle_home:                          "%{::o
 ora_profile::database::db_software::source:                               "%{::ora_profile::database::source}"
 ora_profile::database::db_software::file_name:                            linuxx64_12201_database
 ora_profile::database::db_software::bash_profile:                         true
+
 
 # ------------------------------------------------------------------------------
 #

@@ -76,7 +76,7 @@ class ora_profile::database::db_software(
   Array[Stdlib::Absolutepath]
             $dirs,
   String[1] $dba_group,
-  String[1] $install_group,
+  String[1] $oper_group,
   String[1] $os_user,
   Boolean   $bash_profile,
   Stdlib::Absolutepath
@@ -131,6 +131,7 @@ class ora_profile::database::db_software(
       bash_profile              => $bash_profile,
       group                     => $dba_group,
       group_install             => $install_group,
+      group_oper                => $oper_group,
       user                      => $os_user,
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
