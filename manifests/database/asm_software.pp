@@ -130,6 +130,7 @@ class ora_profile::database::asm_software(
             $grid_type,
   Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
             $disk_redundancy,
+  Boolean   $bash_profile,
   Optional[String[1]]
             $disks_failgroup_names,
   Optional[String[1]]
@@ -208,6 +209,7 @@ class ora_profile::database::asm_software(
       network_interface_list    => $network_interface_list,
       storage_option            => $storage_option,
       ora_inventory_dir         => $ora_inventory_dir,
+      bash_profile              => $bash_profile,
       before                    => Ora_setting[$asm_instance_name],
     }
   } else {
