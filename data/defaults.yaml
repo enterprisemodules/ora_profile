@@ -277,6 +277,10 @@ ora_profile::database::asm_software::asm_disks:                           /dev/a
 ora_profile::database::asm_software::disks_failgroup_names:               '/dev/asm_data01,'
 ora_profile::database::asm_software::configure_afd:                       true
 ora_profile::database::asm_software::disk_redundancy:                     EXTERNAL
+ora_profile::database::asm_software::group:                               asmdba
+ora_profile::database::asm_software::group_oper:                          asmoper
+ora_profile::database::asm_software::group_asm:                           asmadmin
+
 
 # ------------------------------------------------------------------------------
 #
