@@ -22,6 +22,7 @@
 #    The default is: 12.2
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::asm_listener(
   Stdlib::Absolutepath
             $oracle_home,
@@ -53,3 +54,4 @@ class ora_profile::database::asm_listener(
   }
 
 }
+# lint:endignore
