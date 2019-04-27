@@ -113,7 +113,7 @@
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::asm_software(
-  Enum['11.2.0.4','12.1.0.1','12.2.0.1','12.1.0.2','18.0.0.0']
+  Ora_Install::Version
             $version,
   Array[Stdlib::Absolutepath]
             $dirs,

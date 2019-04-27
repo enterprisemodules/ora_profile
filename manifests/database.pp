@@ -104,13 +104,7 @@
 # 
 # ```
 #
-# @param [Enum['11.2.0.1',
-#     '11.2.0.3',
-#     '11.2.0.4',
-#     '12.1.0.1',
-#     '12.1.0.2',
-#     '12.2.0.1',
-#     '18.0.0.0']] version
+# @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
 #    The default is : `12.2.0.1`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
@@ -551,9 +545,8 @@
 #
 #--++--
 class ora_profile::database(
-  Enum['local','asm'] $storage,
-  Enum['11.2.0.1','11.2.0.3','11.2.0.4','12.1.0.1','12.1.0.2','12.2.0.1','18.0.0.0']
-            $version,
+  Enum['local','asm']  $storage,
+  Ora_Install::Version $version,
   String[1] $dbname,
   String[1] $os_user,
   String[1] $dba_group,
