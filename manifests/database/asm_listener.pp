@@ -28,7 +28,7 @@ class ora_profile::database::asm_listener(
             $oracle_home,
   Stdlib::Absolutepath
             $oracle_base,
-  Ora_install::ShortVersion  
+  Ora_install::ShortVersion
             $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
