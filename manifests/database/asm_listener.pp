@@ -41,16 +41,16 @@ class ora_profile::database::asm_listener(
     oracle_home  => $oracle_home,
     version      => $sqlnet_version,        # Different version then the oracle version
     download_dir => '/tmp',
-    user         => $os_user,
-    group        => $dba_group,
+    user         => $grid_user,
+    group        => $install_group,
   }
 
   -> ora_install::listener{"start_${dbname}":
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
     action      => 'start',
-    user        => $os_user,
-    group       => $dba_group,
+    user        => $grid_user,
+    group       => $install_group,
   }
 
 }
