@@ -43,7 +43,7 @@ class ora_profile::database::db_listener(
     version      => $sqlnet_version,        # Different version then the oracle version
     download_dir => '/tmp',
     user         => $os_user,
-    group        => $dba_group
+    group        => $install_group
   }
 
 
@@ -51,7 +51,7 @@ class ora_profile::database::db_listener(
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
     user        => $os_user,
-    group       => $dba_group,
+    group       => $install_group,
     action      => 'start',
   }
 }
