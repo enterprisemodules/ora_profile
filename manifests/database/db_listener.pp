@@ -33,6 +33,7 @@ class ora_profile::database::db_listener(
             $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,
@@ -55,3 +56,4 @@ class ora_profile::database::db_listener(
     action      => 'start',
   }
 }
+# lint:endignore:variable_scope
