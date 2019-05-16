@@ -209,6 +209,8 @@ class ora_profile::database::asm_software(
       network_interface_list    => $network_interface_list,
       storage_option            => $storage_option,
       ora_inventory_dir         => $ora_inventory_dir,
+      download_dir              => $download_dir,
+      temp_dir                  => $temp_dir,
       bash_profile              => $bash_profile,
       before                    => Ora_setting[$asm_instance_name],
     }
