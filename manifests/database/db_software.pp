@@ -133,6 +133,8 @@ class ora_profile::database::db_software(
       group_install             => $install_group,
       group_oper                => $oper_group,
       user                      => $os_user,
+      download_dir              => $download_dir,
+      temp_dir                  => $temp_dir,
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
       require                   => [
