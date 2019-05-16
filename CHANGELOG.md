@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.9.1
+
+-s [core] Add defaults for download_dir and temp_dir
+-s [database] export temp_dir
+-s [db_patches] Export download_dir
+-s [asm_software] extract download_dir and temp_dir
+-s [db_software] extract download_dir and temp_dir
+-s [asm_listener/db_listener] Use the right user and group
+-s [asm_software] Add defaults for oper_group and ams_group
+
+**Bug fixes**s
+
+
 ## Release 0.9.0
 
 **New features**
