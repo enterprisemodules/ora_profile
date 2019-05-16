@@ -68,8 +68,8 @@ class ora_profile::database::db_patches(
     opversion                 => $opversion,
     user                      => $os_user,
     group                     => $install_group,
-    download_dir              => '/tmp',
     puppet_download_mnt_point => $source,
+    download_dir              => $download_dir,
   }
 
   #
