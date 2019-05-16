@@ -567,6 +567,8 @@ class ora_profile::database(
   String[1] $db_control_provider,
   Stdlib::Absolutepath
             $download_dir,
+  Stdlib::Absolutepath
+            $temp_dir,
 #
 # Optional settings
 #
