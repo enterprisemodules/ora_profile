@@ -112,8 +112,8 @@ class ora_profile::database::db_software(
       case $facts['os']['family'] {
         'windows': {
           file{$dir:
-            ensure  => directory,
-            owner   => $os_user,
+            ensure => directory,
+            owner  => $os_user,
           }
         }
         default: {

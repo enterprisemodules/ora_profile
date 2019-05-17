@@ -40,10 +40,10 @@ class ora_profile::database::db_listener(
   }
 
   ora_install::net{ 'config net8':
-    oracle_home  => $oracle_home,
-    version      => $sqlnet_version,        # Different version then the oracle version
-    user         => $os_user,
-    group        => $install_group
+    oracle_home => $oracle_home,
+    version     => $sqlnet_version,        # Different version then the oracle version
+    user        => $os_user,
+    group       => $install_group
   }
 
 
