@@ -22,12 +22,13 @@
 #    The default is: 12.2
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::asm_listener(
   Stdlib::Absolutepath
             $oracle_home,
   Stdlib::Absolutepath
             $oracle_base,
-  Enum['11.2','12.1','12.2','18.0']
+  Ora_install::ShortVersion
             $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
@@ -40,12 +41,17 @@ class ora_profile::database::asm_listener(
     oracle_home  => $oracle_home,
     version      => $sqlnet_version,        # Different version then the oracle version
     download_dir => '/tmp',
+    user         => $grid_user,
+    group        => $install_group,
   }
 
   -> ora_install::listener{"start_${dbname}":
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
     action      => 'start',
+    user        => $grid_user,
+    group       => $install_group,
   }
 
 }
+# lint:endignore

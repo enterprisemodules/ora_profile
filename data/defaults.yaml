@@ -87,11 +87,11 @@ ora_profile::database::limits::list:
 # ------------------------------------------------------------------------------
 ora_profile::database::groups_and_users::groups:
   "%{::ora_profile::database::install_group}":
-    gid:  54321,
+    gid:  54321
   "%{::ora_profile::database::dba_group}":
-    gid:  54322,
+    gid:  54322
   oper:
-    gid:  54323,
+    gid:  54323
 ora_profile::database::groups_and_users::users:
   "%{::ora_profile::database::os_user}":
     uid:        54321
@@ -177,11 +177,11 @@ ora_profile::database::asm_limits::list:                                  {} # N
 #------------------------------------------------------------------------------
 ora_profile::database::asm_groups_and_users::groups:
   "%{::ora_profile::database::install_group}":
-    gid:  54321,
+    gid:  54321
   "%{::ora_profile::database::dba_group}":
-    gid:  54322,
+    gid:  54322
   oper:
-    gid:  54323,
+    gid:  54323
   asmdba:
     gid:  54324
   asmadmin:
@@ -199,7 +199,7 @@ ora_profile::database::asm_groups_and_users::users:
     - asmdba
     shell:      /bin/bash
     password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
-    home:       /home/oracle
+    home:       "/home/%{::ora_profile::database::os_user}"
     comment:    This user oracle was created by Puppet
     managehome: true
   "%{ora_profile::database::grid_user}":
@@ -213,9 +213,10 @@ ora_profile::database::asm_groups_and_users::users:
     - asmoper
     shell:      /bin/bash
     password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
-    home:       /home/grid
+    home:       "/home/%{ora_profile::database::grid_user}"
     comment:    This user grid was created by Puppet
     managehome: true
+
 
 
 # ------------------------------------------------------------------------------
@@ -276,6 +277,11 @@ ora_profile::database::asm_software::disk_discovery_string:               '/dev/
 ora_profile::database::asm_software::asm_disks:                           /dev/asm_data01
 ora_profile::database::asm_software::disks_failgroup_names:               '/dev/asm_data01,'
 ora_profile::database::asm_software::configure_afd:                       true
+ora_profile::database::asm_software::disk_redundancy:                     EXTERNAL
+ora_profile::database::asm_software::group:                               asmdba
+ora_profile::database::asm_software::oper_group:                          asmoper
+ora_profile::database::asm_software::asm_group:                           asmadmin
+ora_profile::database::asm_software::bash_profile:                        true
 
 
 # ------------------------------------------------------------------------------
@@ -317,6 +323,7 @@ ora_profile::database::db_software::dirs:
   - /u03/fast_recovery_area
 ora_profile::database::db_software::dba_group:                            "%{::ora_profile::database::dba_group}"
 ora_profile::database::db_software::install_group:                        "%{::ora_profile::database::install_group}"
+ora_profile::database::db_software::oper_group:                           oper
 ora_profile::database::db_software::os_user:                              "%{::ora_profile::database::os_user}"
 ora_profile::database::db_software::version:                              "%{::ora_profile::database::version}"
 ora_profile::database::db_software::database_type:                        EE
@@ -324,6 +331,7 @@ ora_profile::database::db_software::oracle_base:                          "%{::o
 ora_profile::database::db_software::oracle_home:                          "%{::ora_profile::database::oracle_home}"
 ora_profile::database::db_software::source:                               "%{::ora_profile::database::source}"
 ora_profile::database::db_software::file_name:                            linuxx64_12201_database
+ora_profile::database::db_software::bash_profile:                         true
 
 
 # ------------------------------------------------------------------------------
@@ -361,7 +369,7 @@ ora_profile::database::db_definition::system_tablespace_size:             50M
 ora_profile::database::db_definition::temporary_tablespace_size:          50M
 ora_profile::database::db_definition::undo_tablespace_size:               50M
 ora_profile::database::db_definition::sysaux_tablespace_size:             50M
-ora_profile::database::db_definition::container_database:                 enabled
+ora_profile::database::db_definition::container_database:                 disabled
 ora_profile::database::db_definition::system_password:                    Welcome01
 ora_profile::database::db_definition::sys_password:                       Change_on_1nstall
 ora_profile::database::db_definition::init_ora_template:                  ora_profile/init.ora.erb
@@ -429,7 +437,7 @@ ora_profile::database::db_services::domain_name:                          ~
 #
 # This is a simple way to get started. It is easy to get started, but
 # soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle tablespaces, to override this class and 
+# to let puppet manage your oracle tablespaces, to override this class and
 # add your own puppet implementation. This is much better maintainable
 # and adds more consistency.
 #
@@ -444,7 +452,7 @@ ora_profile::database::db_tablespaces::list:                              {}
 #
 # This is a simple way to get started. It is easy to get started, but
 # soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle profiles, to override this class and 
+# to let puppet manage your oracle profiles, to override this class and
 # add your own puppet implementation. This is much better maintainable
 # and adds more consistency,
 #
@@ -458,7 +466,7 @@ ora_profile::database::db_profiles::list:                                 {}
 #
 # This is a simple way to get started. It is easy to get started, but
 # soon your hiera yaml become a nigtmare. Our advise is when you need
-# to let puppet manage your oracle users, to override this class and 
+# to let puppet manage your oracle users, to override this class and
 # add your own puppet implementation. This is much better maintainable
 # and adds more consistency,
 #
@@ -488,4 +496,3 @@ ora_profile::database::cis_rules::ignore:
   - r_2_1_3
   - r_2_1_4
 ora_profile::database::cis_rules::dbname:                                 "%{::ora_profile::database::dbname}"
-

@@ -11,6 +11,8 @@ ora_install_homes:
     product_version:  11.2.0.4.0
     opatch_version:   11.2.0.3.4
     installed_patches: []
+    defined_sids:      ['TEST']
+    running_sids:      ['TEST']
 #
 # CIS facts
 #

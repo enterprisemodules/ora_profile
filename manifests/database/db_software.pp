@@ -69,15 +69,16 @@
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::db_software(
-  Enum['11.2.0.1','11.2.0.3','11.2.0.4','12.1.0.1','12.1.0.2','12.2.0.1','18.0.0.0']
+  Ora_Install::Version
             $version,
   Enum['SE2', 'SE', 'EE', 'SEONE']
             $database_type,
   Array[Stdlib::Absolutepath]
             $dirs,
   String[1] $dba_group,
-  String[1] $install_group,
+  String[1] $oper_group,
   String[1] $os_user,
+  Boolean   $bash_profile,
   Stdlib::Absolutepath
             $oracle_base,
   Stdlib::Absolutepath
@@ -129,10 +130,10 @@ class ora_profile::database::db_software(
   }
 
   if ( $master_node == $facts['hostname'] ) {
-    if ( empty($cluster_nodes) ) {
-      $installdb_cluster_nodes = undef
-    } else {
+    if ( $is_rac ) {
       $installdb_cluster_nodes = $master_node
+    } else {
+      $installdb_cluster_nodes = undef
     }
     ora_install::installdb{$file_name:
       version                   => $version,
@@ -141,12 +142,14 @@ class ora_profile::database::db_software(
       oracle_base               => $oracle_base,
       oracle_home               => $oracle_home,
       puppet_download_mnt_point => $source,
-      download_dir              => $download_dir,
-      temp_dir                  => $temp_dir,
+      bash_profile              => $bash_profile,
       group                     => $dba_group,
       group_install             => $install_group,
+      group_oper                => $oper_group,
       user                      => $os_user,
       user_password             => $oracle_user_password,
+      download_dir              => $download_dir,
+      temp_dir                  => $temp_dir,
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
       require                   => [

@@ -51,5 +51,5 @@ class ora_profile::database::asm_packages(
     }
   }
 
-  create_resources('package', $list)
+  ensure_packages($list)
 }

@@ -8,9 +8,11 @@ When these customizations aren't enough, you can replace the class with your own
   :dirs,
   :dba_group,
   :install_group,
+  :oper_group,
   :os_user,
   :oracle_base,
   :oracle_home,
   :source,
-  :file_name
+  :file_name,
+  :bash_profile,
 ]%>

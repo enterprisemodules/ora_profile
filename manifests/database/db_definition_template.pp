@@ -96,7 +96,7 @@
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::db_definition_template(
-  Enum['11.2.0.1','11.2.0.3','11.2.0.4','12.1.0.1','12.1.0.2','12.2.0.1','18.0.0.0']
+  Ora_Install::Version
                       $version,
   Stdlib::Absolutepath
                       $oracle_home,
@@ -131,7 +131,7 @@ class ora_profile::database::db_definition_template(
   #
   $split_version = split($version, '[.]')
   $db_version = "${split_version[0]}.${split_version[1]}"
-  if $cluster_nodes {
+  if ( $cluster_nodes ) {
     $db_cluster_nodes = $master_node
   } else {
     $db_cluster_nodes = undef
@@ -180,10 +180,10 @@ class ora_profile::database::db_definition_template(
     oracle_home => $oracle_home,
   }
 
-  -> file_line{ "add_${db_instance_name}_to_oratab":
-    path  => '/etc/oratab',
-    line  => "${db_instance_name}:${oracle_home}:N",
-    match => "^${db_instance_name}:${oracle_home}:N.*",
+  -> ora_tab_entry{ $db_instance_name:
+    ensure      => 'present',
+    oracle_home => $oracle_home,
+    startup     => 'N',
   }
 
   #
@@ -196,14 +196,14 @@ class ora_profile::database::db_definition_template(
     oracle_product_home_dir => $oracle_home,
   }
 
-  if ( ! empty($cluster_nodes) ) {
+  if ( $is_rac ) {
     $cluster_nodes.each |$index, $node| {
       $inst_number = $index + 1
       ora_profile::database::rac::instance {"${dbname}${inst_number}":
         on                => $db_instance_name,
         number            => $inst_number,
         thread            => $inst_number,
-        datafile          => $ora_profile::database::db_definition_template::data_file_destination,
+        datafile          => $data_file_destination,
         undo_initial_size => '100M',
         undo_next         => '100M',
         undo_autoextend   => 'on',
@@ -221,6 +221,5 @@ class ora_profile::database::db_definition_template(
       # }
     }
   }
-
 }
 # lint:endignore

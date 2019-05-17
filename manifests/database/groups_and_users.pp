@@ -58,6 +58,6 @@ class ora_profile::database::groups_and_users(
   }
 
   $defaults = { 'ensure' => 'present'}
-  create_resources('user', $users, $defaults )
-  create_resources('group', $groups, $defaults)
+  ensure_resources('user', $users, $defaults )
+  ensure_resources('group', $groups, $defaults)
 }

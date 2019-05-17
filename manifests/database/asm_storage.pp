@@ -93,12 +93,12 @@ class ora_profile::database::asm_storage(
           Ora_profile::Database::Asm_storage::Partition[$disk_devices.keys]
         ],
       }
+      contain ora_profile::database::asm_storage::udev
       $disk_devices.each |$device, $attributes| {
         ora_profile::database::asm_storage::partition {$device:
-          raw_device      => "/dev/${device}:1",
-          table_type      => 'gpt',
-          wait_for_device => false,
-          before          => Class['ora_profile::database::asm_storage::asmlib'],
+          raw_device => "/dev/${device}:1",
+          table_type => 'gpt',
+          before     => Class['ora_profile::database::asm_storage::asmlib'],
         }
       }
       class {'ora_profile::database::asm_storage::asmlib':
@@ -107,7 +107,6 @@ class ora_profile::database::asm_storage(
         scan_exclude    => $scan_exclude,
         disk_devices    => $disk_devices,
       }
-      contain ora_profile::database::asm_storage::udev
       contain ora_profile::database::asm_storage::asmlib
     }
     'afd': {

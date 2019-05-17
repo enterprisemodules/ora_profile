@@ -20,4 +20,6 @@ When these customizations aren't enough, you can replace the class with your own
   :cluster_node_types,
   :network_interface_list,
   :storage_option,
+  :disk_redundancy,
+  :bash_profile,
 ]%>

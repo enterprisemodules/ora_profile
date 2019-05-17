@@ -113,7 +113,7 @@
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::asm_software(
-  Enum['11.2.0.4','12.1.0.1','12.2.0.1','12.1.0.2','18.0.0.0']
+  Ora_Install::Version
             $version,
   Array[Stdlib::Absolutepath]
             $dirs,
@@ -122,9 +122,15 @@ class ora_profile::database::asm_software(
   String[1] $disk_discovery_string,
   String[1] $asm_diskgroup,
   String[1] $asm_disks,
+  String[1] $group,
+  String[1] $oper_group,
+  String[1] $asm_group,
   Boolean   $configure_afd,
   Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
             $grid_type,
+  Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
+            $disk_redundancy,
+  Boolean   $bash_profile,
   Optional[String[1]]
             $disks_failgroup_names,
   Optional[String[1]]
@@ -187,10 +193,14 @@ class ora_profile::database::asm_software(
       disk_discovery_string     => $disk_discovery_string,
       disks                     => $asm_disks,
       disks_failgroup_names     => $disks_failgroup_names,
-      disk_redundancy           => 'EXTERNAL',
+      disk_redundancy           => $disk_redundancy,
       disk_au_size              => '4',
       configure_afd             => $configure_afd,
       grid_type                 => $grid_type,
+      group                     => $group,
+      group_install             => $install_group,
+      group_oper                => $oper_group,
+      group_asm                 => $asm_group,
       user                      => $grid_user,
       cluster_nodes             => $cluster_node_types,
       cluster_name              => $cluster_name,
@@ -199,6 +209,9 @@ class ora_profile::database::asm_software(
       network_interface_list    => $network_interface_list,
       storage_option            => $storage_option,
       ora_inventory_dir         => $ora_inventory_dir,
+      download_dir              => $download_dir,
+      temp_dir                  => $temp_dir,
+      bash_profile              => $bash_profile,
       before                    => Ora_setting[$asm_instance_name],
     }
   } else {
@@ -247,10 +260,11 @@ class ora_profile::database::asm_software(
     os_user     => $grid_user,
   }
 
-  -> file_line{ 'add_asm_to_oratab':
-    path  => '/etc/oratab',
-    line  => "${asm_instance_name}:${grid_home}:N",
-    match => "^${asm_instance_name}:${grid_home}:N.*",
+  -> ora_tab_entry{ $asm_instance_name:
+    ensure      => 'present',
+    oracle_home => $grid_home,
+    startup     => 'N',
+    comment     => 'Grid instance added by Puppet',
   }
 }
 # lint:endignore

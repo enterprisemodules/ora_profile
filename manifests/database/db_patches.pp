@@ -68,8 +68,8 @@ class ora_profile::database::db_patches(
     opversion                 => $opversion,
     user                      => $os_user,
     group                     => $install_group,
-    download_dir              => '/tmp',
     puppet_download_mnt_point => $source,
+    download_dir              => $download_dir,
   }
 
   #
@@ -82,7 +82,12 @@ class ora_profile::database::db_patches(
       withpath => false,
     }
   } else {
-    $version_data = $::ora_version.filter |$data| {$data['sid'] == '$dbname'}
+    if $::ora_version {
+      $version = $::ora_version
+    } else {
+      $version = []
+    }
+    $version_data = $version.filter |$data| {$data['sid'] == $dbname}
     if $version_data != [] {
       #
       # The idea here is that when the fact ora_version for current instance is filled,
@@ -117,7 +122,7 @@ class ora_profile::database::db_patches(
       require => Ora_install::Opatchupgrade[$patch_file],
       tmp_dir => "${download_dir}/patches",               # always use subdir, the whole directory will be removed when done
     }
-    create_resources('ora_opatch', $patch_list, $defaults)
+    ensure_resources('ora_opatch', $patch_list, $defaults)
 
     if $version_data != [] {
       #

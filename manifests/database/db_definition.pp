@@ -71,8 +71,9 @@
 #    The default value is: 'ora_profile/init.ora.erb'
 #
 #--++--
+# lint:ignore:variable_scope
 class ora_profile::database::db_definition(
-  Enum['11.2.0.1','11.2.0.3','11.2.0.4','12.1.0.1','12.1.0.2','12.2.0.1','18.0.0.0']
+  Ora_Install::Version
             $version,
   Stdlib::Absolutepath
             $oracle_home,
@@ -98,8 +99,14 @@ class ora_profile::database::db_definition(
   String[1] $db_recovery_file_dest,
 ) inherits ora_profile::database {
 
-  echo {"Ensure DB definition for database ${dbname} in ${oracle_home}":
-    withpath => false,
+  if ( $is_rac ) {
+    echo {"Ensure DB definition for RAC database ${dbname} in ${oracle_home}":
+      withpath => false,
+    }
+  } else {
+    echo {"Ensure DB definition for database ${dbname} in ${oracle_home}":
+      withpath => false,
+    }
   }
   #
   # All standard values fetched in data function
@@ -115,6 +122,7 @@ class ora_profile::database::db_definition(
   if ( $master_node == $facts['hostname'] ) {
     ora_database{$dbname:
       ensure                       => present,
+      archivelog                   => $archivelog,
       init_ora_content             => template($init_ora_template),
       oracle_base                  => $oracle_base,
       oracle_home                  => $oracle_home,
@@ -190,8 +198,9 @@ class ora_profile::database::db_definition(
           autoallocate => true,
         }
       },
-      timezone                     => '+01:00',
+      timezone                     => 'Europe/Amsterdam',
     }
+
     #
     # Database is done. Now start it
     #
@@ -251,3 +260,4 @@ class ora_profile::database::db_definition(
     }
   }
 }
+# lint:endignore

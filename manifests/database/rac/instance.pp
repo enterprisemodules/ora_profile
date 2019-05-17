@@ -15,7 +15,10 @@ define ora_profile::database::rac::instance(
   Easy_type::Size  $undo_next,
   Enum['on','off'] $undo_autoextend,
   Easy_type::Size  $undo_max_size,
+  Easy_type::Size  $log_size,
 ){
+
+  $download_dir = lookup('ora_profile::database::download_dir')
 
   ora_tablespace {"UNDOTBS${number}@${on}":
     contents   => 'undo',
@@ -48,16 +51,16 @@ define ora_profile::database::rac::instance(
   }
 
   if ( $thread != 1 ) {
-    file{ "/install/add_logfiles_${thread}.sql":
+    file{ "${download_dir}/add_logfiles_${thread}.sql":
       ensure  => present,
       owner   => $ora_profile::database::os_user,
       group   => $ora_profile::database::install_group,
       content => template('ora_profile/add_logfiles.sql.erb')
     }
 
-    -> ora_exec {"@/install/add_logfiles_${thread}.sql@${on}":
+    -> ora_exec {"@${download_dir}/add_logfiles_${thread}.sql@${on}":
       unless  => "select count(9) from gv\$log where thread# = ${thread} having count(9) >= 3",
-      require => File["/install/add_logfiles_${thread}.sql"],
+      require => File["${download_dir}/add_logfiles_${thread}.sql"],
       before  => Ora_thread["${thread}@${on}"],
     }
   }

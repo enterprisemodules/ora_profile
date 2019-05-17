@@ -26,7 +26,7 @@ class ora_profile::database::firewall::firewalld(
       zone     => 'public',
       protocol => 'tcp'
     }
-    create_resources('firewalld_port', $ports, $defaults)
+    ensure_resources('firewalld_port', $ports, $defaults)
 
     # Add logging chain to log all dropped connections
     firewalld_direct_chain {'Add custom chain Logging-chain':

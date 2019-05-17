@@ -73,4 +73,8 @@ memory_max_target=0
 ###########################################
 # Mulitenant parameters
 ###########################################
+<% if @container_database.to_s == 'enabled' %>
+enable_pluggable_database=true
+<% else -%>
 enable_pluggable_database=false
+<% end -%>

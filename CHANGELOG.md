@@ -1,7 +1,120 @@
 # Changelog
 
-
 All notable changes to this project will be documented in this file.
+
+## Release 0.9.1
+
+-s [core] Add defaults for download_dir and temp_dir
+-s [database] export temp_dir
+-s [db_patches] Export download_dir
+-s [asm_software] extract download_dir and temp_dir
+-s [db_software] extract download_dir and temp_dir
+-s [asm_listener/db_listener] Use the right user and group
+-s [asm_software] Add defaults for oper_group and ams_group
+
+**Bug fixes**s
+
+
+## Release 0.9.0
+
+**New features**
+
+- Add support for Oracle 19
+
+## Release 0.8.11
+
+**Bug fixes**
+
+- [asm_listener] Call classes with user and group parameters. Closes #26
+- [asm_software] Add parameter bash_profile. Closes #23
+- [db_software] Add oper_group parameter
+- [asm_software] Make OS groups configurable. Closes #19
+- [authenticated_nodes] Fix issue when os_user and grid_user are the same. Closes #18
+- [db_patches] Fix detection of running database on initial run
+
+## Release 0.8.10
+
+**Bug fixes**
+
+- [db_definition] Fix non container database
+
+## Release 0.8.9
+
+**Bug fixes**
+
+[core] Use ensure_resources in steda of create_resources to make manifests more resilient
+
+## Release 0.8.8
+
+**New features**
+
+- [release] Use correct version of ora_install
+- [asm_software] Use new ora_tab_entry type
+- [db_definition] Use new ora_tab_entry type
+
+## Release 0.8.7
+
+**New features**
+
+- [db_software] allow usage of bash_profile for db_software
+- [db_definition] Fix lint errors
+- [docs] reword db_tablespaces::list
+
+## Release 0.8.6
+
+**New features**
+
+-  [db_definition] archivelog configurable
+-  [db_definition] add support for RAC
+-  [instance] pass log_size and use it
+
+**Bug fixes**
+
+-  [db_definition_template] properly add line to oratab
+-  [data] add more defaults
+-  [asm_software] properly add line to oratab
+
+## Release 0.8.5
+
+**Bug fixes**
+
+- [db_definition] Container disabled by default
+
+## Release 0.8.4
+
+**New features**
+
+- [db_definition] Add support for container databases
+
+## Release 0.8.3
+
+**Bug fixes**
+
+- [asm_storage] Fix timing issues with ASMlib disks
+
+## Release 0.8.2
+
+**Bug fixes**
+
+- [asm_groups_and_users] Fix used home when not default
+
+## Release 0.8.1
+
+**Bug fixes**
+
+- [asm_software] / [asm_diskgroup] make redundancy configurable
+- [docs] update readme with all dependencies
+
+## Release 0.8.0
+
+**New features**
+
+- Add support for Puppet 6
+
+**Bug fixes**
+
+- [quality] Fix rubocop messages
+- [core] Update metadata to new pdk
 
 ## Release 0.7.1
 

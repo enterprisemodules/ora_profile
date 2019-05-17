@@ -1,26 +1,32 @@
 {
   "name": "enterprisemodules-ora_profile",
-  "version": "0.7.1",
+  "version": "0.9.1",
   "author": "Enterprise Modules",
   "summary": "Puppet profiles for installing Oracle Database software and creating and managing  databases",
   "license": "proprietary",
   "source": "https://github.com/enterprisemodules/ora_profile",
+  "project_page": "https://github.com/enterprisemodules/ora_profile",
+  "issues_url": "https://github.com/enterprisemodules/ora_profile/issues",
   "dependencies": [
     {
       "name": "enterprisemodules/easy_type",
-      "version_requirement": ">= 2.5.0 < 3.0.0"
+      "version_requirement": ">= 2.9.8 < 3.0.0"
+    },
+    {
+      "name": "enterprisemodules/partition",
+      "version_requirement": ">= 0.5.0 < 1.0.0"
     },
     {
       "name": "enterprisemodules/ora_config",
-      "version_requirement": ">= 2.8.0 < 3.0.0"
+      "version_requirement": ">= 3.6.0 < 4.0.0"
     },
     {
       "name": "enterprisemodules/ora_install",
-      "version_requirement": ">= 3.1.0 < 4.0.0"
+      "version_requirement": ">= 4.5.0 < 5.0.0"
     },
     {
       "name": "enterprisemodules/ora_cis",
-      "version_requirement": ">= 1.0.6 < 2.0.0"
+      "version_requirement": ">= 2.1.0 < 3.0.0"
     },
     {
       "name": "ipcrm-echo",
@@ -86,7 +92,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 6.0.0"
+      "version_requirement": ">= 4.7.0 < 7.0.0"
     }
   ],
   "pdk-version": "1.7.0",

@@ -29,10 +29,11 @@ class ora_profile::database::db_listener(
             $oracle_base,
   String[1] $os_user,
   String[1] $dba_group,
-  Enum['11.2','12.1','12.2','18.0']
+  Ora_install::ShortVersion
             $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,
@@ -42,7 +43,7 @@ class ora_profile::database::db_listener(
     oracle_home  => $oracle_home,
     version      => $sqlnet_version,        # Different version then the oracle version
     user         => $os_user,
-    group        => $dba_group
+    group        => $install_group
   }
 
 
@@ -50,7 +51,8 @@ class ora_profile::database::db_listener(
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
     user        => $os_user,
-    group       => $dba_group,
+    group       => $install_group,
     action      => 'start',
   }
 }
+# lint:endignore:variable_scope

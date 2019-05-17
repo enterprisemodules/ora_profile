@@ -156,7 +156,7 @@ Type: `String[1]`
 The `system` password to use for the database.
 
 The default value is: `Welcome01`
-Type: `String[1]`
+Type: `Easy_type::Password`
 
 
 [Back to overview of db_definition](#attributes)
@@ -166,7 +166,7 @@ Type: `String[1]`
 The `sys` password to use for the database.
 
 The default value is: `Change_on_1nstall`
-Type: `String[1]`
+Type: `Easy_type::Password`
 
 
 [Back to overview of db_definition](#attributes)
