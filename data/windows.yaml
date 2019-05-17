@@ -13,8 +13,10 @@ ora_profile::database::oracle_base:                                       "C:\\u
 ora_profile::database::oracle_home:                                       "C:\\u01\\app\\oracle\\product\\%{lookup('ora_profile::database::version')}\\db_home1"
 ora_profile::database::ora_inventory_dir:                                 "C:\\u01\\app"
 ora_profile::database::download_dir:                                      "C:\\install"
+ora_profile::database::temp_dir:                                          "C:\\temp"
 ora_profile::database::install_group:                                     ORA_INSTALL
 ora_profile::database::dba_group:                                         ORA_DBA
+ora_profile::database::oracle_user_password:                              'Vagrant123!'
 # ora_profile::database::source:                                            c:/vagrant/modules/software/files
 
 # ------------------------------------------------------------------------------
@@ -33,6 +35,16 @@ ora_profile::database::db_software::dirs:
   - "c:\\u02\\oradata"
   - "c:\\u03"
   - "c:\\u03\\fast_recovery_area"
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_definition
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_definition::container_database:                 disabled
+
+
 # ------------------------------------------------------------------------------
 #
 # Settings for database::groups_and_users
@@ -49,5 +61,6 @@ ora_profile::database::groups_and_users::users:
     - "%{::ora_profile::database::dba_group}"
     - ORA_OPER
     - Administrators
+    password:   "%{::ora_profile::database::oracle_user_password}"
     comment:    This user was created by Puppet
     # managehome: true

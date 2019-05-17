@@ -142,9 +142,11 @@ class ora_profile::database::db_software(
       oracle_home               => $oracle_home,
       puppet_download_mnt_point => $source,
       download_dir              => $download_dir,
+      temp_dir                  => $temp_dir,
       group                     => $dba_group,
       group_install             => $install_group,
       user                      => $os_user,
+      user_password             => $oracle_user_password,
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
       require                   => [

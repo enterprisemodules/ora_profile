@@ -573,10 +573,13 @@ class ora_profile::database(
             $grid_home,
   String[1] $db_control_provider,
   Stdlib::Absolutepath
-          $download_dir,
+            $download_dir,
+  Stdlib::Absolutepath
+            $temp_dir,
 #
 # Optional settings
 #
+  Optional[String] $oracle_user_password = undef,
   Optional[String] $master_node = $facts['hostname'],
   Optional[Array]  $cluster_nodes = undef,
   Optional[String] $asm_sysctl = undef,
