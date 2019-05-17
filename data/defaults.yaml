@@ -23,6 +23,7 @@ ora_profile::database::ora_inventory_dir:                                 /u01/a
 ora_profile::database::download_dir:                                      /install
 ora_profile::database::temp_dir:                                          /tmp
 
+
 # ------------------------------------------------------------------------------
 #
 # Settings for database::sysctl
@@ -373,7 +374,7 @@ ora_profile::database::db_definition::system_password:                    Welcom
 ora_profile::database::db_definition::sys_password:                       Change_on_1nstall
 ora_profile::database::db_definition::init_ora_template:                  ora_profile/init.ora.erb
 ora_profile::database::db_definition::data_file_destination:              /u02/oradata
-ora_profile::database::db_definition::db_recovery_file_dest:             / u03/fast_recovery_area
+ora_profile::database::db_definition::db_recovery_file_dest:              /u03/fast_recovery_area
 ora_profile::database::db_definition::archivelog:                         disabled
 
 # ------------------------------------------------------------------------------

@@ -127,6 +127,7 @@ class ora_profile::database::db_definition(
       oracle_base                  => $oracle_base,
       oracle_home                  => $oracle_home,
       oracle_user                  => $os_user,
+      oracle_user_password         => $oracle_user_password,
       install_group                => $install_group,
       system_password              => $system_password,
       sys_password                 => $sys_password,

@@ -91,9 +91,13 @@ class ora_profile::database::db_software(
     withpath => false,
   }
 
-  unless defined(Package['unzip']) {
+  #
+  # On non-windows systems , ensure the unzip package is installed
+  #
+  if !defined(Package['unzip']) and $::kernel != 'Windows'  {
     package { 'unzip':
       ensure => 'present',
+      before => Ora_install::Installdb[$file_name],
     }
   }
 
@@ -105,12 +109,22 @@ class ora_profile::database::db_software(
 
   $dirs.each |$dir| {
     unless defined(File[$dir]) {
-      file{$dir:
-        ensure  => directory,
-        owner   => $os_user,
-        group   => $install_group,
-        seltype => 'default_t',
-        mode    => '0770',
+      case $facts['os']['family'] {
+        'windows': {
+          file{$dir:
+            ensure  => directory,
+            owner   => $os_user,
+          }
+        }
+        default: {
+          file{$dir:
+            ensure  => directory,
+            owner   => $os_user,
+            group   => $install_group,
+            seltype => 'default_t',
+            mode    => '0770',
+          }
+        }
       }
     }
   }
@@ -133,13 +147,13 @@ class ora_profile::database::db_software(
       group_install             => $install_group,
       group_oper                => $oper_group,
       user                      => $os_user,
+      user_password             => $oracle_user_password,
       download_dir              => $download_dir,
       temp_dir                  => $temp_dir,
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
       require                   => [
         File[$dirs],
-        Package['unzip'],
         File[$download_dir],
       ],
     }
@@ -180,11 +194,18 @@ class ora_profile::database::db_software(
     }
   }
 
-  file {"${oracle_base}/admin":
-    ensure => 'directory',
-    owner  => $os_user,
-    group  => $install_group,
-    mode   => '0775',
+  if ( $facts['os']['family'] == 'windows' ) {
+    file {"${oracle_base}\\admin":
+      ensure => 'directory',
+      owner  => $os_user,
+    }
+  } else {
+    file {"${oracle_base}/admin":
+      ensure => 'directory',
+      owner  => $os_user,
+      group  => $install_group,
+      mode   => '0775',
+    }
   }
 
 }
