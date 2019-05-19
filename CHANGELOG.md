@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.10.0
+
+**New features**
+
+- Add basic windows support
+
 ## Release 0.9.1
 
 -s [core] Add defaults for download_dir and temp_dir
