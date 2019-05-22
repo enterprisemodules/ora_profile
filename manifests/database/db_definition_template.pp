@@ -121,11 +121,11 @@ class ora_profile::database::db_definition_template(
                       $db_conf_type,
   # Optional[String[1]] $cluster_nodes,
 ) inherits ora_profile::database {
- 
+
   echo {"Ensure DB definition from template for database ${dbname} in ${oracle_home}":
     withpath => false,
   }
- 
+
   #
   # All standard values fetched in data function
   #
@@ -135,8 +135,8 @@ class ora_profile::database::db_definition_template(
     $db_cluster_nodes = $master_node
   } else {
     $db_cluster_nodes = undef
- }
- 
+  }
+
   if ( $master_node == $facts['hostname'] ) {
     ora_install::database{ $dbname:
       action                    => 'create',
@@ -166,7 +166,7 @@ class ora_profile::database::db_definition_template(
       unless      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name}",
       logoutput   => on_failure,
     }
- 
+
     -> exec{'start_instance':
       user        => $os_user,
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
@@ -175,18 +175,18 @@ class ora_profile::database::db_definition_template(
       logoutput   => on_failure,
     }
   }
- 
+
   ora_setting { $db_instance_name:
     default     => true,
     oracle_home => $oracle_home,
   }
- 
+
   -> ora_tab_entry{ $db_instance_name:
     ensure      => 'present',
     oracle_home => $oracle_home,
     startup     => 'N',
   }
- 
+
   #
   # Database is done. Now start it
   #
@@ -196,7 +196,7 @@ class ora_profile::database::db_definition_template(
     instance_name           => $dbname,
     oracle_product_home_dir => $oracle_home,
   }
- 
+
   if ( $is_rac ) {
     $cluster_nodes.each |$index, $node| {
       $inst_number = $index + 1
@@ -210,12 +210,12 @@ class ora_profile::database::db_definition_template(
         undo_autoextend   => 'on',
         undo_max_size     => 'unlimited',
       }
- 
+
       ## Might be needed for older versions
       # exec {"create pfile for ${dbname}${instance_number}":
       #   command     => "echo -e \"set heading off\nselect 'spfile='''||value||'''' from v\\\$parameter where name = 'spfile';\" | ${oracle_home}/bin/sqlplus -S / as sysdba | grep -v ^\$ > ${oracle_home}/dbs/init${dbname}${instance_number}.ora",
       #   cwd         => '/tmp',
-     #   environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
+      #  environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
       #   path        => '/bin',
       #   user        => $ora_profile::database::os_user,
       #   unless      => "stat ${oracle_home}/dbs/init${dbname}${instance_number}.ora",
