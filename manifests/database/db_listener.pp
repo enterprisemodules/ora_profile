@@ -4,7 +4,7 @@
 #
 # @summary This class contains the definition of the Oracle listener process.
 # It installs the specified version of the SQL*net software and start's the listener.
-# 
+#
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [Stdlib::Absolutepath] oracle_home
@@ -34,19 +34,20 @@ class ora_profile::database::db_listener(
   String[1] $dbname,
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
-
+ 
   echo {"Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,
   }
-
+ 
   ora_install::net{ 'config net8':
-    oracle_home => $oracle_home,
-    version     => $sqlnet_version,        # Different version then the oracle version
-    user        => $os_user,
-    group       => $install_group
+    oracle_home  => $oracle_home,
+    version      => $sqlnet_version,        # Different version then the oracle version
+    user         => $os_user,
+    group        => $install_group,
+    download_dir => $download_dir,
+    temp_dir     => $temp_dir,
   }
-
-
+ 
   -> ora_install::listener{"start_${dbname}":
     oracle_base => $oracle_base,
     oracle_home => $oracle_home,
@@ -55,4 +56,3 @@ class ora_profile::database::db_listener(
     action      => 'start',
   }
 }
-# lint:endignore:variable_scope
