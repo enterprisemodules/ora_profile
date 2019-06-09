@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.10.2
+
+**New features**
+
+- [db_definition] Use disable_corrective_ensure for ora_database
+
 ## Release 0.10.1
 
 **Bug fixes**
