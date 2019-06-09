@@ -122,6 +122,7 @@ class ora_profile::database::db_definition(
   if ( $master_node == $facts['hostname'] ) {
     ora_database{$dbname:
       ensure                       => present,
+      disable_corrective_ensure    => true,
       archivelog                   => $archivelog,
       init_ora_content             => template($init_ora_template),
       oracle_base                  => $oracle_base,

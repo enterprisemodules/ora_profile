@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "name": "enterprisemodules/easy_type",
-      "version_requirement": ">= 2.9.8 < 3.0.0"
+      "version_requirement": ">= 2.11.0 < 3.0.0"
     },
     {
       "name": "enterprisemodules/partition",
