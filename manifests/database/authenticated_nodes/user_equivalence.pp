@@ -29,8 +29,8 @@ define ora_profile::database::authenticated_nodes::user_equivalence(
   $nodes.each |$node|{
     exec{"authorize_node_${node}_for_${name}":
       user    => $name,
-      command => "/usr/bin/scp -o StrictHostKeyChecking=no x ${name}@${node}:~",
-      unless  => "/bin/grep '^${node}[, ]' /home/${name}/.ssh/known_hosts",
+      command => "/usr/bin/ssh-keyscan ${node} >> ~/.ssh/known_hosts",
+      unless  => "/bin/grep ${node} /home/${name}/.ssh/known_hosts",
       returns => [0,1],
       require => File["/home/${name}/.ssh/id_rsa"],
     }
