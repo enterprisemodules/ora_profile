@@ -27,8 +27,8 @@ db_name='<%= @dbname %>'
 ###########################################
 # File Configuration
 ###########################################
-db_create_file_dest="/u02/oradata"
-db_recovery_file_dest="/u03/fast_recovery_area"
+db_create_file_dest="<%= @data_file_destination -%>"
+db_recovery_file_dest="<%= @db_recovery_file_dest-%>"
 db_recovery_file_dest_size=20480m
 
 ###########################################
