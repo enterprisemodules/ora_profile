@@ -23,10 +23,10 @@ class ora_profile::database::db_users(
   }
   #
   # This is a simple way to get started. It is easy to get started, but
-  # soon your hiera yaml become a nigtmare. Our advise is when you need
-  # to let puppet manage your oracle users, to override this class and 
-  # add your own puppet implementation. This is much better maintainable
-  # and adds more consistency,
+  # soon your hiera yaml becomes a nigtmare. Our advise is when you need
+  # to let Puppet manage your Oracle users, to override this class and 
+  # add your own Puppet implementation. This is a much better, more
+  # maintainable, and adds more consistency.
   #
   ensure_resources(ora_user, $list)
 }
