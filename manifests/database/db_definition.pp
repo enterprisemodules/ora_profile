@@ -234,11 +234,11 @@ class ora_profile::database::db_definition(
     }
 
     -> ora_database {$dbname:
-      ensure                       => present,
-      disable_corrective_ensure    => true,
-      archivelog                   => $archivelog,
-      instances                    => $db_cluster_nodes,
-      logfile_groups               => case $is_rac {
+      ensure                    => present,
+      disable_corrective_ensure => true,
+      archivelog                => $archivelog,
+      instances                 => $db_cluster_nodes,
+      logfile_groups            => case $is_rac {
         true: {
           [
             {group => 1, size => $log_size, thread => 1},
