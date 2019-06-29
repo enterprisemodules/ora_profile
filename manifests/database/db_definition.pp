@@ -120,7 +120,7 @@ class ora_profile::database::db_definition(
   }
 
   if ( $master_node == $facts['hostname'] ) {
-    ora_database{$dbname:
+    ora_database {$dbname:
       ensure                       => present,
       disable_corrective_ensure    => true,
       archivelog                   => $archivelog,
@@ -212,7 +212,7 @@ class ora_profile::database::db_definition(
       oracle_product_home_dir => $oracle_home,
     }
   } else {
-    exec{'add_instance':
+    exec {'add_instance':
       user        => $os_user,
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oracle_home}"],
       command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${::hostname}",
@@ -220,7 +220,7 @@ class ora_profile::database::db_definition(
       logoutput   => on_failure,
     }
 
-    -> exec{'start_instance':
+    -> exec {'start_instance':
       user        => $os_user,
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
       command     => "${oracle_home}/bin/srvctl start instance -d ${dbname} -i ${db_instance_name}",
@@ -231,6 +231,41 @@ class ora_profile::database::db_definition(
     -> ora_setting { $db_instance_name:
       default     => true,
       oracle_home => $oracle_home,
+    }
+
+    -> ora_database {$dbname:
+      ensure                       => present,
+      disable_corrective_ensure    => true,
+      archivelog                   => $archivelog,
+      instances                    => $db_cluster_nodes,
+      logfile_groups               => case $is_rac {
+        true: {
+          [
+            {group => 1, size => $log_size, thread => 1},
+            {group => 1, size => $log_size, thread => 1},
+            {group => 2, size => $log_size, thread => 1},
+            {group => 2, size => $log_size, thread => 1},
+            {group => 3, size => $log_size, thread => 1},
+            {group => 3, size => $log_size, thread => 1},
+            {group => 4, size => $log_size, thread => 2},
+            {group => 4, size => $log_size, thread => 2},
+            {group => 5, size => $log_size, thread => 2},
+            {group => 5, size => $log_size, thread => 2},
+            {group => 6, size => $log_size, thread => 2},
+            {group => 6, size => $log_size, thread => 2},
+          ]
+        }
+        default: {
+          [
+            {group => 10, size => $log_size},
+            {group => 10, size => $log_size},
+            {group => 20, size => $log_size},
+            {group => 20, size => $log_size},
+            {group => 30, size => $log_size},
+            {group => 30, size => $log_size},
+          ]
+        }
+      },
     }
   }
 
