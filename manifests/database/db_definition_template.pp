@@ -195,6 +195,7 @@ class ora_profile::database::db_definition_template(
     provider                => $db_control_provider,
     instance_name           => $dbname,
     oracle_product_home_dir => $oracle_home,
+    os_user                 => $os_user,
   }
 
   if ( $is_rac ) {
