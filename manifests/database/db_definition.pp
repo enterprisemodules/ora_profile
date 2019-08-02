@@ -4,7 +4,7 @@
 #
 # @summary This class contains the actual database definition using the `ora_database` type.
 # Here you can customize some of the attributes of your database.
-# 
+#
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [Enum['11.2.0.1',
@@ -212,7 +212,13 @@ class ora_profile::database::db_definition(
       oracle_product_home_dir => $oracle_home,
     }
   } else {
-    exec {'add_instance':
+
+    file { "${oracle_home}/dbs/init${db_instance_name}.ora":
+      ensure => present,
+      content => "spfile='${data_file_destination}/spfile${dbname}.ora'"
+    }
+
+    -> exec {'add_instance':
       user        => $os_user,
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oracle_home}"],
       command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${::hostname}",
@@ -231,6 +237,14 @@ class ora_profile::database::db_definition(
     -> ora_setting { $db_instance_name:
       default     => true,
       oracle_home => $oracle_home,
+      cdb         => case $container_database {
+        'enabled': {
+          true
+        }
+        default: {
+          false
+        }
+      },
     }
 
     -> ora_database {$dbname:
