@@ -163,7 +163,7 @@ class ora_profile::database::db_software(
     }
 
     case $version {
-      '12.2.0.1', '19.3.0.0': {
+      '12.2.0.1', '19.0.0.0': {
         $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\""
       }
       '12.1.0.2': {
@@ -189,6 +189,12 @@ class ora_profile::database::db_software(
       timeout     => 0,
       user        => 'root',
       command     => "/bin/sh ${$ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${oracle_home}/root.sh",
+    }
+
+    ~> exec { 'asmgidwrap':
+      refreshonly => true,
+      command     => "${grid_home}/bin/setasmgidwrap o=${oracle_home}/bin/oracle",
+      user        => $grid_user,
     }
   }
 

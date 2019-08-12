@@ -247,6 +247,13 @@ class ora_profile::database::db_definition(
       },
     }
 
+    -> ora_tab_entry{ $db_instance_name:
+      ensure      => 'present',
+      oracle_home => $oracle_home,
+      startup     => 'Y',
+      comment     => 'Oracle instance added by Puppet',
+    }
+
     -> ora_database {$dbname:
       ensure                    => present,
       disable_corrective_ensure => true,

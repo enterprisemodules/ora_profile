@@ -222,7 +222,7 @@ class ora_profile::database::asm_software(
     Exec['register_grid_node'] -> Ora_setting[$asm_instance_name]
 
     case $version {
-      '19.3.0.0': {
+      '19.0.0.0': {
         $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
       }
       '12.2.0.1': {
