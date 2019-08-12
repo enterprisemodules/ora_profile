@@ -163,8 +163,8 @@ class ora_profile::database::db_software(
     }
 
     case $version {
-      '12.2.0.1': {
-        $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
+      '12.2.0.1', '19.0.0.0': {
+        $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\""
       }
       '12.1.0.2': {
         $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
@@ -181,7 +181,6 @@ class ora_profile::database::db_software(
       timeout   => 0,
       user      => $os_user,
       command   => "/usr/bin/ssh ${os_user}@${master_node} \"${add_node_command}\"",
-      logoutput => on_failure,
       creates   => "${oracle_home}/root.sh",
     }
 
@@ -190,7 +189,12 @@ class ora_profile::database::db_software(
       timeout     => 0,
       user        => 'root',
       command     => "/bin/sh ${$ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${oracle_home}/root.sh",
-      logoutput   => on_failure,
+    }
+
+    ~> exec { 'asmgidwrap':
+      refreshonly => true,
+      command     => "${grid_home}/bin/setasmgidwrap o=${oracle_home}/bin/oracle",
+      user        => $grid_user,
     }
   }
 

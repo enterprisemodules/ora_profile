@@ -222,6 +222,9 @@ class ora_profile::database::asm_software(
     Exec['register_grid_node'] -> Ora_setting[$asm_instance_name]
 
     case $version {
+      '19.0.0.0': {
+        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
+      }
       '12.2.0.1': {
         $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
       }
@@ -242,13 +245,13 @@ class ora_profile::database::asm_software(
       creates => "${grid_home}/root.sh",
     }
 
-    -> exec{'register_grid_node':
-      timeout => 0,
-      user    => 'root',
-      creates => "${grid_base}/${facts['hostname']}",
-      returns => [0,25],
-      command => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
-      before  => Ora_setting[$asm_instance_name],
+    ~> exec{'register_grid_node':
+      refreshonly => true,
+      timeout     => 0,
+      user        => 'root',
+      returns     => [0,25],
+      command     => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
+      before      => Ora_setting[$asm_instance_name],
     }
   }
 
