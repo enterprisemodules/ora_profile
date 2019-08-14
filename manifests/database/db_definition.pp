@@ -214,7 +214,7 @@ class ora_profile::database::db_definition(
   } else {
 
     file { "${oracle_home}/dbs/init${db_instance_name}.ora":
-      ensure => present,
+      ensure  => present,
       content => "spfile='${data_file_destination}/spfile${dbname}.ora'"
     }
 

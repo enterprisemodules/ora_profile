@@ -178,10 +178,10 @@ class ora_profile::database::db_software(
     }
 
     exec{'add_oracle_node':
-      timeout   => 0,
-      user      => $os_user,
-      command   => "/usr/bin/ssh ${os_user}@${master_node} \"${add_node_command}\"",
-      creates   => "${oracle_home}/root.sh",
+      timeout => 0,
+      user    => $os_user,
+      command => "/usr/bin/ssh ${os_user}@${master_node} \"${add_node_command}\"",
+      creates => "${oracle_home}/root.sh",
     }
 
     ~> exec{'register_oracle_node':
