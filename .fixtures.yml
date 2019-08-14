@@ -4,12 +4,11 @@
 fixtures:
   symlinks:
     ora_profile: "#{source_dir}"
-  repositories:
-    easy_type:              git@github.com:enterprisemodules/easy_type.git
-    ora_install:            git@github.com:enterprisemodules/ora_install.git
-    ora_config:             git@github.com:enterprisemodules/ora_config.git
-    ora_cis:                git@github.com:enterprisemodules/ora_cis.git
   forge_modules:
+    easy_type:              enterprisemodules-easy_type
+    ora_install:            enterprisemodules-ora_install
+    ora_config:             enterprisemodules-ora_config
+    ora_cis:                enterprisemodules-ora_cis
     powershell:             puppetlabs/powershell
     stdlib:                 puppetlabs/stdlib
     echo:                   ipcrm/echo
