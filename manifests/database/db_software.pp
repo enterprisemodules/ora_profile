@@ -163,7 +163,7 @@ class ora_profile::database::db_software(
     }
 
     case $version {
-      '12.2.0.1', '19.0.0.0': {
+      '12.2.0.1', '18.0.0.0', '19.0.0.0': {
         $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\""
       }
       '12.1.0.2': {
