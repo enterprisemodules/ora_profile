@@ -221,7 +221,7 @@ class ora_profile::database::db_definition(
     -> exec {'add_instance':
       user        => $os_user,
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oracle_home}"],
-      command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${::hostname} -p ${data_file_destination}/spfile${dbname}.ora",
+      command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${::hostname}",
       unless      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name}",
       logoutput   => on_failure,
     }

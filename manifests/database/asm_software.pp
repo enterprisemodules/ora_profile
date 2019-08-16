@@ -225,7 +225,7 @@ class ora_profile::database::asm_software(
       '19.0.0.0': {
         $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
       }
-      '12.2.0.1': {
+      '12.2.0.1', '18.0.0.0': {
         $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
       }
       '12.1.0.2': {
