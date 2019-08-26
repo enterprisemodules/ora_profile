@@ -119,6 +119,7 @@ class ora_profile::database::db_definition_template(
   String[1]           $sys_password,
   Enum['SINGLE','RAC','RACONE']
                       $db_conf_type,
+  String[1]           $log_size,
   # Optional[String[1]] $cluster_nodes,
 ) inherits ora_profile::database {
 
@@ -210,6 +211,7 @@ class ora_profile::database::db_definition_template(
         undo_next         => '100M',
         undo_autoextend   => 'on',
         undo_max_size     => 'unlimited',
+        log_size          => $log_size,
       }
 
       ## Might be needed for older versions
