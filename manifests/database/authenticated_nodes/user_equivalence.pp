@@ -11,6 +11,8 @@ define ora_profile::database::authenticated_nodes::user_equivalence(
   #
   assert_type(String[1], $name)           |$e, $a| { fail "name is ${a}, expect a non empty string"}
 
+  ensure_packages(['openssh-clients'], {ensure => 'present'})
+
   file{"/home/${name}/.ssh":
     ensure  => 'directory',
     mode    => '0700',
@@ -32,7 +34,10 @@ define ora_profile::database::authenticated_nodes::user_equivalence(
       command => "/usr/bin/ssh-keyscan ${node} >> ~/.ssh/known_hosts",
       unless  => "/bin/grep ${node} /home/${name}/.ssh/known_hosts",
       returns => [0,1],
-      require => File["/home/${name}/.ssh/id_rsa"],
+      require => [
+        File["/home/${name}/.ssh/id_rsa"],
+        Package['openssh-clients'],
+      ]
     }
   }
 }
