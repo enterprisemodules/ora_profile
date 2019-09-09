@@ -11,7 +11,7 @@ class ora_profile::database::asm_storage::udev(
 ) inherits ora_profile::database {
   file { '/etc/udev/rules.d/99-oracle-asmdevices.rules':
     ensure  => present,
-    content => template('ora_profile/99-oracle-asmdevices.rules.erb'),
+    content => template("ora_profile/99-oracle-asmdevices-el${facts['os']['release']['major']}.rules.erb"),
     notify  => Exec['apply_udev_rules'],
   }
   exec { 'apply_udev_rules':
