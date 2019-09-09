@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.11.0
+
+**New features**
+
+- [db_definition_template] Add log_size parameter
+- [db_definition_template] Add -spfile(-p) parameter
+- [db_software] Add 19c RAC + remove default logoutput parameter
+- [asm_software] Add 19c for RAC
+- [db_definition_template] Fill template for 19c
+- [db_definition] Manage database on non-master nodes too
+
+**Bug fixes**
+
+- [user_equivalence] Ensure openssh-clients package because we need it
+- [core] Add 18c support for RAC
+- [db_definition_template] Fix for db_definition_template.pp -> db_control should run as the $os_user
+- [core] Rename to 19.0.0.0, oratab entry and setasmgidwrap
+- [db_definition] Create init.ora pointer + set cdb in ora_setting
+- [afd_label] Required to set ORACLE_BASE in 19c
+- [db_definition_template] db_control should run as the $os_user
+- [db_definition] Use specified data_file_destination and db_recovery_file_dest in default template
+- [user_equivalence] Make better idempotent
+
 ## Release 0.10.2
 
 **New features**
