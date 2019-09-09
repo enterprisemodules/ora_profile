@@ -8,12 +8,15 @@ def optional_require(file)
     puts "#{file} not loaded."
   end
 end
+
 optional_require 'puppet-lint/tasks/puppet-lint'
 optional_require 'puppet-syntax/tasks/puppet-syntax'
 optional_require 'puppetlabs_spec_helper/rake_tasks'
 optional_require 'puppet_blacksmith/rake_tasks'
-
-Dir.glob('../easy_type/lib/tasks/*.rake').each { |r| load r}
+optional_require 'puppet_litmus'
+optional_require 'puppet_litmus/rake_tasks'
+optional_require 'bolt_spec/run'
+optional_require 'em_tasks/rake_tasks'
 
 if defined?(RSpec)
   desc "Run the tests"
@@ -24,6 +27,33 @@ if defined?(RSpec)
 end
 
 @module_name = 'ora_profile'
+
+desc "Run Litmus setup"
+task :litmus do
+  # Project root
+  proj_root = File.expand_path(File.join(File.dirname(__FILE__)))
+  if `hostname`.include?('runner')
+    Rake::Task['litmus:provision'].invoke('docker_exp', 'enterprisemodules/acc_base', ' -h oradb -v /software:/software')
+  else
+    Rake::Task['litmus:provision'].invoke('docker_exp', 'enterprisemodules/acc_base', '-h oradb -v $SOFTWARE_DIR:/software')
+  end
+  node_name = YAML.load_file("#{proj_root}/inventory.yaml").dig('groups',0,'nodes',0, 'name')
+  ENV['TARGET_HOST'] = node_name
+  Rake::Task['litmus:install_agent'].invoke
+  Rake::Task['litmus:install_module'].invoke
+  Rake::Task['litmus:prepare'].invoke(node_name)
+
+end
+
+namespace :litmus do
+  desc "Prepare the system for the tests"
+  task :prepare, [:node_name] do |task, args|
+    node_name = args['node_name']
+    include BoltSpec::Run
+    extend PuppetLitmus::Serverspec
+    # Nothing for now
+  end
+end
 
 
 if defined?(PuppetLint)

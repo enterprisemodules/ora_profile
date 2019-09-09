@@ -3,3 +3,81 @@
 include:
   - project: 'enterprisemodules/gitlab_ci'
     file: 'module-defaults.yml'
+
+Oracle 12 database Acc test:
+  extends: .puppet_acceptance_test
+  variables:
+    type: database_on_ora12
+  only:
+    changes:
+      - "lib/puppet/**/*.rb"
+      - "templates/**/*.*"
+      - "manifests/database.pp"
+      - "manifests/database/**/*.pp"
+      - "specs/support/acceptance/**/*.rb"
+      - "specs/acceptance/database_spec.rb"
+
+Oracle 18 database Acc test:
+  extends: .puppet_acceptance_test
+  variables:
+    type: database_on_ora18
+  only:
+    changes:
+      - "lib/puppet/**/*.rb"
+      - "templates/**/*.*"
+      - "manifests/database.pp"
+      - "manifests/database/**/*.pp"
+      - "specs/support/acceptance/**/*.rb"
+      - "specs/acceptance/database_spec.rb"
+
+Oracle 19 database Acc test:
+  extends: .puppet_acceptance_test
+  variables:
+    type: database_on_ora19
+  only:
+    changes:
+      - "lib/puppet/**/*.rb"
+      - "templates/**/*.*"
+      - "manifests/database.pp"
+      - "manifests/database/**/*.pp"
+      - "specs/support/acceptance/**/*.rb"
+      - "specs/acceptance/database_spec.rb"
+
+Oracle 12 secured_database Acc test:
+  extends: .puppet_acceptance_test
+  variables:
+    type: secured_database_on_ora12
+  only:
+    changes:
+      - "lib/puppet/**/*.rb"
+      - "templates/**/*.*"
+      - "manifests/database.pp"
+      - "manifests/database/**/*.pp"
+      - "specs/support/acceptance/**/*.rb"
+      - "specs/acceptance/secured_database_spec.rb"
+
+Oracle 18 secured_database Acc test:
+  extends: .puppet_acceptance_test
+  variables:
+    type: secured_database_on_ora18
+  only:
+    changes:
+      - "lib/puppet/**/*.rb"
+      - "templates/**/*.*"
+      - "manifests/database.pp"
+      - "manifests/database/**/*.pp"
+      - "specs/support/acceptance/**/*.rb"
+      - "specs/acceptance/secured_database_spec.rb"
+
+Oracle 19 secured_database Acc test:
+  extends: .puppet_acceptance_test
+  variables:
+    type: secured_database_on_ora19
+  only:
+    changes:
+      - "lib/puppet/**/*.rb"
+      - "templates/**/*.*"
+      - "manifests/database.pp"
+      - "manifests/database/**/*.pp"
+      - "specs/support/acceptance/**/*.rb"
+      - "specs/acceptance/secured_database_spec.rb"

@@ -20,3 +20,4 @@
 /vendor/
 
 .DS_Store
+/inventory.yaml
