@@ -286,6 +286,18 @@ ora_profile::database::asm_software::bash_profile:                        true
 
 # ------------------------------------------------------------------------------
 #
+#  Settings for database::asm_init_params
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_init_params::parameters:
+  spfile/asm_power_limit:
+    value: 1
+  memory/asm_power_limit:
+    value: 1
+
+
+# ------------------------------------------------------------------------------
+#
 #  Settings for asm_diskgroup
 #
 # ------------------------------------------------------------------------------
@@ -412,6 +424,8 @@ ora_profile::database::db_listener::oracle_home:                          "%{::o
 ora_profile::database::db_listener::sqlnet_version:                       '12.2'
 ora_profile::database::db_listener::os_user:                              "%{::ora_profile::database::os_user}"
 ora_profile::database::db_listener::dba_group:                            "%{::ora_profile::database::dba_group}"
+
+
 # ------------------------------------------------------------------------------
 #
 #  Settings for database::asm_listener
@@ -421,6 +435,18 @@ ora_profile::database::asm_listener::dbname:                              "%{::o
 ora_profile::database::asm_listener::oracle_home:                         "%{::ora_profile::database::grid_home}"
 ora_profile::database::asm_listener::oracle_base:                         "%{::ora_profile::database::oracle_base}"
 ora_profile::database::asm_listener::sqlnet_version:                      '12.2'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_init_params
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_init_params::parameters:
+  spfile/archive_lag_target:
+    value: 1800
+  memory/archive_lag_target:
+    value: 1800
 
 
 # ------------------------------------------------------------------------------
