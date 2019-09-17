@@ -388,7 +388,7 @@ ora_profile::database::db_definition::init_ora_template:                  ora_pr
 ora_profile::database::db_definition::data_file_destination:              /u02/oradata
 ora_profile::database::db_definition::db_recovery_file_dest:              /u03/fast_recovery_area
 ora_profile::database::db_definition::archivelog:                         disabled
-
+ora_profile::database::db_definition::ora_database_override:              {}
 # ------------------------------------------------------------------------------
 #
 #  Settings for database::db_definition_template

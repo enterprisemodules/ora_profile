@@ -97,6 +97,7 @@ class ora_profile::database::db_definition(
   String[1] $init_ora_template,
   String[1] $data_file_destination,
   String[1] $db_recovery_file_dest,
+  Hash      $ora_database_override,
 ) inherits ora_profile::database {
 
   if ( $is_rac ) {
@@ -120,8 +121,8 @@ class ora_profile::database::db_definition(
   }
 
   if ( $master_node == $facts['hostname'] ) {
-    ora_database {$dbname:
-      ensure                       => present,
+
+    $ora_database_settings = {
       disable_corrective_ensure    => true,
       archivelog                   => $archivelog,
       init_ora_content             => template($init_ora_template),
@@ -200,6 +201,11 @@ class ora_profile::database::db_definition(
         }
       },
       timezone                     => 'Europe/Amsterdam',
+    }.deep_merge($ora_database_override)
+
+    ora_database {$dbname:
+      ensure => present,
+      *      => $ora_database_settings,
     }
 
     #
@@ -212,6 +218,40 @@ class ora_profile::database::db_definition(
       oracle_product_home_dir => $oracle_home,
     }
   } else {
+
+    $ora_database_settings = {
+      disable_corrective_ensure => true,
+      archivelog                => $archivelog,
+      instances                 => $db_cluster_nodes,
+      logfile_groups            => case $is_rac {
+        true: {
+          [
+            {group => 1, size => $log_size, thread => 1},
+            {group => 1, size => $log_size, thread => 1},
+            {group => 2, size => $log_size, thread => 1},
+            {group => 2, size => $log_size, thread => 1},
+            {group => 3, size => $log_size, thread => 1},
+            {group => 3, size => $log_size, thread => 1},
+            {group => 4, size => $log_size, thread => 2},
+            {group => 4, size => $log_size, thread => 2},
+            {group => 5, size => $log_size, thread => 2},
+            {group => 5, size => $log_size, thread => 2},
+            {group => 6, size => $log_size, thread => 2},
+            {group => 6, size => $log_size, thread => 2},
+          ]
+        }
+        default: {
+          [
+            {group => 10, size => $log_size},
+            {group => 10, size => $log_size},
+            {group => 20, size => $log_size},
+            {group => 20, size => $log_size},
+            {group => 30, size => $log_size},
+            {group => 30, size => $log_size},
+          ]
+        }
+      },
+    }.deep_merge($ora_database_override)
 
     file { "${oracle_home}/dbs/init${db_instance_name}.ora":
       ensure  => present,
@@ -255,38 +295,8 @@ class ora_profile::database::db_definition(
     }
 
     -> ora_database {$dbname:
-      ensure                    => present,
-      disable_corrective_ensure => true,
-      archivelog                => $archivelog,
-      instances                 => $db_cluster_nodes,
-      logfile_groups            => case $is_rac {
-        true: {
-          [
-            {group => 1, size => $log_size, thread => 1},
-            {group => 1, size => $log_size, thread => 1},
-            {group => 2, size => $log_size, thread => 1},
-            {group => 2, size => $log_size, thread => 1},
-            {group => 3, size => $log_size, thread => 1},
-            {group => 3, size => $log_size, thread => 1},
-            {group => 4, size => $log_size, thread => 2},
-            {group => 4, size => $log_size, thread => 2},
-            {group => 5, size => $log_size, thread => 2},
-            {group => 5, size => $log_size, thread => 2},
-            {group => 6, size => $log_size, thread => 2},
-            {group => 6, size => $log_size, thread => 2},
-          ]
-        }
-        default: {
-          [
-            {group => 10, size => $log_size},
-            {group => 10, size => $log_size},
-            {group => 20, size => $log_size},
-            {group => 20, size => $log_size},
-            {group => 30, size => $log_size},
-            {group => 30, size => $log_size},
-          ]
-        }
-      },
+      ensure => present,
+      *      => $ora_database_override,
     }
   }
 
@@ -298,7 +308,7 @@ class ora_profile::database::db_definition(
         number            => $inst_number,
         thread            => $inst_number,
         datafile          => $data_file_destination,
-        undo_initial_size => '100M',
+        undo_initial_size => $undo_tablespace_size,
         undo_next         => '100M',
         undo_autoextend   => 'on',
         undo_max_size     => 'unlimited',
