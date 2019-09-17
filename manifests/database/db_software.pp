@@ -97,7 +97,6 @@ class ora_profile::database::db_software(
   if !defined(Package['unzip']) and $::kernel != 'Windows'  {
     package { 'unzip':
       ensure => 'present',
-      before => Ora_install::Installdb[$file_name],
     }
   }
 
@@ -155,6 +154,7 @@ class ora_profile::database::db_software(
       require                   => [
         File[$dirs],
         File[$download_dir],
+        Package['unzip'],
       ],
     }
   } else {
