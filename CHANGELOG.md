@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.12.0
+
+**New features**
+
+- [db_definition] Allow ora_database settings override in detail
+- [init_params] Manage init params for ASM and DB
+
+**Bug fixes**
+
+- [db_definition_template] Fix Oracle 19 template
+- [secured_database] Refacter code for less change on circular dep
+- [db_software] change dependency on unzip package to be moree resilient
+
+
 ## Release 0.11.0
 
 **New features**
