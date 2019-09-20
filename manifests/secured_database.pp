@@ -124,15 +124,7 @@
 #
 #--++--
 class ora_profile::secured_database(
-  Optional[String] $database = undef,
-  Optional[String] $cis_rules = undef,
-  Optional[String] $before_database = undef,
-  Optional[String] $before_cis_rules = undef,
-  Optional[String] $after_database = undef,
-  Optional[String] $after_cis_rules = undef,
 ) {
-  easy_type::staged_contain([
-    'ora_profile::database',
-    'ora_profile::database::cis_rules',
-  ])
+  contain ora_profile::database
+  include ora_profile::database::cis_rules
 }
