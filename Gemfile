@@ -21,12 +21,19 @@ group 'acceptance_test' do
   gem 'puppet_litmus', git: 'https://github.com/enterprisemodules/puppet_litmus.git' if puppetversion == '6.4.2'
   gem 'serverspec'
   gem 'rspec-retry'
-  gem 'parallel_tests', '< 2.10.0' if RUBY_VERSION < '2.0.0'
-  gem 'parallel_tests' if RUBY_VERSION >= '2.0.0'
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.0.0')
+    gem 'parallel_tests', '< 2.10.0'
+  else
+    gem 'parallel_tests'
+  end
 end
 
 group :release, :acceptance_test do
-  gem 'rake'
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.2.0')
+    gem 'rake', '< 13.0.0'
+  else
+    gem 'rake'
+  end
   gem 'puppet-blacksmith'
   gem 'em_tasks', :git => "https://github.com/enterprisemodules/em_tasks.git" if RUBY_VERSION > '2.1.2'
 end
@@ -39,7 +46,8 @@ group :quality do
   gem 'overcommit'
   gem 'puppet-lint'
   gem 'reek'
-  gem 'rubocop'
+  gem 'rubocop', :require => false
+  gem 'rubocop-performance' if Gem::Version.new(RUBY_VERSION) > Gem::Version.new('2.3.0')
 end
 
 group :unit_test, :acceptance_test, :publish do
