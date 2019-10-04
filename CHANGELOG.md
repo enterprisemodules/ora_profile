@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.13.0
+
+**New features**
+
+- [release] Add support for RHEL 8 os-es
+- [asm_patches] Add manifests for applying patches in ASM
+
 ## Release 0.12.0
 
 **New features**
