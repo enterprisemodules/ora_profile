@@ -40,7 +40,7 @@ class ora_profile::database::firewall(
             manage_service => $manage_service,
           }
         }
-        '7': {
+        '7', '8': {
           class {'ora_profile::database::firewall::firewalld':
             ports          => $ports,
             manage_service => $manage_service,
