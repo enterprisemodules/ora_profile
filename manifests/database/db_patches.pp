@@ -62,7 +62,7 @@ class ora_profile::database::db_patches(
   #
   # First make sure the correct version of opatch is installed
   #
-  ora_install::opatchupgrade{$patch_file:
+  ora_install::opatchupgrade{"DB OPatch upgrade to ${opversion}":
     oracle_home               => $oracle_home,
     patch_file                => "${patch_file}.zip",
     opversion                 => $opversion,
@@ -119,7 +119,7 @@ class ora_profile::database::db_patches(
     #
     $defaults = {
       ensure  => 'present',
-      require => Ora_install::Opatchupgrade[$patch_file],
+      require => Ora_install::Opatchupgrade["DB OPatch upgrade to ${opversion}"],
       tmp_dir => "${download_dir}/patches",               # always use subdir, the whole directory will be removed when done
     }
     ensure_resources('ora_opatch', $patch_list, $defaults)

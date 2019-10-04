@@ -4,7 +4,7 @@
 #
 # @summary This class contains the code to install Oracle Grid Infrastructure.
 # Here you can customize some of the attributes of your database.
-#
+# 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [Enum['11.2.0.4', '12.1.0.1', '12.2.0.1', '12.1.0.2', '18.0.0.0']] version
@@ -93,7 +93,7 @@
 #    The default value is: `undef`
 #
 # @param [Optional[String[1]]] network_interface_list
-#
+#    
 #    The list of interfaces to use for RAC.The value should be a comma separated strings where each string is as shown below```InterfaceName:SubnetAddress:InterfaceType```where InterfaceType can be either "1", "2", "3", "4" or "5" (1 indicates public, 2 indicates private, 3 indicates the interface is not used, 4 indicates ASM and 5 indicates ASM & Private)The default value is: `undef`
 #
 # @param [Optional[Enum['FLEX_ASM_STORAGE',
@@ -112,7 +112,7 @@
 #
 #--++--
 # lint:ignore:variable_scope
-class ora_profile::database::asm_software(
+class ora_profile::database::asm_setup(
   Ora_Install::Version
             $version,
   Array[Stdlib::Absolutepath]
@@ -147,43 +147,16 @@ class ora_profile::database::asm_software(
             $network_interface_list,
   Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]
             $storage_option,
-) inherits ora_profile::database {
+) inherits ora_profile::database::asm_software {
 
-  echo {"Ensure ASM Software ${version} in ${grid_home}":
+  echo {"Ensure ASM Setup ${version} in ${grid_home}":
     withpath => false,
-  }
-
-  $dirs.each |$dir| {
-    unless defined(File[$dir]) {
-      file{$dir:
-        ensure  => directory,
-        owner   => $grid_user,
-        group   => $install_group,
-        seltype => 'default_t',
-        mode    => '0770',
-      }
-    }
-  }
-
-  file{ '/u01/app':
-    ensure => directory,
-    owner  => $grid_user,
-    group  => $install_group,
-    mode   => '0775',
-  }
-
-  -> file {$download_dir:
-    ensure  => directory,
-    owner   => $os_user,
-    group   => $install_group,
-    seltype => 'default_t',
-    mode    => '0775',
   }
 
   if ( $master_node == $facts['hostname'] ) {
     # Ora_install::installasm[$file_name] -> Ora_setting[$asm_instance_name]
 
-    ora_install::installasm{ "Install GRID version ${version} in ${grid_home}":
+    ora_install::installasm{ "Setup GRID version ${version} in ${grid_home}":
       version                   => $version,
       file                      => $file_name,
       grid_base                 => $grid_base,
@@ -214,24 +187,8 @@ class ora_profile::database::asm_software(
       download_dir              => $download_dir,
       temp_dir                  => $temp_dir,
       bash_profile              => $bash_profile,
-      install_task              => $install_task,
-    }
-    if ( $install_task == 'ALL' ) {
-      ora_setting{ $asm_instance_name:
-        default     => false,
-        user        => 'sys',
-        syspriv     => 'sysasm',
-        oracle_home => $grid_home,
-        os_user     => $grid_user,
-        require     => Ora_install::Installasm["Install GRID version ${version} in ${grid_home}"],
-      }
-
-      -> ora_tab_entry{ $asm_instance_name:
-        ensure      => 'present',
-        oracle_home => $grid_home,
-        startup     => 'N',
-        comment     => 'Grid instance added by Puppet',
-      }
+      install_task              => 'SETUP',
+      before                    => Ora_setting[$asm_instance_name],
     }
   } else {
     echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
@@ -272,21 +229,21 @@ class ora_profile::database::asm_software(
       command     => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
       before      => Ora_setting[$asm_instance_name],
     }
+  }
 
-    -> ora_setting{ $asm_instance_name:
-      default     => false,
-      user        => 'sys',
-      syspriv     => 'sysasm',
-      oracle_home => $grid_home,
-      os_user     => $grid_user,
-    }
+  ora_setting{ $asm_instance_name:
+    default     => false,
+    user        => 'sys',
+    syspriv     => 'sysasm',
+    oracle_home => $grid_home,
+    os_user     => $grid_user,
+  }
 
-    -> ora_tab_entry{ $asm_instance_name:
-      ensure      => 'present',
-      oracle_home => $grid_home,
-      startup     => 'N',
-      comment     => 'Grid instance added by Puppet',
-    }
+  -> ora_tab_entry{ $asm_instance_name:
+    ensure      => 'present',
+    oracle_home => $grid_home,
+    startup     => 'N',
+    comment     => 'Grid instance added by Puppet',
   }
 }
 # lint:endignore
