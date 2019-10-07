@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.13.1
+
+**Bug fixes**
+
+- [asm_patches] Fix issue when no sub_patches defined
+
 ## Release 0.13.0
 
 **New features**
