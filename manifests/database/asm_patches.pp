@@ -27,7 +27,7 @@ class ora_profile::database::asm_patches(
     download_dir              => $download_dir,
   }
 
-  $converted_patch_list = $patch_list.map | $i, $j | { $j['sub_patches'].map | $x | { "${i.split(':')[0]}:${x}" } }.flatten
+  # $converted_patch_list = $patch_list.map | $i, $j | { $j['sub_patches'].map | $x | { "${i.split(':')[0]}:${x}" } }.flatten
 
   if ( oracle_exists($grid_home) ) {
     # Stop everything, install patches and start again
@@ -60,7 +60,7 @@ class ora_profile::database::asm_patches(
           Ora_install::Opatchupgrade["ASM OPatch upgrade to ${opversion}"],
         ],
       }
-      if $props['sub_patches'] {
+      if ( has_key($props, 'sub_patches') ) {
         $sub_patches = $props['sub_patches'].map |$p| { "${download_dir}/patches/${patch_num}/${p}" }
         $apply_patches = join($sub_patches, ',')
       } else {
