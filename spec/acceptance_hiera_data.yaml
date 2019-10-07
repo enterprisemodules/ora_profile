@@ -11,7 +11,43 @@ ora_profile::database::sysctl:  skip    # Docker doesn't allow this
 #  ERROR at line 1:
 #  ORA-04020: deadlock detected while trying to lock object SYS.DBMS_DDL
 #
-# Therefore we skip rule 4.1.11 for now
+# Therefore we skip rule that revoke a grant for now
 #
 ora_cis::ignore:
-  - R_4_1_11
+  - r_4_1_1
+  - r_4_1_2
+  - r_4_1_3
+  - r_4_1_4
+  - r_4_1_5
+  - r_4_1_6
+  - r_4_1_7
+  - r_4_1_8
+  - r_4_1_9
+  - r_4_1_10
+  - r_4_1_11
+  - r_4_1_12
+  - r_4_1_13
+  - r_4_1_14
+  - r_4_1_15
+  - r_4_1_16
+  - r_4_1_17
+  - r_4_1_18
+  - r_4_1_19
+  - r_4_1_20
+  - r_4_1_21
+  - r_4_1_22
+  - r_4_2_1
+  - r_4_2_2
+  - r_4_2_3
+  - r_4_2_4
+  - r_4_2_5
+  - r_4_2_6
+  - r_4_2_7
+  - r_4_2_8
+  - r_4_2_9
+  - r_4_2_10
+  - r_4_2_11
+  - r_4_2_12
+  - r_4_2_13
+  - r_4_2_14
+  - 
