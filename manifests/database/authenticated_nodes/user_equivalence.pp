@@ -28,11 +28,11 @@ define ora_profile::database::authenticated_nodes::user_equivalence(
     require => File["/home/${name}/.ssh"],
   }
 
-  $nodes.each |$node|{
-    exec{"authorize_node_${node}_for_${name}":
+  $nodes.each |$node_name|{
+    exec{"authorize_node_${node_name}_for_${name}":
       user    => $name,
-      command => "/usr/bin/ssh-keyscan ${node} >> ~/.ssh/known_hosts",
-      unless  => "/bin/grep ${node} /home/${name}/.ssh/known_hosts",
+      command => "/usr/bin/ssh-keysca_namen ${node_name} >> ~/.ssh/known_hosts",
+      unless  => "/bin/grep ${node_name} /home/${name}/.ssh/known_hosts",
       returns => [0,1],
       require => [
         File["/home/${name}/.ssh/id_rsa"],
