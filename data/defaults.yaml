@@ -282,6 +282,7 @@ ora_profile::database::asm_software::group:                               asmdba
 ora_profile::database::asm_software::oper_group:                          asmoper
 ora_profile::database::asm_software::asm_group:                           asmadmin
 ora_profile::database::asm_software::bash_profile:                        true
+ora_profile::database::asm_software::install_task:                        ALL
 
 
 # ------------------------------------------------------------------------------
