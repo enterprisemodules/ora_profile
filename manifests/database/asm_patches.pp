@@ -44,6 +44,7 @@ class ora_profile::database::asm_patches(
     $patch_list.each |$patch, $props| {
       $home = split($patch, ':')[0]
       $patch_num = split($patch, ':')[1]
+
       archive{ "${download_dir}/${props['source']}":
         ensure       => present,
         cleanup      => true,
@@ -60,50 +61,62 @@ class ora_profile::database::asm_patches(
           Ora_install::Opatchupgrade["ASM OPatch upgrade to ${opversion}"],
         ],
       }
+
       if ( has_key($props, 'sub_patches') ) {
         $sub_patches = $props['sub_patches'].map |$p| { "${download_dir}/patches/${patch_num}/${p}" }
         $apply_patches = join($sub_patches, ',')
       } else {
         $apply_patches = "${download_dir}/patches/${patch_num}"
       }
+
+      case $props['type'] {
+        'psu': {
+          case $asm_version {
+            '12.2.0.1': {
+              $apply_type = 'RU'
+            }
+            '18.0.0.0', '19.0.0.0': {
+              $apply_type = 'PSU'
+            }
+            default: {
+              fail ("Version ${asm_version} doesn't support patching this way")
+            }
+          }
+        }
+        'one-off': {
+          case $asm_version {
+            '12.2.0.1', '18.0.0.0', '19.0.0.0': {
+              $apply_type = 'OneOffs'
+            }
+            default: {
+              fail ("Version ${asm_version} doesn't support patching this way")
+            }
+          }
+        }
+        default: {
+          fail ("Unknown patch type (${$props['type']}) specified.")
+        }
+      }
+
+      file { "${download_dir}/patches/patch_grid_${patch_num}.sh":
+        ensure  => file,
+        owner   => $grid_user,
+        group   => $install_group,
+        mode    => '0744',
+        content => template('ora_profile/patch_grid.sh.erb'),
+      }
+
       exec{ "Apply ${props['type']} patch(es) ${patch_num} to ${home}":
-        command     => case $props['type'] {
-          'psu': {
-            case $asm_version {
-              '12.2.0.1': {
-                "${home}/gridSetup.sh -applyPSU ${download_dir}/patches/${patch_num} -silent | grep -z \"Successfully applied the patch.\""
-              }
-              '18.0.0.0', '19.0.0.0': {
-                "${home}/gridSetup.sh -applyRU ${download_dir}/patches/${patch_num} -silent | grep -z \"Successfully applied the patch.\""
-              }
-              default: {
-                fail ("Version ${asm_version} doesn't support patching this way")
-              }
-            }
-          }
-          'one-off': {
-            case $asm_version {
-              '12.2.0.1', '18.0.0.0', '19.0.0.0': {
-                "${home}/gridSetup.sh -applyOneOffs ${apply_patches} -silent | grep -z \"Successfully applied the patch.\""
-              }
-              default: {
-                fail ("Version ${asm_version} doesn't support patching this way")
-              }
-            }
-          }
-          default: {
-            fail ('This case doesnot have a default')
-          }
-        },
+        command     => "${download_dir}/patches/patch_grid_${patch_num}.sh",
         refreshonly => true,
-        environment => ["ORACLE_HOME=${home}", "ORACLE_BASE=${grid_base}", 'DISPLAY=:0'],
-        path        => '/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:',
         timeout     => 0,
         user        => $grid_user,
         group       => $install_group,
         notify      => Exec["Cleanup ${download_dir}/patches/${patch_num}"],
+        require     => File["${download_dir}/patches/patch_grid_${patch_num}.sh"],
         logoutput   => true,
       }
+
       exec{ "Cleanup ${download_dir}/patches/${patch_num}":
         command     => "/bin/rm -rf ${download_dir}/patches/${patch_num}",
         refreshonly => true,
