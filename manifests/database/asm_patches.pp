@@ -73,10 +73,10 @@ class ora_profile::database::asm_patches(
         'psu': {
           case $asm_version {
             '12.2.0.1': {
-              $apply_type = 'RU'
+              $apply_type = 'PSU'
             }
             '18.0.0.0', '19.0.0.0': {
-              $apply_type = 'PSU'
+              $apply_type = 'RU'
             }
             default: {
               fail ("Version ${asm_version} doesn't support patching this way")
