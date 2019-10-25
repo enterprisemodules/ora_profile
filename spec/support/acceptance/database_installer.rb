@@ -102,7 +102,7 @@ shared_examples "a database installer" do | settings|
     #
     # ora_cis needs some more run's before it is idempotent.
     #
-    if klass = 'ora_profile::secured_database'
+    if klass == 'ora_profile::secured_database'
       apply_manifest(manifest, :expect_changes => true)
     end
     apply_manifest(manifest, :expect_changes => false)
