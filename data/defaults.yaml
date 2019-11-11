@@ -301,33 +301,33 @@ ora_profile::database::asm_patches::patch_list:                           {}
 #  Settings for database::asm_setup
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_setup::version:                                "%{lookup('ora_profile::database::asm_software::version')}"
+ora_profile::database::asm_setup::version:                                "%{alias('ora_profile::database::asm_software::version')}"
 ora_profile::database::asm_setup::dirs:
   - /u01
   - /u01/app/grid
   - /u01/app/grid/admin
   - /u01/app/grid/product
   - "/u01/app/grid/product/%{lookup('ora_profile::database::asm_setup::version')}"
-ora_profile::database::asm_setup::grid_home:                              "%{lookup('ora_profile::database::asm_software::grid_home')}"
-ora_profile::database::asm_setup::file_name:                              "%{lookup('ora_profile::database::asm_software::file_name')}"
-ora_profile::database::asm_setup::asm_sys_password:                       "%{lookup('ora_profile::database::asm_software::asm_sys_password')}"
-ora_profile::database::asm_setup::asm_diskgroup:                          "%{lookup('ora_profile::database::asm_software::asm_diskgroup')}"
-ora_profile::database::asm_setup::grid_type:                              "%{lookup('ora_profile::database::asm_software::grid_type')}"
-ora_profile::database::asm_setup::cluster_node_types:                     "%{lookup('ora_profile::database::asm_software::cluster_node_types')}"
-ora_profile::database::asm_setup::cluster_name:                           "%{lookup('ora_profile::database::asm_software::cluster_name')}"
-ora_profile::database::asm_setup::scan_name:                              "%{lookup('ora_profile::database::asm_software::scan_name')}"
-ora_profile::database::asm_setup::scan_port:                              "%{lookup('ora_profile::database::asm_software::scan_port')}"
-ora_profile::database::asm_setup::network_interface_list:                 "%{lookup('ora_profile::database::asm_software::network_interface_list')}"
-ora_profile::database::asm_setup::storage_option:                         "%{lookup('ora_profile::database::asm_software::storage_option')}"
-ora_profile::database::asm_setup::disk_discovery_string:                  "%{lookup('ora_profile::database::asm_software::disk_discovery_string')}"
-ora_profile::database::asm_setup::asm_disks:                              "%{lookup('ora_profile::database::asm_software::asm_disks')}"
-ora_profile::database::asm_setup::disks_failgroup_names:                  "%{lookup('ora_profile::database::asm_software::disks_failgroup_names')}"
-ora_profile::database::asm_setup::configure_afd:                          "%{lookup('ora_profile::database::asm_software::configure_afd')}"
-ora_profile::database::asm_setup::disk_redundancy:                        "%{lookup('ora_profile::database::asm_software::disk_redundancy')}"
-ora_profile::database::asm_setup::group:                                  "%{lookup('ora_profile::database::asm_software::group')}"
-ora_profile::database::asm_setup::oper_group:                             "%{lookup('ora_profile::database::asm_software::oper_group')}"
-ora_profile::database::asm_setup::asm_group:                              "%{lookup('ora_profile::database::asm_software::asm_group')}"
-ora_profile::database::asm_setup::bash_profile:                           "%{lookup('ora_profile::database::asm_software::bash_profile')}"
+ora_profile::database::asm_setup::grid_home:                              "%{alias('ora_profile::database::asm_software::grid_home')}"
+ora_profile::database::asm_setup::file_name:                              "%{alias('ora_profile::database::asm_software::file_name')}"
+ora_profile::database::asm_setup::asm_sys_password:                       "%{alias('ora_profile::database::asm_software::asm_sys_password')}"
+ora_profile::database::asm_setup::asm_diskgroup:                          "%{alias('ora_profile::database::asm_software::asm_diskgroup')}"
+ora_profile::database::asm_setup::grid_type:                              "%{alias('ora_profile::database::asm_software::grid_type')}"
+ora_profile::database::asm_setup::cluster_node_types:                     "%{alias('ora_profile::database::asm_software::cluster_node_types')}"
+ora_profile::database::asm_setup::cluster_name:                           "%{alias('ora_profile::database::asm_software::cluster_name')}"
+ora_profile::database::asm_setup::scan_name:                              "%{alias('ora_profile::database::asm_software::scan_name')}"
+ora_profile::database::asm_setup::scan_port:                              "%{alias('ora_profile::database::asm_software::scan_port')}"
+ora_profile::database::asm_setup::network_interface_list:                 "%{alias('ora_profile::database::asm_software::network_interface_list')}"
+ora_profile::database::asm_setup::storage_option:                         "%{alias('ora_profile::database::asm_software::storage_option')}"
+ora_profile::database::asm_setup::disk_discovery_string:                  "%{alias('ora_profile::database::asm_software::disk_discovery_string')}"
+ora_profile::database::asm_setup::asm_disks:                              "%{alias('ora_profile::database::asm_software::asm_disks')}"
+ora_profile::database::asm_setup::disks_failgroup_names:                  "%{alias('ora_profile::database::asm_software::disks_failgroup_names')}"
+ora_profile::database::asm_setup::configure_afd:                          "%{alias('ora_profile::database::asm_software::configure_afd')}"
+ora_profile::database::asm_setup::disk_redundancy:                        "%{alias('ora_profile::database::asm_software::disk_redundancy')}"
+ora_profile::database::asm_setup::group:                                  "%{alias('ora_profile::database::asm_software::group')}"
+ora_profile::database::asm_setup::oper_group:                             "%{alias('ora_profile::database::asm_software::oper_group')}"
+ora_profile::database::asm_setup::asm_group:                              "%{alias('ora_profile::database::asm_software::asm_group')}"
+ora_profile::database::asm_setup::bash_profile:                           "%{alias('ora_profile::database::asm_software::bash_profile')}"
 ora_profile::database::asm_setup::install_task:                           SETUP
 
 
