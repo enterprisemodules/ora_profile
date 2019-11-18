@@ -55,8 +55,10 @@ class ora_profile::database::db_patches(
   Hash      $patch_list,
 ) inherits ora_profile::database {
 
-  echo {"Ensure Patch(es) on ${oracle_home}":
-    withpath => false,
+  if $patch_list.keys.size > 0 {
+    echo {"Ensure DB Patch(es) ${patch_list.keys.join(',')} on ${oracle_home}":
+      withpath => false,
+    }
   }
 
   #
@@ -78,7 +80,7 @@ class ora_profile::database::db_patches(
   $converted_patch_list = $patch_list.map | $i, $j | { $j['sub_patches'].map | $x | { "${i.split(':')[0]}:${x}" } }.flatten
 
   if ora_patches_installed($converted_patch_list) {
-    echo { 'All Oracle patches already installed. Skipping patches.':
+    echo { 'All DB patches already installed. Skipping patches.':
       withpath => false,
     }
   } else {
@@ -100,7 +102,7 @@ class ora_profile::database::db_patches(
 
       db_control {'database stop':
         ensure                  => 'stop',
-        instance_name           => $dbname,
+        instance_name           => $db_instance_name,
         oracle_product_home_dir => $oracle_home,
         os_user                 => $os_user,
         provider                => $db_control_provider,
@@ -131,7 +133,7 @@ class ora_profile::database::db_patches(
       #
       db_control {'database start':
         ensure                  => 'start',
-        instance_name           => $dbname,
+        instance_name           => $db_instance_name,
         oracle_product_home_dir => $oracle_home,
         os_user                 => $os_user,
         require                 => Ora_opatch[$patch_list.keys]
