@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.13.2
+
+**Bug fixes**
+
+- [asm_setup] Use alias iso lookup
+- [asm_patches/asm_setup] Set defaults
+- [asm_patches] Fix case statement
+- [user_equivalence] Fix typo
+- [asm_patches] Generate a script to do the patching
+
 ## Release 0.13.1
 
 **Bug fixes**
