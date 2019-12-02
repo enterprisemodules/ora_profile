@@ -405,10 +405,7 @@ ora_profile::database::db_patches::install_group:                         "%{::o
 ora_profile::database::db_patches::os_user:                               "%{::ora_profile::database::os_user}"
 ora_profile::database::db_patches::source:                                "%{::ora_profile::database::source}"
 ora_profile::database::db_patches::oracle_home:                           "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_patches::patch_list:
-  "%{::ora_profile::database::oracle_home}:27468969":
-    source:              "%{::ora_profile::database::source}/p27468969_122010_Linux-x86-64.zip"
-    sub_patches:        ['27674384', '27464465']
+ora_profile::database::db_patches::patch_list:                            {}
 
 
 # ------------------------------------------------------------------------------

@@ -152,8 +152,6 @@ class ora_profile::database::asm_setup(
   }
 
   if ( $master_node == $facts['hostname'] ) {
-    # Ora_install::installasm[$file_name] -> Ora_setting[$asm_instance_name]
-
     ora_install::installasm{ "Setup GRID version ${version} in ${grid_home}":
       version                   => $version,
       file                      => $file_name,
