@@ -658,15 +658,17 @@ class ora_profile::database(
   Optional[String] $after_db_startup = undef,
 )
 {
-  $asm_instance_name = set_param('instance_name', '+ASM', $cluster_nodes)
-  $db_instance_name  = set_param('instance_name', $dbname, $cluster_nodes)
-  $instance_number   = set_param('instance_number', $dbname, $cluster_nodes)
-  $thread_number     = set_param('instance_number', $dbname, $cluster_nodes)
+  $asm_instance_name         = set_param('instance_name', '+ASM', $cluster_nodes)
+  $db_instance_name          = set_param('instance_name', $dbname, $cluster_nodes)
+  $instance_number           = set_param('instance_number', $dbname, $cluster_nodes)
+  $thread_number             = set_param('instance_number', $dbname, $cluster_nodes)
 
-  $is_linux   = $::kernel == 'Linux'
-  $is_windows = $::kernel == 'Windows'
-  $use_asm    = $storage == 'asm'
-  $is_rac     = !empty($cluster_nodes)
+  $is_linux                  = $::kernel == 'Linux'
+  $is_windows                = $::kernel == 'Windows'
+  $use_asm                   = $storage == 'asm'
+  $is_rac                    = !empty($cluster_nodes)
+  $asm_software_install_task = lookup('ora_profile::database::asm_software::install_task')
+  $asm_inline_patch          = $use_asm and $asm_software_install_task != 'ALL'
 
   easy_type::staged_contain([
     ['ora_profile::database::sysctl',                   $is_linux],
@@ -682,7 +684,7 @@ class ora_profile::database(
     ['ora_profile::database::asm_storage',              $use_asm],
     ['ora_profile::database::asm_software',             $use_asm],
     ['ora_profile::database::asm_patches',              $use_asm],
-    ['ora_profile::database::asm_setup',                $use_asm],
+    ['ora_profile::database::asm_setup',                $asm_inline_patch],
     ['ora_profile::database::asm_init_params',          $use_asm],
     ['ora_profile::database::asm_diskgroup',            $use_asm],
     'ora_profile::database::db_software',

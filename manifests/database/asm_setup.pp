@@ -130,8 +130,6 @@ class ora_profile::database::asm_setup(
             $grid_type,
   Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
             $disk_redundancy,
-  Enum['ALL','EXTRACT','SETUP']
-            $install_task,
   Boolean   $bash_profile,
   Optional[String[1]]
             $disks_failgroup_names,
@@ -186,24 +184,23 @@ class ora_profile::database::asm_setup(
       temp_dir                  => $temp_dir,
       bash_profile              => $bash_profile,
       install_task              => 'SETUP',
+      before                    => Ora_setting[$asm_instance_name],
     }
   }
 
-  if ( $install_task == 'SETUP' ) {
-    ora_setting{ $asm_instance_name:
-      default     => false,
-      user        => 'sys',
-      syspriv     => 'sysasm',
-      oracle_home => $grid_home,
-      os_user     => $grid_user,
-    }
+  ora_setting{ $asm_instance_name:
+    default     => false,
+    user        => 'sys',
+    syspriv     => 'sysasm',
+    oracle_home => $grid_home,
+    os_user     => $grid_user,
+  }
 
-    -> ora_tab_entry{ $asm_instance_name:
-      ensure      => 'present',
-      oracle_home => $grid_home,
-      startup     => 'N',
-      comment     => 'Grid instance added by Puppet',
-    }
+  -> ora_tab_entry{ $asm_instance_name:
+    ensure      => 'present',
+    oracle_home => $grid_home,
+    startup     => 'N',
+    comment     => 'Grid instance added by Puppet',
   }
 }
 # lint:endignore
