@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.13.3
+
+**Bug fixes**
+
+- [asm_patches] Improve ASM patching mechanism
+- [asm_patches] Use empty value for ora_profile::database::db_patches::patch_list as default
+
 ## Release 0.13.2
 
 **Bug fixes**
