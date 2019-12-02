@@ -154,8 +154,6 @@ class ora_profile::database::asm_setup(
   }
 
   if ( $master_node == $facts['hostname'] ) {
-    # Ora_install::installasm[$file_name] -> Ora_setting[$asm_instance_name]
-
     ora_install::installasm{ "Setup GRID version ${version} in ${grid_home}":
       version                   => $version,
       file                      => $file_name,
@@ -188,62 +186,24 @@ class ora_profile::database::asm_setup(
       temp_dir                  => $temp_dir,
       bash_profile              => $bash_profile,
       install_task              => 'SETUP',
-      before                    => Ora_setting[$asm_instance_name],
-    }
-  } else {
-    echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
-      withpath => false,
-    }
-
-    Exec['register_grid_node'] -> Ora_setting[$asm_instance_name]
-
-    case $version {
-      '19.0.0.0': {
-        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
-      }
-      '12.2.0.1', '18.0.0.0': {
-        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
-      }
-      '12.1.0.2': {
-        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
-      }
-      '11.2.0.4': {
-        $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${grid_home}/oui/bin/addNode.sh -silent -ignorePrereq -ignoreSysPrereqs \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
-      }
-      default: {
-        notice('Version not supported yet')
-      }
-    }
-    exec{'add_grid_node':
-      timeout => 0,
-      user    => $grid_user,
-      command => "/usr/bin/ssh ${grid_user}@${master_node} \"${add_node_command}\"",
-      creates => "${grid_home}/root.sh",
-    }
-
-    ~> exec{'register_grid_node':
-      refreshonly => true,
-      timeout     => 0,
-      user        => 'root',
-      returns     => [0,25],
-      command     => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
-      before      => Ora_setting[$asm_instance_name],
     }
   }
 
-  ora_setting{ $asm_instance_name:
-    default     => false,
-    user        => 'sys',
-    syspriv     => 'sysasm',
-    oracle_home => $grid_home,
-    os_user     => $grid_user,
-  }
+  if ( $install_task == 'SETUP' ) {
+    ora_setting{ $asm_instance_name:
+      default     => false,
+      user        => 'sys',
+      syspriv     => 'sysasm',
+      oracle_home => $grid_home,
+      os_user     => $grid_user,
+    }
 
-  -> ora_tab_entry{ $asm_instance_name:
-    ensure      => 'present',
-    oracle_home => $grid_home,
-    startup     => 'N',
-    comment     => 'Grid instance added by Puppet',
+    -> ora_tab_entry{ $asm_instance_name:
+      ensure      => 'present',
+      oracle_home => $grid_home,
+      startup     => 'N',
+      comment     => 'Grid instance added by Puppet',
+    }
   }
 }
 # lint:endignore

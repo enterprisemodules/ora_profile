@@ -273,19 +273,21 @@ class ora_profile::database::asm_software(
       before      => Ora_setting[$asm_instance_name],
     }
 
-    -> ora_setting{ $asm_instance_name:
-      default     => false,
-      user        => 'sys',
-      syspriv     => 'sysasm',
-      oracle_home => $grid_home,
-      os_user     => $grid_user,
-    }
+    if ( $install_task == 'ALL' ) {
+      ora_setting{ $asm_instance_name:
+        default     => false,
+        user        => 'sys',
+        syspriv     => 'sysasm',
+        oracle_home => $grid_home,
+        os_user     => $grid_user,
+      }
 
-    -> ora_tab_entry{ $asm_instance_name:
-      ensure      => 'present',
-      oracle_home => $grid_home,
-      startup     => 'N',
-      comment     => 'Grid instance added by Puppet',
+      -> ora_tab_entry{ $asm_instance_name:
+        ensure      => 'present',
+        oracle_home => $grid_home,
+        startup     => 'N',
+        comment     => 'Grid instance added by Puppet',
+      }
     }
   }
 }
