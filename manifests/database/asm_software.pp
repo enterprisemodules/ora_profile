@@ -130,7 +130,7 @@ class ora_profile::database::asm_software(
             $grid_type,
   Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
             $disk_redundancy,
-  Enum['ALL','EXTRACT','SETUP']
+  Enum['ALL','EXTRACT']
             $install_task,
   Boolean   $bash_profile,
   Optional[String[1]]
@@ -216,23 +216,7 @@ class ora_profile::database::asm_software(
       bash_profile              => $bash_profile,
       install_task              => $install_task,
     }
-    if ( $install_task == 'ALL' ) {
-      ora_setting{ $asm_instance_name:
-        default     => false,
-        user        => 'sys',
-        syspriv     => 'sysasm',
-        oracle_home => $grid_home,
-        os_user     => $grid_user,
-        require     => Ora_install::Installasm["Install GRID version ${version} in ${grid_home}"],
-      }
-
-      -> ora_tab_entry{ $asm_instance_name:
-        ensure      => 'present',
-        oracle_home => $grid_home,
-        startup     => 'N',
-        comment     => 'Grid instance added by Puppet',
-      }
-    }
+    $require_install = Ora_install::Installasm["Install GRID version ${version} in ${grid_home}"]
   } else {
     echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
       withpath => false,
@@ -272,13 +256,17 @@ class ora_profile::database::asm_software(
       command     => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
       before      => Ora_setting[$asm_instance_name],
     }
+    $require_install = Exec['register_grid_node']
+  }
 
-    -> ora_setting{ $asm_instance_name:
+  if ( $install_task == 'ALL' ) {
+    ora_setting{ $asm_instance_name:
       default     => false,
       user        => 'sys',
       syspriv     => 'sysasm',
       oracle_home => $grid_home,
       os_user     => $grid_user,
+      require     => $require_install,
     }
 
     -> ora_tab_entry{ $asm_instance_name:
