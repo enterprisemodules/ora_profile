@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.13.4
+
+**Bug fixes**
+
+- [user_equivalence] Make installation of openssh more resilient
+
 ## Release 0.13.3
 
 **Bug fixes**
