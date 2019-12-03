@@ -11,7 +11,11 @@ define ora_profile::database::authenticated_nodes::user_equivalence(
   #
   assert_type(String[1], $name)           |$e, $a| { fail "name is ${a}, expect a non empty string"}
 
-  ensure_packages(['openssh-clients'], {ensure => 'present'})
+  unless defined(Package['openssh-clients']) {
+    package { 'openssh-clients':
+      ensure => 'present',
+    }
+  }
 
   file{"/home/${name}/.ssh":
     ensure  => 'directory',
