@@ -242,7 +242,6 @@ ora_profile::database::asm_packages::list:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_storage::storage_type:                         afd
-ora_profile::database::asm_storage::nfs_files:                            ~
 ora_profile::database::asm_storage::nfs_mountpoint:                       ~
 ora_profile::database::asm_storage::nfs_export:                           ~
 ora_profile::database::asm_storage::nfs_server:                           ~

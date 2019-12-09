@@ -48,8 +48,6 @@
 class ora_profile::database::asm_storage(
   Enum['nfs','asmlib','afd','raw']
             $storage_type,
-  Optional[Array[Stdlib::Absolutepath]]
-            $nfs_files,
   Optional[Stdlib::Absolutepath]
             $nfs_mountpoint,
   Optional[Stdlib::Absolutepath]
@@ -67,13 +65,12 @@ class ora_profile::database::asm_storage(
   }
   case $storage_type {
     'nfs': {
-      unless ( $nfs_files or $nfs_mountpoint or $nfs_export or $nfs_server) {
-        fail 'Parameters nfs_files, nfs_mountpoint, nfs_export and nfs_server should all be specified'
+      unless ( $nfs_mountpoint or $nfs_export or $nfs_server) {
+        fail 'Parameters nfs_mountpoint, nfs_export and nfs_server should all be specified'
       }
       class {'ora_profile::database::asm_storage::nfs':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
-        nfs_files       => $nfs_files,
         nfs_mountpoint  => $nfs_mountpoint,
         nfs_export      => $nfs_export,
         nfs_server      => $nfs_server,
