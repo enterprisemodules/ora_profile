@@ -296,7 +296,7 @@ class ora_profile::database::db_definition(
 
     -> ora_database {$dbname:
       ensure => present,
-      *      => $ora_database_override,
+      *      => $ora_database_settings,
     }
   }
 
