@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.13.5
+
+**Bug fixes**
+
+- [db_definition] Fix settings on second node
+
 ## Release 0.13.4
 
 **Bug fixes**
