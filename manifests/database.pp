@@ -697,6 +697,6 @@ class ora_profile::database(
     'ora_profile::database::db_tablespaces',
     'ora_profile::database::db_profiles',
     'ora_profile::database::db_users',
-    'ora_profile::database::db_startup',
+    ['ora_profile::database::db_startup',             !$is_rac],
   ])
 }
