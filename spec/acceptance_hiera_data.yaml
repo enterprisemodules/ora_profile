@@ -4,7 +4,7 @@ ora_profile::database::sysctl:  skip    # Docker doesn't allow this
 
 #
 #  During testing regularly this error occurs:
-# 
+#
 #  Warning: Ora_service[DB01_APP@DB01]: preferred_instances has no effect on non clustered service.
 #  Error: /Stage[main]/Ora_profile::Database::Cis_rules/Ora_cis[DB01]/Ora_cis::Rules::R_4_1_11[DB01]/Ora_cis::Internal::Revoke_public_grants[DBMS_SQL@DB01]/Ora_object_grant[PUBLIC->SYS.DBMS_SQL@DB01]: Could not evaluate: Execution of 'su - oracle -c "cd /tmp;export PERL5LIB=$(ls -d /u01/app/oracle/product/18.0.0.0/db_home1/perl/lib/[0-9]*);export ORACLE_SID=DB01;export ORACLE_HOME=/u01/app/oracle/product/18.0.0.0/db_home1;unset TNS_ADMIN;export PATH=$PATH:/u01/app/oracle/product/18.0.0.0/db_home1/bin; sqlplus -S /nolog  @/tmp/command20191007-556-1j5d5iu.sql"' returned 180: revoke EXECUTE on SYS.DBMS_SQL from PUBLIC
 #  *
@@ -50,4 +50,6 @@ ora_cis::ignore:
   - r_4_2_12
   - r_4_2_13
   - r_4_2_14
-  - 
+  -
+ora_profile::database::db_definition::system_password: Welcome01!
+ora_profile::database::db_definition::sys_password:    Welcome01!

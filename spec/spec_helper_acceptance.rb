@@ -45,7 +45,45 @@ else
     user = node_config.dig('winrm', 'user') unless node_config.dig('winrm', 'user').nil?
     pass = node_config.dig('winrm', 'password') unless node_config.dig('winrm', 'password').nil?
     endpoint = "http://#{ENV['TARGET_HOST']}:5985/wsman"
-
+    # Readable test descriptions
+    c.formatter = :documentation
+    c.order     = :defined
+    c.mock_with :rspec
+    c.include Helpers
+    # Copy module root and easy_type to docker container
+    c.before :suite do
+      # em_license_file = ENV['EM_LICENSE_FILE']
+      # fail 'You neeed to set $EM_LICENSE_FILE' if em_license_file.nil?
+      em_license_file = '/software/Universal.entitlements'
+      on(master, "cp #{em_license_file} /etc/puppetlabs/puppet/")
+      copy_module_to(master, :source => proj_root,
+                            :ignore_list => %w[software log junit],
+                            :target_module_path => '/etc/puppetlabs/code/environments/production/modules',
+                            :module_name => 'ora_profile')
+      # Now we don't use hiera any more. This code is needed when we want to use hiera to specify any stuff
+      on(master, "mkdir -p /etc/puppetlabs/puppet/data")
+      scp_to(master, "#{proj_root}/spec/hiera.yaml",'/etc/puppetlabs/puppet/hiera.yaml',  )
+      scp_to(master, "#{proj_root}/spec/acceptance_hiera_data.yaml",'/etc/puppetlabs/puppet/data')
+      #
+      # Install required modules
+      #
+      modules = [
+        'saz-limits',
+        'herculesteam-augeasproviders_sysctl',
+        'enterprisemodules-easy_type',
+        'enterprisemodules-ora_install',
+        'enterprisemodules-ora_config',
+        'enterprisemodules-ora_cis',
+        'puppetlabs-stdlib',
+        'ipcrm-echo',
+        'puppet-archive',
+        'herculesteam-augeasproviders_core',
+        'herculesteam-augeasproviders_sysctl',
+        'saz-limits',
+        'puppetlabs-firewall',
+        'crayfishx-firewalld'
+      ]
+    end
     opts = {
       user: user,
       password: pass,
