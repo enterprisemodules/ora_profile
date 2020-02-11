@@ -1,6 +1,6 @@
 {
   "name": "enterprisemodules-ora_profile",
-  "version": "0.13.5",
+  "version": "0.14.0",
   "author": "Enterprise Modules",
   "summary": "Puppet profiles for installing Oracle Database software and creating and managing  databases",
   "license": "proprietary",
@@ -61,9 +61,9 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "5",
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {

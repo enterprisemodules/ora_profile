@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.14.0
+
+**New Features**
+
+- [core] Make password sensitive
+- [core] Use generated passwords
+- [database] Don’t apply db_startup when we detect RAC
+
 ## Release 0.13.5
 
 **Bug fixes**
