@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.14.1
+
+**Bug fixes**
+
+- [db_definition_template] Fix sys_password and add system_password
+
 ## Release 0.14.0
 
 **New Features**
