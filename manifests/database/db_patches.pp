@@ -84,8 +84,8 @@ class ora_profile::database::db_patches(
       withpath => false,
     }
   } else {
-    if $::ora_version {
-      $version = $::ora_version
+    if $facts['ora_version'] != undef {
+      $version = $facts['ora_version']
     } else {
       $version = []
     }
