@@ -17,3 +17,4 @@ hierarchy:
         'ora_profile::.*::grid_user_password':   'hash(aA1#.12,sha-512)'
         'ora_profile::.*::system_password':      'aA1#.12'
         'ora_profile::.*::sys_password':         'aA1#.12'
+        'ora_profile::.*::asm_sys_password':     'aA1#.12'
