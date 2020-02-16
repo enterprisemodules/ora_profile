@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.14.2
+
+**Bug fixes**
+
+- [core] Add asm_sys_password to list of generated passwords
+- [release] Update dependencies
+
 ## Release 0.14.1
 
 **Bug fixes**
