@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.14.3
+
+**Bug fixes**
+
+- [db_patches] Fix ‘Unknown variable’ warning
+- [asm_setup] Fix usage of sys_asm_password
+- [asm_software] Fix usage of sys_asm_password
+
 ## Release 0.14.2
 
 **Bug fixes**
