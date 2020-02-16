@@ -5,6 +5,7 @@ shared_examples "a database installer" do | settings|
 
   before do
     hiera_values_on_sut(
+      'easy_type::generate_password_mode'                                        => 'development',
       'ora_profile::database::version'                                           => version,
       'ora_profile::database::source'                                            => '/software',
       'ora_profile::database::db_software::file_name'                            => file,
@@ -14,8 +15,6 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
       'ora_profile::database::db_definition_template::recovery_area_destination' => '/u03/fast_recovery_area',
       'ora_profile::database::db_definition_template::storage_type'              => 'FS',
-      'ora_profile::database::db_definition_template::system_password'           => 'Welcome01',
-      'ora_profile::database::db_definition_template::sys_password'              => 'Welcome01',
       'ora_profile::database::db_definition'                                     => 'ora_profile::database::db_definition_template',
       'ora_profile::database::db_tablespaces::list'                              => {'TEST_TS' => {
           'ensure'            => 'present',

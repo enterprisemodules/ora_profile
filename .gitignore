@@ -21,3 +21,6 @@
 
 .DS_Store
 /inventory.yaml
+/
+/.bash_history
+/.gem
