@@ -118,7 +118,8 @@ class ora_profile::database::asm_setup(
   Array[Stdlib::Absolutepath]
             $dirs,
   String[1] $file_name,
-  String[1] $asm_sys_password,
+  Easy_type::Password
+            $asm_sys_password,
   String[1] $disk_discovery_string,
   String[1] $asm_diskgroup,
   String[1] $asm_disks,
