@@ -575,6 +575,7 @@ class ora_profile::database(
   Optional[String] $oracle_user_password = undef,
   Optional[String] $master_node = $facts['hostname'],
   Optional[Array]  $cluster_nodes = undef,
+  Optional[String] $em_license = undef,
   Optional[String] $asm_sysctl = undef,
   Optional[String] $asm_limits = undef,
   Optional[String] $authenticated_nodes = undef,
@@ -602,6 +603,7 @@ class ora_profile::database(
   Optional[String] $db_profiles = undef,
   Optional[String] $db_users = undef,
   Optional[String] $db_startup = undef,
+  Optional[String] $before_em_license = undef,
   Optional[String] $before_asm_sysctl = undef,
   Optional[String] $before_asm_limits = undef,
   Optional[String] $before_authenticated_nodes = undef,
@@ -629,6 +631,7 @@ class ora_profile::database(
   Optional[String] $before_db_profiles = undef,
   Optional[String] $before_db_users = undef,
   Optional[String] $before_db_startup = undef,
+  Optional[String] $after_em_license = undef,
   Optional[String] $after_asm_sysctl = undef,
   Optional[String] $after_asm_limits = undef,
   Optional[String] $after_authenticated_nodes = undef,
@@ -671,6 +674,7 @@ class ora_profile::database(
   $asm_inline_patch          = $use_asm and $asm_software_install_task != 'ALL'
 
   easy_type::staged_contain([
+    'ora_profile::database::em_license',
     ['ora_profile::database::sysctl',                   $is_linux],
     ['ora_profile::database::limits',                   $is_linux],
     ['ora_profile::database::groups_and_users',         !$use_asm],
