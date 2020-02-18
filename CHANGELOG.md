@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.15.0
+
+**New Features**
+
+- [core] Add em_license as first stage
+
 ## Release 0.14.3
 
 **Bug fixes**
