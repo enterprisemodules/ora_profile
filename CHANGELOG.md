@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.15.1
+
+**Bug fixes**
+
+- [em_license] Fix detection of previous invocation
+
 ## Release 0.15.0
 
 **New Features**
