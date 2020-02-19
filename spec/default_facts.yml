@@ -13,6 +13,7 @@ ora_install_homes:
     installed_patches: []
     defined_sids:      ['TEST']
     running_sids:      ['TEST']
+puppet_confdir:       /etc/puppetlabs/puppet
 #
 # CIS facts
 #
