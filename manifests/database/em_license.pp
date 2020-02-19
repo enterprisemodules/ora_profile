@@ -6,7 +6,9 @@
 #--++--
 class ora_profile::database::em_license
 {
-  unless defined('easy_type::license::available') {
+  include stdlib
+
+  unless defined(Class['easy_type::license::available']) {
     class{'::easy_type::license::available':
       stage => 'setup',
     }
