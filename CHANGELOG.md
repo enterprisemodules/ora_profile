@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.16.0
+
+**New Features**
+
+- [client] Added first implementation
+
 ## Release 0.15.1
 
 **Bug fixes**
