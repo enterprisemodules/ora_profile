@@ -81,3 +81,16 @@ Oracle 19 secured_database Acc test:
       - "manifests/database/**/*.pp"
       - "specs/support/acceptance/**/*.rb"
       - "specs/acceptance/secured_database_spec.rb"
+
+Oracle Client Acc test:
+  extends: .puppet_acceptance_test
+  variables:
+    type: client
+  only:
+    changes:
+      - "lib/puppet/**/*.rb"
+      - "templates/**/*.*"
+      - "manifests/client.pp"
+      - "manifests/client/**/*.pp"
+      - "specs/support/acceptance/**/*.rb"
+      - "specs/acceptance/client_spec.rb"

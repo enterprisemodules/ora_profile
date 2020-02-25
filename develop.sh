@@ -1,4 +1,3 @@
-set -x
 alias into="docker exec -it ora_profile bash"
 alias stop="docker kill ora_profile"
 docker run --rm -d --name ora_profile \

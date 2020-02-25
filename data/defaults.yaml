@@ -98,23 +98,23 @@ ora_profile::database::limits::list:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::groups_and_users::groups:
-  "%{::ora_profile::database::install_group}":
+  "%{lookup('ora_profile::database::install_group')}":
     gid:  54321
-  "%{::ora_profile::database::dba_group}":
+  "%{lookup('ora_profile::database::dba_group')}":
     gid:  54322
   oper:
     gid:  54323
 ora_profile::database::groups_and_users::users:
-  "%{::ora_profile::database::os_user}":
+  "%{lookup('ora_profile::database::os_user')}":
     uid:        54321
-    gid:        "%{::ora_profile::database::install_group}"
+    gid:        "%{lookup('ora_profile::database::install_group')}"
     groups:
-    - "%{::ora_profile::database::install_group}"
-    - "%{::ora_profile::database::dba_group}"
+    - "%{lookup('ora_profile::database::install_group')}"
+    - "%{lookup('ora_profile::database::dba_group')}"
     - oper
     shell:      /bin/bash
     password:   "%{lookup('ora_profile::database::os_user_password')}"
-    home:       "/home/%{::ora_profile::database::os_user}"
+    home:       "/home/%{lookup('ora_profile::database::os_user')}"
     comment:    This user was created by Puppet
     managehome: true
 
@@ -574,3 +574,81 @@ ora_profile::database::cis_rules::ignore:
   - r_2_1_3
   - r_2_1_4
 ora_profile::database::cis_rules::dbname:                                 "%{::ora_profile::database::dbname}"
+#
+# Client installation
+#
+ora_profile::client::software::oracle_base:                 "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::client::software::oracle_home:                 "%{lookup('ora_profile::client::software::oracle_base')}/%{lookup('ora_profile::client::software::version')}/db_home1"
+ora_profile::client::software::db_port:                     1521
+ora_profile::client::software::user:                        "%{lookup('ora_profile::database::os_user')}"
+ora_profile::client::software::user_base_dir:               "/home"
+ora_profile::client::software::group:                       "%{lookup('ora_profile::database::dba_group')}"
+ora_profile::client::software::group_install:               "%{lookup('ora_profile::database::install_group')}"
+ora_profile::client::software::download_dir:                "%{lookup('ora_profile::database::download_dir')}"
+ora_profile::client::software::temp_dir:                    "%{lookup('ora_profile::database::temp_dir')}"
+ora_profile::client::software::install_type:                Administrator
+ora_profile::client::software::install_options:             []
+ora_profile::client::software::bash_profile:                true
+ora_profile::client::software::ora_inventory_dir:           "%{lookup('ora_profile::database::ora_inventory_dir')}"
+ora_profile::client::software::allow_insecure:              false
+ora_profile::client::software::logoutput:                   on_failure
+ora_profile::client::software::puppet_download_mnt_point:   ~
+ora_profile::client::packages::list: 
+  psmisc:
+    ensure: present
+  unzip:
+    ensure: present
+  binutils.x86_64:
+    ensure: present
+  compat-libcap1.x86_64:
+    ensure: present
+  compat-libstdc++-33.i686:
+    ensure: present
+  compat-libstdc++-33.x86_64:
+    ensure: present
+  gcc.x86_64:
+    ensure: present
+  gcc-c++.x86_64:
+    ensure: present
+  glibc.i686:
+    ensure: present
+  glibc.x86_64:
+    ensure: present
+  glibc-devel.i686:
+    ensure: present
+  glibc-devel.x86_64:
+    ensure: present
+  ksh:
+    ensure: present
+  libaio.i686:
+    ensure: present
+  libaio.x86_64:
+    ensure: present
+  libaio-devel.i686:
+    ensure: present
+  libaio-devel.x86_64:
+    ensure: present
+  libgcc.i686:
+    ensure: present
+  libgcc.x86_64:
+    ensure: present
+  libstdc++.i686:
+    ensure: present
+  libstdc++.x86_64:
+    ensure: present
+  libstdc++-devel.i686:
+    ensure: present
+  libstdc++-devel.x86_64:
+    ensure: present
+  libXi.i686:
+    ensure: present
+  libXi.x86_64:
+    ensure: present
+  libXtst.i686:
+    ensure: present
+  libXtst.x86_64:
+    ensure: present
+  make.x86_64:
+    ensure: present
+  sysstat.x86_64:
+    ensure: present
