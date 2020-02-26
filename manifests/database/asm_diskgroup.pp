@@ -1,6 +1,6 @@
 #++--++
 #
-# ora_profile::asm_diskgroup
+# ora_profile::database::asm_diskgroup
 #
 # @summary This class contains the code to create the ASM diskgroups.
 # Here you can customize some of the attributes of your database.

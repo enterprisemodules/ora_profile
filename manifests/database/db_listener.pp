@@ -1,10 +1,10 @@
 #++--++
 #
-# ora_profile::db_listener
+# ora_profile::database::db_listener
 #
 # @summary This class contains the definition of the Oracle listener process.
 # It installs the specified version of the SQL*net software and start's the listener.
-#
+# 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [Stdlib::Absolutepath] oracle_home
@@ -17,7 +17,7 @@
 #    The default is : `/u01/app/oracle`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
-# @param [Enum['11.2', '12.1', '12.2', '18.0']] sqlnet_version
+# @param [Ora_install::ShortVersion] sqlnet_version
 #    The SQLnet version to use.
 #    The default is: 12.2
 #

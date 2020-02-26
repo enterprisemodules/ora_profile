@@ -1,17 +1,11 @@
 #++--++
 #
-# ora_profile::db_software
+# ora_profile::database::db_software
 #
 # @summary This class contains the definition of the Oracle software you want to use on this system.
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @param [Enum['11.2.0.1',
-#     '11.2.0.3',
-#     '11.2.0.4',
-#     '12.1.0.1',
-#     '12.1.0.2',
-#     '12.2.0.1',
-#     '18.0.0.0']] version
+# @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
 #    The default is : `12.2.0.1`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
@@ -36,10 +30,14 @@
 #    The default is : `dba`
 #    To customize this consistently use the hiera key `ora_profile::database::dba_group`.
 #
-# @param [String[1]] install_group
+# @param install_group
 #    The group to use for Oracle install.
 #    The default is : `oinstall`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
+#
+# @param [String[1]] oper_group
+#    The oper group for the database.
+#    The default is : `oper`
 #
 # @param [String[1]] os_user
 #    The OS user to use for Oracle install.
@@ -65,6 +63,10 @@
 # @param [String[1]] file_name
 #    The file name containing the Oracle database software kit.
 #    The default is: `linuxx64_12201_database`
+#
+# @param [Boolean] bash_profile
+#    Whether or not to deploy bash_profile for $os_user or $grid_user
+#    The default is : `true`
 #
 #--++--
 # lint:ignore:variable_scope

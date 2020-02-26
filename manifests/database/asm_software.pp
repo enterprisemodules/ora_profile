@@ -1,13 +1,13 @@
 #++--++
 #
-# ora_profile::asm_software
+# ora_profile::database::asm_software
 #
 # @summary This class contains the code to install Oracle Grid Infrastructure.
 # Here you can customize some of the attributes of your database.
-#
+# 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @param [Enum['11.2.0.4', '12.1.0.1', '12.2.0.1', '12.1.0.2', '18.0.0.0']] version
+# @param [Ora_Install::Version] version
 #    The version of Oracle Grid Infrastructure you want to install.
 #    The default is : `12.2.0.1`
 #    To customize this consistently use the hiera key `ora_profile::database::asm_software::version`.
@@ -28,7 +28,7 @@
 #    The default is: `linuxx64_12201_grid_home`
 #    To customize this consistently use the hiera key `ora_profile::database::asm_software::source`.
 #
-# @param [String[1]] asm_sys_password
+# @param [Easy_type::Password] asm_sys_password
 #    The `sys` password to use for ASM.
 #    The default is: `Welcome01`
 #
@@ -93,7 +93,7 @@
 #    The default value is: `undef`
 #
 # @param [Optional[String[1]]] network_interface_list
-#
+#    
 #    The list of interfaces to use for RAC.The value should be a comma separated strings where each string is as shown below```InterfaceName:SubnetAddress:InterfaceType```where InterfaceType can be either "1", "2", "3", "4" or "5" (1 indicates public, 2 indicates private, 3 indicates the interface is not used, 4 indicates ASM and 5 indicates ASM & Private)The default value is: `undef`
 #
 # @param [Optional[Enum['FLEX_ASM_STORAGE',
@@ -109,6 +109,20 @@
 #    - `CLIENT_ASM_STORAGE`   (versions >= 12.2)
 #    - `FLEX_ASM_STORAGE`     (versions >= 12.1)
 #    The default value is: `undef`
+#
+# @param [Enum['EXTENDED', 'EXTERNAL', 'FLEX', 'HIGH', 'NORMAL']] disk_redundancy
+#    The disk redundancy for the initial diskgroup to setup ASM.
+#    Valid values are:
+#    - `EXTENDED`
+#    - `EXTERNAL`
+#    - `FLEX`
+#    - `HIGH`
+#    - `NORMAL`
+#    The default value is: `EXTERNAL`
+#
+# @param [Boolean] bash_profile
+#    Whether or not to deploy bash_profile for $os_user or $grid_user
+#    The default is : `true`
 #
 #--++--
 # lint:ignore:variable_scope

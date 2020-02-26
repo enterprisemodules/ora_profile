@@ -1,24 +1,18 @@
 #++--++
 #
-# ora_profile::db_definition_template
+# ora_profile::database::db_definition_template
 #
 # @summary This class contains the actual database definition using the `ora_install::database` class.
 # In this class the database will be created from a template. When using a 'seed' template, this will significantly decrease the time it takes to create a database. Bij default the Oracle supplied General_Purpose template is used, which is probably not the best option for your production environment.
 # This class is meant to replace the db_definition class by specifying in your yaml file:
-#
+# 
 # ```yaml
 # ora_profile::database::before_sysctl:  my_module::my_class
 # ```
-#
+# 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @param [Enum['11.2.0.1',
-#     '11.2.0.3',
-#     '11.2.0.4',
-#     '12.1.0.1',
-#     '12.1.0.2',
-#     '12.2.0.1',
-#     '18.0.0.0']] version
+# @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
 #    The default is : `12.2.0.1`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
@@ -73,11 +67,11 @@
 #    This is the module where the xml file for your template is stored as a puppet template(erb).
 #    The default value is `ora_profile`
 #
-# @param [String[1]] system_password
+# @param [Easy_type::Password] system_password
 #    The `system` password to use for the database.
 #    The default value is: `Welcome01`
 #
-# @param [String[1]] sys_password
+# @param [Easy_Type::Password] sys_password
 #    The `sys` password to use for the database.
 #    The default value is: `Change_on_1nstall`
 #

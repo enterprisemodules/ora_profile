@@ -1,6 +1,6 @@
 #++--++
 #
-# ora_profile::db_patches
+# ora_profile::database::db_patches
 #
 # @summary This class contains the definition for the Oracle patches.
 # It also contains the definition of the required `Opatch` version.

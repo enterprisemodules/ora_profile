@@ -1,6 +1,6 @@
 #++--++
 #
-# ora_profile::cis_rules
+# ora_profile::database::cis_rules
 #
 # @summary This class contains the actual code secureing the database.
 # Here you ca customise the securtiy by specifying the CIS rules you *don't* want to apply.

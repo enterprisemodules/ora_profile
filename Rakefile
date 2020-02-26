@@ -9,6 +9,7 @@ def optional_require(file)
   end
 end
 
+import '../easy_type/lib/tasks/docs.rake' if File.exists?('../easy_type/lib/tasks/docs.rake')
 optional_require 'puppet-lint/tasks/puppet-lint'
 optional_require 'puppet-syntax/tasks/puppet-syntax'
 optional_require 'puppetlabs_spec_helper/rake_tasks'

@@ -1,6 +1,6 @@
 #++--++
 #
-# ora_profile::firewall
+# ora_profile::database::firewall
 #
 # @summary This class contains the definition of the firewall settings you need for Oracle.
 # When you are using a Redhat flavored version lower then release 7, this module uses the `puppetlabs-firewall` module to manage the `iptables` settings. When using a version 7 or higher, the puppet module `crayfishx-firewalld` to manage the `firewalld daemon`.
