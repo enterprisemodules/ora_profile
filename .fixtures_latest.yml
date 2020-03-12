@@ -1,0 +1,26 @@
+# This file can be used to install module depdencies for unit testing
+# See https://github.com/puppetlabs/puppetlabs_spec_helper#using-fixtures for details
+---
+fixtures:
+  symlinks:
+    ora_profile: "#{source_dir}"
+fixtures:
+  repositories:
+    facts:          'git://github.com/puppetlabs/puppetlabs-facts.git'
+    puppet_agent:   'git://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+    provision:      'git://github.com/enterprisemodules/provision.git'
+    easy_type:      'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/easy_type_src.git'
+    ora_install:    'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_install.git'
+    ora_config:     'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_config.git'
+    ora_cis:        'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_cis.git'
+  forge_modules:
+    powershell:             puppetlabs/powershell
+    pwshlib:                puppetlabs/pwshlib
+    stdlib:                 puppetlabs/stdlib
+    echo:                   ipcrm/echo
+    archive:                puppet/archive
+    augeasproviders_core:   herculesteam-augeasproviders_core
+    augeasproviders_sysctl: herculesteam-augeasproviders_sysctl
+    limits:                 saz/limits
+    firewall:               puppetlabs-firewall
+    firewalld:              crayfishx-firewalld
