@@ -15,4 +15,5 @@ When these customizations aren't enough, you can replace the class with your own
   :source,
   :file_name,
   :bash_profile,
+  :bash_additions,
 ]%>

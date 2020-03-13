@@ -18,21 +18,22 @@ When these customizations aren't enough, you can replace the class with your own
 
 
 
-Attribute Name                                        | Short Description                                                 |
------------------------------------------------------ | ----------------------------------------------------------------- |
-[bash_profile](#database::db_software_bash_profile)   | Whether or not to deploy bash_profile for $os_user or $grid_user
+Attribute Name                                          | Short Description                                                 |
+------------------------------------------------------- | ----------------------------------------------------------------- |
+[bash_additions](#database::db_software_bash_additions) | The text to add at the end of the bash_profile.                   |
+[bash_profile](#database::db_software_bash_profile)     | Whether or not to deploy bash_profile for $os_user or $grid_user
  |
-[database_type](#database::db_software_database_type) | The type of database to define.                                   |
-[dba_group](#database::db_software_dba_group)         | The group to use for Oracle DBA users.                            |
-[dirs](#database::db_software_dirs)                   | The directories to create as part of the installation.            |
-[file_name](#database::db_software_file_name)         | The file name containing the Oracle database software kit.        |
-[install_group](#database::db_software_install_group) | The group to use for Oracle install.                              |
-[oper_group](#database::db_software_oper_group)       | The oper group for the database.                                  |
-[oracle_base](#database::db_software_oracle_base)     | The base firectory to use for the Oracle installation.            |
-[oracle_home](#database::db_software_oracle_home)     | The home firectory to use for the Oracle installation.            |
-[os_user](#database::db_software_os_user)             | The OS user to use for Oracle install.                            |
-[source](#database::db_software_source)               | The location where the classes can find the software.             |
-[version](#database::db_software_version)             | The version of Oracle you want to install.                        |
+[database_type](#database::db_software_database_type)   | The type of database to define.                                   |
+[dba_group](#database::db_software_dba_group)           | The group to use for Oracle DBA users.                            |
+[dirs](#database::db_software_dirs)                     | The directories to create as part of the installation.            |
+[file_name](#database::db_software_file_name)           | The file name containing the Oracle database software kit.        |
+[install_group](#database::db_software_install_group)   | The group to use for Oracle install.                              |
+[oper_group](#database::db_software_oper_group)         | The oper group for the database.                                  |
+[oracle_base](#database::db_software_oracle_base)       | The base firectory to use for the Oracle installation.            |
+[oracle_home](#database::db_software_oracle_home)       | The home firectory to use for the Oracle installation.            |
+[os_user](#database::db_software_os_user)               | The OS user to use for Oracle install.                            |
+[source](#database::db_software_source)                 | The location where the classes can find the software.             |
+[version](#database::db_software_version)               | The version of Oracle you want to install.                        |
 
 
 
@@ -187,6 +188,17 @@ Whether or not to deploy bash_profile for $os_user or $grid_user
 The default is : `true`
 
 Type: `Boolean`
+
+
+[Back to overview of database::db_software](#attributes)
+
+### bash_additions<a name='database::db_software_bash_additions'>
+
+The text to add at the end of the bash_profile. This parameter will only be used when you have specified `true` for the parameter `bash_profile`
+
+The default value is an empty string.
+
+Type: `String`
 
 
 [Back to overview of database::db_software](#attributes)

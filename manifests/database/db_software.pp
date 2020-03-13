@@ -68,6 +68,11 @@
 #    Whether or not to deploy bash_profile for $os_user or $grid_user
 #    The default is : `true`
 #
+# @param [String] bash_additions
+#    The text to add at the end of the bash_profile.
+#    This parameter will only be used when you have specified `true` for the parameter `bash_profile`
+#    The default value is an empty string.
+#
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::db_software(
@@ -81,6 +86,7 @@ class ora_profile::database::db_software(
   String[1] $oper_group,
   String[1] $os_user,
   Boolean   $bash_profile,
+  String    $bash_additions,
   Stdlib::Absolutepath
             $oracle_base,
   Stdlib::Absolutepath
@@ -144,6 +150,7 @@ class ora_profile::database::db_software(
       oracle_home               => $oracle_home,
       puppet_download_mnt_point => $source,
       bash_profile              => $bash_profile,
+      bash_additions            => $bash_additions,
       group                     => $dba_group,
       group_install             => $install_group,
       group_oper                => $oper_group,
