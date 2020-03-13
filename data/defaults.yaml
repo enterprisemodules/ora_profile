@@ -293,6 +293,7 @@ ora_profile::database::asm_software::group:                               asmdba
 ora_profile::database::asm_software::oper_group:                          asmoper
 ora_profile::database::asm_software::asm_group:                           asmadmin
 ora_profile::database::asm_software::bash_profile:                        true
+ora_profile::database::asm_software::bash_additions:                      ''
 ora_profile::database::asm_software::install_task:                        ALL
 
 
@@ -402,6 +403,7 @@ ora_profile::database::db_software::oracle_home:                          "%{::o
 ora_profile::database::db_software::source:                               "%{::ora_profile::database::source}"
 ora_profile::database::db_software::file_name:                            linuxx64_12201_database
 ora_profile::database::db_software::bash_profile:                         true
+ora_profile::database::db_software::bash_additions:                       ''
 
 
 # ------------------------------------------------------------------------------

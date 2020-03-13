@@ -22,4 +22,5 @@ When these customizations aren't enough, you can replace the class with your own
   :storage_option,
   :disk_redundancy,
   :bash_profile,
+  :bash_additions,
 ]%>

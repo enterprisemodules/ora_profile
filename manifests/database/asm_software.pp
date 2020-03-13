@@ -124,6 +124,11 @@
 #    Whether or not to deploy bash_profile for $os_user or $grid_user
 #    The default is : `true`
 #
+# @param [String] bash_additions
+#    The text to add at the end of the bash_profile.
+#    This parameter will only be used when you have specified `true` for the parameter `bash_profile`
+#    The default value is an empty string.
+#
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::asm_software(
@@ -148,6 +153,7 @@ class ora_profile::database::asm_software(
   Enum['ALL','EXTRACT']
             $install_task,
   Boolean   $bash_profile,
+  String    $bash_additions,
   Optional[String[1]]
             $disks_failgroup_names,
   Optional[String[1]]
@@ -229,6 +235,7 @@ class ora_profile::database::asm_software(
       download_dir              => $download_dir,
       temp_dir                  => $temp_dir,
       bash_profile              => $bash_profile,
+      bash_additions            => $bash_additions,
       install_task              => $install_task,
     }
     $require_install = Ora_install::Installasm["Install GRID version ${version} in ${grid_home}"]

@@ -24,6 +24,7 @@ Attribute Name                                                           | Short
 [asm_diskgroup](#database::asm_software_asm_diskgroup)                   | The name of the ASM diskgroup to use.                                    |
 [asm_disks](#database::asm_software_asm_disks)                           | List of disks to create a ASM DiskGroup.                                 |
 [asm_sys_password](#database::asm_software_asm_sys_password)             | The `sys` password to use for ASM.                                       |
+[bash_additions](#database::asm_software_bash_additions)                 | The text to add at the end of the bash_profile.                          |
 [bash_profile](#database::asm_software_bash_profile)                     | Whether or not to deploy bash_profile for $os_user or $grid_user
         |
 [cluster_name](#database::asm_software_cluster_name)                     | The name of the cluster.                                                 |
@@ -303,6 +304,17 @@ Whether or not to deploy bash_profile for $os_user or $grid_user
 The default is : `true`
 
 Type: `Boolean`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### bash_additions<a name='database::asm_software_bash_additions'>
+
+The text to add at the end of the bash_profile. This parameter will only be used when you have specified `true` for the parameter `bash_profile`
+
+The default value is an empty string.
+
+Type: `String`
 
 
 [Back to overview of database::asm_software](#attributes)
