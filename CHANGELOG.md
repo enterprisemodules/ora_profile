@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.17.0
+
+**New Features**
+
+- [db_software] Add support for bash_additions
+- [asm_software] Add support for bash_additions
+
 ## Release 0.16.0
 
 **New Features**
