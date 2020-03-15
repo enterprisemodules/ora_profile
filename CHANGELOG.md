@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.17.1
+
+- [core] Fix support for RHEL8 and OracleLinux8 type OS-es
+
 ## Release 0.17.0
 
 **New Features**
