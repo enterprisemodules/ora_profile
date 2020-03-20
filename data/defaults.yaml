@@ -113,7 +113,7 @@ ora_profile::database::groups_and_users::users:
     - "%{lookup('ora_profile::database::dba_group')}"
     - oper
     shell:      /bin/bash
-    password:   "%{lookup('ora_profile::database::os_user_password')}"
+    password:   "%{alias('ora_profile::database::os_user_password')}"
     home:       "/home/%{lookup('ora_profile::database::os_user')}"
     comment:    This user was created by Puppet
     managehome: true
@@ -188,9 +188,9 @@ ora_profile::database::asm_limits::list:                                  {} # N
 #
 #------------------------------------------------------------------------------
 ora_profile::database::asm_groups_and_users::groups:
-  "%{::ora_profile::database::install_group}":
+  "%{lookup('ora_profile::database::install_group')}":
     gid:  54321
-  "%{::ora_profile::database::dba_group}":
+  "%{lookup('ora_profile::database::dba_group')}":
     gid:  54322
   oper:
     gid:  54323
@@ -201,35 +201,33 @@ ora_profile::database::asm_groups_and_users::groups:
   asmoper:
     gid:  54326
 ora_profile::database::asm_groups_and_users::users:
-  "%{::ora_profile::database::os_user}":
+  "%{lookup('ora_profile::database::os_user')}":
     uid:        54321
-    gid:        "%{::ora_profile::database::install_group}"
+    gid:        "%{lookup('ora_profile::database::install_group')}"
     groups:
-    - "%{::ora_profile::database::install_group}"
-    - "%{::ora_profile::database::dba_group}"
+    - "%{lookup('ora_profile::database::install_group')}"
+    - "%{lookup('ora_profile::database::dba_group')}"
     - oper
     - asmdba
     shell:      /bin/bash
-    password:   "%{lookup('ora_profile::database::os_user_password')}"
+    password:   "%{alias('ora_profile::database::os_user_password')}"
     home:       "/home/%{::ora_profile::database::os_user}"
     comment:    This user oracle was created by Puppet
     managehome: true
-  "%{ora_profile::database::grid_user}":
+  "%{lookup('ora_profile::database::grid_user')}":
     uid:        54322
-    gid:        "%{::ora_profile::database::install_group}"
+    gid:        "%{lookup('ora_profile::database::install_group')}"
     groups:
-    - "%{::ora_profile::database::install_group}"
-    - "%{::ora_profile::database::dba_group}"
+    - "%{lookup('ora_profile::database::install_group')}"
+    - "%{lookup('ora_profile::database::dba_group')}"
     - asmadmin
     - asmdba
     - asmoper
     shell:      /bin/bash
-    password:   "%{lookup('ora_profile::database::grid_user_password')}"
-    home:       "/home/%{ora_profile::database::grid_user}"
+    password:   "%{alias('ora_profile::database::grid_user_password')}"
+    home:       "/home/%{lookup('ora_profile::database::grid_user')}"
     comment:    This user grid was created by Puppet
     managehome: true
-
-
 
 # ------------------------------------------------------------------------------
 #

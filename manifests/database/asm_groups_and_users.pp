@@ -41,7 +41,7 @@
 class ora_profile::database::asm_groups_and_users(
   Hash  $users,
   Hash  $groups,
-) inherits ora_profile::database {
+) {
 
   if $groups.size > 0 {
     $groups_list = $groups.keys
