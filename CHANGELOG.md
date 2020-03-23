@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.17.2
+
+- [asm_groups_and_users] Allow standalone usage
+- [firewalld] Log dropped packets differently
+
 ## Release 0.17.1
 
 - [core] Fix support for RHEL8 and OracleLinux8 type OS-es
