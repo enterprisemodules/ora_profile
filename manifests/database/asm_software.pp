@@ -202,7 +202,6 @@ class ora_profile::database::asm_software(
   }
 
   if ( $master_node == $facts['hostname'] ) {
-    # Ora_install::installasm[$file_name] -> Ora_setting[$asm_instance_name]
 
     ora_install::installasm{ "Install GRID version ${version} in ${grid_home}":
       version                   => $version,
@@ -239,46 +238,64 @@ class ora_profile::database::asm_software(
       install_task              => $install_task,
     }
     $require_install = Ora_install::Installasm["Install GRID version ${version} in ${grid_home}"]
+
   } else {
-    echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
-      withpath => false,
-    }
 
-    Exec['register_grid_node'] -> Ora_setting[$asm_instance_name]
+    unless ( $grid_home in $facts['ora_install_homes'].keys ) {
+      echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
+        withpath => false,
+      }
 
-    case $version {
-      '19.0.0.0': {
-        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
-      }
-      '12.2.0.1', '18.0.0.0': {
-        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
-      }
-      '12.1.0.2': {
-        $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
-      }
-      '11.2.0.4': {
-        $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${grid_home}/oui/bin/addNode.sh -silent -ignorePrereq -ignoreSysPrereqs \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
-      }
-      default: {
-        notice('Version not supported yet')
-      }
-    }
-    exec{'add_grid_node':
-      timeout => 0,
-      user    => $grid_user,
-      command => "/usr/bin/ssh ${grid_user}@${master_node} \"${add_node_command}\"",
-      creates => "${grid_home}/root.sh",
-    }
+      case $version {
+        '18.0.0.0', '19.0.0.0': {
+          $add_node_rsp = "${download_dir}/add_node_${facts['hostname']}.rsp"
+          $add_node_command = "${grid_home}/gridSetup.sh -silent -waitForCompletion -skipPrereqs -responseFile ${add_node_rsp}"
+          $ora_inventory = "${ora_inventory_dir}/oraInventory"
+          file{ $add_node_rsp:
+            ensure  => present,
+            content => template("ora_profile/grid_addnode_${version}.rsp.erb"),
+            mode    => '0770',
+            owner   => $user,
+            group   => $group,
+          }
 
-    ~> exec{'register_grid_node':
-      refreshonly => true,
-      timeout     => 0,
-      user        => 'root',
-      returns     => [0,25],
-      command     => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
-      before      => Ora_setting[$asm_instance_name],
+          exec { "${add_node_rsp}@${master_node}":
+            timeout => 0,
+            user    => $grid_user,
+            command => "/usr/bin/scp ${add_node_rsp} ${grid_user}@${master_node}:${add_node_rsp}",
+            require => File[$add_node_rsp],
+            before  => Exec['add_grid_node'],
+          }
+        }
+        '12.2.0.1': {
+          $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
+        }
+        '12.1.0.2': {
+          $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
+        }
+        '11.2.0.4': {
+          $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${grid_home}/oui/bin/addNode.sh -silent -ignorePrereq -ignoreSysPrereqs \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
+        }
+        default: {
+          notice('Version not supported yet')
+        }
+      }
+      exec{'add_grid_node':
+        timeout => 0,
+        user    => $grid_user,
+        command => "/usr/bin/ssh ${grid_user}@${master_node} \"${add_node_command}\"",
+        creates => "${grid_home}/root.sh",
+      }
+
+      ~> exec{'register_grid_node':
+        refreshonly => true,
+        timeout     => 0,
+        user        => 'root',
+        returns     => [0,25],
+        command     => "/bin/sh ${ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${grid_home}/root.sh",
+      }
+      $require_install = Exec['register_grid_node']
     }
-    $require_install = Exec['register_grid_node']
   }
 
   if ( $install_task == 'ALL' ) {

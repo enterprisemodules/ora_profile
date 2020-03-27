@@ -137,6 +137,7 @@ class ora_profile::database::db_software(
   }
 
   if ( $master_node == $facts['hostname'] ) {
+
     if ( $is_rac ) {
       $installdb_cluster_nodes = $master_node
     } else {
@@ -166,44 +167,48 @@ class ora_profile::database::db_software(
         Package['unzip'],
       ],
     }
+
   } else {
-    echo {"This is not the master node. Clone ORACLE_HOME from ${master_node}":
-      withpath => false,
-    }
 
-    case $version {
-      '12.2.0.1', '18.0.0.0', '19.0.0.0': {
-        $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\""
+    unless $oracle_home in $facts['ora_install_homes'].keys {
+      echo {"This is not the master node. Clone ORACLE_HOME from ${master_node}":
+        withpath => false,
       }
-      '12.1.0.2': {
-        $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
-      }
-      '11.2.0.4': {
-        $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${oracle_home}/oui/bin/addNode.sh -ignorePrereq \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
-      }
-      default: {
-        notice('Version not supported yet')
-      }
-    }
 
-    exec{'add_oracle_node':
-      timeout => 0,
-      user    => $os_user,
-      command => "/usr/bin/ssh ${os_user}@${master_node} \"${add_node_command}\"",
-      creates => "${oracle_home}/root.sh",
-    }
+      case $version {
+        '12.2.0.1', '18.0.0.0', '19.0.0.0': {
+          $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\""
+        }
+        '12.1.0.2': {
+          $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
+        }
+        '11.2.0.4': {
+          $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${oracle_home}/oui/bin/addNode.sh -ignorePrereq \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
+        }
+        default: {
+          notice('Version not supported yet')
+        }
+      }
 
-    ~> exec{'register_oracle_node':
-      refreshonly => true,
-      timeout     => 0,
-      user        => 'root',
-      command     => "/bin/sh ${$ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${oracle_home}/root.sh",
-    }
+      exec{'add_oracle_node':
+        timeout => 0,
+        user    => $os_user,
+        command => "/usr/bin/ssh ${os_user}@${master_node} \"${add_node_command}\"",
+        creates => "${oracle_home}/root.sh",
+      }
 
-    ~> exec { 'asmgidwrap':
-      refreshonly => true,
-      command     => "${grid_home}/bin/setasmgidwrap o=${oracle_home}/bin/oracle",
-      user        => $grid_user,
+      ~> exec{'register_oracle_node':
+        refreshonly => true,
+        timeout     => 0,
+        user        => 'root',
+        command     => "/bin/sh ${$ora_inventory_dir}/oraInventory/orainstRoot.sh;/bin/sh ${oracle_home}/root.sh",
+      }
+
+      ~> exec { 'asmgidwrap':
+        refreshonly => true,
+        command     => "${grid_home}/bin/setasmgidwrap o=${oracle_home}/bin/oracle",
+        user        => $grid_user,
+      }
     }
   }
 
