@@ -21,7 +21,7 @@ open_cursors=300
 ###########################################
 # Database Identification
 ###########################################
-db_domain=domain.local
+db_domain=<%= @dbdomain %%>
 db_name='<%= @dbname %>'
 
 ###########################################
@@ -35,7 +35,7 @@ db_recovery_file_dest_size=20480m
 # Miscellaneous
 ###########################################
 compatible=12.2.0.1.0
-diagnostic_dest=/u01/app/oracle
+diagnostic_dest=<%= @oracle_base %>
 
 ###########################################
 # Processes and Sessions

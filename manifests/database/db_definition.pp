@@ -4,7 +4,7 @@
 #
 # @summary This class contains the actual database definition using the `ora_database` type.
 # Here you can customize some of the attributes of your database.
-# 
+#
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [Ora_Install::Version] version
@@ -64,6 +64,9 @@
 #    ora parameters.
 #    The default value is: 'ora_profile/init.ora.erb'
 #
+# @param [String[1]] dbdomain
+#    The domain to user ffor the database.
+#    The default value is: '%{facts['networking']['domain']}'
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::db_definition(
@@ -94,6 +97,7 @@ class ora_profile::database::db_definition(
   String[1] $data_file_destination,
   String[1] $db_recovery_file_dest,
   Hash      $ora_database_override,
+  String[1] $dbdomain,
 ) inherits ora_profile::database {
 
   if ( $is_rac ) {
