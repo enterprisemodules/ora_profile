@@ -1,4 +1,4 @@
 <% @disk_devices.sort.each do | device, attrib | -%>
-KERNEL=="sd?" SUBSYSTEM=="block", PROGRAM="/usr/lib/udev/scsi_id -g -u -d /dev/$name", RESULT=="<%= attrib['uuid'] %>", SYMLINK+="<%= device %>", OWNER="<%= @grid_user %>", GROUP="<%= @grid_admingroup %>", MODE="0660"
-KERNEL=="sd?1" SUBSYSTEM=="block", PROGRAM="/usr/lib/udev/scsi_id -g -u -d /dev/$name", RESULT=="<%= attrib['uuid'] %>", SYMLINK+="<%= device %>_1", OWNER="<%= @grid_user %>", GROUP="<%= @grid_admingroup %>", MODE="0660"
+KERNEL=="sd*" SUBSYSTEM=="block", PROGRAM="/usr/lib/udev/scsi_id -g -u -d /dev/$name", RESULT=="<%= attrib['uuid'] %>", SYMLINK+="<%= device %>", OWNER="<%= @grid_user %>", GROUP="<%= @grid_admingroup %>", MODE="0660"
+KERNEL=="sd*1" SUBSYSTEM=="block", PROGRAM="/usr/lib/udev/scsi_id -g -u -d /dev/$name", RESULT=="<%= attrib['uuid'] %>", SYMLINK+="<%= device %>_1", OWNER="<%= @grid_user %>", GROUP="<%= @grid_admingroup %>", MODE="0660"
 <% end -%>
