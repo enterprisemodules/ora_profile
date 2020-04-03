@@ -493,11 +493,7 @@ ora_profile::database::asm_listener::sqlnet_version:                      '12.2'
 #  Settings for database::db_init_params
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::db_init_params::parameters:
-  spfile/archive_lag_target:
-    value: 1800
-  memory/archive_lag_target:
-    value: 1800
+ora_profile::database::db_init_params::parameters:                        {}
 
 
 # ------------------------------------------------------------------------------
