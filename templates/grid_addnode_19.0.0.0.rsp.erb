@@ -1,0 +1,223 @@
+###############################################################################
+## Copyright(c) Oracle Corporation 1998,2019. All rights reserved.           ##
+##                                                                           ##
+## Specify values for the variables listed below to customize                ##
+## your installation.                                                        ##
+##                                                                           ##
+## Each variable is associated with a comment. The comment                   ##
+## can help to populate the variables with the appropriate                   ##
+## values.                                                                   ##
+##                                                                           ##
+## IMPORTANT NOTE: This file contains plain text passwords and               ##
+## should be secured to have read permission only by oracle user             ##
+## or db administrator who owns this installation.                           ##
+##                                                                           ##
+###############################################################################
+
+###############################################################################
+##                                                                           ##
+## Instructions to fill this response file                                   ##
+## To register and configure 'Grid Infrastructure for Cluster'               ##
+##  - Fill out sections A,B,C,D,E,F and G                                    ##
+##  - Fill out section G if OCR and voting disk should be placed on ASM      ##
+##                                                                           ##
+## To register and configure 'Grid Infrastructure for Standalone server'     ##
+##  - Fill out sections A,B and G                                            ##
+##                                                                           ##
+## To register software for 'Grid Infrastructure'                            ##
+##  - Fill out sections A,B and D                                            ##
+##  - Provide the cluster nodes in section D when choosing CRS_SWONLY as     ##
+##    installation option in section A                                       ##
+##                                                                           ##
+## To upgrade clusterware and/or Automatic storage management of earlier     ##
+## releases                                                                  ##
+##  - Fill out sections A,B,C,D and H                                        ##
+##                                                                           ##
+## To add more nodes to the cluster                                          ##
+##  - Fill out sections A and D                                              ##
+##  - Provide the cluster nodes in section D when choosing CRS_ADDNODE as    ##
+##    installation option in section A                                       ##
+##                                                                           ##
+###############################################################################
+
+#------------------------------------------------------------------------------
+# Do not change the following system generated value.
+#------------------------------------------------------------------------------
+oracle.install.responseFileVersion=/oracle/install/rspfmt_crsinstall_response_schema_v19.0.0
+
+###############################################################################
+#                                                                             #
+#                          SECTION A - BASIC                                  #
+#                                                                             #
+###############################################################################
+
+
+#-------------------------------------------------------------------------------
+# Specify the location which holds the inventory files.
+# This is an optional parameter if installing on
+# Windows based Operating System.
+#-------------------------------------------------------------------------------
+INVENTORY_LOCATION=<%= @ora_inventory %>
+
+#-------------------------------------------------------------------------------
+# Specify the installation option.
+# Allowed values: CRS_CONFIG or HA_CONFIG or UPGRADE or CRS_SWONLY or HA_SWONLY
+#   - CRS_CONFIG  : To register home and configure Grid Infrastructure for cluster
+#   - HA_CONFIG   : To register home and configure Grid Infrastructure for stand alone server
+#   - UPGRADE     : To register home and upgrade clusterware software of earlier release
+#   - CRS_SWONLY  : To register Grid Infrastructure Software home (can be configured for cluster
+#                   or stand alone server later)
+#   - HA_SWONLY   : To register Grid Infrastructure Software home (can be configured for stand
+#                   alone server later. This is only supported on Windows.)
+#   - CRS_ADDNODE : To add more nodes to the cluster
+#   - CRS_DELETE_NODE : To delete nodes to the cluster
+#-------------------------------------------------------------------------------
+oracle.install.option=CRS_ADDNODE
+
+#-------------------------------------------------------------------------------
+# Specify the complete path of the Oracle Base.
+#-------------------------------------------------------------------------------
+ORACLE_BASE=<%= @grid_base %>
+
+################################################################################
+#                                                                              #
+#                           SECTION D - CLUSTER & GNS                         #
+#                                                                              #
+################################################################################
+#-------------------------------------------------------------------------------
+# Specify the required cluster configuration
+# Allowed values: STANDALONE, DOMAIN, MEMBERDB, MEMBERAPP
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.ClusterConfiguration=STANDALONE
+
+#-------------------------------------------------------------------------------
+# Specify 'true' if you would like to configure the cluster as Extended, else
+# specify 'false'
+#
+# Applicable only for STANDALONE and DOMAIN cluster configuration
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.configureAsExtendedCluster=false
+
+
+#-------------------------------------------------------------------------------
+# Specify the Member Cluster Manifest file
+#
+# Applicable only for MEMBERDB and MEMBERAPP cluster configuration
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.memberClusterManifestFile=
+
+#-------------------------------------------------------------------------------
+# Specify a name for the Cluster you are creating.
+#
+# The maximum length allowed for clustername is 63 characters. The name can be
+# any combination of lower and uppercase alphabets (A - Z), (0 - 9) and hyphens (-).
+#
+# Applicable only for STANDALONE and DOMAIN cluster configuration
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.clusterName=<%= @cluster_name %>
+
+#-------------------------------------------------------------------------------
+# Applicable only for STANDALONE, DOMAIN, MEMBERDB cluster configuration.
+# Specify 'true' if you would like to configure Grid Naming Service(GNS), else
+# specify 'false'
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.gpnp.configureGNS=false
+
+#-------------------------------------------------------------------------------
+# Applicable only for STANDALONE and DOMAIN cluster configuration if you choose to configure GNS.
+# Specify 'true' if you would like to assign SCAN name VIP and Node VIPs by DHCP
+# , else specify 'false'
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.autoConfigureClusterNodeVIP=false
+
+#-------------------------------------------------------------------------------
+# Applicable only if you choose to configure GNS.
+# Specify the type of GNS configuration for cluster
+# Allowed values are: CREATE_NEW_GNS and USE_SHARED_GNS
+# Only USE_SHARED_GNS value is allowed for MEMBERDB cluster configuration.
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.gpnp.gnsOption=
+
+#-------------------------------------------------------------------------------
+# Applicable only if SHARED_GNS is being configured for cluster
+# Specify the path to the GNS client data file
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.gpnp.gnsClientDataFile=false
+
+#-------------------------------------------------------------------------------
+# Applicable only for STANDALONE and DOMAIN cluster configuration if you choose to
+# configure GNS for this cluster oracle.install.crs.config.gpnp.gnsOption=CREATE_NEW_GNS
+# Specify the GNS subdomain and an unused virtual hostname for GNS service
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.gpnp.gnsSubDomain=
+oracle.install.crs.config.gpnp.gnsVIPAddress=
+
+#-------------------------------------------------------------------------------
+# Specify the list of sites - only if configuring an Extended Cluster
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.sites=
+
+#-------------------------------------------------------------------------------
+# Specify the list of nodes that have to be configured to be part of the cluster.
+#
+# The list should a comma-separated list of tuples.  Each tuple should be a
+# colon-separated string that contains
+# - 1 field if you have chosen CRS_SWONLY as installation option, or
+# - 1 field if configuring an Application Cluster, or
+# - 3 fields if configuring a Flex Cluster
+# - 3 fields if adding more nodes to the configured cluster, or
+# - 4 fields if configuring an Extended Cluster
+#
+# The fields should be ordered as follows:
+# 1. The first field should be the public node name.
+# 2. The second field should be the virtual host name
+#    (Should be specified as AUTO if you have chosen 'auto configure for VIP'
+#     i.e. autoConfigureClusterNodeVIP=true)
+# 3. The third field indicates the site designation for the node. To be specified only if configuring an Extended Cluster.
+# Only the 1st field is applicable if you have chosen CRS_SWONLY as installation option
+# Only the 1st field is applicable if configuring an Application Cluster
+#
+# Examples
+# For registering GI for a cluster software: oracle.install.crs.config.clusterNodes=node1,node2
+# For adding more nodes to the configured cluster: oracle.install.crs.config.clusterNodes=node1:node1-vip,node2:node2-vip
+# For configuring Application Cluster: oracle.install.crs.config.clusterNodes=node1,node2
+# For configuring Flex Cluster: oracle.install.crs.config.clusterNodes=node1:node1-vip,node2:node2-vip
+# For configuring Extended Cluster: oracle.install.crs.config.clusterNodes=node1:node1-vip:site1,node2:node2-vip:site2
+# You can specify a range of nodes in the tuple using colon separated fields of format
+# hostnameprefix:lowerbound-upperbound:hostnamesuffix:vipsuffix:role of node
+#
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.clusterNodes=<%= @facts['hostname'] -%>:<%= @facts['hostname'] %>-vip
+
+#-------------------------------------------------------------------------------
+# The value should be a comma separated strings where each string is as shown below
+# InterfaceName:SubnetAddress:InterfaceType
+# where InterfaceType can be either "1", "2", "3", "4", or "5"
+# InterfaceType stand for the following values
+#   - 1 : PUBLIC
+#   - 2 : PRIVATE
+#   - 3 : DO NOT USE
+#   - 4 : ASM
+#   - 5 : ASM & PRIVATE
+#
+# For example: eth0:140.87.24.0:1,eth1:10.2.1.0:2,eth2:140.87.52.0:3
+#
+#-------------------------------------------------------------------------------
+oracle.install.crs.config.networkInterfaceList=<%= @network_interface_list %>
+
+#------------------------------------------------------------------------------
+# Specify 'true' if you would like to configure Grid Infrastructure Management
+# Repository (GIMR), else specify 'false'.
+# This option is only applicable when CRS_CONFIG is chosen as install option,
+# and STANDALONE is chosen as cluster configuration.
+#------------------------------------------------------------------------------
+oracle.install.crs.configureGIMR=<%= @gimr_configure %>
+
+#------------------------------------------------------------------------------
+# Create a separate ASM DiskGroup to store GIMR data.
+# Specify 'true' if you would like to separate GIMR data with clusterware data,
+# else specify 'false'
+# Value should be 'true' for DOMAIN cluster configurations
+# Value can be true/false for STANDALONE cluster configurations.
+#------------------------------------------------------------------------------
+oracle.install.asm.configureGIMRDataDG=<%= @gimr_dg %>
