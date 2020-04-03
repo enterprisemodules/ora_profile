@@ -20,6 +20,7 @@ When these customizations aren't enough, you can replace the class with your own
 
 Attribute Name                                                                  | Short Description                                      |
 ------------------------------------------------------------------------------- | ------------------------------------------------------ |
+[dbdomain](#database::db_definition_dbdomain)                                   | The domain of the database.                            |
 [dbname](#database::db_definition_dbname)                                       | The name of the database.                              |
 [init_ora_template](#database::db_definition_init_ora_template)                 | The template to use for the init.ora parameters.       |
 [log_size](#database::db_definition_log_size)                                   | The log ize to use.                                    |
@@ -176,6 +177,17 @@ Type: `Easy_type::Password`
 The template to use for the init.ora parameters.
 
 The default value is: 'ora_profile/init.ora.erb'
+Type: `String[1]`
+
+
+[Back to overview of database::db_definition](#attributes)
+
+### dbdomain<a name='database::db_definition_dbdomain'>
+
+The domain of the database.
+
+The default is `$facts['networking']['domain']`
+
 Type: `String[1]`
 
 

@@ -462,6 +462,7 @@ ora_profile::database::db_definition_template::puppet_download_mnt_point: 'ora_p
 ora_profile::database::db_definition_template::db_conf_type:              'SINGLE'
 ora_profile::database::db_definition_template::cluster_nodes:             ~
 ora_profile::database::db_definition_template::log_size:                  "%{lookup('ora_profile::database::db_definition::log_size')}"
+ora_profile::database::db_definition_template::dbdomain:                  "%{facts.networking.domain}"
 
 
 # ------------------------------------------------------------------------------

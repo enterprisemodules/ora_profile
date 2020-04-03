@@ -28,6 +28,7 @@ Attribute Name                                                                  
 [cluster_nodes](#database::db_definition_template_cluster_nodes)                         | A comma seperated list of nodes in your cluster, for RAC databases. |
 [data_file_destination](#database::db_definition_template_data_file_destination)         | The location where you want to store your database files.           |
 [db_conf_type](#database::db_definition_template_db_conf_type)                           | The type of database that needs to be installed.                    |
+[dbdomain](#database::db_definition_template_dbdomain)                                   | The domain of the database.                                         |
 [dbname](#database::db_definition_template_dbname)                                       | The name of the database.                                           |
 [memory_mgmt_type](#database::db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                          |
 [oracle_base](#database::db_definition_template_oracle_base)                             | The base firectory to use for the Oracle installation.              |
@@ -221,6 +222,17 @@ A comma seperated list of nodes in your cluster, for RAC databases.
 
 The default value is `undef`
 Type: `Optional[String[1]]`
+
+
+[Back to overview of database::db_definition_template](#attributes)
+
+### dbdomain<a name='database::db_definition_template_dbdomain'>
+
+The domain of the database.
+
+The default is `$facts['networking']['domain']`
+
+Type: `String[1]`
 
 
 [Back to overview of database::db_definition_template](#attributes)
