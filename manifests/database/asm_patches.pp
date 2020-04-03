@@ -78,8 +78,12 @@ class ora_profile::database::asm_patches(
         }
 
         $sub_patches = $props['sub_patches'].map |$sp| {
-          if $sp == $patch_num {
-            "${download_dir}/patches/${patch_num}"
+          if ( $sp == $patch_num ) {
+            if ( $props['type'] == 'psu' ) {
+              "${download_dir}/patches/${patch_num}/${sp}"
+            } else {
+              "${download_dir}/patches/${patch_num}"
+            }
           } else {
             "${download_dir}/patches/${patch_num}/${sp}"
           }
