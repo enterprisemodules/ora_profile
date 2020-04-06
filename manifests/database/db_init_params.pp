@@ -30,10 +30,10 @@
 #    See: [ora_init_params](https://www.enterprisemodules.com/docs/ora_config/ora_init_param.html)
 #
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::db_init_params(
   Hash    $parameters         = {},
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   if $parameters.keys.size > 0 {
     echo {"Ensure DB init parameter(s) ${parameters.keys.join(',')}":

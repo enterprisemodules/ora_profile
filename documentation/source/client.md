@@ -52,8 +52,16 @@ ora_profile::client::packages:   my_profile::my_own_implementation
 
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 
+Here is an example:
+```puppet
+contain ora_profile::client
+```
+
 
 <%- include_attributes [
+  :before_em_license,
+  :em_license,
+  :after_em_license,
   :before_groups_and_users,
   :groups_and_users,
   :after_groups_and_users,

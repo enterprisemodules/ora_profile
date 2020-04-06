@@ -23,6 +23,7 @@ Attribute Name                                                           | Short
 ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
 [asm_diskgroup](#database::asm_software_asm_diskgroup)                   | The name of the ASM diskgroup to use.                                    |
 [asm_disks](#database::asm_software_asm_disks)                           | List of disks to create a ASM DiskGroup.                                 |
+[asm_group](#database::asm_software_asm_group)                           | The admin group for ASM.                                                 |
 [asm_sys_password](#database::asm_software_asm_sys_password)             | The `sys` password to use for ASM.                                       |
 [bash_additions](#database::asm_software_bash_additions)                 | The text to add at the end of the bash_profile.                          |
 [bash_profile](#database::asm_software_bash_profile)                     | Whether or not to deploy bash_profile for $os_user or $grid_user
@@ -36,7 +37,10 @@ Attribute Name                                                           | Short
 [disks_failgroup_names](#database::asm_software_disks_failgroup_names)   | A comma seperated list of device and failure group name.                 |
 [file_name](#database::asm_software_file_name)                           | The file name containing the Oracle Grid Infrastructure software kit.    |
 [grid_type](#database::asm_software_grid_type)                           | The type of grid.                                                        |
+[group](#database::asm_software_group)                                   | The dba group for ASM.                                                   |
+[install_task](#database::asm_software_install_task)                     | The installation task that should be executed.                           |
 [network_interface_list](#database::asm_software_network_interface_list) | The list of interfaces to use for RAC.                                   |
+[oper_group](#database::asm_software_oper_group)                         | The oper group for ASM.                                                  |
 [scan_name](#database::asm_software_scan_name)                           | The hostname to use for the SCAN service.                                |
 [scan_port](#database::asm_software_scan_port)                           | The IP portnumber to use for the SCAN service.                           |
 [storage_option](#database::asm_software_storage_option)                 | The type of storage to use.                                              |
@@ -83,8 +87,6 @@ The file name containing the Oracle Grid Infrastructure software kit.
 
 The default is: `linuxx64_12201_grid_home`
 
-To customize this consistently use the hiera key `ora_profile::database::asm_software::source`.
-
 Type: `String[1]`
 
 
@@ -95,6 +97,9 @@ Type: `String[1]`
 The `sys` password to use for ASM.
 
 The default is: `Welcome01`
+
+To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_sys_password`.
+
 Type: `Easy_type::Password`
 
 
@@ -119,6 +124,7 @@ The name of the ASM diskgroup to use.
 
 The default value is: `DATA`
 
+
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_diskgroup`.
 
 Type: `String[1]`
@@ -133,6 +139,45 @@ List of disks to create a ASM DiskGroup.
 The default value is: `/nfs_client/asm_sda_nfs_b1,/nfs_client/asm_sda_nfs_b2`
 
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_disks`.
+
+Type: `String[1]`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### group<a name='database::asm_software_group'>
+
+The dba group for ASM.
+
+The default is : `asmdba`
+
+To customize this consistently use the hiera key `ora_profile::database::asm_software::group`.
+
+Type: `String[1]`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### oper_group<a name='database::asm_software_oper_group'>
+
+The oper group for ASM.
+
+The default is : `asmoper`
+
+To customize this consistently use the hiera key `ora_profile::database::asm_software::oper_group`.
+
+Type: `String[1]`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### asm_group<a name='database::asm_software_asm_group'>
+
+The admin group for ASM.
+
+The default is : `asmadmin`
+
+To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_group`.
 
 Type: `String[1]`
 
@@ -168,6 +213,56 @@ The default value is: `HA_CONFIG`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::grid_type`.
 
 Type: `Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### disk_redundancy<a name='database::asm_software_disk_redundancy'>
+
+The disk redundancy for the initial diskgroup to setup ASM.
+
+Valid values are:
+
+- `EXTENDED`
+- `EXTERNAL`
+- `FLEX`
+- `HIGH`
+- `NORMAL`
+
+The default value is: `EXTERNAL`
+
+Type: `Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### install_task<a name='database::asm_software_install_task'>
+
+The installation task that should be executed.
+
+Type: `Enum['ALL','EXTRACT']`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### bash_profile<a name='database::asm_software_bash_profile'>
+
+Whether or not to deploy bash_profile for $os_user or $grid_user
+
+The default is : `true`
+
+Type: `Boolean`
+
+
+[Back to overview of database::asm_software](#attributes)
+
+### bash_additions<a name='database::asm_software_bash_additions'>
+
+The text to add at the end of the bash_profile. This parameter will only be used when you have specified `true` for the parameter `bash_profile`
+
+The default value is an empty string.
+
+Type: `String`
 
 
 [Back to overview of database::asm_software](#attributes)
@@ -274,47 +369,6 @@ Valid values are:
 The default value is: `undef`
 
 Type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
-
-
-[Back to overview of database::asm_software](#attributes)
-
-### disk_redundancy<a name='database::asm_software_disk_redundancy'>
-
-The disk redundancy for the initial diskgroup to setup ASM.
-
-Valid values are:
-
-- `EXTENDED`
-- `EXTERNAL`
-- `FLEX`
-- `HIGH`
-- `NORMAL`
-
-The default value is: `EXTERNAL`
-
-Type: `Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']`
-
-
-[Back to overview of database::asm_software](#attributes)
-
-### bash_profile<a name='database::asm_software_bash_profile'>
-
-Whether or not to deploy bash_profile for $os_user or $grid_user
-
-The default is : `true`
-
-Type: `Boolean`
-
-
-[Back to overview of database::asm_software](#attributes)
-
-### bash_additions<a name='database::asm_software_bash_additions'>
-
-The text to add at the end of the bash_profile. This parameter will only be used when you have specified `true` for the parameter `bash_profile`
-
-The default value is an empty string.
-
-Type: `String`
 
 
 [Back to overview of database::asm_software](#attributes)

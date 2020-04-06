@@ -26,11 +26,11 @@
 # @param [String[1]] file_name
 #    The file name containing the Oracle Grid Infrastructure software kit.
 #    The default is: `linuxx64_12201_grid_home`
-#    To customize this consistently use the hiera key `ora_profile::database::asm_software::source`.
 #
 # @param [Easy_type::Password] asm_sys_password
 #    The `sys` password to use for ASM.
 #    The default is: `Welcome01`
+#    To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_sys_password`.
 #
 # @param [String[1]] disk_discovery_string
 #    The disk discovery string for ASM.
@@ -47,6 +47,21 @@
 #    The default value is: `/nfs_client/asm_sda_nfs_b1,/nfs_client/asm_sda_nfs_b2`
 #    To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_disks`.
 #
+# @param [String[1]] group
+#    The dba group for ASM.
+#    The default is : `asmdba`
+#    To customize this consistently use the hiera key `ora_profile::database::asm_software::group`.
+#
+# @param [String[1]] oper_group
+#    The oper group for ASM.
+#    The default is : `asmoper`
+#    To customize this consistently use the hiera key `ora_profile::database::asm_software::oper_group`.
+#
+# @param [String[1]] asm_group
+#    The admin group for ASM.
+#    The default is : `asmadmin`
+#    To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_group`.
+#
 # @param [Boolean] configure_afd
 #    Specify whether or not to configure ASM Filter Driver instead of ASMLib.
 #    The default value is: `false`
@@ -62,6 +77,28 @@
 #    - `CRS_SWONLY`
 #    The default value is: `HA_CONFIG`
 #    To customize this consistently use the hiera key `ora_profile::database::asm_software::grid_type`.
+#
+# @param [Enum['EXTENDED', 'EXTERNAL', 'FLEX', 'HIGH', 'NORMAL']] disk_redundancy
+#    The disk redundancy for the initial diskgroup to setup ASM.
+#    Valid values are:
+#    - `EXTENDED`
+#    - `EXTERNAL`
+#    - `FLEX`
+#    - `HIGH`
+#    - `NORMAL`
+#    The default value is: `EXTERNAL`
+#
+# @param [Enum['ALL', 'EXTRACT']] install_task
+#    The installation task that should be executed.
+#
+# @param [Boolean] bash_profile
+#    Whether or not to deploy bash_profile for $os_user or $grid_user
+#    The default is : `true`
+#
+# @param [String] bash_additions
+#    The text to add at the end of the bash_profile.
+#    This parameter will only be used when you have specified `true` for the parameter `bash_profile`
+#    The default value is an empty string.
 #
 # @param [Optional[String[1]]] disks_failgroup_names
 #    A comma seperated list of device and failure group name.
@@ -110,27 +147,7 @@
 #    - `FLEX_ASM_STORAGE`     (versions >= 12.1)
 #    The default value is: `undef`
 #
-# @param [Enum['EXTENDED', 'EXTERNAL', 'FLEX', 'HIGH', 'NORMAL']] disk_redundancy
-#    The disk redundancy for the initial diskgroup to setup ASM.
-#    Valid values are:
-#    - `EXTENDED`
-#    - `EXTERNAL`
-#    - `FLEX`
-#    - `HIGH`
-#    - `NORMAL`
-#    The default value is: `EXTERNAL`
-#
-# @param [Boolean] bash_profile
-#    Whether or not to deploy bash_profile for $os_user or $grid_user
-#    The default is : `true`
-#
-# @param [String] bash_additions
-#    The text to add at the end of the bash_profile.
-#    This parameter will only be used when you have specified `true` for the parameter `bash_profile`
-#    The default value is an empty string.
-#
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::asm_software(
   Ora_Install::Version
             $version,
@@ -169,6 +186,7 @@ class ora_profile::database::asm_software(
   Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]
             $storage_option,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure ASM Software ${version} in ${grid_home}":
     withpath => false,

@@ -27,7 +27,6 @@ Attribute Name                                          | Short Description     
 [dba_group](#database::db_software_dba_group)           | The group to use for Oracle DBA users.                            |
 [dirs](#database::db_software_dirs)                     | The directories to create as part of the installation.            |
 [file_name](#database::db_software_file_name)           | The file name containing the Oracle database software kit.        |
-[install_group](#database::db_software_install_group)   | The group to use for Oracle install.                              |
 [oper_group](#database::db_software_oper_group)         | The oper group for the database.                                  |
 [oracle_base](#database::db_software_oracle_base)       | The base firectory to use for the Oracle installation.            |
 [oracle_home](#database::db_software_oracle_home)       | The home firectory to use for the Oracle installation.            |
@@ -89,17 +88,6 @@ The default is : `dba`
 To customize this consistently use the hiera key `ora_profile::database::dba_group`.
 
 Type: `String[1]`
-
-
-[Back to overview of database::db_software](#attributes)
-
-### install_group<a name='database::db_software_install_group'>
-
-The group to use for Oracle install.
-
-The default is : `oinstall`
-
-To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
 
 [Back to overview of database::db_software](#attributes)

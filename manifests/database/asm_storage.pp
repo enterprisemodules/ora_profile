@@ -13,18 +13,8 @@
 #    - `nfs`
 #    - `asmlib`
 #    - `afd`
+#    - `raw`
 #    The default value is: `nfs`.
-#
-# @param [Optional[Array[Stdlib::Absolutepath]]] nfs_files
-#    This is an array of NFS files that will be used as ASM disks.
-#    The default value is:
-#    ```yaml
-#    ora_profile::database::asm_storage::nfs_files:
-#    - /home/nfs_server_data/asm_sda_nfs_b1
-#    - /home/nfs_server_data/asm_sda_nfs_b2
-#    - /home/nfs_server_data/asm_sda_nfs_b3
-#    - /home/nfs_server_data/asm_sda_nfs_b4
-#    ```
 #
 # @param [Optional[Stdlib::Absolutepath]] nfs_mountpoint
 #    The mountpoint where the NFS volume will be mounted.
@@ -38,12 +28,23 @@
 #    The name of the NFS server.
 #    The default value is: `localhost`.
 #
+# @param [Optional[Hash]] disk_devices
+#    The disk devices that should be used.
+#    Dependant on value specified for `ora_profile::database::asm_storage::storage_type`
+#    Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_storage::disk_devices:
+#      asm_data01:
+#        size: 8192
+#        uuid: '1ATA_VBOX_HARDDISK_VB00000000-01000000'
+#        label: 'DATA1'
+#    ```
+#
 # @param [Optional[String[1]]] scan_exclude
 #    Specify which devices to exclude from scanning for ASMLib.
 #    The default value is: `undef`
 #
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::asm_storage(
   Enum['nfs','asmlib','afd','raw']
             $storage_type,
@@ -58,6 +59,7 @@ class ora_profile::database::asm_storage(
   Optional[String[1]]
             $scan_exclude,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure ASM storage setup using ${storage_type} disk devices":
     withpath => false,

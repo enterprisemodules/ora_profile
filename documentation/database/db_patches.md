@@ -21,6 +21,7 @@ When these customizations aren't enough, you can replace the class with your own
 
 Attribute Name                                       | Short Description                                      |
 ---------------------------------------------------- | ------------------------------------------------------ |
+[dbname](#database::db_patches_dbname)               | The name of the database.                              |
 [install_group](#database::db_patches_install_group) | The group to use for Oracle install.                   |
 [opversion](#database::db_patches_opversion)         | The version of OPatch that is needed.                  |
 [oracle_home](#database::db_patches_oracle_home)     | The home firectory to use for the Oracle installation. |
@@ -31,6 +32,18 @@ Attribute Name                                       | Short Description        
 
 
 
+
+### dbname<a name='database::db_patches_dbname'>
+
+The name of the database.
+
+The default is `DB01`
+
+To customize this consistently use the hiera key `ora_profile::database::dbname`.
+Type: `String[1]`
+
+
+[Back to overview of database::db_patches](#attributes)
 
 ### patch_file<a name='database::db_patches_patch_file'>
 

@@ -1,12 +1,40 @@
 #++--++
 #
+# ora_profile::database::rac::authenticated_nodes
+#
+# @summary Setup authentication for the cluster nodes.
+# Only applicable for RAC.
+#
+# @param [String[1]] oracle_private_key
+#    The private key of the oracle user.
+#
+# @param [String[1]] grid_private_key
+#    The private key of the grid user.
+#
+# @param [Hash] keys
+#    Hash with users and the public keys they will get.
+#    Here is an example:
+#    ```yaml
+#    ora_profile::database::rac::authenticated_nodes::keys:
+#      oracle_for_grid:
+#        ensure: present
+#        user: grid
+#        type: rsa
+#        key: '<public key>'
+#      grid_for_oracle:
+#        ensure: present
+#        user: oracle
+#        type: rsa
+#        key: '<public key>'
+#    ```
+#
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::rac::authenticated_nodes (
   String[1] $oracle_private_key,
   String[1] $grid_private_key,
   Hash      $keys = {},
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   if ( $os_user == $grid_user ) {
     echo {"Ensure User equivalence for user ${os_user}":

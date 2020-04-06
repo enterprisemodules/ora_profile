@@ -1,11 +1,39 @@
+#++--++
+#
 # ora_profile::database::rac::instance
 #
-# Add Undo tablespace, Thread and init parameters for RAC instances
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
+# @summary Add Undo tablespace, Thread and init parameters for RAC instances
+# Here is an example:
 #   ora_profile::database::rac::instance{'instance_name'}
+#
+# @param [String[1]] on
+#    The instance for which it should be executed.
+#
+# @param [Integer] number
+#    The instance number.
+#
+# @param [Integer] thread
+#    The thread of the instance.
+#
+# @param [String[1]] datafile
+#    The datafile for the Undo tablespace for the instance.
+#
+# @param [Easy_type::Size] undo_initial_size
+#    The size of the Undo tablespace for the instance.
+#
+# @param [Easy_type::Size] undo_next
+#    The size of the next extent for the Undo tablesapce of the instance.
+#
+# @param [Enum['on', 'off']] undo_autoextend
+#    Auto extensibility of the Undo tablespace for the instance.
+#
+# @param [Easy_type::Size] undo_max_size
+#    The maximum size of the datafile of the Undo tablespace for the instance.
+#
+# @param [Easy_type::Size] log_size
+#    The size of the redolog files of the instance.
+#
+#--++--
 define ora_profile::database::rac::instance(
   String[1]        $on,
   Integer          $number,

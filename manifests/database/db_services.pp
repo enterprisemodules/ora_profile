@@ -14,12 +14,12 @@
 #    
 #
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::db_services(
   String[1] $dbname,
   Optional[String[1]]
             $domain_name,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   if $domain_name == undef { $service_name = "${dbname}_APP" } else { $service_name = "${dbname}_APP.${domain_name}" }
 

@@ -1,5 +1,16 @@
 #++--++
 #
+# ora_profile::database::authenticated_nodes::user_equivalence
+#
+# @summary Setup user equivalence for the specified user on specified nodes.
+#
+#
+# @param [String] private_key
+#    The private key of the user.
+#
+# @param [Array[String[1]]] nodes
+#    The cluster nodes.
+#
 #--++--
 define ora_profile::database::authenticated_nodes::user_equivalence(
   String            $private_key,

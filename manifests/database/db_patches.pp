@@ -7,6 +7,11 @@
 # 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
+# @param [String[1]] dbname
+#    The name of the database.
+#    The default is `DB01`
+#    To customize this consistently use the hiera key `ora_profile::database::dbname`.
+#
 # @param [String[1]] patch_file
 #    The file containing the required Opatch version.
 #    The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
@@ -42,7 +47,6 @@
 #    The default value is : `{}`
 #
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::db_patches(
   String[1] $dbname,
   String[1] $patch_file,
@@ -54,6 +58,7 @@ class ora_profile::database::db_patches(
   String[1] $source,
   Hash      $patch_list,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   if $patch_list.keys.size > 0 {
     echo {"Ensure DB Patch(es) ${patch_list.keys.join(',')} on ${oracle_home}":

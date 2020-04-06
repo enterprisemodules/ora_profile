@@ -1,11 +1,23 @@
+#++--++
+#
 # ora_profile::database::firewall::iptables
 #
-# Open up ports for Oracle using the iptables
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
+# @summary Open up ports for Oracle using the iptables
+# Here is an example:
+# 
+# ```puppet
 #   include ora_profile::database::firewall::iptables
+# ```
+#
+# @param [Hash] ports
+#    A list of TCP ports to open in the firewall.
+#    The default value is: `[1521]`
+#
+# @param [Boolean] manage_service
+#    Using this setting you can specify if you want this module to manage the firewall service.
+#    The default value is `true` and will make sure the firewall service is started and enabled.
+#
+#--++--
 class ora_profile::database::firewall::iptables(
   Hash    $ports,
   Boolean $manage_service,
