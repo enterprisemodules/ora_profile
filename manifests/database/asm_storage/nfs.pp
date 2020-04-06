@@ -1,11 +1,35 @@
+#++--++
+#
 # ora_profile::database::asm_storage::nfs
 #
-# Configure NFS storage
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
+# @summary This class will create the specified mountpoint and mount the nfs share there.
+# Here is an example:
+# 
+# ```puppet
 #   include ora_profile::database::asm_storage::nfs
+# ```
+#
+# @param [String[1]] grid_user
+#    The name of the user that owns the Grid Infrastructure installation.
+#    The default value is: `grid`.
+#
+# @param [String[1]] grid_admingroup
+#    The OS group to use for ASM admin.
+#    The default value is: `asmadmin`
+#
+# @param [Stdlib::Absolutepath] nfs_mountpoint
+#    The mountpoint where the NFS volume will be mounted.
+#    The default value is: `/nfs_client`.
+#
+# @param [Stdlib::Absolutepath] nfs_export
+#    The name of the NFS volume that will be mounted to nfs_mountpoint.
+#    The default value is: `/home/nfs_server_data`.
+#
+# @param [String[1]] nfs_server
+#    The name of the NFS server.
+#    The default value is: `localhost`.
+#
+#--++--
 class ora_profile::database::asm_storage::nfs(
   String[1] $grid_user,
   String[1] $grid_admingroup,

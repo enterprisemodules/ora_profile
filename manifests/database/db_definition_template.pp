@@ -83,16 +83,15 @@
 #    - `RACONE`
 #    The default value is `SINGLE`
 #
-# @param [Optional[String[1]]] cluster_nodes
-#    A comma seperated list of nodes in your cluster, for RAC databases.
-#    The default value is `undef`
+# @param [String[1]] log_size
+#    The log ize to use.
+#    The default is : `100M`
 #
 # @param [String[1]] dbdomain
 #    The domain of the database.
 #    The default is `$facts['networking']['domain']`
 #
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::db_definition_template(
   Ora_Install::Version
                       $version,
@@ -121,8 +120,8 @@ class ora_profile::database::db_definition_template(
                       $db_conf_type,
   String[1]           $log_size,
   String[1]           $dbdomain,
-  # Optional[String[1]] $cluster_nodes,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure DB definition from template for database ${dbname} in ${oracle_home}":
     withpath => false,

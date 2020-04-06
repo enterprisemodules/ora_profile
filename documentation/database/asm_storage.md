@@ -21,8 +21,8 @@ When these customizations aren't enough, you can replace the class with your own
 
 Attribute Name                                          | Short Description                                                  |
 ------------------------------------------------------- | ------------------------------------------------------------------ |
+[disk_devices](#database::asm_storage_disk_devices)     | The disk devices that should be used.                              |
 [nfs_export](#database::asm_storage_nfs_export)         | The name of the NFS volume that will be mounted to nfs_mountpoint. |
-[nfs_files](#database::asm_storage_nfs_files)           | This is an array of NFS files that will be used as ASM disks.      |
 [nfs_mountpoint](#database::asm_storage_nfs_mountpoint) | The mountpoint where the NFS volume will be mounted.               |
 [nfs_server](#database::asm_storage_nfs_server)         | The name of the NFS server.                                        |
 [scan_exclude](#database::asm_storage_scan_exclude)     | Specify which devices to exclude from scanning for ASMLib.         |
@@ -39,28 +39,10 @@ Valid values are:
 - `nfs`
 - `asmlib`
 - `afd`
+- `raw`
 
 The default value is: `nfs`.
 Type: `Enum['nfs','asmlib','afd','raw']`
-
-
-[Back to overview of database::asm_storage](#attributes)
-
-### nfs_files<a name='database::asm_storage_nfs_files'>
-
-This is an array of NFS files that will be used as ASM disks.
-
-The default value is:
-
-```yaml
-ora_profile::database::asm_storage::nfs_files:
-- /home/nfs_server_data/asm_sda_nfs_b1
-- /home/nfs_server_data/asm_sda_nfs_b2
-- /home/nfs_server_data/asm_sda_nfs_b3
-- /home/nfs_server_data/asm_sda_nfs_b4
-```
-
-Type: `Optional[Array[Stdlib::Absolutepath]]`
 
 
 [Back to overview of database::asm_storage](#attributes)
@@ -91,6 +73,26 @@ The name of the NFS server.
 
 The default value is: `localhost`.
 Type: `Optional[String[1]]`
+
+
+[Back to overview of database::asm_storage](#attributes)
+
+### disk_devices<a name='database::asm_storage_disk_devices'>
+
+The disk devices that should be used.
+Dependant on value specified for `ora_profile::database::asm_storage::storage_type`
+
+Here is an example:
+
+```yaml
+ora_profile::database::asm_storage::disk_devices:
+  asm_data01:
+    size: 8192
+    uuid: '1ATA_VBOX_HARDDISK_VB00000000-01000000'
+    label: 'DATA1'
+```
+
+Type: `Optional[Hash]`
 
 
 [Back to overview of database::asm_storage](#attributes)

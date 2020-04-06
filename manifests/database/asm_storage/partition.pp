@@ -1,9 +1,34 @@
 # ora_profile::database::asm_storage::partition
 #
-# @summary A short summary of the purpose of this class
+#++--++
 #
-# @example
+# ora_profile::database::asm_storage::partition
+#
+# @summary This class adds partition table and partitions to specified device.
+# .
+# 
+# Here is an example:
+# 
+# ```puppet
 #   include ora_profile::database::asm_storage::partition
+# ```
+#
+# @param [Stdlib::Absolutepath] raw_device
+#    The device that needs to be partitioned.
+#
+# @param [Enum['gpt', 'msdos']] table_type
+#    The type of partition table.
+#
+# @param [Boolean] wait_for_device
+#    Should we wait for the device to be available?
+#
+# @param [Optional[Easy_type::Size]] start
+#    The start point of the partition.
+#
+# @param [Optional[Easy_type::Size]] end
+#    The end point of the partition.
+#
+#--++--
 define ora_profile::database::asm_storage::partition(
   Stdlib::Absolutepath
             $raw_device,
@@ -21,7 +46,7 @@ define ora_profile::database::asm_storage::partition(
   if ( $wait_for_device ) {
     sleep { "until_${device}_available":
       bedtime       => '120',                                     # how long to sleep for
-      wakeupfor     => "/usr/bin/test -b ${device}",         # an optional test, run in a shell
+      wakeupfor     => "/usr/bin/test -b ${device}",              # an optional test, run in a shell
       dozetime      => '5',                                       # dozetime for the test interval, defaults to 10s
       failontimeout => true,                                      # whether to fail the resource if the test times out
       refreshonly   => false,

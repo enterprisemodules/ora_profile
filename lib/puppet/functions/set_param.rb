@@ -1,7 +1,11 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-# Returns the the installed Opatch version for a specfied Oracle home
+# Returns the value for requested parameter.
+# Currently supported parameters:
+# - instance_name
+# - instance_number
+# - thread_number
 #
 # rubocop: disable Metrics/AbcSize
 # rubocop: disable Metrics/CyclomaticComplexity

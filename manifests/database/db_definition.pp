@@ -22,6 +22,16 @@
 #    The default is : `/u01/app/oracle`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
+# @param [String[1]] os_user
+#    The OS user to use for Oracle install.
+#    The default is : `oracle`
+#    To customize this consistently use the hiera key `ora_profile::database::os_user`.
+#
+# @param [String[1]] install_group
+#    The group to use for Oracle install.
+#    The default is : `oinstall`
+#    To customize this consistently use the hiera key `ora_profile::database::install_group`.
+#
 # @param [String[1]] dbname
 #    The name of the database.
 #    The default is `DB01`
@@ -59,17 +69,33 @@
 #    The `sys` password to use for the database.
 #    The default value is: `Change_on_1nstall`
 #
+# @param [Enum['enabled', 'disabled']] container_database
+#    Database is a container for pluggable databases.
+#    When you want to add pluggable database to this database, specify a value of `enabled`.
+#    The default value is: `disabled`
+#
+# @param [Enum['enabled', 'disabled']] archivelog
+#    The database should be running in archivelog mode.
+#
 # @param [String[1]] init_ora_template
 #    The template to use for the init.
 #    ora parameters.
 #    The default value is: 'ora_profile/init.ora.erb'
+#
+# @param [String[1]] data_file_destination
+#    The location of the datafiles.
+#
+# @param [String[1]] db_recovery_file_dest
+#    The location of the Flash Recovery Area.
+#
+# @param [Hash] ora_database_override
+#    A hash with database settings that will override the default database settings.
 #
 # @param [String[1]] dbdomain
 #    The domain of the database.
 #    The default is `$facts['networking']['domain']`
 #
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::db_definition(
   Ora_Install::Version
             $version,
@@ -100,6 +126,7 @@ class ora_profile::database::db_definition(
   Hash      $ora_database_override,
   String[1] $dbdomain,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   if ( $is_rac ) {
     echo {"Ensure DB definition for RAC database ${dbname} in ${oracle_home}":

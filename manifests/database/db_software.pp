@@ -30,11 +30,6 @@
 #    The default is : `dba`
 #    To customize this consistently use the hiera key `ora_profile::database::dba_group`.
 #
-# @param install_group
-#    The group to use for Oracle install.
-#    The default is : `oinstall`
-#    To customize this consistently use the hiera key `ora_profile::database::install_group`.
-#
 # @param [String[1]] oper_group
 #    The oper group for the database.
 #    The default is : `oper`
@@ -74,7 +69,6 @@
 #    The default value is an empty string.
 #
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::db_software(
   Ora_Install::Version
             $version,
@@ -94,6 +88,7 @@ class ora_profile::database::db_software(
   String[1] $source,
   String[1] $file_name,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure DB software ${version} ${database_type} in ${oracle_home}":
     withpath => false,

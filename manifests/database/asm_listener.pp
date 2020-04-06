@@ -1,6 +1,6 @@
 #++--++
 #
-# ora_profile::db_listener
+# ora_profile::database::asm_listener
 #
 # @summary This class contains the definition of the Oracle listener process.
 # It installs the specified version of the SQL*net software and start's the listener.
@@ -17,12 +17,16 @@
 #    The default is : `/u01/app/oracle`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
-# @param [String[1]] sqlnet_version
+# @param [Ora_install::ShortVersion] sqlnet_version
 #    The SQLnet version to use.
 #    The default is: 12.2
 #
+# @param [String[1]] dbname
+#    The name of the database.
+#    The default is `DB01`
+#    To customize this consistently use the hiera key `ora_profile::database::dbname`.
+#
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::asm_listener(
   Stdlib::Absolutepath
             $oracle_home,
@@ -32,6 +36,7 @@ class ora_profile::database::asm_listener(
             $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,

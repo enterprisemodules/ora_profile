@@ -2,6 +2,8 @@
 #
 # ora_profile::database::em_license
 #
+# @summary This class will deploy the Enterprise Modules license.
+#
 #
 #--++--
 class ora_profile::database::em_license

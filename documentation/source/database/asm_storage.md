@@ -5,9 +5,9 @@ When these customizations aren't enough, you can replace the class with your own
 
 <%- include_attributes [
   :storage_type,
-  :nfs_files,
   :nfs_mountpoint,
   :nfs_export,
   :nfs_server,
+  :disk_devices,
   :scan_exclude,
 ]%>

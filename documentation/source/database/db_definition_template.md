@@ -23,5 +23,6 @@ When these customizations aren't enough, you can replace the class with your own
   :system_password,
   :sys_password,
   :db_conf_type,
-  :cluster_nodes,
+  :log_size,
+  :dbdomain,
 ]%>

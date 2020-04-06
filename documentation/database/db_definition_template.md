@@ -23,26 +23,26 @@ When these customizations aren't enough, you can replace the class with your own
 
 
 
-Attribute Name                                                                           | Short Description                                                   |
----------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-[cluster_nodes](#database::db_definition_template_cluster_nodes)                         | A comma seperated list of nodes in your cluster, for RAC databases. |
-[data_file_destination](#database::db_definition_template_data_file_destination)         | The location where you want to store your database files.           |
-[db_conf_type](#database::db_definition_template_db_conf_type)                           | The type of database that needs to be installed.                    |
-[dbdomain](#database::db_definition_template_dbdomain)                                   | The domain of the database.                                         |
-[dbname](#database::db_definition_template_dbname)                                       | The name of the database.                                           |
-[memory_mgmt_type](#database::db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                          |
-[oracle_base](#database::db_definition_template_oracle_base)                             | The base firectory to use for the Oracle installation.              |
-[oracle_home](#database::db_definition_template_oracle_home)                             | The home firectory to use for the Oracle installation.              |
-[puppet_download_mnt_point](#database::db_definition_template_puppet_download_mnt_point) | Where to get the source of your template from.                      |
-[recovery_area_destination](#database::db_definition_template_recovery_area_destination) | The location where you want to store your flash recovery area.      |
-[sample_schema](#database::db_definition_template_sample_schema)                         | Specify if you want the sample schemas installed in your database.  |
-[storage_type](#database::db_definition_template_storage_type)                           | What type of storage is used for your database.                     |
-[sys_password](#database::db_definition_template_sys_password)                           | The `sys` password to use for the database.                         |
-[system_password](#database::db_definition_template_system_password)                     | The `system` password to use for the database.                      |
+Attribute Name                                                                           | Short Description                                                  |
+---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+[data_file_destination](#database::db_definition_template_data_file_destination)         | The location where you want to store your database files.          |
+[db_conf_type](#database::db_definition_template_db_conf_type)                           | The type of database that needs to be installed.                   |
+[dbdomain](#database::db_definition_template_dbdomain)                                   | The domain of the database.                                        |
+[dbname](#database::db_definition_template_dbname)                                       | The name of the database.                                          |
+[log_size](#database::db_definition_template_log_size)                                   | The log ize to use.                                                |
+[memory_mgmt_type](#database::db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                         |
+[oracle_base](#database::db_definition_template_oracle_base)                             | The base firectory to use for the Oracle installation.             |
+[oracle_home](#database::db_definition_template_oracle_home)                             | The home firectory to use for the Oracle installation.             |
+[puppet_download_mnt_point](#database::db_definition_template_puppet_download_mnt_point) | Where to get the source of your template from.                     |
+[recovery_area_destination](#database::db_definition_template_recovery_area_destination) | The location where you want to store your flash recovery area.     |
+[sample_schema](#database::db_definition_template_sample_schema)                         | Specify if you want the sample schemas installed in your database. |
+[storage_type](#database::db_definition_template_storage_type)                           | What type of storage is used for your database.                    |
+[sys_password](#database::db_definition_template_sys_password)                           | The `sys` password to use for the database.                        |
+[system_password](#database::db_definition_template_system_password)                     | The `system` password to use for the database.                     |
 [template_name](#database::db_definition_template_template_name)                         | The name of the template to use for creating the database
-          |
-[template_type](#database::db_definition_template_template_type)                         | What type of template is used for creating the database.            |
-[version](#database::db_definition_template_version)                                     | The version of Oracle you want to install.                          |
+         |
+[template_type](#database::db_definition_template_template_type)                         | What type of template is used for creating the database.           |
+[version](#database::db_definition_template_version)                                     | The version of Oracle you want to install.                         |
 
 
 
@@ -216,12 +216,12 @@ Type: `Enum['SINGLE','RAC','RACONE']`
 
 [Back to overview of database::db_definition_template](#attributes)
 
-### cluster_nodes<a name='database::db_definition_template_cluster_nodes'>
+### log_size<a name='database::db_definition_template_log_size'>
 
-A comma seperated list of nodes in your cluster, for RAC databases.
+The log ize to use.
 
-The default value is `undef`
-Type: `Optional[String[1]]`
+The default is : `100M`
+Type: `String[1]`
 
 
 [Back to overview of database::db_definition_template](#attributes)

@@ -104,6 +104,10 @@
 # 
 # ```
 #
+# @param [Enum['local', 'asm']] storage
+#    The type of storage used.
+#    The default is `local`
+#
 # @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
 #    The default is : `12.2.0.1`
@@ -129,6 +133,14 @@
 #    The default is : `oinstall`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
+# @param [String[1]] grid_user
+#    The name of the user that owns the Grid Infrastructure installation.
+#    The default value is: `grid`.
+#
+# @param [String[1]] grid_admingroup
+#    The OS group to use for ASM admin.
+#    The default value is: `asmadmin`
+#
 # @param [String[1]] source
 #    The location where the classes can find the software.
 #    You can specify a local directory, a Puppet url or an http url.
@@ -145,13 +157,9 @@
 #    The default is : `/u01/app/oracle/product/#{version}/db_home1`
 #    To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 #
-# @param [String[1]] grid_user
-#    The name of the user that owns the Grid Infrastructure installation.
-#    The default value is: `grid`.
-#
-# @param [String[1]] grid_admingroup
-#    The OS group to use for ASM admin.
-#    The default value is: `asmadmin`
+# @param [Stdlib::Absolutepath] ora_inventory_dir
+#    The directory that contains the oracle inventory.
+#    The default value is: `/oracle_base/oraInventory`
 #
 # @param [Stdlib::Absolutepath] grid_base
 #    The directory to use as grid base.
@@ -160,6 +168,126 @@
 # @param [Stdlib::Absolutepath] grid_home
 #    The oracle home directory to use for the GRID software.
 #    The default value is: `/u01/app/grid/product/12.2.0.1/grid_home1`
+#
+# @param [String[1]] db_control_provider
+#    Which provider should be used for the type db_control.
+#    The default value is: `sqlplus`
+#
+# @param [Stdlib::Absolutepath] download_dir
+#    The directory where the Puppet software puts all downloaded files.
+#    Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
+#    The default value is: `/install`
+#
+# @param [Stdlib::Absolutepath] temp_dir
+#    Directory to use for temporary files.
+#
+# @param [Optional[String]] oracle_user_password
+#    The password for the oracle os user.
+#    Only applicable for Windows systems.
+#
+# @param [Optional[String]] master_node
+#    The first node in RAC.
+#    This  is the node where the other nodes will clone the software installations from.
+#
+# @param [Optional[Array]] cluster_nodes
+#    An array with cluster node names for RAC.
+#    Example:
+#    ```yaml
+#    ora_profile::database::cluster_nodes:
+#    - node1
+#    - node2
+#    ```
+#
+# @param [Optional[String]] em_license
+#    Use this value if you want to skip or use your own class for stage `em_license`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::em_license:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::em_license:  skip
+#    ```
+#
+# @param [Optional[String]] asm_sysctl
+#    Use this value if you want to skip or use your own class for stage `asm_sysctl`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_sysctl:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_sysctl:  skip
+#    ```
+#
+# @param [Optional[String]] asm_limits
+#    Use this value if you want to skip or use your own class for stage `asm_limits`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_limits:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_limits:  skip
+#    ```
+#
+# @param [Optional[String]] authenticated_nodes
+#    Use this value if you want to skip or use your own class for stage `authenticated_nodes`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::authenticated_nodes:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::authenticated_nodes:  skip
+#    ```
+#
+# @param [Optional[String]] asm_groups_and_users
+#    Use this value if you want to skip or use your own class for stage `asm_groups_and_users`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_groups_and_users:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_groups_and_users:  skip
+#    ```
+#
+# @param [Optional[String]] asm_packages
+#    Use this value if you want to skip or use your own class for stage `asm_packages`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_packages:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_packages:  skip
+#    ```
+#
+# @param [Optional[String]] asm_listener
+#    Use this value if you want to skip or use your own class for stage `asm_listener`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_listener:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_listener:  skip
+#    ```
 #
 # @param [Optional[String]] sysctl
 #    Use this value if you want to skip or use your own class for stage `sysctl`.
@@ -226,6 +354,84 @@
 #    ora_profile::database::firewall:  skip
 #    ```
 #
+# @param [Optional[String]] asm_storage
+#    Use this value if you want to skip or use your own class for stage `asm_storage`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_storage:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_storage:  skip
+#    ```
+#
+# @param [Optional[String]] asm_software
+#    Use this value if you want to skip or use your own class for stage `asm_software`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_software:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_software:  skip
+#    ```
+#
+# @param [Optional[String]] asm_patches
+#    Use this value if you want to skip or use your own class for stage `asm_patches`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_patches:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_patches:  skip
+#    ```
+#
+# @param [Optional[String]] asm_setup
+#    Use this value if you want to skip or use your own class for stage `asm_setup`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_setup:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_setup:  skip
+#    ```
+#
+# @param [Optional[String]] asm_init_params
+#    Use this value if you want to skip or use your own class for stage `asm_init_params`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_init_params:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_init_params:  skip
+#    ```
+#
+# @param [Optional[String]] asm_diskgroup
+#    Use this value if you want to skip or use your own class for stage `asm_diskgroup`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_diskgroup:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::asm_diskgroup:  skip
+#    ```
+#
 # @param [Optional[String]] db_software
 #    Use this value if you want to skip or use your own class for stage `db_software`.
 #    ## Use your own class
@@ -276,6 +482,19 @@
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
 #    ora_profile::database::db_listener:  skip
+#    ```
+#
+# @param [Optional[String]] db_init_params
+#    Use this value if you want to skip or use your own class for stage `db_init_params`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::db_init_params:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::db_init_params:  skip
 #    ```
 #
 # @param [Optional[String]] db_services
@@ -343,6 +562,55 @@
 #    ora_profile::database::db_startup:  skip
 #    ```
 #
+# @param [Optional[String]] before_em_license
+#    The name of the class you want to execute directly **before** the `em_license` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_em_license:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_sysctl
+#    The name of the class you want to execute directly **before** the `asm_sysctl` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_sysctl:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_limits
+#    The name of the class you want to execute directly **before** the `asm_limits` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_limits:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_authenticated_nodes
+#    The name of the class you want to execute directly **before** the `authenticated_nodes` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_authenticated_nodes:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_groups_and_users
+#    The name of the class you want to execute directly **before** the `asm_groups_and_users` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_groups_and_users:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_packages
+#    The name of the class you want to execute directly **before** the `asm_packages` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_packages:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_listener
+#    The name of the class you want to execute directly **before** the `asm_listener` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_listener:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] before_sysctl
 #    The name of the class you want to execute directly **before** the `sysctl` class.
 #    You can use hiera to set this value. Here is an example:
@@ -378,6 +646,48 @@
 #    ora_profile::database::before_firewall:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] before_asm_storage
+#    The name of the class you want to execute directly **before** the `asm_storage` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_storage:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_software
+#    The name of the class you want to execute directly **before** the `asm_software` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_software:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_patches
+#    The name of the class you want to execute directly **before** the `asm_patches` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_patches:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_setup
+#    The name of the class you want to execute directly **before** the `asm_setup` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_setup:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_init_params
+#    The name of the class you want to execute directly **before** the `asm_init_params` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_init_params:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_asm_diskgroup
+#    The name of the class you want to execute directly **before** the `asm_diskgroup` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_asm_diskgroup:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] before_db_software
 #    The name of the class you want to execute directly **before** the `db_software` class.
 #    You can use hiera to set this value. Here is an example:
@@ -393,10 +703,10 @@
 #    ```
 #
 # @param [Optional[String]] before_db_definition
-#    The name of the class you want to execute directly **before** the `limits` class.
+#    The name of the class you want to execute directly **before** the `db_definition` class.
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
-#    ora_profile::database::before_limits:  my_module::my_class
+#    ora_profile::database::before_db_definition:  my_module::my_class
 #    ```
 #
 # @param [Optional[String]] before_db_listener
@@ -404,6 +714,13 @@
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
 #    ora_profile::database::before_db_listener:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] before_db_init_params
+#    The name of the class you want to execute directly **before** the `db_init_params` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_db_init_params:  my_module::my_class
 #    ```
 #
 # @param [Optional[String]] before_db_services
@@ -441,6 +758,55 @@
 #    ora_profile::database::before_db_startup:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] after_em_license
+#    The name of the class you want to execute directly **after** the `em_license` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_em_license:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_sysctl
+#    The name of the class you want to execute directly **after** the `asm_sysctl` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_sysctl:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_limits
+#    The name of the class you want to execute directly **after** the `asm_limits` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_limits:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_authenticated_nodes
+#    The name of the class you want to execute directly **after** the `authenticated_nodes` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_authenticated_nodes:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_groups_and_users
+#    The name of the class you want to execute directly **after** the `asm_groups_and_users` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_groups_and_users:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_packages
+#    The name of the class you want to execute directly **after** the `asm_packages` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_packages:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_listener
+#    The name of the class you want to execute directly **after** the `asm_listener` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_listener:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] after_sysctl
 #    The name of the class you want to execute directly **after** the `sysctl` class.
 #    You can use hiera to set this value. Here is an example:
@@ -476,6 +842,48 @@
 #    ora_profile::database::after_firewall:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] after_asm_storage
+#    The name of the class you want to execute directly **after** the `asm_storage` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_storage:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_software
+#    The name of the class you want to execute directly **after** the `asm_software` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_software:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_patches
+#    The name of the class you want to execute directly **after** the `asm_patches` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_patches:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_setup
+#    The name of the class you want to execute directly **after** the `asm_setup` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_setup:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_init_params
+#    The name of the class you want to execute directly **after** the `asm_init_params` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_init_params:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_asm_diskgroup
+#    The name of the class you want to execute directly **after** the `asm_diskgroup` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_asm_diskgroup:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] after_db_software
 #    The name of the class you want to execute directly **after** the `db_software` class.
 #    You can use hiera to set this value. Here is an example:
@@ -502,6 +910,13 @@
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
 #    ora_profile::database::after_db_listener:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_db_init_params
+#    The name of the class you want to execute directly **after** the `db_init_params` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_db_init_params:  my_module::my_class
 #    ```
 #
 # @param [Optional[String]] after_db_services
@@ -538,10 +953,6 @@
 #    ```yaml
 #    ora_profile::database::after_db_startup:  my_module::my_class
 #    ```
-#
-# @param [String[1]] db_control_provider
-#    Which provider should be used for the type db_control.
-#    The default value is: `sqlplus`
 #
 #--++--
 class ora_profile::database(

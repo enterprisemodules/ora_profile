@@ -17,12 +17,26 @@
 #    The default is : `/u01/app/oracle`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
+# @param [String[1]] os_user
+#    The OS user to use for Oracle install.
+#    The default is : `oracle`
+#    To customize this consistently use the hiera key `ora_profile::database::os_user`.
+#
+# @param [String[1]] dba_group
+#    The group to use for Oracle DBA users.
+#    The default is : `dba`
+#    To customize this consistently use the hiera key `ora_profile::database::dba_group`.
+#
 # @param [Ora_install::ShortVersion] sqlnet_version
 #    The SQLnet version to use.
 #    The default is: 12.2
 #
+# @param [String[1]] dbname
+#    The name of the database.
+#    The default is `DB01`
+#    To customize this consistently use the hiera key `ora_profile::database::dbname`.
+#
 #--++--
-# lint:ignore:variable_scope
 class ora_profile::database::db_listener(
   Stdlib::Absolutepath
             $oracle_home,
@@ -34,6 +48,7 @@ class ora_profile::database::db_listener(
             $sqlnet_version,
   String[1] $dbname,
 ) inherits ora_profile::database {
+# lint:ignore:variable_scope
 
   echo {"Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,
