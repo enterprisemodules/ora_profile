@@ -87,6 +87,10 @@
 #    A comma seperated list of nodes in your cluster, for RAC databases.
 #    The default value is `undef`
 #
+# @param [String[1]] dbdomain
+#    The domain of the database.
+#    The default is `$facts['networking']['domain']`
+#
 #--++--
 # lint:ignore:variable_scope
 class ora_profile::database::db_definition_template(
@@ -116,6 +120,7 @@ class ora_profile::database::db_definition_template(
   Enum['SINGLE','RAC','RACONE']
                       $db_conf_type,
   String[1]           $log_size,
+  String[1]           $dbdomain,
   # Optional[String[1]] $cluster_nodes,
 ) inherits ora_profile::database {
 
@@ -154,6 +159,7 @@ class ora_profile::database::db_definition_template(
       system_password           => $system_password,
       db_conf_type              => $db_conf_type,
       cluster_nodes             => $db_cluster_nodes,
+      db_domain                 => $dbdomain,
       before                    => Ora_setting[$db_instance_name],
     }
   } else {
