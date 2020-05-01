@@ -116,7 +116,6 @@ ora_profile::client::packages:   my_profile::my_own_implementation
 ```
 
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
-
 ora_profile::client
 
 In it's core just adding:
@@ -2319,7 +2318,6 @@ ora_profile::asm_software
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
 ora_profile::database::asm_setup
 
 Here you can customize some of the attributes of your database.
@@ -3466,19 +3464,19 @@ ora_profile::database::db_patches
 
 It also contains the definition of the required `Opatch` version.
 
+The class allows you to specify a patch level and optionally include the OJVM pacthes for the level specified.
+A patch_list to specify additional patches is also supported.
+
+Keep in mind that when changing the patch level and/or adding patches will cause the listener and database(s) to be stopped and started.
+
+Applying patches to database software in a RAC environment is only supported on initial run.
+There is no support yet to apply patches on a running system.
+
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
 #### Parameters
 
 The following parameters are available in the `ora_profile::database::db_patches` class.
-
-##### `dbname`
-
-Data type: `String[1]`
-
-The name of the database.
-The default is `DB01`
-To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
 ##### `patch_file`
 
@@ -3534,6 +3532,25 @@ Data type: `Hash`
 
 The list of patches to apply.
 The default value is : `{}`
+
+##### `level`
+
+Data type: `String[1]`
+
+The patch level the database should be patched to.
+Default value is: `NONE`
+Valid values depend on your database version, but it should like like below:
+- `OCT2018RU`
+- `JAN2019RU`
+- `APR2019RU`
+- etc...
+
+##### `include_ojvm`
+
+Data type: `Boolean`
+
+Specify if the OJVM patch for the patch level should also be installed.
+Default value is: `false`
 
 ### ora_profile::database::db_profiles
 
