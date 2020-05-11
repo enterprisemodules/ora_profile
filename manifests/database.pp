@@ -148,12 +148,12 @@
 #    To customize this consistently use the hiera key `ora_profile::database::source`.
 #
 # @param [Stdlib::Absolutepath] oracle_base
-#    The base firectory to use for the Oracle installation.
+#    The base directory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
 # @param [Stdlib::Absolutepath] oracle_home
-#    The home firectory to use for the Oracle installation.
+#    The home directory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle/product/#{version}/db_home1`
 #    To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 #

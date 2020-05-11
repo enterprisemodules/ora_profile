@@ -22,8 +22,8 @@ When these customizations aren't enough, you can replace the class with your own
 Attribute Name                                           | Short Description                                      |
 -------------------------------------------------------- | ------------------------------------------------------ |
 [dbname](#database::asm_listener_dbname)                 | The name of the database.                              |
-[oracle_base](#database::asm_listener_oracle_base)       | The base firectory to use for the Oracle installation. |
-[oracle_home](#database::asm_listener_oracle_home)       | The home firectory to use for the Oracle installation. |
+[oracle_base](#database::asm_listener_oracle_base)       | The base directory to use for the Oracle installation. |
+[oracle_home](#database::asm_listener_oracle_home)       | The home directory to use for the Oracle installation. |
 [sqlnet_version](#database::asm_listener_sqlnet_version) | The SQLnet version to use.                             |
 
 
@@ -31,7 +31,7 @@ Attribute Name                                           | Short Description    
 
 ### oracle_home<a name='database::asm_listener_oracle_home'>
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
@@ -45,7 +45,7 @@ Type: `Stdlib::Absolutepath`
 
 ### oracle_base<a name='database::asm_listener_oracle_base'>
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle`
 

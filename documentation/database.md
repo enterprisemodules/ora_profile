@@ -205,8 +205,8 @@ Attribute Name                                                       | Short Des
 [limits](#database_limits)                                           | Use this value if you want to skip or use your own class for stage `limits`.                    |
 [master_node](#database_master_node)                                 | The first node in RAC.                                                                          |
 [ora_inventory_dir](#database_ora_inventory_dir)                     | The directory that contains the oracle inventory.                                               |
-[oracle_base](#database_oracle_base)                                 | The base firectory to use for the Oracle installation.                                          |
-[oracle_home](#database_oracle_home)                                 | The home firectory to use for the Oracle installation.                                          |
+[oracle_base](#database_oracle_base)                                 | The base directory to use for the Oracle installation.                                          |
+[oracle_home](#database_oracle_home)                                 | The home directory to use for the Oracle installation.                                          |
 [oracle_user_password](#database_oracle_user_password)               | The password for the oracle os user.                                                            |
 [os_user](#database_os_user)                                         | The OS user to use for Oracle install.                                                          |
 [packages](#database_packages)                                       | Use this value if you want to skip or use your own class for stage `packages`.                  |
@@ -332,7 +332,7 @@ Type: `String[1]`
 
 ### oracle_base<a name='database_oracle_base'>
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle`
 
@@ -346,7 +346,7 @@ Type: `Stdlib::Absolutepath`
 
 ### oracle_home<a name='database_oracle_home'>
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 

@@ -454,7 +454,7 @@ The source file to use.
 
 Data type: `Stdlib::Absolutepath`
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
@@ -762,7 +762,7 @@ To customize this consistently use the hiera key `ora_profile::database::source`
 
 Data type: `Stdlib::Absolutepath`
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
@@ -770,7 +770,7 @@ To customize this consistently use the hiera key `ora_profile::database::install
 
 Data type: `Stdlib::Absolutepath`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
@@ -2195,7 +2195,7 @@ The following parameters are available in the `ora_profile::database::asm_listen
 
 Data type: `Stdlib::Absolutepath`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
@@ -2203,7 +2203,7 @@ To customize this consistently use the hiera key `ora_profile::database::oracle_
 
 Data type: `Stdlib::Absolutepath`
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
@@ -3074,7 +3074,7 @@ To customize this consistently use the hiera key `ora_profile::database::version
 
 Data type: `Stdlib::Absolutepath`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
@@ -3082,7 +3082,7 @@ To customize this consistently use the hiera key `ora_profile::database::oracle_
 
 Data type: `Stdlib::Absolutepath`
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
@@ -3242,7 +3242,7 @@ To customize this consistently use the hiera key `ora_profile::database::version
 
 Data type: `Stdlib::Absolutepath`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
@@ -3250,7 +3250,7 @@ To customize this consistently use the hiera key `ora_profile::database::oracle_
 
 Data type: `Stdlib::Absolutepath`
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
@@ -3415,7 +3415,7 @@ The following parameters are available in the `ora_profile::database::db_listene
 
 Data type: `Stdlib::Absolutepath`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
@@ -3423,7 +3423,7 @@ To customize this consistently use the hiera key `ora_profile::database::oracle_
 
 Data type: `Stdlib::Absolutepath`
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
@@ -3467,7 +3467,7 @@ It also contains the definition of the required `Opatch` version.
 The class allows you to specify a patch level and optionally include the OJVM pacthes for the level specified.
 A patch_list to specify additional patches is also supported.
 
-Keep in mind that when changing the patch level and/or adding patches will cause the listener and database(s) to be stopped and started.
+Keep in mind that when changing the patch level and/or adding patches will cause the listener(s) and database(s) to be stopped and started.
 
 Applying patches to database software in a RAC environment is only supported on initial run.
 There is no support yet to apply patches on a running system.
@@ -3489,7 +3489,7 @@ The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
 
 Data type: `Stdlib::Absolutepath`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
@@ -3661,17 +3661,48 @@ To customize this consistently use the hiera key `ora_profile::database::os_user
 
 Data type: `Stdlib::Absolutepath`
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
 ##### `oracle_home`
 
-Data type: `Stdlib::Absolutepath`
+Data type: `Variant[Stdlib::Absolutepath, Hash]`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
-To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
+To customize this consistently use the hiera key `ora_profile::database::oracle_home` for a single ORACLE_HOME.
+This parameter can also be specified as Hash if you need to install multiple ORACLE_HOME's.
+The keys of the hash are just a name.
+For every key all parameters that are valid for ora_install::installdb can be specified.
+For example:
+```yaml
+ora_profile::database::db_software::oracle_home:
+  18cORACLE_HOME1:
+    version:     "%{lookup('ora_profile::database::version')}"
+    file:        "%{lookup('ora_profile::database::db_software::file_name')}"
+    oracle_home: "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1"
+  18cORACLE_HOME2:
+    version:     "%{lookup('ora_profile::database::version')}"
+    file:        "%{lookup('ora_profile::database::db_software::file_name')}"
+    oracle_home: "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home2"
+  12cR1ORACLE_HOME1:
+    version:     12.1.0.2
+    file:        linuxamd64_12102_database
+    oracle_home: /u01/app/oracle/product/12.1.0.2/db_home1
+  12cR1ORACLE_HOME2:
+    version:     12.1.0.2
+    file:        linuxamd64_12102_database
+    oracle_home: /u01/app/oracle/product/12.1.0.2/db_home2
+  12cR1ORACLE_HOME3:
+    version:     12.1.0.2
+    file:        linuxamd64_12102_database
+    oracle_home: /u01/app/oracle/product/12.1.0.2/db_home3
+  12cR2ORACLE_HOME1:
+    version:      12.2.0.1
+    file:         linuxx64_12201_database
+    oracle_home: /u01/app/oracle/product/12.2.0.1/db_home1
+```
 
 ##### `source`
 
@@ -3718,7 +3749,7 @@ The following parameters are available in the `ora_profile::database::db_startup
 
 Data type: `Stdlib::Absolutepath`
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 

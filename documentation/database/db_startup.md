@@ -22,14 +22,14 @@ Attribute Name                                   | Short Description            
 ------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
 [db_type](#database::db_startup_db_type)         | The type of the database used to specify if the database should be started by an init script or srvctl. |
 [dbname](#database::db_startup_dbname)           | The name of the database.                                                                               |
-[oracle_home](#database::db_startup_oracle_home) | The home firectory to use for the Oracle installation.                                                  |
+[oracle_home](#database::db_startup_oracle_home) | The home directory to use for the Oracle installation.                                                  |
 
 
 
 
 ### oracle_home<a name='database::db_startup_oracle_home'>
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
