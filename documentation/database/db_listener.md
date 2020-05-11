@@ -23,8 +23,8 @@ Attribute Name                                          | Short Description     
 ------------------------------------------------------- | ------------------------------------------------------ |
 [dba_group](#database::db_listener_dba_group)           | The group to use for Oracle DBA users.                 |
 [dbname](#database::db_listener_dbname)                 | The name of the database.                              |
-[oracle_base](#database::db_listener_oracle_base)       | The base firectory to use for the Oracle installation. |
-[oracle_home](#database::db_listener_oracle_home)       | The home firectory to use for the Oracle installation. |
+[oracle_base](#database::db_listener_oracle_base)       | The base directory to use for the Oracle installation. |
+[oracle_home](#database::db_listener_oracle_home)       | The home directory to use for the Oracle installation. |
 [os_user](#database::db_listener_os_user)               | The OS user to use for Oracle install.                 |
 [sqlnet_version](#database::db_listener_sqlnet_version) | The SQLnet version to use.                             |
 
@@ -33,7 +33,7 @@ Attribute Name                                          | Short Description     
 
 ### oracle_home<a name='database::db_listener_oracle_home'>
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
@@ -47,7 +47,7 @@ Type: `Stdlib::Absolutepath`
 
 ### oracle_base<a name='database::db_listener_oracle_base'>
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle`
 

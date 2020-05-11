@@ -31,7 +31,7 @@ Attribute Name                                                           | Short
 [install_type](#client::software_install_type)                           | Which type of client software should be installed.                 |
 [logoutput](#client::software_logoutput)                                 | log the outputs of Puppet exec or not.                             |
 [ora_inventory_dir](#client::software_ora_inventory_dir)                 | The directory that contains the oracle inventory.                  |
-[oracle_base](#client::software_oracle_base)                             | The base firectory to use for the Oracle installation.             |
+[oracle_base](#client::software_oracle_base)                             | The base directory to use for the Oracle installation.             |
 [oracle_home](#client::software_oracle_home)                             | A directory to be used as Oracle home directory for this software. |
 [puppet_download_mnt_point](#client::software_puppet_download_mnt_point) | The base path of all remote files for the defined type or class.   |
 [temp_dir](#client::software_temp_dir)                                   | Directory to use for temporary files.                              |
@@ -64,7 +64,7 @@ Type: `String[1]`
 
 ### oracle_base<a name='client::software_oracle_base'>
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle`
 

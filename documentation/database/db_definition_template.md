@@ -31,8 +31,8 @@ Attribute Name                                                                  
 [dbname](#database::db_definition_template_dbname)                                       | The name of the database.                                          |
 [log_size](#database::db_definition_template_log_size)                                   | The log ize to use.                                                |
 [memory_mgmt_type](#database::db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                         |
-[oracle_base](#database::db_definition_template_oracle_base)                             | The base firectory to use for the Oracle installation.             |
-[oracle_home](#database::db_definition_template_oracle_home)                             | The home firectory to use for the Oracle installation.             |
+[oracle_base](#database::db_definition_template_oracle_base)                             | The base directory to use for the Oracle installation.             |
+[oracle_home](#database::db_definition_template_oracle_home)                             | The home directory to use for the Oracle installation.             |
 [puppet_download_mnt_point](#database::db_definition_template_puppet_download_mnt_point) | Where to get the source of your template from.                     |
 [recovery_area_destination](#database::db_definition_template_recovery_area_destination) | The location where you want to store your flash recovery area.     |
 [sample_schema](#database::db_definition_template_sample_schema)                         | Specify if you want the sample schemas installed in your database. |
@@ -62,7 +62,7 @@ Type: `Ora_Install::Version`
 
 ### oracle_home<a name='database::db_definition_template_oracle_home'>
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
@@ -76,7 +76,7 @@ Type: `Stdlib::Absolutepath`
 
 ### oracle_base<a name='database::db_definition_template_oracle_base'>
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle`
 

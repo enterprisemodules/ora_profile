@@ -12,7 +12,7 @@ This class contains the definition for the Oracle patches. It also contains the 
 The class allows you to specify a patch level and optionally include the OJVM pacthes for the level specified.
 A patch_list to specify additional patches is also supported.
 
-Keep in mind that when changing the patch level and/or adding patches will cause the listener and database(s) to be stopped and started.
+Keep in mind that when changing the patch level and/or adding patches will cause the listener(s) and database(s) to be stopped and started.
 
 Applying patches to database software in a RAC environment is only supported on initial run.
 There is no support yet to apply patches on a running system.
@@ -33,7 +33,7 @@ Attribute Name                                       | Short Description        
 [install_group](#database::db_patches_install_group) | The group to use for Oracle install.                                    |
 [level](#database::db_patches_level)                 | The patch level the database should be patched to.                      |
 [opversion](#database::db_patches_opversion)         | The version of OPatch that is needed.                                   |
-[oracle_home](#database::db_patches_oracle_home)     | The home firectory to use for the Oracle installation.                  |
+[oracle_home](#database::db_patches_oracle_home)     | The home directory to use for the Oracle installation.                  |
 [os_user](#database::db_patches_os_user)             | The OS user to use for Oracle install.                                  |
 [patch_file](#database::db_patches_patch_file)       | The file containing the required Opatch version.                        |
 [patch_list](#database::db_patches_patch_list)       | The list of patches to apply.                                           |
@@ -54,7 +54,7 @@ Type: `String[1]`
 
 ### oracle_home<a name='database::db_patches_oracle_home'>
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 

@@ -8,7 +8,7 @@
 # The class allows you to specify a patch level and optionally include the OJVM pacthes for the level specified.
 # A patch_list to specify additional patches is also supported.
 # 
-# Keep in mind that when changing the patch level and/or adding patches will cause the listener and database(s) to be stopped and started.
+# Keep in mind that when changing the patch level and/or adding patches will cause the listener(s) and database(s) to be stopped and started.
 # 
 # Applying patches to database software in a RAC environment is only supported on initial run.
 # There is no support yet to apply patches on a running system.
@@ -20,7 +20,7 @@
 #    The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
 #
 # @param [Stdlib::Absolutepath] oracle_home
-#    The home firectory to use for the Oracle installation.
+#    The home directory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle/product/#{version}/db_home1`
 #    To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 #

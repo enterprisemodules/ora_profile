@@ -30,8 +30,8 @@ Attribute Name                                                                  
 [install_group](#database::db_definition_install_group)                         | The group to use for Oracle install.                                            |
 [log_size](#database::db_definition_log_size)                                   | The log ize to use.                                                             |
 [ora_database_override](#database::db_definition_ora_database_override)         | A hash with database settings that will override the default database settings. |
-[oracle_base](#database::db_definition_oracle_base)                             | The base firectory to use for the Oracle installation.                          |
-[oracle_home](#database::db_definition_oracle_home)                             | The home firectory to use for the Oracle installation.                          |
+[oracle_base](#database::db_definition_oracle_base)                             | The base directory to use for the Oracle installation.                          |
+[oracle_home](#database::db_definition_oracle_home)                             | The home directory to use for the Oracle installation.                          |
 [os_user](#database::db_definition_os_user)                                     | The OS user to use for Oracle install.                                          |
 [sys_password](#database::db_definition_sys_password)                           | The `sys` password to use for the database.                                     |
 [sysaux_tablespace_size](#database::db_definition_sysaux_tablespace_size)       | The size for the `SYSAUX` tablespace.                                           |
@@ -60,7 +60,7 @@ Type: `Ora_Install::Version`
 
 ### oracle_home<a name='database::db_definition_oracle_home'>
 
-The home firectory to use for the Oracle installation.
+The home directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 
@@ -74,7 +74,7 @@ Type: `Stdlib::Absolutepath`
 
 ### oracle_base<a name='database::db_definition_oracle_base'>
 
-The base firectory to use for the Oracle installation.
+The base directory to use for the Oracle installation.
 
 The default is : `/u01/app/oracle`
 

@@ -40,14 +40,45 @@
 #    To customize this consistently use the hiera key `ora_profile::database::os_user`.
 #
 # @param [Stdlib::Absolutepath] oracle_base
-#    The base firectory to use for the Oracle installation.
+#    The base directory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
-# @param [Stdlib::Absolutepath] oracle_home
-#    The home firectory to use for the Oracle installation.
+# @param [Variant[Stdlib::Absolutepath, Hash]] oracle_home
+#    The home directory to use for the Oracle installation.
 #    The default is : `/u01/app/oracle/product/#{version}/db_home1`
-#    To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
+#    To customize this consistently use the hiera key `ora_profile::database::oracle_home` for a single ORACLE_HOME.
+#    This parameter can also be specified as Hash if you need to install multiple ORACLE_HOME's.
+#    The keys of the hash are just a name.
+#    For every key all parameters that are valid for ora_install::installdb can be specified.
+#    For example:
+#    ```yaml
+#    ora_profile::database::db_software::oracle_home:
+#      18cORACLE_HOME1:
+#        version:     "%{lookup('ora_profile::database::version')}"
+#        file:        "%{lookup('ora_profile::database::db_software::file_name')}"
+#        oracle_home: "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1"
+#      18cORACLE_HOME2:
+#        version:     "%{lookup('ora_profile::database::version')}"
+#        file:        "%{lookup('ora_profile::database::db_software::file_name')}"
+#        oracle_home: "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home2"
+#      12cR1ORACLE_HOME1:
+#        version:     12.1.0.2
+#        file:        linuxamd64_12102_database
+#        oracle_home: /u01/app/oracle/product/12.1.0.2/db_home1
+#      12cR1ORACLE_HOME2:
+#        version:     12.1.0.2
+#        file:        linuxamd64_12102_database
+#        oracle_home: /u01/app/oracle/product/12.1.0.2/db_home2
+#      12cR1ORACLE_HOME3:
+#        version:     12.1.0.2
+#        file:        linuxamd64_12102_database
+#        oracle_home: /u01/app/oracle/product/12.1.0.2/db_home3
+#      12cR2ORACLE_HOME1:
+#        version:      12.2.0.1
+#        file:         linuxx64_12201_database
+#        oracle_home: /u01/app/oracle/product/12.2.0.1/db_home1
+#    ```
 #
 # @param [String[1]] source
 #    The location where the classes can find the software.
@@ -83,16 +114,12 @@ class ora_profile::database::db_software(
   String    $bash_additions,
   Stdlib::Absolutepath
             $oracle_base,
-  Stdlib::Absolutepath
+  Variant[Stdlib::Absolutepath, Hash]
             $oracle_home,
   String[1] $source,
   String[1] $file_name,
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
-
-  echo {"Ensure DB software ${version} ${database_type} in ${oracle_home}":
-    withpath => false,
-  }
 
   #
   # On non-windows systems , ensure the unzip package is installed
@@ -138,12 +165,12 @@ class ora_profile::database::db_software(
     } else {
       $installdb_cluster_nodes = undef
     }
-    ora_install::installdb{$file_name:
+
+    $oracle_home_defaults = {
       version                   => $version,
       file                      => $file_name,
       database_type             => $database_type,
       oracle_base               => $oracle_base,
-      oracle_home               => $oracle_home,
       puppet_download_mnt_point => $source,
       bash_profile              => $bash_profile,
       bash_additions            => $bash_additions,
@@ -162,8 +189,36 @@ class ora_profile::database::db_software(
         Package['unzip'],
       ],
     }
+    if ( $oracle_home =~ String ) {
+      $install_homes = {
+        $oracle_home => deep_merge($oracle_home_defaults, {oracle_home => $oracle_home})
+      }
+    } else {
+      if ( $is_rac ) {
+        fail 'Multiple ORACLE_HOME\'s is not supported in a RAC environment yet'
+      } else {
+        $install_homes = $oracle_home
+      }
+    }
+
+    $install_homes.each |$_home, $home_props = {}| {
+      $oracle_home_props = deep_merge($oracle_home_defaults, $home_props)
+
+      echo {"Ensure DB software ${oracle_home_props['version']} ${oracle_home_props['database_type']} in ${oracle_home_props['oracle_home']}":
+        withpath => false,
+      }
+
+      ora_install::installdb { $oracle_home_props['oracle_home']:
+        * => $oracle_home_props,
+      }
+    }
+
 
   } else {
+
+    if ( $oracle_home =~ Hash ) {
+      fail 'Multiple ORACLE_HOME\'s is not supported in a RAC environment yet'
+    }
 
     unless $oracle_home in $facts['ora_install_homes'].keys {
       echo {"This is not the master node. Clone ORACLE_HOME from ${master_node}":
