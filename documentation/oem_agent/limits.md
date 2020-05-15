@@ -1,0 +1,42 @@
+---
+title: oem agent::limits
+keywords: documentation
+layout: documentation
+sidebar: ora_profile_sidebar
+toc: false
+---
+## Overview
+
+This class contains the definition all the required OS limit settings for OEM Agent on your system.
+
+
+
+
+## Attributes
+
+
+
+Attribute Name                  | Short Description                 |
+------------------------------- | --------------------------------- |
+[list](#oem_agent::limits_list) | The OS limits created for Oracle. |
+
+
+
+
+### list<a name='oem_agent::limits_list'>
+
+The OS limits created for Oracle.
+
+The defaults are:
+
+```yaml
+ora_profile::oem_agent::limits::list:
+  '*/nproc':
+    soft: 4096
+    hard: 16384
+```
+
+Type: `Hash`
+
+
+[Back to overview of oem_agent::limits](#attributes)

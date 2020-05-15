@@ -14,7 +14,7 @@
 # In it's core just adding:
 # 
 # ```
-# contain ora_profile::database
+# contain ::ora_profile::database
 # ```
 # 
 # Is enough to get an Oracle 12.2 database running on your system. 

@@ -1,7 +1,7 @@
 This is a highly customizable Puppet profile class to define an Oracle database on your system. In it's core just adding:
 
 ```
-contain ora_profile::database
+contain ::ora_profile::database
 ```
 
 Is enough to get an Oracle 12.2 database running on your system. 

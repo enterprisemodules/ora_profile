@@ -19,9 +19,10 @@
 class ora_profile::database::firewall(
   Hash    $ports,
   Boolean $manage_service,
-) inherits ora_profile::database {
+) {
 
-  if $ora_profile::database::cluster_nodes {
+  $cluster_nodes = lookup('ora_profile::database::cluster_nodes')
+  if $cluster_nodes {
     echo {'Ensure Firewall is disabled for RAC installation':
       withpath => false,
     }
@@ -38,12 +39,14 @@ class ora_profile::database::firewall(
           class {'ora_profile::database::firewall::iptables':
             ports          => $ports,
             manage_service => $manage_service,
+            cluster_nodes  => $cluster_nodes,
           }
         }
         '7', '8': {
           class {'ora_profile::database::firewall::firewalld':
             ports          => $ports,
             manage_service => $manage_service,
+            cluster_nodes  => $cluster_nodes,
           }
         }
         default: { fail 'unsupported OS version when checking firewall service'}
