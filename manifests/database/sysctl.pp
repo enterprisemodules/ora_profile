@@ -43,7 +43,7 @@
 #--++--
 class ora_profile::database::sysctl(
   Hash $list,
-) inherits ora_profile::database {
+) {
 
   if $list.keys.size > 0 {
     echo {"Ensure Sysctl param(s) ${list.keys.join(',')}":

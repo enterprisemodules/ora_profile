@@ -9,4 +9,5 @@ Here is an example:
 <%- include_attributes [
   :ports,
   :manage_service,
+  :cluster_nodes
 ]%>

@@ -27,7 +27,7 @@
 #--++--
 class ora_profile::database::limits(
   Hash $list,
-) inherits ora_profile::database {
+) {
 
   if $list.keys.size > 0 {
     echo {"Ensure Limit(s) ${list.keys.join(',')}":

@@ -46,7 +46,7 @@ class ora_profile::database::packages(
 
   if $list.size > 0 {
     $packages = $list.keys
-    echo {"Ensure Packages(s) ${packages.join(',')}":
+    echo {"Ensure DB Packages(s) ${packages.join(',')}":
       withpath => false,
     }
   }

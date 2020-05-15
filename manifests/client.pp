@@ -72,7 +72,7 @@
 # 
 # ## Stages
 # 
-# Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
+# Defining an Oracle client on you system goes through several stages(These are not puppet stages):
 # 
 # - `packages`         (Install all required packages)
 # - `groups_and_users` (Create required groups and users)
@@ -82,10 +82,10 @@
 # 
 # ## before classes
 # 
-# But sometimes this is not enough and you would like to add some extra definitions, you can, for example, add a Puppet class to be executed after the `systctl` stage is done and before the `limits` is done. You can do this by adding the next line to your yaml data:
+# But sometimes this is not enough and you would like to add some extra definitions, you can, for example, add a Puppet class to be executed after the `packages` stage is done and before the `groups_and_users` is started. You can do this by adding the next line to your yaml data:
 # 
 # ```yaml
-# ora_profile::client::before_packages:   my_profile::my_extra_class
+# ora_profile::client::before_groups_and_users:   my_profile::my_extra_class
 # ```
 # 
 # ## after classes
@@ -116,7 +116,7 @@
 # 
 # Here is an example:
 # ```puppet
-# contain ora_profile::client
+# contain ::ora_profile::client
 # ```
 #
 # @param [Optional[String]] before_em_license

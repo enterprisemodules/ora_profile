@@ -17,14 +17,24 @@
 #    Using this setting you can specify if you want this module to manage the firewall service.
 #    The default value is `true` and will make sure the firewall service is started and enabled.
 #
+# @param [Optional[Array]] cluster_nodes
+#    An array with cluster node names for RAC.
+#    Example:
+#    ```yaml
+#    ora_profile::database::cluster_nodes:
+#    - node1
+#    - node2
+#    ```
+#
 #--++--
 class ora_profile::database::firewall::iptables(
-  Hash    $ports,
-  Boolean $manage_service,
+  Hash            $ports,
+  Boolean         $manage_service,
+  Optional[Array] $cluster_nodes,
 ) {
 
   # Oracle recommends to disable firewalld for RAC installations
-  if $ora_profile::database::cluster_nodes {
+  if $cluster_nodes {
     service { 'iptables':
       ensure => stopped,
       enable => false,

@@ -77,7 +77,7 @@ class ora_profile::client::packages(
 
   if $list.size > 0 {
     $packages = $list.keys
-    echo {"Ensure Packages(s) ${packages.join(',')}":
+    echo {"Ensure Client Packages(s) ${packages.join(',')}":
       withpath => false,
     }
   }

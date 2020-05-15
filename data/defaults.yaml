@@ -36,6 +36,16 @@ lookup_options:
     convert_to: 'Sensitive'
   '^ora_profile::.*::asm_sys_password':
     convert_to: 'Sensitive'
+  '^ora_profile::.*::weblogic_password':
+    convert_to: 'Sensitive'
+  '^ora_profile::.*::sysman_password':
+    convert_to: 'Sensitive'
+  '^ora_profile::.*::agent_registration_password':
+    convert_to: 'Sensitive'
+  '^ora_profile::.*::database_sys_password':
+    convert_to: 'Sensitive'
+
+
 # ------------------------------------------------------------------------------
 #
 # Settings for database::sysctl
@@ -241,9 +251,9 @@ ora_profile::database::rac::authenticated_nodes::keys:                         ~
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_packages::list:
   nfs-utils.x86_64: {}
-  net-tools.x86_64: {}
-  smartmontools.x86_64: {}
-  python.x86_64: {}
+  net-tools: {}
+  smartmontools: {}
+  python: {}
   python-configshell: {}
   python-rtslib: {}
   python-six: {}
@@ -811,25 +821,29 @@ ora_profile::database::cis_rules::ignore:
   - r_2_1_3
   - r_2_1_4
 ora_profile::database::cis_rules::dbname:                                 "%{::ora_profile::database::dbname}"
+
+
+# ------------------------------------------------------------------------------
 #
 # Client installation
 #
-ora_profile::client::software::oracle_base:                 "%{lookup('ora_profile::database::oracle_base')}"
-ora_profile::client::software::oracle_home:                 "%{lookup('ora_profile::client::software::oracle_base')}/%{lookup('ora_profile::client::software::version')}/db_home1"
-ora_profile::client::software::db_port:                     1521
-ora_profile::client::software::user:                        "%{lookup('ora_profile::database::os_user')}"
-ora_profile::client::software::user_base_dir:               "/home"
-ora_profile::client::software::group:                       "%{lookup('ora_profile::database::dba_group')}"
-ora_profile::client::software::group_install:               "%{lookup('ora_profile::database::install_group')}"
-ora_profile::client::software::download_dir:                "%{lookup('ora_profile::database::download_dir')}"
-ora_profile::client::software::temp_dir:                    "%{lookup('ora_profile::database::temp_dir')}"
-ora_profile::client::software::install_type:                Administrator
-ora_profile::client::software::install_options:             []
-ora_profile::client::software::bash_profile:                true
-ora_profile::client::software::ora_inventory_dir:           "%{lookup('ora_profile::database::ora_inventory_dir')}"
-ora_profile::client::software::allow_insecure:              false
-ora_profile::client::software::logoutput:                   on_failure
-ora_profile::client::software::puppet_download_mnt_point:   ~
+# ------------------------------------------------------------------------------
+ora_profile::client::software::oracle_base:                               "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::client::software::oracle_home:                               "%{lookup('ora_profile::client::software::oracle_base')}/%{lookup('ora_profile::client::software::version')}/db_home1"
+ora_profile::client::software::db_port:                                   1521
+ora_profile::client::software::user:                                      "%{lookup('ora_profile::database::os_user')}"
+ora_profile::client::software::user_base_dir:                             "/home"
+ora_profile::client::software::group:                                     "%{lookup('ora_profile::database::dba_group')}"
+ora_profile::client::software::group_install:                             "%{lookup('ora_profile::database::install_group')}"
+ora_profile::client::software::download_dir:                              "%{lookup('ora_profile::database::download_dir')}"
+ora_profile::client::software::temp_dir:                                  "%{lookup('ora_profile::database::temp_dir')}"
+ora_profile::client::software::install_type:                              Administrator
+ora_profile::client::software::install_options:                           []
+ora_profile::client::software::bash_profile:                              true
+ora_profile::client::software::ora_inventory_dir:                         "%{lookup('ora_profile::database::ora_inventory_dir')}"
+ora_profile::client::software::allow_insecure:                            false
+ora_profile::client::software::logoutput:                                 on_failure
+ora_profile::client::software::puppet_download_mnt_point:                 ~
 ora_profile::client::packages::list:
   psmisc:
     ensure: present
@@ -839,39 +853,29 @@ ora_profile::client::packages::list:
     ensure: present
   compat-libcap1.x86_64:
     ensure: present
-    ensure: present
   compat-libstdc++-33.x86_64:
     ensure: present
   gcc.x86_64:
     ensure: present
   gcc-c++.x86_64:
     ensure: present
-    ensure: present
   glibc.x86_64:
-    ensure: present
     ensure: present
   glibc-devel.x86_64:
     ensure: present
   ksh:
     ensure: present
-    ensure: present
   libaio.x86_64:
-    ensure: present
     ensure: present
   libaio-devel.x86_64:
     ensure: present
-    ensure: present
   libgcc.x86_64:
-    ensure: present
     ensure: present
   libstdc++.x86_64:
     ensure: present
-    ensure: present
   libstdc++-devel.x86_64:
     ensure: present
-    ensure: present
   libXi.x86_64:
-    ensure: present
     ensure: present
   libXtst.x86_64:
     ensure: present
@@ -879,3 +883,127 @@ ora_profile::client::packages::list:
     ensure: present
   sysstat.x86_64:
     ensure: present
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for oem_server
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_server::standalone:                                      false
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for oem_server::limits
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_server::limits::list:
+  '*/nproc':
+    soft: 4098
+    hard: 8192
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for oem_server::packages
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_server::packages::list:
+  gcc: {}
+  gcc-c++: {}
+  dejavu-serif-fonts: {}
+  numactl: {}
+  numactl-devel: {}
+  motif: {}
+  motif-devel: {}
+  redhat-lsb: {}
+  redhat-lsb-core: {}
+  openssl: {}
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for oem_server::software
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_server::software::version:                               '13.3.0.0'
+ora_profile::oem_server::software::file:                                  'em13300_linux64'
+ora_profile::oem_server::software::oracle_base_dir:                       '/u01/app/oracle'
+ora_profile::oem_server::software::oracle_home_dir:                       "%{hiera('ora_profile::oem_server::software::oracle_base_dir')}/product/%{hiera('ora_profile::oem_server::software::version')}/em_home1"
+ora_profile::oem_server::software::agent_base_dir:                        "%{hiera('ora_profile::oem_server::software::oracle_base_dir')}/agent"
+ora_profile::oem_server::software::software_library_dir:                  "%{hiera('ora_profile::oem_server::software::oracle_base_dir')}/swlib"
+ora_profile::oem_server::software::ora_inventory_dir:                     "%{hiera('ora_profile::database::ora_inventory_dir')}"
+ora_profile::oem_server::software::weblogic_user:                         oracle
+# ora_profile::oem_server::software::weblogic_password:                     Evd6dYANlLk
+ora_profile::oem_server::software::database_hostname:                     '%{::fqdn}'
+ora_profile::oem_server::software::database_listener_port:                1521
+ora_profile::oem_server::software::database_service_sid_name:             "%{hiera('ora_profile::database::dbname')}.%{facts.networking.domain}"
+ora_profile::oem_server::software::database_sys_password:                 "%{alias('ora_profile::database::db_definition_template::sys_password')}"
+# ora_profile::oem_server::software::sysman_password:                       Evd6#dYANlLk
+# ora_profile::oem_server::software::agent_registration_password:           Evd6#dYANlLk
+ora_profile::oem_server::software::deployment_size:                       SMALL
+ora_profile::oem_server::software::user:                                  oracle
+ora_profile::oem_server::software::group:                                 oinstall
+ora_profile::oem_server::software::download_dir:                          "%{hiera('ora_profile::database::download_dir')}"
+ora_profile::oem_server::software::temp_dir:                              "%{hiera('ora_profile::database::temp_dir')}"
+ora_profile::oem_server::software::zip_extract:                           true
+ora_profile::oem_server::software::puppet_download_mnt_point:             "%{hiera('ora_profile::database::source')}"
+ora_profile::oem_server::software::logoutput:                             on_failure
+ora_profile::oem_server::software::swonly:                                false
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for oem_agent
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_agent::standalone:                                       false
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for oem_agent::limits
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_agent::limits::list:
+  '*/nofile':
+    soft: 4096
+    hard: 16384
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for oem_agent::packages
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_agent::packages::list:
+  make: {}
+  binutils: {}
+  gcc: {}
+  libaio: {}
+  glibc-common: {}
+  libstdc++: {}
+  sysstat: {}
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for oem_agent::software
+#
+# ------------------------------------------------------------------------------
+ora_profile::oem_agent::software::version:                                '13.3.0.0'
+ora_profile::oem_agent::software::install_version:                        '13.3.0.0.0'
+ora_profile::oem_agent::software::oms_host:                               ~
+ora_profile::oem_agent::software::oms_port:                               7799
+ora_profile::oem_agent::software::em_upload_port:                         1159
+ora_profile::oem_agent::software::sysman_user:                            sysman
+ora_profile::oem_agent::software::sysman_password:                        ~
+ora_profile::oem_agent::software::agent_registration_password:            ~
+ora_profile::oem_agent::software::agent_base_dir:                         /u01/app/agent
+ora_profile::oem_agent::software::oracle_base:                            /u01/app/oracle
+ora_profile::oem_agent::software::ora_inventory_dir:                      /u01/app
+ora_profile::oem_agent::software::os_user:                                oracle
+ora_profile::oem_agent::software::install_group:                          oinstall
+ora_profile::oem_agent::software::download_dir:                           /install
+
