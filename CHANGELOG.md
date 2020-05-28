@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.18.0
+
+**New Features**
+
+- [db_software] Enable installation of multiple ORACLE_HOME's
+- [db_patches] Add patch levels
+- [db_definition_template] Expose dbdomain and add docs
+- [db_definition]DB domain is now configurable and diagnostic_dest uses always value from oracle_base parameter
+
+**Bug fixes**
+
+- [data] Add the X11 packages
+- [documentation] Update docs and add REFERENCE.md
+- [defaults] Removed db_init_params
+- [asm_patches] Fix usecase where PSU has only one sub patch with same number
+- [asm_storage] Fix for udev rules when more then 26 disk devices are present
+- [asm_software] Use gridSetup.sh for version 18 and 19
+- [db_definition] Fix default value for dbdomain
+
 ## Release 0.17.2
 
 - [asm_groups_and_users] Allow standalone usage
