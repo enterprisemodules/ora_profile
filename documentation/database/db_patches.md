@@ -38,6 +38,7 @@ Attribute Name                                       | Short Description        
 [os_user](#database::db_patches_os_user)             | The OS user to use for Oracle install.                                  |
 [patch_file](#database::db_patches_patch_file)       | The file containing the required Opatch version.                        |
 [patch_list](#database::db_patches_patch_list)       | The list of patches to apply.                                           |
+[patch_window](#database::db_patches_patch_window)   | The patch window in which you want to do the patching.                  |
 [source](#database::db_patches_source)               | The location where the classes can find the software.                   |
 
 
@@ -142,6 +143,19 @@ Valid values depend on your database version, but it should like like below:
 - `JAN2019RU`
 - `APR2019RU`
 - etc...
+Type: `String[1]`
+
+
+[Back to overview of database::db_patches](#attributes)
+
+### patch_window<a name='database::db_patches_patch_window'>
+
+The patch window in which you want to do the patching. Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
+
+an example on how to use this is:
+
+        patch_window => '2:00 - 4:00'
+
 Type: `String[1]`
 
 

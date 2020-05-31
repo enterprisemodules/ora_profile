@@ -58,6 +58,12 @@
 #    - `APR2019RU`
 #    - etc...
 #
+# @param [String[1]] patch_window
+#    The patch window in which you want to do the patching.
+#    Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
+#    an example on how to use this is:
+#            patch_window => '2:00 - 4:00'
+#
 # @param [Variant[Boolean, Enum['on_failure']]] logoutput
 #    log the outputs of Puppet exec or not.
 #    When you specify `true` Puppet will log all output of `exec` types.
@@ -82,6 +88,7 @@ class ora_profile::database::db_patches(
   String[1] $os_user,
   String[1] $source,
   Hash      $patch_list,
+  String[1] $patch_window,
   Variant[Boolean,Enum['on_failure']]
             $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
 ) inherits ora_profile::database {
@@ -150,8 +157,6 @@ class ora_profile::database::db_patches(
       withpath => false,
     }
   }
-
-  $patch_window = lookup('profile::db_patches::patch_window', String, 'first', '0:00 - 23:59')
 
   schedule {'patchschedule':
     range  => $patch_window,
