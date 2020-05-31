@@ -91,6 +91,14 @@
 #    The domain of the database.
 #    The default is `$facts['networking']['domain']`
 #
+# @param [Variant[Boolean, Enum['on_failure']]] logoutput
+#    log the outputs of Puppet exec or not.
+#    When you specify `true` Puppet will log all output of `exec` types.
+#    Valid values are:
+#    - `true`
+#    - `false`
+#    - `on_failure`
+#
 #--++--
 class ora_profile::database::db_definition_template(
   Ora_Install::Version
@@ -120,6 +128,8 @@ class ora_profile::database::db_definition_template(
                       $db_conf_type,
   String[1]           $log_size,
   String[1]           $dbdomain,
+  Variant[Boolean,Enum['on_failure']]
+                      $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
@@ -167,7 +177,7 @@ class ora_profile::database::db_definition_template(
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oracle_home}"],
       command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${::hostname}",
       unless      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name}",
-      logoutput   => on_failure,
+      logoutput   => $logoutput,
     }
 
     -> exec{'start_instance':
@@ -175,7 +185,7 @@ class ora_profile::database::db_definition_template(
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
       command     => "${oracle_home}/bin/srvctl start instance -d ${dbname} -i ${db_instance_name}",
       onlyif      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name} | grep not",
-      logoutput   => on_failure,
+      logoutput   => $logoutput,
     }
   }
 

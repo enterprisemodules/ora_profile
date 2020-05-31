@@ -24,4 +24,5 @@ When these customizations aren't enough, you can replace the class with your own
   :db_recovery_file_dest,
   :ora_database_override,
   :dbdomain,
+  :logoutput,
 ]%>

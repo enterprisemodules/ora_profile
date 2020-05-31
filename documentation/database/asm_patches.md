@@ -22,6 +22,7 @@ When these customizations aren't enough, you can replace the class with your own
 Attribute Name                                  | Short Description                                         |
 ----------------------------------------------- | --------------------------------------------------------- |
 [grid_home](#database::asm_patches_grid_home)   | The ORACLE_HOME for the Grid Infrastructure installation. |
+[logoutput](#database::asm_patches_logoutput)   | log the outputs of Puppet exec or not.                    |
 [opversion](#database::asm_patches_opversion)   | The version of OPatch that is needed.                     |
 [patch_file](#database::asm_patches_patch_file) | The file containing the required Opatch version.          |
 [patch_list](#database::asm_patches_patch_list) | The list of patches to apply.                             |
@@ -71,5 +72,23 @@ The default value is : `{}`
 
 Type: `Hash`
 
+
+[Back to overview of database::asm_patches](#attributes)
+
+### logoutput<a name='database::asm_patches_logoutput'>
+
+log the outputs of Puppet exec or not.
+
+When you specify `true` Puppet will log all output of `exec` types.
+
+Valid values are:
+
+- `true`
+- `false`
+- `on_failure`
+
+Type: `Variant[Boolean,Enum['on_failure']]`
+
+Default:`lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 [Back to overview of database::asm_patches](#attributes)

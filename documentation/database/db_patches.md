@@ -32,6 +32,7 @@ Attribute Name                                       | Short Description        
 [include_ojvm](#database::db_patches_include_ojvm)   | Specify if the OJVM patch for the patch level should also be installed. |
 [install_group](#database::db_patches_install_group) | The group to use for Oracle install.                                    |
 [level](#database::db_patches_level)                 | The patch level the database should be patched to.                      |
+[logoutput](#database::db_patches_logoutput)         | log the outputs of Puppet exec or not.                                  |
 [opversion](#database::db_patches_opversion)         | The version of OPatch that is needed.                                   |
 [oracle_home](#database::db_patches_oracle_home)     | The home directory to use for the Oracle installation.                  |
 [os_user](#database::db_patches_os_user)             | The OS user to use for Oracle install.                                  |
@@ -143,6 +144,24 @@ Valid values depend on your database version, but it should like like below:
 - etc...
 Type: `String[1]`
 
+
+[Back to overview of database::db_patches](#attributes)
+
+### logoutput<a name='database::db_patches_logoutput'>
+
+log the outputs of Puppet exec or not.
+
+When you specify `true` Puppet will log all output of `exec` types.
+
+Valid values are:
+
+- `true`
+- `false`
+- `on_failure`
+
+Type: `Variant[Boolean,Enum['on_failure']]`
+
+Default:`lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 [Back to overview of database::db_patches](#attributes)
 

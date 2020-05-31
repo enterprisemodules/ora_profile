@@ -30,6 +30,7 @@ Attribute Name                                                                  
 [dbdomain](#database::db_definition_template_dbdomain)                                   | The domain of the database.                                        |
 [dbname](#database::db_definition_template_dbname)                                       | The name of the database.                                          |
 [log_size](#database::db_definition_template_log_size)                                   | The log ize to use.                                                |
+[logoutput](#database::db_definition_template_logoutput)                                 | log the outputs of Puppet exec or not.                             |
 [memory_mgmt_type](#database::db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                         |
 [oracle_base](#database::db_definition_template_oracle_base)                             | The base directory to use for the Oracle installation.             |
 [oracle_home](#database::db_definition_template_oracle_home)                             | The home directory to use for the Oracle installation.             |
@@ -234,5 +235,23 @@ The default is `$facts['networking']['domain']`
 
 Type: `String[1]`
 
+
+[Back to overview of database::db_definition_template](#attributes)
+
+### logoutput<a name='database::db_definition_template_logoutput'>
+
+log the outputs of Puppet exec or not.
+
+When you specify `true` Puppet will log all output of `exec` types.
+
+Valid values are:
+
+- `true`
+- `false`
+- `on_failure`
+
+Type: `Variant[Boolean,Enum['on_failure']]`
+
+Default:`lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 [Back to overview of database::db_definition_template](#attributes)
