@@ -19,6 +19,7 @@ When these customizations aren't enough, you can replace the class with your own
   :source,
   :patch_list,
   :level,
+  :patch_window,
   :logoutput,
   :include_ojvm,
 ]%>

@@ -116,6 +116,8 @@ ora_profile::client::packages:   my_profile::my_own_implementation
 ```
 
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
+
+
 ora_profile::client
 
 In it's core just adding:
@@ -2311,6 +2313,19 @@ Data type: `Hash`
 The list of patches to apply.
 The default value is : `{}`
 
+##### `logoutput`
+
+Data type: `Variant[Boolean,Enum['on_failure']]`
+
+log the outputs of Puppet exec or not.
+When you specify `true` Puppet will log all output of `exec` types.
+Valid values are:
+- `true`
+- `false`
+- `on_failure`
+
+Default value: lookup({name => 'logoutput', default_value => 'on_failure'})
+
 ### ora_profile::database::asm_setup
 
 ora_profile::asm_software
@@ -2318,6 +2333,8 @@ ora_profile::asm_software
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+
 ora_profile::database::asm_setup
 
 Here you can customize some of the attributes of your database.
@@ -3213,6 +3230,19 @@ Data type: `String[1]`
 The domain of the database.
 The default is `$facts['networking']['domain']`
 
+##### `logoutput`
+
+Data type: `Variant[Boolean,Enum['on_failure']]`
+
+log the outputs of Puppet exec or not.
+When you specify `true` Puppet will log all output of `exec` types.
+Valid values are:
+- `true`
+- `false`
+- `on_failure`
+
+Default value: lookup({name => 'logoutput', default_value => 'on_failure'})
+
 ### ora_profile::database::db_definition_template
 
 ora_profile::database::db_definition_template
@@ -3359,6 +3389,19 @@ Data type: `String[1]`
 
 The domain of the database.
 The default is `$facts['networking']['domain']`
+
+##### `logoutput`
+
+Data type: `Variant[Boolean,Enum['on_failure']]`
+
+log the outputs of Puppet exec or not.
+When you specify `true` Puppet will log all output of `exec` types.
+Valid values are:
+- `true`
+- `false`
+- `on_failure`
+
+Default value: lookup({name => 'logoutput', default_value => 'on_failure'})
 
 ### ora_profile::database::db_init_params
 
@@ -3544,6 +3587,28 @@ Valid values depend on your database version, but it should like like below:
 - `JAN2019RU`
 - `APR2019RU`
 - etc...
+
+##### `patch_window`
+
+Data type: `String[1]`
+
+The patch window in which you want to do the patching.
+Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
+an example on how to use this is:
+        patch_window => '2:00 - 4:00'
+
+##### `logoutput`
+
+Data type: `Variant[Boolean,Enum['on_failure']]`
+
+log the outputs of Puppet exec or not.
+When you specify `true` Puppet will log all output of `exec` types.
+Valid values are:
+- `true`
+- `false`
+- `on_failure`
+
+Default value: lookup({name => 'logoutput', default_value => 'on_failure'})
 
 ##### `include_ojvm`
 
@@ -4145,6 +4210,8 @@ include ora_profile::secured_db
 ### ora_profile::database::asm_storage::partition
 
 ora_profile::database::asm_storage::partition
+
+
 
 ora_profile::database::asm_storage::partition
 
