@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.18.1
+
+**Bug fixes**
+
+- [db_patches] Fix patch_window
+- [core] Consistently use logoutput in asm_patches, db_patches and db_defintion_* classes
+
 ## Release 0.18.0
 
 **New Features**
