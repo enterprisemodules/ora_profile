@@ -58,6 +58,14 @@
 #    - `APR2019RU`
 #    - etc...
 #
+# @param [Variant[Boolean, Enum['on_failure']]] logoutput
+#    log the outputs of Puppet exec or not.
+#    When you specify `true` Puppet will log all output of `exec` types.
+#    Valid values are:
+#    - `true`
+#    - `false`
+#    - `on_failure`
+#
 # @param [Boolean] include_ojvm
 #    Specify if the OJVM patch for the patch level should also be installed.
 #    Default value is: `false`
@@ -74,6 +82,8 @@ class ora_profile::database::db_patches(
   String[1] $os_user,
   String[1] $source,
   Hash      $patch_list,
+  Variant[Boolean,Enum['on_failure']]
+            $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 

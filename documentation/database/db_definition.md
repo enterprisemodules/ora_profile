@@ -29,6 +29,7 @@ Attribute Name                                                                  
 [init_ora_template](#database::db_definition_init_ora_template)                 | The template to use for the init.ora parameters.                                |
 [install_group](#database::db_definition_install_group)                         | The group to use for Oracle install.                                            |
 [log_size](#database::db_definition_log_size)                                   | The log ize to use.                                                             |
+[logoutput](#database::db_definition_logoutput)                                 | log the outputs of Puppet exec or not.                                          |
 [ora_database_override](#database::db_definition_ora_database_override)         | A hash with database settings that will override the default database settings. |
 [oracle_base](#database::db_definition_oracle_base)                             | The base directory to use for the Oracle installation.                          |
 [oracle_home](#database::db_definition_oracle_home)                             | The home directory to use for the Oracle installation.                          |
@@ -271,5 +272,23 @@ The default is `$facts['networking']['domain']`
 
 Type: `String[1]`
 
+
+[Back to overview of database::db_definition](#attributes)
+
+### logoutput<a name='database::db_definition_logoutput'>
+
+log the outputs of Puppet exec or not.
+
+When you specify `true` Puppet will log all output of `exec` types.
+
+Valid values are:
+
+- `true`
+- `false`
+- `on_failure`
+
+Type: `Variant[Boolean,Enum['on_failure']]`
+
+Default:`lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 [Back to overview of database::db_definition](#attributes)

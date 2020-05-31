@@ -7,5 +7,6 @@ When these customizations aren't enough, you can replace the class with your own
   :patch_file,
   :opversion,
   :patch_list,
+  :logoutput,
 ]%>
 

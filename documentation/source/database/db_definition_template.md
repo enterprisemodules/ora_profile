@@ -25,4 +25,5 @@ When these customizations aren't enough, you can replace the class with your own
   :db_conf_type,
   :log_size,
   :dbdomain,
+  :logoutput,
 ]%>
