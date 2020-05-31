@@ -36,6 +36,7 @@ group :release, :acceptance_test do
   end
   gem 'puppet-blacksmith'
   gem 'em_tasks', :git => "https://github.com/enterprisemodules/em_tasks.git" if RUBY_VERSION > '2.1.2'
+  gem 'puppet-strings'
 end
 
 group :quality do
