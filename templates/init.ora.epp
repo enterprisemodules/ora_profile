@@ -1,3 +1,24 @@
+<%- | String $dbname,
+      String $dbdomain,
+      String $db_create_file_dest,
+      String $db_recovery_file_dest,
+      String $db_recovery_file_dest_size,
+      String $compatible,
+      String $oracle_base,
+      Enum['enabled', 'disabled'] $container_database,
+      Boolean $is_windows,
+      String $sga_target,
+      String $pga_aggregate_target,
+      Integer $processes,
+      Integer $open_cursors,
+      Integer $db_block_size,
+      String $log_archive_format,
+      String $audit_trail,
+      String $remote_login_passwordfile,
+      String $undo_tablespace,
+      Integer $memory_target,
+      Integer $memory_max_target,
+| -%>
 ##############################################################################
 # Copyright (c) 1991, 2013 by Oracle Corporation
 ##############################################################################
@@ -6,75 +27,79 @@
 ###########################################
 # Archive
 ###########################################
-log_archive_format=%t_%s_%r.dbf
+log_archive_format=<%= $log_archive_format %>
 
 ###########################################
 # Cache and I/O
 ###########################################
-db_block_size=8192
+db_block_size=<%= $db_block_size %>
 
 ###########################################
 # Cursors and Library Cache
 ###########################################
-open_cursors=300
+open_cursors=<%= $open_cursors %>
 
 ###########################################
 # Database Identification
 ###########################################
-db_domain=<%= @dbdomain %>
-db_name='<%= @dbname %>'
+db_domain=<%= $dbdomain %>
+db_name='<%= $dbname %>'
 
 ###########################################
 # File Configuration
 ###########################################
-db_create_file_dest="<%= @data_file_destination -%>"
-db_recovery_file_dest="<%= @db_recovery_file_dest-%>"
-db_recovery_file_dest_size=20480m
+db_create_file_dest="<%= $db_create_file_dest %>"
+db_recovery_file_dest="<%= $db_recovery_file_dest %>"
+db_recovery_file_dest_size=<%= $db_recovery_file_dest_size %>
 
 ###########################################
 # Miscellaneous
 ###########################################
-compatible=12.2.0.1.0
-diagnostic_dest=<%= @oracle_base %>
+compatible=<%= $compatible %>
+diagnostic_dest=<%= $oracle_base %>
 
 ###########################################
 # Processes and Sessions
 ###########################################
-processes=300
+processes=<%= $processes %>
 
 ###########################################
 # SGA Memory
 ###########################################
-sga_target=1024m
+sga_target=<%= $sga_target %>
 
 ###########################################
 # Security and Auditing
 ###########################################
-audit_file_dest='<%= @oracle_base -%>/admin/<%= @dbname -%>/adump'
-audit_trail=db
-remote_login_passwordfile=EXCLUSIVE
+<% if $is_windows { -%>
+audit_file_dest='<%= $oracle_base %>\admin\<%= $dbname %>\adump'
+<% } else { -%>
+audit_file_dest='<%= $oracle_base %>/admin/<%= $dbname %>/adump'
+<% } -%>
+audit_trail=<%= $audit_trail %>
+remote_login_passwordfile=<%= $remote_login_passwordfile %>
 
 ###########################################
 # Sort, Hash Joins, Bitmap Indexes
 ###########################################
-pga_aggregate_target=256m
+pga_aggregate_target=<%= $pga_aggregate_target %>
 
 ###########################################
 # System Managed Undo and Rollback Segments
 ###########################################
-undo_tablespace=UNDOTBS1
+undo_tablespace=<%= $undo_tablespace %>
 
 ###########################################
 # Automatic Memory Management disabled for use with HugePages
 ###########################################
-memory_target=0
-memory_max_target=0
+memory_target=<%= $memory_target %>
+memory_max_target=<%= $memory_max_target %>
 
 ###########################################
-# Mulitenant parameters
+# Multitenant parameters
 ###########################################
-<% if @container_database.to_s == 'enabled' %>
+<% if $container_database == 'enabled' { -%>
 enable_pluggable_database=true
-<% else -%>
+<% } else { -%>
 enable_pluggable_database=false
-<% end -%>
+<% } -%>

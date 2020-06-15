@@ -20,6 +20,7 @@ When these customizations aren't enough, you can replace the class with your own
   :container_database,
   :archivelog,
   :init_ora_template,
+  :init_ora_params,
   :data_file_destination,
   :db_recovery_file_dest,
   :ora_database_override,

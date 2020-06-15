@@ -106,7 +106,7 @@ class ora_profile::database::db_patches(
         withpath => false,
       }
     } else {
-      echo { "Ensure DB patch level ${level} ${ojvm_msg} and patch list ${patch_list.keys.join(',')} on ${oracle_home}":
+      echo { "Ensure DB patch level ${level} ${ojvm_msg} on ${oracle_home} and patch list ${patch_list.keys.join(',')}":
         withpath => false,
       }
     }
@@ -115,6 +115,9 @@ class ora_profile::database::db_patches(
       withpath => false,
     }
   }
+
+  # Always execute Ora_install::Opatchupgrade before any Ora_opatch
+  Ora_install::Opatchupgrade <| |> -> Ora_opatch <| |>
 
   #
   # First make sure the correct version of opatch is installed
@@ -151,9 +154,15 @@ class ora_profile::database::db_patches(
   #
   # Now start with the patches themselves
   #
-  $converted_patch_list = $complete_patch_list.map | $i, $j | { $j['sub_patches'].map | $x | { "${i.split(':')[0]}:${x}" } }.flatten.unique
+  # converted_patch_list contains all the patches in simple notation which is used for echo and to check if any patches need to be installed
+  $converted_patch_list = ora_physical_patches($complete_patch_list)
+  # patch_list_to_apply is the hash with patches that need to be applied, without patches that have already been applied
+  $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list)
+  # apply_patches is the hash without the OPatch details which can be given to ora_opatch
+  $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details - patch_file - opversion } }.reduce({}) |$memo, $array| { $memo + $array }
+
   if ( $converted_patch_list.length > 0 ) {
-    echo {"Ensure DB patch(es) ${converted_patch_list.join(',')} on ${oracle_home}":
+    echo {"Ensure DB patch(es) ${converted_patch_list.join(',')}":
       withpath => false,
     }
   }
@@ -181,28 +190,47 @@ class ora_profile::database::db_patches(
     if ( $facts['ora_version'] ) {
 
       unless ( $is_rac ) {
-        $running_sids = $facts['ora_install_homes'][$oracle_home]['running_sids']
-        echo {"Stopping and starting database(s) ${running_sids.join(',')} to apply DB patches on ${oracle_home}":
-          withpath => false,
-          schedule => $schedule,
-        }
+        $ora_install_homes = $facts['ora_install_homes']
 
-        $running_sids.each |$dbname| {
-          ora_listener {"Stop listener for ${dbname}":
-            ensure        => 'stopped',
-            instance_name => $dbname,
-            before        => Ora_opatch[$complete_patch_list.keys],
-            schedule      => $schedule,
+        $patch_list_to_apply.each |$patch, $patch_details| {
+
+          $patch_home = $patch.split(':')[0]
+
+          ora_install::opatchupgrade{"DB OPatch upgrade to ${patch_details['opversion']} in ${patch_home}":
+            oracle_home               => $patch_home,
+            patch_file                => "${patch_details['patch_file']}.zip",
+            opversion                 => $patch_details['opversion'],
+            user                      => $os_user,
+            group                     => $install_group,
+            puppet_download_mnt_point => $source,
+            download_dir              => $download_dir,
           }
 
-          db_control {"database stop ${dbname}":
-            ensure                  => 'stop',
-            instance_name           => $dbname,
-            oracle_product_home_dir => $oracle_home,
-            os_user                 => $os_user,
-            provider                => $db_control_provider,
-            before                  => Ora_opatch[$complete_patch_list.keys],
-            schedule                => $schedule,
+          $running_sids = $ora_install_homes[$patch_home]['running_sids']
+          if $running_sids.length > 0 {
+            echo {"Stopping and starting database(s) ${running_sids.join(',')} to apply DB patches on ${patch_home}":
+              withpath => false,
+              schedule => $schedule,
+            }
+
+            $running_sids.each |$dbname| {
+              ora_listener {"Stop listener for ${dbname}":
+                ensure        => 'stopped',
+                instance_name => $dbname,
+                before        => Ora_opatch[$patch_list_to_apply.keys],
+                schedule      => $schedule,
+              }
+
+              db_control {"database stop ${dbname}":
+                ensure                  => 'stop',
+                instance_name           => $dbname,
+                oracle_product_home_dir => $patch_home,
+                os_user                 => $os_user,
+                provider                => $db_control_provider,
+                before                  => Ora_opatch[$patch_list_to_apply.keys],
+                schedule                => $schedule,
+              }
+            }
           }
         }
       }
@@ -213,8 +241,7 @@ class ora_profile::database::db_patches(
     #
     $defaults = {
       ensure   => 'present',
-      require  => Ora_install::Opatchupgrade["DB OPatch upgrade to ${opversion}"],
-      tmp_dir  => "${download_dir}/patches",                                       # always use subdir, the whole directory will be removed when done
+      tmp_dir  => "${download_dir}/patches", # always use subdir, the whole directory will be removed when done
       schedule => $schedule,
     }
     if ( $is_rac ) {
@@ -223,10 +250,10 @@ class ora_profile::database::db_patches(
           withpath => false,
         }
       } else {
-        ensure_resources('ora_opatch', $complete_patch_list, $defaults)
+        ensure_resources('ora_opatch', $apply_patches, $defaults)
       }
     } else {
-      ensure_resources('ora_opatch', $complete_patch_list, $defaults)
+      ensure_resources('ora_opatch', $apply_patches, $defaults)
     }
 
     if ( $facts['ora_version'] ) {
@@ -235,39 +262,50 @@ class ora_profile::database::db_patches(
       # Now we need to start it again.
       #
       unless ( $is_rac ) {
-        $running_sids.each |$dbname| {
-          ora_listener {"Start listener for ${dbname}":
-            ensure        => 'running',
-            instance_name => $dbname,
-            require       => Ora_opatch[$complete_patch_list.keys],
-            schedule      => $schedule,
-          }
 
-          db_control {'database start':
-            ensure                  => 'start',
-            instance_name           => $dbname,
-            oracle_product_home_dir => $oracle_home,
-            os_user                 => $os_user,
-            require                 => Ora_opatch[$complete_patch_list.keys],
-            schedule                => $schedule,
-          }
-          -> exec { "Datapatch for ${dbname}":
-            cwd         => "${oracle_home}/OPatch",
-            command     => "${oracle_home}/OPatch/datapatch -verbose",
-            environment => ["PATH=/usr/bin:/bin:${oracle_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${oracle_home}"],
-            user        => $os_user,
-            logoutput   => $logoutput,
-            timeout     => 3600,
-            schedule    => $schedule,
-          }
-          -> exec { "SQLPlus UTLRP ${dbname}":
-            cwd         => $oracle_home,
-            command     => "${oracle_home}/bin/sqlplus / as sysdba @?/rdbms/admin/utlrp",
-            environment => ["PATH=/usr/bin:/bin:${oracle_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${oracle_home}"],
-            user        => $os_user,
-            logoutput   => $logoutput,
-            timeout     => 3600,
-            schedule    => $schedule,
+        $patch_list_to_apply.each |$patch, $_patch_details| {
+
+          $patch_home = $patch.split(':')[0]
+
+          $running_sids = $ora_install_homes[$patch_home]['running_sids']
+          if $running_sids.length > 0 {
+            $running_sids.each |$dbname| {
+              ora_listener {"Start listener for ${dbname}":
+                ensure        => 'running',
+                instance_name => $dbname,
+                require       => Ora_opatch[$apply_patches.keys],
+                schedule      => $schedule,
+              }
+
+              db_control {'database start':
+                ensure                  => 'start',
+                instance_name           => $dbname,
+                oracle_product_home_dir => $patch_home,
+                os_user                 => $os_user,
+                require                 => Ora_opatch[$apply_patches.keys],
+                schedule                => $schedule,
+              }
+
+              -> exec { "Datapatch for ${dbname}":
+                cwd         => "${patch_home}/OPatch",
+                command     => "${patch_home}/OPatch/datapatch -verbose",
+                environment => ["PATH=/usr/bin:/bin:${patch_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${patch_home}"],
+                user        => $os_user,
+                logoutput   => $logoutput,
+                timeout     => 3600,
+                schedule    => $schedule,
+              }
+
+              -> exec { "SQLPlus UTLRP ${dbname}":
+                cwd         => $patch_home,
+                command     => "${patch_home}/bin/sqlplus / as sysdba @?/rdbms/admin/utlrp",
+                environment => ["PATH=/usr/bin:/bin:${patch_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${patch_home}"],
+                user        => $os_user,
+                logoutput   => $logoutput,
+                timeout     => 3600,
+                schedule    => $schedule,
+              }
+            }
           }
         }
       }

@@ -32,10 +32,13 @@
 #    The default is : `oinstall`
 #    To customize this consistently use the hiera key `ora_profile::database::install_group`.
 #
-# @param [String[1]] dbname
+# @param [Variant[String[1], Hash]] dbname
 #    The name of the database.
 #    The default is `DB01`
 #    To customize this consistently use the hiera key `ora_profile::database::dbname`.
+#    This parameter can also be defined as Hash in which case the key(s) of the Hash are the name of the database(s).
+#    The defaults for all the database(s) in the Hash are the ones given to the db_definition class.
+#    In addition all properties and parameters taken by ora_database can be defined in hiera data.
 #
 # @param [String[1]] log_size
 #    The log ize to use.
@@ -80,7 +83,34 @@
 # @param [String[1]] init_ora_template
 #    The template to use for the init.
 #    ora parameters.
-#    The default value is: 'ora_profile/init.ora.erb'
+#    This needs to be an epp template.
+#    The default value is: 'ora_profile/init.ora.epp'
+#
+# @param [Hash] init_ora_params
+#    The parameters to use in the template specified in `init_ora_template`.
+#    The default value is:
+#    ```yaml
+#    ora_profile::database::db_definition::init_ora_params:
+#      dbname: "%{lookup('ora_profile::database::db_definition::dbname')}"
+#      dbdomain: "%{lookup('ora_profile::database::db_definition::dbdomain')}"
+#      db_create_file_dest: "%{lookup('ora_profile::database::db_definition::data_file_destination')}"
+#      db_recovery_file_dest: "%{lookup('ora_profile::database::db_definition::db_recovery_file_dest')}"
+#      db_recovery_file_dest_size: 20480m
+#      compatible: "%{lookup('ora_profile::database::db_definition::version')}"
+#      oracle_base: "%{lookup('ora_profile::database::db_definition::oracle_base')}"
+#      container_database: "%{lookup('ora_profile::database::db_definition::container_database')}"
+#      sga_target: 1024m
+#      pga_aggregate_target: 256m
+#      processes: 300
+#      open_cursors: 300
+#      db_block_size: 8192
+#      log_archive_format: '%t_%s_%r.dbf'
+#      audit_trail: db
+#      remote_login_passwordfile: EXCLUSIVE
+#      undo_tablespace: UNDOTBS1
+#      memory_target: 0
+#      memory_max_target: 0
+#    ```
 #
 # @param [String[1]] data_file_destination
 #    The location of the datafiles.
@@ -113,7 +143,8 @@ class ora_profile::database::db_definition(
             $oracle_base,
   String[1] $os_user,
   String[1] $install_group,
-  String[1] $dbname,
+  Variant[String[1], Hash]
+            $dbname,
   String[1] $log_size,
   String[1] $user_tablespace_size,
   String[1] $system_tablespace_size,
@@ -129,6 +160,7 @@ class ora_profile::database::db_definition(
   Enum['enabled','disabled']
             $archivelog,
   String[1] $init_ora_template,
+  Hash      $init_ora_params,
   String[1] $data_file_destination,
   String[1] $db_recovery_file_dest,
   Hash      $ora_database_override,
@@ -139,229 +171,240 @@ class ora_profile::database::db_definition(
 # lint:ignore:variable_scope
 
   if ( $is_rac ) {
-    echo {"Ensure DB definition for RAC database ${dbname} in ${oracle_home}":
-      withpath => false,
+    if ( $dbname =~ Hash and $dbname.length > 1 ) {
+      fail 'Multiple databases is not supported in a RAC environment yet'
+    } elsif ( $dbname =~ String ) {
+      echo {"Ensure DB definition for RAC database ${dbname} in ${oracle_home}":
+        withpath => false,
+      }
+    } else {
+      echo {"Ensure DB definition for RAC database ${dbname.keys[0]} in ${dbname['oracle_home']}":
+        withpath => false,
+      }
     }
   } else {
-    echo {"Ensure DB definition for database ${dbname} in ${oracle_home}":
-      withpath => false,
+    if ( $dbname =~ Hash ) {
+      $dbname.each |$db, $db_props| {
+        echo {"Ensure DB definition for database ${db} in ${db_props['oracle_home']}":
+          withpath => false,
+        }
+      }
+    } else {
+      echo {"Ensure DB definition for database ${dbname} in ${oracle_home}":
+        withpath => false,
+      }
     }
   }
   #
   # All standard values fetched in data function
   #
-  $split_version = split($version, '[.]')
-  $db_version = "${split_version[0]}.${split_version[1]}"
   if ( $is_rac ) {
     $db_cluster_nodes = { $db_instance_name => $facts['hostname'] }
   } else {
     $db_cluster_nodes = undef
   }
 
-  if ( $master_node == $facts['hostname'] ) {
-
-    $ora_database_settings = {
-      disable_corrective_ensure    => true,
-      archivelog                   => $archivelog,
-      init_ora_content             => template($init_ora_template),
-      oracle_base                  => $oracle_base,
-      oracle_home                  => $oracle_home,
-      oracle_user                  => $os_user,
-      oracle_user_password         => $oracle_user_password,
-      install_group                => $install_group,
-      system_password              => unwrap($system_password),
-      sys_password                 => unwrap($sys_password),
-      character_set                => 'AL32UTF8',
-      national_character_set       => 'AL16UTF16',
-      container_database           => $container_database,
-      extent_management            => 'local',
-      instances                    => $db_cluster_nodes,
-      spfile_location              => $data_file_destination,
-      logfile_groups               => case $is_rac {
-        true: {
-          [
-            {group => 1, size => $log_size, thread => 1},
-            {group => 1, size => $log_size, thread => 1},
-            {group => 2, size => $log_size, thread => 1},
-            {group => 2, size => $log_size, thread => 1},
-            {group => 3, size => $log_size, thread => 1},
-            {group => 3, size => $log_size, thread => 1},
-            {group => 4, size => $log_size, thread => 2},
-            {group => 4, size => $log_size, thread => 2},
-            {group => 5, size => $log_size, thread => 2},
-            {group => 5, size => $log_size, thread => 2},
-            {group => 6, size => $log_size, thread => 2},
-            {group => 6, size => $log_size, thread => 2},
-          ]
-        }
-        default: {
-          [
-            {group => 10, size => $log_size},
-            {group => 10, size => $log_size},
-            {group => 20, size => $log_size},
-            {group => 20, size => $log_size},
-            {group => 30, size => $log_size},
-            {group => 30, size => $log_size},
-          ]
-        }
-      },
-      datafiles                    => [
-        {size => $system_tablespace_size, autoextend => {next => '10M', maxsize => 'unlimited'}},
-      ],
-      sysaux_datafiles             => [
-        {size => $sysaux_tablespace_size, autoextend => {next => '10M', maxsize => 'unlimited'}},
-      ],
-      default_temporary_tablespace => {
-        name     => 'TEMP',
-        tempfile => {
-          size       => $temporary_tablespace_size,
-          autoextend => {
-            next    => '5M',
-            maxsize => 'unlimited',
-          }
-        },
-      },
-      undo_tablespace              => {
-        name     => 'UNDOTBS1',
-        datafile => {
-          size       => $undo_tablespace_size,
-          autoextend => {next => '5M', maxsize => 'unlimited'}      }
-      },
-      default_tablespace           => {
-        name              => 'USERS',
-        datafile          => {
-          size       => $user_tablespace_size,
-          autoextend => {next => '1M', maxsize => 'unlimited'}
-        },
-        extent_management => {
-          'type'       => 'local',
-          autoallocate => true,
+  $dbname_defaults = {
+    init_ora_params           => $init_ora_params + { is_windows => $is_windows },
+    # ora_database parameters below
+    disable_corrective_ensure => true,
+    archivelog                => $archivelog,
+    oracle_base               => $oracle_base,
+    oracle_home               => $oracle_home,
+    oracle_user               => $os_user,
+    oracle_user_password      => $oracle_user_password,
+    install_group             => $install_group,
+    system_password           => unwrap($system_password),
+    # init_ora_content             => template($init_ora_template), # Don't include init_ora_content here, merge it later
+    sys_password              => unwrap($sys_password),
+    character_set             => 'AL32UTF8',
+    national_character_set    => 'AL16UTF16',
+    container_database        => $container_database,
+    extent_management         => 'local',
+    instances                 => $db_cluster_nodes,
+    spfile_location           => $data_file_destination,
+    logfile_groups            => case $is_rac {
+      true: {
+        [
+          {group => 1, size => $log_size, thread => 1},
+          {group => 1, size => $log_size, thread => 1},
+          {group => 2, size => $log_size, thread => 1},
+          {group => 2, size => $log_size, thread => 1},
+          {group => 3, size => $log_size, thread => 1},
+          {group => 3, size => $log_size, thread => 1},
+          {group => 4, size => $log_size, thread => 2},
+          {group => 4, size => $log_size, thread => 2},
+          {group => 5, size => $log_size, thread => 2},
+          {group => 5, size => $log_size, thread => 2},
+          {group => 6, size => $log_size, thread => 2},
+          {group => 6, size => $log_size, thread => 2},
+        ]
+      }
+      default: {
+        [
+          {group => 10, size => $log_size},
+          {group => 10, size => $log_size},
+          {group => 20, size => $log_size},
+          {group => 20, size => $log_size},
+          {group => 30, size => $log_size},
+          {group => 30, size => $log_size},
+        ]
+      }
+    },
+    datafiles                    => [
+      {size => $system_tablespace_size, autoextend => {next => '10M', maxsize => 'unlimited'}},
+    ],
+    sysaux_datafiles             => [
+      {size => $sysaux_tablespace_size, autoextend => {next => '10M', maxsize => 'unlimited'}},
+    ],
+    default_temporary_tablespace => {
+      name     => 'TEMP',
+      tempfile => {
+        size       => $temporary_tablespace_size,
+        autoextend => {
+          next    => '5M',
+          maxsize => 'unlimited',
         }
       },
-      timezone                     => 'Europe/Amsterdam',
-    }.deep_merge($ora_database_override)
+    },
+    undo_tablespace              => {
+      name     => 'UNDOTBS1',
+      datafile => {
+        size       => $undo_tablespace_size,
+        autoextend => {next => '5M', maxsize => 'unlimited'}
+      }
+    },
+    default_tablespace           => {
+      name              => 'USERS',
+      datafile          => {
+        size       => $user_tablespace_size,
+        autoextend => {next => '1M', maxsize => 'unlimited'}
+      },
+      extent_management => {
+        'type'       => 'local',
+        autoallocate => true,
+      }
+    },
+    timezone                     => 'Europe/Amsterdam',
+  }
 
-    ora_database {$dbname:
-      ensure => present,
-      *      => $ora_database_settings,
-    }
-
-    #
-    # Database is done. Now start it
-    #
-    -> db_control {'database started':
-      ensure                  => 'start',
-      provider                => $db_control_provider,
-      instance_name           => $dbname,
-      oracle_product_home_dir => $oracle_home,
+  if ( $dbname =~ String ) {
+    $database = case $ora_database_override.empty {
+      false: {
+        { $dbname => deep_merge($dbname_defaults, $ora_database_override) }
+      }
+      default: {
+        { $dbname => $dbname_defaults }
+      }
     }
   } else {
+    $database = $dbname.map |$db, $db_props| { { $db => deep_merge($dbname_defaults, $db_props) } }.reduce({}) |$memo, $array| { $memo + $array }
+  }
 
-    $ora_database_settings = {
-      disable_corrective_ensure => true,
-      archivelog                => $archivelog,
-      instances                 => $db_cluster_nodes,
-      logfile_groups            => case $is_rac {
-        true: {
-          [
-            {group => 1, size => $log_size, thread => 1},
-            {group => 1, size => $log_size, thread => 1},
-            {group => 2, size => $log_size, thread => 1},
-            {group => 2, size => $log_size, thread => 1},
-            {group => 3, size => $log_size, thread => 1},
-            {group => 3, size => $log_size, thread => 1},
-            {group => 4, size => $log_size, thread => 2},
-            {group => 4, size => $log_size, thread => 2},
-            {group => 5, size => $log_size, thread => 2},
-            {group => 5, size => $log_size, thread => 2},
-            {group => 6, size => $log_size, thread => 2},
-            {group => 6, size => $log_size, thread => 2},
-          ]
-        }
-        default: {
-          [
-            {group => 10, size => $log_size},
-            {group => 10, size => $log_size},
-            {group => 20, size => $log_size},
-            {group => 20, size => $log_size},
-            {group => 30, size => $log_size},
-            {group => 30, size => $log_size},
-          ]
-        }
-      },
-    }.deep_merge($ora_database_override)
+  if ( $master_node == $facts['hostname'] ) {
 
-    file { "${oracle_home}/dbs/init${db_instance_name}.ora":
-      ensure  => present,
-      content => "spfile='${data_file_destination}/spfile${dbname}.ora'"
+    $database.each |$db, $db_props| {
+      $init_ora = {init_ora_content => epp($init_ora_template, $db_props['init_ora_params'])}
+      # Add init_ora_content to hash and remove init_ora_params, which is only needed for the init_ora_content
+      $all_db_props = $db_props + $init_ora - init_ora_params
+
+      ora_database { $db:
+        ensure => present,
+        *      => $all_db_props,
+      }
+
+      #
+      # Database is done. Now start it
+      #
+      -> db_control {"database started from ${all_db_props['oracle_home']}":
+        ensure                  => 'start',
+        provider                => $db_control_provider,
+        instance_name           => $db,
+        oracle_product_home_dir => $all_db_props['oracle_home'],
+      }
     }
 
-    -> exec {'add_instance':
-      user        => $os_user,
-      environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oracle_home}"],
-      command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${::hostname}",
-      unless      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name}",
-      logoutput   => $logoutput,
-    }
+  } else {
 
-    -> exec {'start_instance':
-      user        => $os_user,
-      environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
-      command     => "${oracle_home}/bin/srvctl start instance -d ${dbname} -i ${db_instance_name}",
-      onlyif      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name} | grep not",
-      logoutput   => $logoutput,
-    }
+    $database.each |$db, $db_props| {
+      $instance_name = set_param('instance_name', $db, $cluster_nodes)
+      $oh = $db_props['oracle_home']
+      file { "${oh}/dbs/init${instance_name}.ora":
+        ensure  => present,
+        content => "spfile='${data_file_destination}/spfile${db}.ora'"
+      }
 
-    -> ora_setting { $db_instance_name:
-      default     => true,
-      oracle_home => $oracle_home,
-      cdb         => case $container_database {
-        'enabled': {
-          true
-        }
-        default: {
-          false
-        }
-      },
-    }
+      -> exec {'add_instance':
+        user        => $os_user,
+        environment => ["ORACLE_SID=${instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oh}"],
+        command     => "${oh}/bin/srvctl add instance -d ${db} -i ${instance_name} -n ${::hostname}",
+        unless      => "${oh}/bin/srvctl status instance -d ${db} -i ${instance_name}",
+        logoutput   => $logoutput,
+      }
 
-    -> ora_tab_entry{ $db_instance_name:
-      ensure      => 'present',
-      oracle_home => $oracle_home,
-      startup     => 'Y',
-      comment     => 'Oracle instance added by Puppet',
-    }
+      -> exec {'start_instance':
+        user        => $os_user,
+        environment => ["ORACLE_SID=${instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oh}"],
+        command     => "${oh}/bin/srvctl start instance -d ${db} -i ${instance_name}",
+        onlyif      => "${oh}/bin/srvctl status instance -d ${db} -i ${instance_name} | grep not",
+        logoutput   => $logoutput,
+      }
 
-    -> ora_database {$dbname:
-      ensure => present,
-      *      => $ora_database_settings,
+      -> ora_setting { $instance_name:
+        default     => true,
+        oracle_home => $oh,
+        cdb         => case $container_database {
+          'enabled': {
+            true
+          }
+          default: {
+            false
+          }
+        },
+      }
+
+      -> ora_tab_entry{ $instance_name:
+        ensure      => 'present',
+        oracle_home => $oh,
+        startup     => 'Y',
+        comment     => 'Oracle instance added by Puppet',
+      }
+
+      -> ora_database {$db:
+        ensure => present,
+        *      => $db_props,
+      }
     }
   }
 
   if ( $is_rac ) {
-    $cluster_nodes.each |$index, $node| {
-      $inst_number = $index + 1
-      ora_profile::database::rac::instance {"${dbname}${inst_number}":
-        on                => $db_instance_name,
-        number            => $inst_number,
-        thread            => $inst_number,
-        datafile          => $data_file_destination,
-        undo_initial_size => $undo_tablespace_size,
-        undo_next         => '100M',
-        undo_autoextend   => 'on',
-        undo_max_size     => 'unlimited',
-        log_size          => $log_size,
-      }
+    $database.each |$db, $db_props| {
+      $oh = $db_props['oracle_home']
+      $cluster_nodes.each |$index, $node| {
+        $instance_name = set_param('instance_name', $db, $cluster_nodes)
+        $inst_number = $index + 1
+        ora_profile::database::rac::instance {"${db}${inst_number}":
+          on                => $instance_name,
+          number            => $inst_number,
+          thread            => $inst_number,
+          datafile          => $data_file_destination,
+          undo_initial_size => $undo_tablespace_size,
+          undo_next         => '100M',
+          undo_autoextend   => 'on',
+          undo_max_size     => 'unlimited',
+          log_size          => $log_size,
+        }
 
-      ## Might be needed for older versions
-      # exec {"create pfile for ${dbname}${instance_number}":
-      #   command     => "echo -e \"set heading off\nselect 'spfile='''||value||'''' from v\\\$parameter where name = 'spfile';\" | ${oracle_home}/bin/sqlplus -S / as sysdba | grep -v ^\$ > ${oracle_home}/dbs/init${dbname}${instance_number}.ora",
-      #   cwd         => '/tmp',
-      #   environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
-      #   path        => '/bin',
-      #   user        => $ora_profile::database::os_user,
-      #   unless      => "stat ${oracle_home}/dbs/init${dbname}${instance_number}.ora",
-      # }
+        ## Might be needed for older versions
+        # exec {"create pfile for ${db}${instance_number}":
+        #   command     => "echo -e \"set heading off\nselect 'spfile='''||value||'''' from v\\\$parameter where name = 'spfile';\" | ${oh}/bin/sqlplus -S / as sysdba | grep -v ^\$ > ${oracle_home}/dbs/init${db}${instance_number}.ora",
+        #   cwd         => '/tmp',
+        #   environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oh}"],
+        #   path        => '/bin',
+        #   user        => $ora_profile::database::os_user,
+        #   unless      => "stat ${oh}/dbs/init${db}${instance_number}.ora",
+        # }
+      }
     }
   }
 }

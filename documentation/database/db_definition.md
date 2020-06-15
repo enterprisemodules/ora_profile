@@ -26,6 +26,7 @@ Attribute Name                                                                  
 [db_recovery_file_dest](#database::db_definition_db_recovery_file_dest)         | The location of the Flash Recovery Area.                                        |
 [dbdomain](#database::db_definition_dbdomain)                                   | The domain of the database.                                                     |
 [dbname](#database::db_definition_dbname)                                       | The name of the database.                                                       |
+[init_ora_params](#database::db_definition_init_ora_params)                     | The parameters to use in the template specified in `init_ora_template`.         |
 [init_ora_template](#database::db_definition_init_ora_template)                 | The template to use for the init.ora parameters.                                |
 [install_group](#database::db_definition_install_group)                         | The group to use for Oracle install.                                            |
 [log_size](#database::db_definition_log_size)                                   | The log ize to use.                                                             |
@@ -120,7 +121,12 @@ The name of the database.
 The default is `DB01`
 
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
-Type: `String[1]`
+
+This parameter can also be defined as Hash in which case the key(s) of the Hash are the name of the database(s).
+The defaults for all the database(s) in the Hash are the ones given to the db_definition class.
+In addition all properties and parameters taken by ora_database can be defined in hiera data.
+
+Type: `Variant[String[1], Hash]`
 
 
 [Back to overview of database::db_definition](#attributes)
@@ -230,9 +236,44 @@ Type: `Enum['enabled','disabled']`
 ### init_ora_template<a name='database::db_definition_init_ora_template'>
 
 The template to use for the init.ora parameters.
+This needs to be an epp template.
 
-The default value is: 'ora_profile/init.ora.erb'
+The default value is: 'ora_profile/init.ora.epp'
 Type: `String[1]`
+
+
+[Back to overview of database::db_definition](#attributes)
+
+### init_ora_params<a name='database::db_definition_init_ora_params'>
+
+The parameters to use in the template specified in `init_ora_template`.
+
+The default value is:
+
+```yaml
+ora_profile::database::db_definition::init_ora_params:
+  dbname: "%{lookup('ora_profile::database::db_definition::dbname')}"
+  dbdomain: "%{lookup('ora_profile::database::db_definition::dbdomain')}"
+  db_create_file_dest: "%{lookup('ora_profile::database::db_definition::data_file_destination')}"
+  db_recovery_file_dest: "%{lookup('ora_profile::database::db_definition::db_recovery_file_dest')}"
+  db_recovery_file_dest_size: 20480m
+  compatible: "%{lookup('ora_profile::database::db_definition::version')}"
+  oracle_base: "%{lookup('ora_profile::database::db_definition::oracle_base')}"
+  container_database: "%{lookup('ora_profile::database::db_definition::container_database')}"
+  sga_target: 1024m
+  pga_aggregate_target: 256m
+  processes: 300
+  open_cursors: 300
+  db_block_size: 8192
+  log_archive_format: '%t_%s_%r.dbf'
+  audit_trail: db
+  remote_login_passwordfile: EXCLUSIVE
+  undo_tablespace: UNDOTBS1
+  memory_target: 0
+  memory_max_target: 0
+
+```
+Type: `Hash`
 
 
 [Back to overview of database::db_definition](#attributes)
