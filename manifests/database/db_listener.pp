@@ -46,29 +46,56 @@ class ora_profile::database::db_listener(
   String[1] $dba_group,
   Ora_install::ShortVersion
             $sqlnet_version,
-  String[1] $dbname,
+  Variant[String[1], Hash]
+            $dbname,
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
-  echo {"Ensure Listener for ${dbname} in ${oracle_home}":
-    withpath => false,
+  $listener_defaults = {
+    oracle_home    => $oracle_home,
+    oracle_base    => $oracle_base,
+    os_user        => $os_user,
+    install_group  => $install_group,
+    sqlnet_version => $sqlnet_version,
+    db_port        => 1521,
   }
 
-  ora_install::net{ 'config net8':
-    oracle_home  => $oracle_home,
-    version      => $sqlnet_version,        # Different version then the oracle version
-    user         => $os_user,
-    group        => $install_group,
-    download_dir => $download_dir,
-    temp_dir     => $temp_dir,
+  if ( $dbname =~ String ) {
+    echo {"Ensure Listener for ${dbname} in ${oracle_home}":
+      withpath => false,
+    }
+    $listener = { 'LISTENER' => $listener_defaults }
+  } else {
+    $dbname.each |$db, $db_props| {
+      echo {"Ensure Listener for ${db} in ${db_props['oracle_home']}":
+        withpath => false,
+      }
+    }
+    $listener = $dbname.map |$db, $db_props| { { $db => deep_merge($listener_defaults, $db_props) } }.reduce({}) |$memo, $array| { $memo + $array }
   }
 
-  -> ora_install::listener{"start_${dbname}":
-    oracle_base => $oracle_base,
-    oracle_home => $oracle_home,
-    user        => $os_user,
-    group       => $install_group,
-    action      => 'start',
+  $listener.each |$lsnr, $lsnr_props| {
+
+    ora_install::net{ "config net8 for ${lsnr_props['oracle_home']}":
+      oracle_home   => $lsnr_props['oracle_home'],
+      version       => $lsnr_props['sqlnet_version'], # Different version then the oracle version
+      user          => $lsnr_props['os_user'],
+      group         => $lsnr_props['install_group'],
+      download_dir  => $download_dir,
+      temp_dir      => $temp_dir,
+      db_port       => $lsnr_props['db_port'],
+      listener_name => $lsnr,
+    }
+
+    -> ora_install::listener{"start listener ${lsnr} from ${lsnr_props['oracle_home']}":
+      oracle_base   => $lsnr_props['oracle_base'],
+      oracle_home   => $lsnr_props['oracle_home'],
+      user          => $lsnr_props['os_user'],
+      group         => $lsnr_props['install_group'],
+      listener_name => $lsnr,
+      action        => 'start',
+    }
+
   }
 }
 # lint:endignore:variable_scope

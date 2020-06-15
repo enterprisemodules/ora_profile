@@ -597,7 +597,7 @@ ora_profile::database::db_patches::ojvm_patch_levels:
         sub_patches:           ['30502018']
     APR2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30805580-OJVM-12.2.0.1.200414":
-        source:                "%{::ora_profile::database::source}/p30502018_122010_Linux-x86-64.zip"
+        source:                "%{::ora_profile::database::source}/p30805580_122010_Linux-x86-64.zip"
         sub_patches:           ['30805580']
   '18.0.0.0':
     OCT2018RU:
@@ -659,7 +659,7 @@ ora_profile::database::db_patches::ojvm_patch_levels:
 ora_profile::database::db_definition::dbname:                             "%{::ora_profile::database::dbname}"
 ora_profile::database::db_definition::oracle_base:                        "%{::ora_profile::database::oracle_base}"
 ora_profile::database::db_definition::oracle_home:                        "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_definition::os_user:                           "%{::ora_profile::database::os_user}"
+ora_profile::database::db_definition::os_user:                            "%{::ora_profile::database::os_user}"
 ora_profile::database::db_definition::install_group:                      "%{::ora_profile::database::install_group}"
 ora_profile::database::db_definition::version:                            "%{::ora_profile::database::version}"
 ora_profile::database::db_definition::log_size:                           100M
@@ -669,12 +669,34 @@ ora_profile::database::db_definition::temporary_tablespace_size:          50M
 ora_profile::database::db_definition::undo_tablespace_size:               50M
 ora_profile::database::db_definition::sysaux_tablespace_size:             50M
 ora_profile::database::db_definition::container_database:                 disabled
-ora_profile::database::db_definition::init_ora_template:                  ora_profile/init.ora.erb
+ora_profile::database::db_definition::init_ora_template:                  ora_profile/init.ora.epp
+ora_profile::database::db_definition::init_ora_params:
+  dbname: "%{lookup('ora_profile::database::db_definition::dbname')}"
+  dbdomain: "%{lookup('ora_profile::database::db_definition::dbdomain')}"
+  db_create_file_dest: "%{lookup('ora_profile::database::db_definition::data_file_destination')}"
+  db_recovery_file_dest: "%{lookup('ora_profile::database::db_definition::db_recovery_file_dest')}"
+  db_recovery_file_dest_size: 20480m
+  compatible: "%{lookup('ora_profile::database::db_definition::version')}"
+  oracle_base: "%{lookup('ora_profile::database::db_definition::oracle_base')}"
+  container_database: "%{lookup('ora_profile::database::db_definition::container_database')}"
+  sga_target: 1024m
+  pga_aggregate_target: 256m
+  processes: 300
+  open_cursors: 300
+  db_block_size: 8192
+  log_archive_format: '%t_%s_%r.dbf'
+  audit_trail: db
+  remote_login_passwordfile: EXCLUSIVE
+  undo_tablespace: UNDOTBS1
+  memory_target: 0
+  memory_max_target: 0
 ora_profile::database::db_definition::data_file_destination:              /u02/oradata
 ora_profile::database::db_definition::db_recovery_file_dest:              /u03/fast_recovery_area
 ora_profile::database::db_definition::archivelog:                         disabled
 ora_profile::database::db_definition::ora_database_override:              {}
 ora_profile::database::db_definition::dbdomain:                           "%{facts.networking.domain}"
+
+
 # ------------------------------------------------------------------------------
 #
 #  Settings for database::db_definition_template

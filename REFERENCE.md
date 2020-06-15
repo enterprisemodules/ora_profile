@@ -117,7 +117,6 @@ ora_profile::client::packages:   my_profile::my_own_implementation
 
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 
-
 ora_profile::client
 
 In it's core just adding:
@@ -2334,7 +2333,6 @@ Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
-
 ora_profile::database::asm_setup
 
 Here you can customize some of the attributes of your database.
@@ -3121,11 +3119,14 @@ To customize this consistently use the hiera key `ora_profile::database::install
 
 ##### `dbname`
 
-Data type: `String[1]`
+Data type: `Variant[String[1], Hash]`
 
 The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
+This parameter can also be defined as Hash in which case the key(s) of the Hash are the name of the database(s).
+The defaults for all the database(s) in the Hash are the ones given to the db_definition class.
+In addition all properties and parameters taken by ora_database can be defined in hiera data.
 
 ##### `log_size`
 
@@ -3203,7 +3204,37 @@ Data type: `String[1]`
 
 The template to use for the init.
 ora parameters.
-The default value is: 'ora_profile/init.ora.erb'
+This needs to be an epp template.
+The default value is: 'ora_profile/init.ora.epp'
+
+##### `init_ora_params`
+
+Data type: `Hash`
+
+The parameters to use in the template specified in `init_ora_template`.
+The default value is:
+```yaml
+ora_profile::database::db_definition::init_ora_params:
+  dbname: "%{lookup('ora_profile::database::db_definition::dbname')}"
+  dbdomain: "%{lookup('ora_profile::database::db_definition::dbdomain')}"
+  db_create_file_dest: "%{lookup('ora_profile::database::db_definition::data_file_destination')}"
+  db_recovery_file_dest: "%{lookup('ora_profile::database::db_definition::db_recovery_file_dest')}"
+  db_recovery_file_dest_size: 20480m
+  compatible: "%{lookup('ora_profile::database::db_definition::version')}"
+  oracle_base: "%{lookup('ora_profile::database::db_definition::oracle_base')}"
+  container_database: "%{lookup('ora_profile::database::db_definition::container_database')}"
+  sga_target: 1024m
+  pga_aggregate_target: 256m
+  processes: 300
+  open_cursors: 300
+  db_block_size: 8192
+  log_archive_format: '%t_%s_%r.dbf'
+  audit_trail: db
+  remote_login_passwordfile: EXCLUSIVE
+  undo_tablespace: UNDOTBS1
+  memory_target: 0
+  memory_max_target: 0
+```
 
 ##### `data_file_destination`
 
@@ -4210,8 +4241,6 @@ include ora_profile::secured_db
 ### ora_profile::database::asm_storage::partition
 
 ora_profile::database::asm_storage::partition
-
-
 
 ora_profile::database::asm_storage::partition
 
