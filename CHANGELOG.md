@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.19.0
+
+**New Features**
+
+- [db_patches] Better handle stopping and starting databases and listeners [ch352]
+- [db_definition] Add support for multiple databases [ch353]
+- [db_listener] Add support for multiple listeners [ch370]
+
+
 ## Release 0.18.1
 
 **Bug fixes**
