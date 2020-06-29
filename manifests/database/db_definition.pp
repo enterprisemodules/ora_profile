@@ -121,7 +121,7 @@
 # @param [Hash] ora_database_override
 #    A hash with database settings that will override the default database settings.
 #
-# @param [String[1]] dbdomain
+# @param [Optional[String[1]]] dbdomain
 #    The domain of the database.
 #    The default is `$facts['networking']['domain']`
 #
@@ -164,7 +164,8 @@ class ora_profile::database::db_definition(
   String[1] $data_file_destination,
   String[1] $db_recovery_file_dest,
   Hash      $ora_database_override,
-  String[1] $dbdomain,
+  Optional[String[1]]
+            $dbdomain,
   Variant[Boolean,Enum['on_failure']]
             $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
 ) inherits ora_profile::database {
@@ -327,8 +328,9 @@ class ora_profile::database::db_definition(
   } else {
 
     $database.each |$db, $db_props| {
+      $all_db_props = $db_props  - init_ora_params
       $instance_name = set_param('instance_name', $db, $cluster_nodes)
-      $oh = $db_props['oracle_home']
+      $oh = $all_db_props['oracle_home']
       file { "${oh}/dbs/init${instance_name}.ora":
         ensure  => present,
         content => "spfile='${data_file_destination}/spfile${db}.ora'"
@@ -372,7 +374,7 @@ class ora_profile::database::db_definition(
 
       -> ora_database {$db:
         ensure => present,
-        *      => $db_props,
+        *      => $all_db_props,
       }
     }
   }

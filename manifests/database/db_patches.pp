@@ -17,7 +17,7 @@
 #
 # @param [String[1]] patch_file
 #    The file containing the required Opatch version.
-#    The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
+#    The default value is: `p6880880_122010_Linux-x86-64`
 #
 # @param [Stdlib::Absolutepath] oracle_home
 #    The home directory to use for the Oracle installation.
@@ -27,7 +27,11 @@
 # @param [String[1]] opversion
 #    The version of OPatch that is needed.
 #    If it is not installed, Puppet will install the specfied version.
-#    The default value is: `12.1.0.1.10`
+#    If you have defined patches for multiple homes, this version of the OPatch utility will be installed
+#    in all of these homes from the patch_file specified. Recent versions of the OPatch utility are exactly
+#    the same for Oracle versions 12.1 through 19, so it doesn't matter for which Oracle version you have
+#    downloaded it.
+#    The default value is: `12.2.0.1.13`
 #
 # @param [String[1]] install_group
 #    The group to use for Oracle install.
@@ -94,6 +98,9 @@ class ora_profile::database::db_patches(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  # Always execute Ora_install::Opatchupgrade before any Ora_opatch
+  Ora_install::Opatchupgrade <| |> -> Ora_opatch <| |>
+
   if ( $include_ojvm ) {
     $ojvm_msg = 'including OJVM'
   } else {
@@ -114,22 +121,6 @@ class ora_profile::database::db_patches(
     echo { "Ensure DB patch level ${level} ${ojvm_msg} on ${oracle_home}":
       withpath => false,
     }
-  }
-
-  # Always execute Ora_install::Opatchupgrade before any Ora_opatch
-  Ora_install::Opatchupgrade <| |> -> Ora_opatch <| |>
-
-  #
-  # First make sure the correct version of opatch is installed
-  #
-  ora_install::opatchupgrade{"DB OPatch upgrade to ${opversion}":
-    oracle_home               => $oracle_home,
-    patch_file                => "${patch_file}.zip",
-    opversion                 => $opversion,
-    user                      => $os_user,
-    group                     => $install_group,
-    puppet_download_mnt_point => $source,
-    download_dir              => $download_dir,
   }
 
   $patch_levels = lookup('ora_profile::database::db_patches::patch_levels', Hash)
@@ -159,13 +150,8 @@ class ora_profile::database::db_patches(
   # patch_list_to_apply is the hash with patches that need to be applied, without patches that have already been applied
   $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list)
   # apply_patches is the hash without the OPatch details which can be given to ora_opatch
-  $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details - patch_file - opversion } }.reduce({}) |$memo, $array| { $memo + $array }
-
-  if ( $converted_patch_list.length > 0 ) {
-    echo {"Ensure DB patch(es) ${converted_patch_list.join(',')}":
-      withpath => false,
-    }
-  }
+  $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
+  $converted_apply_patch_list = ora_physical_patches($apply_patches)
 
   schedule {'patchschedule':
     range  => $patch_window,
@@ -180,6 +166,19 @@ class ora_profile::database::db_patches(
     $schedule = undef
   }
 
+  # Opatchupgrade in all homes that have patches defined
+  $complete_patch_list.map |$patch, $_details| { $patch.split(':')[0] }.unique.each |$home| {
+    ora_install::opatchupgrade{"DB OPatch upgrade to ${opversion} in ${home}":
+      oracle_home               => $home,
+      patch_file                => "${patch_file}.zip",
+      opversion                 => $opversion,
+      user                      => $os_user,
+      group                     => $install_group,
+      puppet_download_mnt_point => $source,
+      download_dir              => $download_dir,
+    }
+  }
+
   if ( ora_patches_installed($converted_patch_list) ) {
     if ( $converted_patch_list.length > 0 ) {
       echo { 'All DB patches already installed. Skipping patches.':
@@ -192,19 +191,16 @@ class ora_profile::database::db_patches(
       unless ( $is_rac ) {
         $ora_install_homes = $facts['ora_install_homes']
 
+        if ( $converted_apply_patch_list.length > 0 ) {
+          echo {"Apply DB patch(es) ${converted_apply_patch_list.join(',')}":
+            withpath => false,
+            schedule => $schedule,
+          }
+        }
+
         $patch_list_to_apply.each |$patch, $patch_details| {
 
           $patch_home = $patch.split(':')[0]
-
-          ora_install::opatchupgrade{"DB OPatch upgrade to ${patch_details['opversion']} in ${patch_home}":
-            oracle_home               => $patch_home,
-            patch_file                => "${patch_details['patch_file']}.zip",
-            opversion                 => $patch_details['opversion'],
-            user                      => $os_user,
-            group                     => $install_group,
-            puppet_download_mnt_point => $source,
-            download_dir              => $download_dir,
-          }
 
           $running_sids = $ora_install_homes[$patch_home]['running_sids']
           if $running_sids.length > 0 {

@@ -1,5 +1,5 @@
 <%- | String $dbname,
-      String $dbdomain,
+      Optional[String] $dbdomain,
       String $db_create_file_dest,
       String $db_recovery_file_dest,
       String $db_recovery_file_dest_size,
@@ -42,8 +42,10 @@ open_cursors=<%= $open_cursors %>
 ###########################################
 # Database Identification
 ###########################################
+<% if $dbdomain { -%>
 db_domain=<%= $dbdomain %>
-db_name='<%= $dbname %>'
+<% } -%>
+db_name=<%= $dbname %>
 
 ###########################################
 # File Configuration
