@@ -2295,7 +2295,7 @@ To customize this consistently use the hiera key `ora_profile::database::grid_ho
 Data type: `String[1]`
 
 The file containing the required Opatch version.
-The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
+The default value is: `p6880880_122010_Linux-x86-64`
 
 ##### `opversion`
 
@@ -2303,7 +2303,7 @@ Data type: `String[1]`
 
 The version of OPatch that is needed.
 If it is not installed, Puppet will install the specfied version.
-The default value is: `12.1.0.1.10`
+The default value is: `12.2.0.1.13`
 
 ##### `patch_list`
 
@@ -2332,7 +2332,6 @@ ora_profile::asm_software
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
 ora_profile::database::asm_setup
 
 Here you can customize some of the attributes of your database.
@@ -3256,7 +3255,7 @@ A hash with database settings that will override the default database settings.
 
 ##### `dbdomain`
 
-Data type: `String[1]`
+Data type: `Optional[String[1]]`
 
 The domain of the database.
 The default is `$facts['networking']['domain']`
@@ -3526,11 +3525,14 @@ The default is: 12.2
 
 ##### `dbname`
 
-Data type: `String[1]`
+Data type: `Variant[String[1], Hash]`
 
 The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
+This parameter can also be defined as Hash in case you need multiple listeners.
+The keys of the hash are the database names, and for every key you can specify all valid parameters for the class.
+The defaults for all key(s) in the Hash are the ones given to the class.
 
 ### ora_profile::database::db_patches
 
@@ -3557,7 +3559,7 @@ The following parameters are available in the `ora_profile::database::db_patches
 Data type: `String[1]`
 
 The file containing the required Opatch version.
-The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
+The default value is: `p6880880_122010_Linux-x86-64`
 
 ##### `oracle_home`
 
@@ -3573,7 +3575,11 @@ Data type: `String[1]`
 
 The version of OPatch that is needed.
 If it is not installed, Puppet will install the specfied version.
-The default value is: `12.1.0.1.10`
+If you have defined patches for multiple homes, this version of the OPatch utility will be installed
+in all of these homes from the patch_file specified. Recent versions of the OPatch utility are exactly
+the same for Oracle versions 12.1 through 19, so it doesn't matter for which Oracle version you have
+downloaded it.
+The default value is: `12.2.0.1.13`
 
 ##### `install_group`
 

@@ -47,7 +47,7 @@ Type: `Stdlib::Absolutepath`
 
 The file containing the required Opatch version.
 
-The default value is: `p6880880_121010_Linux-x86-64_12.1.0.1.10`
+The default value is: `p6880880_122010_Linux-x86-64`
 Type: `String[1]`
 
 
@@ -57,7 +57,7 @@ Type: `String[1]`
 
 The version of OPatch that is needed. If it is not installed, Puppet will install the specfied version.
 
-The default value is: `12.1.0.1.10`
+The default value is: `12.2.0.1.13`
 Type: `String[1]`
 
 
