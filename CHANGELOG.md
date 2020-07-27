@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.20.0
+
+**New Features**
+
+- [core] Add Redhat-7 hiera layer with packages
+- [core] Remove all 32-bits packages
 
 ## Release 0.19.1
 
