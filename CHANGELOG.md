@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## Release 0.19.1
+
+**Bug fixes**
+
+- [db_definition] Make dbdomain optional
+- [db_definition] Fix non-master_node usecase
+- [db_patches] Move opatchupgrade outside of loop and apply to all
+- [db_patches] Remove condition for opatchupgrade
+
 ## Release 0.19.0
 
 **New Features**
