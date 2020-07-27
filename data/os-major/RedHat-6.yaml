@@ -15,38 +15,23 @@ ora_profile::database::packages::list:
   bc: {}
   binutils: {}
   compat-libcap1: {}
-  compat-libstdc++-33.i686: {}
   compat-libstdc++-33.x86_64: {}
   e2fsprogs.x86_64: {}
   e2fsprogs-libs.x86_64: {}
-  glibc.i686: {}
   glibc.x86_64: {}
-  glibc-devel.i686: {}
   glibc-devel.x86_64: {}
   ksh: {}
   libaio.x86_64: {}
-  libaio.i686: {}
   libaio-devel.x86_64: {}
-  libaio-devel.i686: {}
-  libX11.i686: {}
   libX11.x86_64: {}
-  libXau.i686: {}
   libXau.x86_64: {}
-  libXi.i686: {}
   libXi.x86_64: {}
-  libXtst.i686: {}
   libXtst.x86_64: {}
-  libgcc.i686: {}
   libgcc.x86_64: {}
-  libstdc++.i686: {}
   libstdc++.x86_64: {}
-  libstdc++-devel.i686: {}
   libstdc++-devel.x86_64: {}
-  libxcb.i686: {}
   libxcb.x86_64: {}
-  libXrender.i686: {}
   libXrender.x86_64: {}
-  libXrender-devel.i686: {}
   libXrender-devel.x86_64: {}
   makex86_64: {}
   sysstat.x86_64: {}
