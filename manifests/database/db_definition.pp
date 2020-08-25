@@ -123,7 +123,6 @@
 #
 # @param [Optional[String[1]]] dbdomain
 #    The domain of the database.
-#    The default is `$facts['networking']['domain']`
 #
 # @param [Variant[Boolean, Enum['on_failure']]] logoutput
 #    log the outputs of Puppet exec or not.
