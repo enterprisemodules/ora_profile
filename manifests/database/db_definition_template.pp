@@ -87,9 +87,8 @@
 #    The log ize to use.
 #    The default is : `100M`
 #
-# @param [String[1]] dbdomain
+# @param [Optional[String[1]]] dbdomain
 #    The domain of the database.
-#    The default is `$facts['networking']['domain']`
 #
 # @param [Variant[Boolean, Enum['on_failure']]] logoutput
 #    log the outputs of Puppet exec or not.
@@ -127,7 +126,7 @@ class ora_profile::database::db_definition_template(
   Enum['SINGLE','RAC','RACONE']
                       $db_conf_type,
   String[1]           $log_size,
-  String[1]           $dbdomain,
+  Optional[String[1]] $dbdomain,
   Variant[Boolean,Enum['on_failure']]
                       $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
 ) inherits ora_profile::database {

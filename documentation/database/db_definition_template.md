@@ -231,9 +231,8 @@ Type: `String[1]`
 
 The domain of the database.
 
-The default is `$facts['networking']['domain']`
 
-Type: `String[1]`
+Type: `Optional[String[1]]`
 
 
 [Back to overview of database::db_definition_template](#attributes)
