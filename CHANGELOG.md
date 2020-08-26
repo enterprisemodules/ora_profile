@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.20.1
+
+**Bug fixes**
+
+- [db_definition_template] Make domain optional
+
 ## Release 0.20.0
 
 **New Features**
