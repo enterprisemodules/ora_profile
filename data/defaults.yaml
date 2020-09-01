@@ -162,7 +162,18 @@ ora_profile::database::firewall::ports:
     port: 1521
 ora_profile::database::firewall::manage_service:                          true
 
-
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::tmpfiles
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::tmpfiles::list:
+  oracle:
+    - dir: '/tmp/.oracle'
+      mode: 'x'
+    - dir: '/var/tmp/.oracle'
+      mode: 'x'
+  
 # ------------------------------------------------------------------------------
 #
 # Settings for database::asm_sysctl
