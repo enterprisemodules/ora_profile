@@ -129,13 +129,11 @@ class ora_profile::database::db_software(
       ensure => 'present',
     }
   }
-
   unless defined(File[$download_dir]) {
     file { $download_dir:
       ensure => 'directory',
     }
   }
-
   $dirs.each |$dir| {
     unless defined(File[$dir]) {
       case $facts['os']['family'] {

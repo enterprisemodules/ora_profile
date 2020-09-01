@@ -8,6 +8,7 @@ fixtures:
     provision:    'git://github.com/enterprisemodules/provision.git'
   forge_modules:
     easy_type:              enterprisemodules-easy_type
+    partition:              enterprisemodules-partition
     ora_install:            enterprisemodules-ora_install
     ora_config:             enterprisemodules-ora_config
     ora_cis:                enterprisemodules-ora_cis
