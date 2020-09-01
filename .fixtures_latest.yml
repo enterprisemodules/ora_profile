@@ -14,6 +14,7 @@ fixtures:
     ora_config:     'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_config.git'
     ora_cis:        'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_cis.git'
   forge_modules:
+    partition:              enterprisemodules-partition
     powershell:             puppetlabs/powershell
     pwshlib:                puppetlabs/pwshlib
     stdlib:                 puppetlabs/stdlib

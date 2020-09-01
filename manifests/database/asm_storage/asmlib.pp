@@ -4,7 +4,7 @@
 #
 # @summary This class configures ASMLib devices.
 # Here is an example:
-# 
+#
 # ```puppet
 #   include ora_profile::database::asm_storage::asmlib
 # ```
@@ -46,7 +46,11 @@ class ora_profile::database::asm_storage::asmlib(
     owner   => root,
     group   => root,
     mode    => '0775',
-    content => template('ora_profile/oracleasm-_dev_oracleasm.erb'),
+    content => epp('ora_profile/oracleasm-_dev_oracleasm.epp',{
+      'grid_user'       => $grid_user,
+      'grid_admingroup' => $grid_admingroup,
+      'scan_exclude'    => $scan_exclude,
+    }),
   }
 
   file{'/etc/sysconfig/oracleasm':

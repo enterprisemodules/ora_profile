@@ -4,7 +4,7 @@
 #
 # @summary This class will apply udev rules to specified disk devices.
 # Here is an example:
-# 
+#
 # ```puppet
 #   include ora_profile::database::asm_storage::udev
 # ```
@@ -37,7 +37,11 @@ class ora_profile::database::asm_storage::udev(
 ) inherits ora_profile::database {
   file { '/etc/udev/rules.d/99-oracle-asmdevices.rules':
     ensure  => present,
-    content => template("ora_profile/99-oracle-asmdevices-el${facts['os']['release']['major']}.rules.erb"),
+    content => epp("ora_profile/99-oracle-asmdevices-el${facts['os']['release']['major']}.rules.epp",{
+      'grid_user'       => $grid_user,
+      'grid_admingroup' => $grid_admingroup,
+      'disk_devices'    => $disk_devices,
+    }),
     notify  => Exec['apply_udev_rules'],
   }
   exec { 'apply_udev_rules':

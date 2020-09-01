@@ -1,0 +1,7 @@
+<% |
+  Integer          $thread,
+  Easy_type::Size  $log_size,
+| %>
+alter database add logfile thread <%= $thread %> size <%= $log_size %>;
+alter database add logfile thread <%= $thread %> size <%= $log_size %>;
+alter database add logfile thread <%= $thread %> size <%= $log_size %>;

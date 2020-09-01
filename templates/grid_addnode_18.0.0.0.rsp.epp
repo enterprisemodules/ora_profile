@@ -1,3 +1,12 @@
+<% |
+  Optional[String[1]] $ora_inventory = undef,
+  Optional[String[1]] $grid_base = undef,
+  Optional[String[1]] $cluster_name = undef,
+  Optional[String[1]] $hostname = undef,
+  Optional[String[1]] $network_interface_list = undef,
+  Optional[Boolean]   $gimr_configure = undef,
+  Optional[Boolean]   $gimr_dg = undef,
+| %>
 ###############################################################################
 ## Copyright(c) Oracle Corporation 1998,2018. All rights reserved.           ##
 ##                                                                           ##
@@ -57,7 +66,7 @@ oracle.install.responseFileVersion=/oracle/install/rspfmt_crsinstall_response_sc
 # This is an optional parameter if installing on
 # Windows based Operating System.
 #-------------------------------------------------------------------------------
-INVENTORY_LOCATION=<%= @ora_inventory %>
+INVENTORY_LOCATION=<%= $ora_inventory %>
 
 #-------------------------------------------------------------------------------
 # Specify the installation option.
@@ -77,7 +86,7 @@ oracle.install.option=CRS_ADDNODE
 #-------------------------------------------------------------------------------
 # Specify the complete path of the Oracle Base.
 #-------------------------------------------------------------------------------
-ORACLE_BASE=<%= @grid_base %>
+ORACLE_BASE=<%= $grid_base %>
 
 ################################################################################
 #                                                                              #
@@ -115,7 +124,7 @@ oracle.install.crs.config.memberClusterManifestFile=
 #
 # Applicable only for STANDALONE and DOMAIN cluster configuration
 #-------------------------------------------------------------------------------
-oracle.install.crs.config.clusterName=<%= @cluster_name %>
+oracle.install.crs.config.clusterName=<%= $cluster_name %>
 
 #-------------------------------------------------------------------------------
 # Applicable only for STANDALONE, DOMAIN, MEMBERDB cluster configuration.
@@ -191,7 +200,7 @@ oracle.install.crs.config.sites=
 # hostnameprefix:lowerbound-upperbound:hostnamesuffix:vipsuffix:role of node
 #
 #-------------------------------------------------------------------------------
-oracle.install.crs.config.clusterNodes=<%= @facts['hostname'] -%>:<%= @facts['hostname'] -%>-vip:HUB
+oracle.install.crs.config.clusterNodes=<%= $hostname -%>:<%= $hostname -%>-vip:HUB
 
 #-------------------------------------------------------------------------------
 # The value should be a comma separated strings where each string is as shown below
@@ -207,7 +216,7 @@ oracle.install.crs.config.clusterNodes=<%= @facts['hostname'] -%>:<%= @facts['ho
 # For example: eth0:140.87.24.0:1,eth1:10.2.1.0:2,eth2:140.87.52.0:3
 #
 #-------------------------------------------------------------------------------
-oracle.install.crs.config.networkInterfaceList=<%= @network_interface_list %>
+oracle.install.crs.config.networkInterfaceList=<%= $network_interface_list %>
 
 #------------------------------------------------------------------------------
 # Create a separate ASM DiskGroup to store GIMR data.

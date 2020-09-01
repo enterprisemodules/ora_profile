@@ -183,7 +183,7 @@ ora_profile::database::tmpfiles::list:
       mode: 'x'
     - dir: '/var/tmp/.oracle'
       mode: 'x'
-  
+
 # ------------------------------------------------------------------------------
 #
 # Settings for database::asm_sysctl

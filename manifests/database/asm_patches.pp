@@ -4,7 +4,7 @@
 #
 # @summary This class contains the definition for the ASM patches.
 # It also contains the definition of the required `Opatch` version.
-# 
+#
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [Stdlib::Absolutepath] grid_home
@@ -89,7 +89,6 @@ class ora_profile::database::asm_patches(
       }
 
       $asm_version = lookup('ora_profile::database::asm_software::version')
-
       $patch_list.each |$patch, $props| {
         $home = split($patch, ':')[0]
         $patch_num = split($patch, ':')[1]
@@ -160,7 +159,14 @@ class ora_profile::database::asm_patches(
           owner   => $grid_user,
           group   => $install_group,
           mode    => '0744',
-          content => template('ora_profile/patch_grid.sh.erb'),
+          content => epp('ora_profile/patch_grid.sh.epp',{
+            'home'          => $home,
+            'grid_base'     => $grid_base,
+            'download_dir'  => $download_dir,
+            'patch_num'     => $patch_num,
+            'apply_type'    => $apply_type,
+            'apply_patches' => $apply_patches,
+          }),
         }
 
         exec{ "Apply ${props['type']} patch(es) ${patch_num} to ${home}":
