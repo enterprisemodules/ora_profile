@@ -492,6 +492,10 @@ ora_profile::database::db_patches::patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:30920127-GIRU-12.2.0.1.200414":
         source:                "%{::ora_profile::database::source}/p30920127_122010_Linux-x86-64.zip"
         sub_patches:           ['30886680','30882603']
+    JUL2020RU:
+      "%{lookup('ora_profile::database::oracle_home')}:31305382-GIRU-12.2.0.1.200714":
+        source:                "%{::ora_profile::database::source}/p31305382_122010_Linux-x86-64.zip"
+        sub_patches:           ['31312468','31309299']
   '18.0.0.0':
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28659165-GIRU-18.4.0.0.181016":
@@ -521,6 +525,10 @@ ora_profile::database::db_patches::patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:30899645-GIRU-18.10.0.0.200414":
         source:                "%{::ora_profile::database::source}/p30899645_180000_Linux-x86-64.zip"
         sub_patches:           ['30872794','30882568']
+    JUL2020RU:
+      "%{lookup('ora_profile::database::oracle_home')}:31305362-GIRU-18.11.0.0.200714":
+        source:                "%{::ora_profile::database::source}/p31305362_180000_Linux-x86-64.zip"
+        sub_patches:           ['31308624','31309087']
   '19.0.0.0':
     APR2019RU: {}
     JUL2019RU:
@@ -542,7 +550,7 @@ ora_profile::database::db_patches::patch_levels:
     JUL2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:31305339-GIRU-19.8.0.0.200714":
         source:                "%{::ora_profile::database::source}/p31305339_190000_Linux-x86-64.zip"
-        sub_patches:           ['31281355','31305087','31304218','31335188']
+        sub_patches:           ['31281355','31305087']
 ora_profile::database::db_patches::ojvm_patch_levels:
   '11.2.0.1': {}
   '11.2.0.3': {}
@@ -599,6 +607,10 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:30805580-OJVM-12.2.0.1.200414":
         source:                "%{::ora_profile::database::source}/p30805580_122010_Linux-x86-64.zip"
         sub_patches:           ['30805580']
+    JUL2020RU:
+      "%{lookup('ora_profile::database::oracle_home')}:31219919-OJVM-12.2.0.1.200714":
+        source:                "%{::ora_profile::database::source}/p31219919_122010_Linux-x86-64.zip"
+        sub_patches:           ['31219919']
   '18.0.0.0':
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28502229-OJVM-18.4.0.0.181016":
@@ -628,6 +640,10 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:30805598-OJVM-18.10.0.0.200414":
         source:                "%{::ora_profile::database::source}/p30805598_180000_Linux-x86-64.zip"
         sub_patches:           ['30805598']
+    JUL2020RU:
+      "%{lookup('ora_profile::database::oracle_home')}:31219909-OJVM-18.11.0.0.200714":
+        source:                "%{::ora_profile::database::source}/p31219909_180000_Linux-x86-64.zip"
+        sub_patches:           ['31219909']
   '19.0.0.0':
     APR2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29548437-OJVM-19.3.0.0.190416":
@@ -649,7 +665,10 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:30805684-OJVM-19.7.0.0.200414":
         source:                "%{::ora_profile::database::source}/p30805684_190000_Linux-x86-64.zip"
         sub_patches:           ['30805684']
-    JUL2020RU:                  {}
+    JUL2020RU:
+      "%{lookup('ora_profile::database::oracle_home')}:31219897-OJVM-19.7.0.0.200714":
+        source:                "%{::ora_profile::database::source}/p31219897_190000_Linux-x86-64.zip"
+        sub_patches:           ['31219897']
 
 # ------------------------------------------------------------------------------
 #
@@ -854,39 +873,29 @@ ora_profile::client::packages::list:
     ensure: present
   compat-libcap1.x86_64:
     ensure: present
-    ensure: present
   compat-libstdc++-33.x86_64:
     ensure: present
   gcc.x86_64:
     ensure: present
   gcc-c++.x86_64:
     ensure: present
-    ensure: present
   glibc.x86_64:
-    ensure: present
     ensure: present
   glibc-devel.x86_64:
     ensure: present
   ksh:
     ensure: present
-    ensure: present
   libaio.x86_64:
-    ensure: present
     ensure: present
   libaio-devel.x86_64:
     ensure: present
-    ensure: present
   libgcc.x86_64:
-    ensure: present
     ensure: present
   libstdc++.x86_64:
     ensure: present
-    ensure: present
   libstdc++-devel.x86_64:
     ensure: present
-    ensure: present
   libXi.x86_64:
-    ensure: present
     ensure: present
   libXtst.x86_64:
     ensure: present
