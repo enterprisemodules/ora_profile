@@ -528,6 +528,10 @@ ora_profile::database::db_patches::patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:30899722-GIRU-19.7.0.0.200414":
         source:                "%{::ora_profile::database::source}/p30899722_190000_Linux-x86-64.zip"
         sub_patches:           ['30869156','30894985']
+    JUL2020RU:
+      "%{lookup('ora_profile::database::oracle_home')}:31305339-GIRU-19.8.0.0.200714":
+        source:                "%{::ora_profile::database::source}/p31305339_190000_Linux-x86-64.zip"
+        sub_patches:           ['31281355','31305087','31304218','31335188']
 ora_profile::database::db_patches::ojvm_patch_levels:
   '11.2.0.1': {}
   '11.2.0.3': {}
@@ -634,7 +638,7 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:30805684-OJVM-19.7.0.0.200414":
         source:                "%{::ora_profile::database::source}/p30805684_190000_Linux-x86-64.zip"
         sub_patches:           ['30805684']
-
+    JUL2020RU:                  {}
 
 # ------------------------------------------------------------------------------
 #
