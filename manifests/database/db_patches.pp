@@ -152,6 +152,7 @@ class ora_profile::database::db_patches(
   # apply_patches is the hash without the OPatch details which can be given to ora_opatch
   $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
   $converted_apply_patch_list = ora_physical_patches($apply_patches)
+  $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
 
   schedule {'patchschedule':
     range  => $patch_window,
@@ -198,9 +199,7 @@ class ora_profile::database::db_patches(
           }
         }
 
-        $patch_list_to_apply.each |$patch, $patch_details| {
-
-          $patch_home = $patch.split(':')[0]
+        $homes_to_be_patched.each |$patch_home|  {
 
           $running_sids = $ora_install_homes[$patch_home]['running_sids']
           if $running_sids.length > 0 {
@@ -259,9 +258,7 @@ class ora_profile::database::db_patches(
       #
       unless ( $is_rac ) {
 
-        $patch_list_to_apply.each |$patch, $_patch_details| {
-
-          $patch_home = $patch.split(':')[0]
+        $homes_to_be_patched.each |$patch_home|  {
 
           $running_sids = $ora_install_homes[$patch_home]['running_sids']
           if $running_sids.length > 0 {
