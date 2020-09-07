@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.21.0
+
+**New Features**
+
+- [db_patches] Add JUL2020RU patchlevel
+
 ## Release 0.20.1
 
 **Bug fixes**
