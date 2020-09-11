@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.22.0
+
+**New Features**
+
+- [dba_patches] Add July 2020 Release Updates for version 12.2, 18 and 19
+- [tmpfiles] Control rhel tmpfiles systemd service
+
+
 ## Release 0.21.0
 
 **New Features**
