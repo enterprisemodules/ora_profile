@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.23.0
+
+**New Features**
+
+- [oem] Add OEM server and agent to ora_profile
+
 ## Release 0.22.0
 
 **New Features**
