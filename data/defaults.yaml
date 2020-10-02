@@ -269,7 +269,7 @@ ora_profile::database::asm_packages::list:
   python-rtslib: {}
   python-six: {}
   targetcli: {}
-
+  unzip.x86_64: {}
 
 # ------------------------------------------------------------------------------
 #
@@ -1040,4 +1040,3 @@ ora_profile::oem_agent::software::ora_inventory_dir:                      /u01/a
 ora_profile::oem_agent::software::os_user:                                oracle
 ora_profile::oem_agent::software::install_group:                          oinstall
 ora_profile::oem_agent::software::download_dir:                           /install
-

@@ -46,3 +46,4 @@ ora_profile::database::asm_packages::list:
   net-tools.x86_64: {}
   nfs-utils.x86_64: {}
   smartmontools.x86_64: {}
+  unzip.x86_64: {}
