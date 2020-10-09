@@ -286,12 +286,12 @@ class ora_profile::oem_agent(
 )
 {
   easy_type::staged_contain([
-    ['ora_profile::database::em_license',               $standalone],
-    ['ora_profile::database::sysctl',                   $standalone],
-    ['ora_profile::database::groups_and_users',         $standalone],
-    ['ora_profile::database::firewall',                 $standalone],
-    ['ora_profile::oem_agent::limits',                  $standalone],
-    'ora_profile::oem_agent::packages',
+    ['ora_profile::database::em_license',       { 'onlyif' => $standalone }],
+    ['ora_profile::database::sysctl',           { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],
+    ['ora_profile::database::groups_and_users', { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::groups_and_users' }],
+    ['ora_profile::database::firewall',         { 'onlyif' => $standalone }],
+    ['ora_profile::oem_agent::limits',          { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::limits' }],
+    ['ora_profile::oem_agent::packages',        { 'implementation' => 'easy_type::profile::packages' }],
     'ora_profile::oem_agent::software',
   ])
 }

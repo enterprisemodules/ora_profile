@@ -3,7 +3,7 @@
 include:
   - project: 'enterprisemodules/gitlab_ci'
     file: 'module-defaults.yml'
-
+    
 Oracle 12 database Acc test:
   extends: .puppet_acceptance_test
   variables:
