@@ -96,7 +96,7 @@
 # 
 # ```puppet
 # 
-# class {'ora_profile::database':
+# class { 'ora_profile::database':
 #   dbname  => 'EM',
 #   source  => 'http://www.example.com/database_files',
 #   version => '11.2.0.3',
@@ -1087,35 +1087,38 @@ class ora_profile::database(
   $asm_software_install_task = lookup('ora_profile::database::asm_software::install_task')
   $asm_inline_patch          = $use_asm and $asm_software_install_task != 'ALL'
 
-  easy_type::staged_contain([
+  easy_type::ordered_steps([
     'ora_profile::database::em_license',
-    ['ora_profile::database::sysctl',                   $is_linux],
-    ['ora_profile::database::limits',                   $is_linux],
-    ['ora_profile::database::groups_and_users',         !$use_asm],
-    ['ora_profile::database::packages',                 $is_linux],
-    ['ora_profile::database::firewall',                 $is_linux],
-    ['ora_profile::database::tmpfiles',                 $is_linux],
-    ['ora_profile::database::asm_sysctl',               $use_asm],
-    ['ora_profile::database::asm_limits',               $use_asm],
-    ['ora_profile::database::asm_groups_and_users',     $use_asm],
-    ['ora_profile::database::rac::authenticated_nodes', $is_rac],
-    ['ora_profile::database::asm_packages',             $use_asm],
-    ['ora_profile::database::asm_storage',              $use_asm],
-    ['ora_profile::database::asm_software',             $use_asm],
-    ['ora_profile::database::asm_patches',              $use_asm],
-    ['ora_profile::database::asm_setup',                $asm_inline_patch],
-    ['ora_profile::database::asm_init_params',          $use_asm],
-    ['ora_profile::database::asm_diskgroup',            $use_asm],
+    ['ora_profile::database::sysctl',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::sysctl' }],
+    ['ora_profile::database::limits',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::limits' }],
+    ['ora_profile::database::groups_and_users',         { 'onlyif' => !$use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
+    ['ora_profile::database::packages',                 { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::packages' }],
+    #
+    # Although there is an easy_type::profile::firewall implementation, it doesn't fit here. We are doing more here
+    #
+    ['ora_profile::database::firewall',                 { 'onlyif' => $is_linux}],
+    ['ora_profile::database::tmpfiles',                 { 'onlyif' => $is_linux}],
+    ['ora_profile::database::asm_sysctl',               { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::sysctl' }],
+    ['ora_profile::database::asm_limits',               { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::limits' }],
+    ['ora_profile::database::asm_groups_and_users',     { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
+    ['ora_profile::database::rac::authenticated_nodes', { 'onlyif' => $is_rac}],
+    ['ora_profile::database::asm_packages',             { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::packages' }],
+    ['ora_profile::database::asm_storage',              { 'onlyif' => $use_asm}],
+    ['ora_profile::database::asm_software',             { 'onlyif' => $use_asm}],
+    ['ora_profile::database::asm_patches',              { 'onlyif' => $use_asm}],
+    ['ora_profile::database::asm_setup',                { 'onlyif' => $asm_inline_patch}],
+    ['ora_profile::database::asm_init_params',          { 'onlyif' => $use_asm}],
+    ['ora_profile::database::asm_diskgroup',            { 'onlyif' => $use_asm}],
     'ora_profile::database::db_software',
     'ora_profile::database::db_patches',
     'ora_profile::database::db_definition',
-    ['ora_profile::database::db_listener',              !$use_asm],
-    ['ora_profile::database::asm_listener',             $use_asm],
+    ['ora_profile::database::db_listener',              { 'onlyif' => !$use_asm}],
+    ['ora_profile::database::asm_listener',             { 'onlyif' => $use_asm}],
     'ora_profile::database::db_init_params',
     'ora_profile::database::db_services',
     'ora_profile::database::db_tablespaces',
     'ora_profile::database::db_profiles',
     'ora_profile::database::db_users',
-    ['ora_profile::database::db_startup',             !$is_rac],
+    ['ora_profile::database::db_startup',             { 'onlyif' => !$is_rac}],
   ])
 }

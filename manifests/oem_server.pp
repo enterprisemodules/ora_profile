@@ -292,12 +292,12 @@ class ora_profile::oem_server(
     -> Class['ora_profile::oem_server::limits']
   }
   easy_type::staged_contain([
-    ['ora_profile::database::em_license',               $standalone],
-    ['ora_profile::database::sysctl',                   $standalone],
-    ['ora_profile::database::groups_and_users',         $standalone],
-    ['ora_profile::database::firewall',                 $standalone],
-    'ora_profile::oem_server::limits',
-    'ora_profile::oem_server::packages',
+    ['ora_profile::database::em_license',       { 'onlyif' => $standalone }],
+    ['ora_profile::database::sysctl',           { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],
+    ['ora_profile::database::groups_and_users', { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],
+    ['ora_profile::database::firewall',         { 'onlyif' => $standalone }],
+    ['ora_profile::oem_server::limits',         { 'implementation' => 'easy_type::profile::limits' }],
+    ['ora_profile::oem_server::packages',       { 'implementation' => 'easy_type::profile::packages' }],
     'ora_profile::oem_server::software',
   ])
 }
