@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.24.0
+
+**New Features**
+
+- [core] Add easy_type::debug_evaluation to all classes
+- [core] Migrate from staged_contain to use ordered_steps
+- [core] Unzip package added to the required packages.
+- [core] Convert erb templates to epp
+
 ## Release 0.23.0
 
 **New Features**
