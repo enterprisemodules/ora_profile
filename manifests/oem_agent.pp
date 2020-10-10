@@ -285,6 +285,8 @@ class ora_profile::oem_agent(
   Optional[String]  $after_software          = undef,
 )
 {
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   easy_type::staged_contain([
     ['ora_profile::database::em_license',       { 'onlyif' => $standalone }],
     ['ora_profile::database::sysctl',           { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],

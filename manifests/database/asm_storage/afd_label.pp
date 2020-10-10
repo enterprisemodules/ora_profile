@@ -10,6 +10,8 @@ class ora_profile::database::asm_storage::afd_label()
   $grid_user = lookup('ora_profile::database::grid_user')
   $grid_base = lookup('ora_profile::database::grid_base')
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   $ora_profile::database::asm_storage::disk_devices.each |$device, $values| {
     exec { "add afd label ${values['label']} to device /dev/${device}":
       command     => "${grid_home}/bin/asmcmd afd_label ${values['label']} /dev/${device}",

@@ -134,6 +134,8 @@ class ora_profile::oem_server::software(
   Boolean                             $swonly,
 ) inherits ora_profile::oem_server {
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Ensure OEM Server version ${version} in ${oracle_home_dir}":
     withpath => false,
   }

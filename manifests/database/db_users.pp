@@ -16,6 +16,8 @@ class ora_profile::database::db_users(
   Hash $list,
 ) inherits ora_profile::database {
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if $list.keys.size > 0 {
     echo {"Ensure DB user(s) ${list.keys.join(',')}":
       withpath => false,

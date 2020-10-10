@@ -41,6 +41,8 @@ class ora_profile::database::asm_storage::asmlib(
             $scan_exclude,
 ) inherits ora_profile::database {
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   file{'/etc/sysconfig/oracleasm-_dev_oracleasm':
     ensure  => file,
     owner   => root,

@@ -33,6 +33,8 @@ class ora_profile::database::firewall::iptables(
   Optional[Array] $cluster_nodes,
 ) {
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   # Oracle recommends to disable firewalld for RAC installations
   if $cluster_nodes {
     service { 'iptables':

@@ -98,6 +98,8 @@ class ora_profile::database::db_patches(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   # Always execute Ora_install::Opatchupgrade before any Ora_opatch
   Ora_install::Opatchupgrade <| |> -> Ora_opatch <| |>
 

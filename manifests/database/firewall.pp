@@ -32,6 +32,8 @@ class ora_profile::database::firewall(
     }
   }
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   case  $::operatingsystem {
     'RedHat', 'CentOS', 'OracleLinux': {
       case ($::os['release']['major']) {

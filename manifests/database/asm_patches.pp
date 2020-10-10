@@ -45,6 +45,8 @@ class ora_profile::database::asm_patches(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if ( $patch_list.keys.size > 0 ) {
     $patch_list.each |$patch, $props| {
       if ( ! has_key($props, 'sub_patches') ) {

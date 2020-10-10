@@ -112,6 +112,8 @@ class ora_profile::client::software(
   Boolean                             $allow_insecure,
 ){
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Ensure Client Software ${version} in ${oracle_home}":
     withpath => false,
   }

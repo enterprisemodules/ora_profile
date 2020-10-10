@@ -63,6 +63,8 @@ class ora_profile::database::db_listener(
     db_port        => 1521,
   }
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if ( $dbname =~ String ) {
     echo {"Ensure Listener for ${dbname} in ${oracle_home}":
       withpath => false,

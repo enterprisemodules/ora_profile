@@ -43,6 +43,8 @@ define ora_profile::database::asm_storage::partition(
 
   $device = split($raw_device,':')[0]
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if ( $wait_for_device ) {
     sleep { "until_${device}_available":
       bedtime       => '120',                                     # how long to sleep for

@@ -170,6 +170,8 @@ class ora_profile::database::db_definition(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if ( $is_rac ) {
     if ( $dbname =~ Hash and $dbname.length > 1 ) {
       fail 'Multiple databases is not supported in a RAC environment yet'

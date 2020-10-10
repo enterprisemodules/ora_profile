@@ -41,6 +41,8 @@ class ora_profile::database::asm_diskgroup(
 
   $diskgroups = suffix($disks, "@${asm_instance_name}")
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   $diskgroups.each |String $diskgroup, Hash $diskgroup_props = {}| {
     ora_asm_diskgroup {
       default:
