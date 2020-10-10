@@ -41,6 +41,8 @@ class ora_profile::database::asm_storage::nfs(
 )
 {
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   file { $nfs_mountpoint:
     ensure  => directory,
     recurse => false,

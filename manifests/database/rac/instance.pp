@@ -48,6 +48,8 @@ define ora_profile::database::rac::instance(
 
   $download_dir = lookup('ora_profile::database::download_dir')
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   ora_tablespace {"UNDOTBS${number}@${on}":
     contents   => 'undo',
     datafile   => [$datafile],

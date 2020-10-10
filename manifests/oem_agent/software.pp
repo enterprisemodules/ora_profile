@@ -91,6 +91,8 @@ class ora_profile::oem_agent::software(
   Boolean              $install_agent = true,
 ) inherits ora_profile::oem_agent {
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if ( $install_agent ) {
     echo {"Ensure Enterprise Manager agent ${install_version} installation in ${agent_base_dir}/agent_${install_version}":
       withpath => false,

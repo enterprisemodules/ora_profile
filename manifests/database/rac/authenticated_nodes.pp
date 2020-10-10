@@ -36,6 +36,8 @@ class ora_profile::database::rac::authenticated_nodes (
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if ( $os_user == $grid_user ) {
     echo {"Ensure User equivalence for user ${os_user}":
       withpath => false,

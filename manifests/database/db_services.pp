@@ -23,6 +23,8 @@ class ora_profile::database::db_services(
 
   if $domain_name == undef { $service_name = "${dbname}_APP" } else { $service_name = "${dbname}_APP.${domain_name}" }
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Ensure DB service(s) ${service_name}":
     withpath => false,
   }

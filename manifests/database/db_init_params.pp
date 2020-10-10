@@ -35,6 +35,8 @@ class ora_profile::database::db_init_params(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   if $parameters.keys.size > 0 {
     echo {"Ensure DB init parameter(s) ${parameters.keys.join(',')}":
       withpath => false,

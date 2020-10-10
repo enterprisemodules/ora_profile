@@ -35,6 +35,9 @@ class ora_profile::database::asm_storage::udev(
   String[1] $grid_admingroup,
   Hash      $disk_devices,
 ) inherits ora_profile::database {
+
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   file { '/etc/udev/rules.d/99-oracle-asmdevices.rules':
     ensure  => present,
     content => epp("ora_profile/99-oracle-asmdevices-el${facts['os']['release']['major']}.rules.epp",{

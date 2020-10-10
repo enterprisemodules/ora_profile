@@ -1087,6 +1087,8 @@ class ora_profile::database(
   $asm_software_install_task = lookup('ora_profile::database::asm_software::install_task')
   $asm_inline_patch          = $use_asm and $asm_software_install_task != 'ALL'
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   easy_type::ordered_steps([
     'ora_profile::database::em_license',
     ['ora_profile::database::sysctl',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::sysctl' }],

@@ -17,6 +17,8 @@ define ora_profile::database::authenticated_nodes::user_equivalence(
   Array[String[1]]  $nodes        = ['localhost'],
 )
 {
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   #
   # Validate input
   #

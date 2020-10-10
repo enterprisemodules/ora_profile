@@ -38,6 +38,9 @@ class ora_profile::database::cis_rules(
   String[1]         $dbname,
   Array[String[1]]  $ignore,
 ) inherits ora_profile::database {
+
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Making sure database ${dbname} is secured.":
     withpath => false,
   }

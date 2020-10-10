@@ -34,6 +34,8 @@ class ora_profile::database::firewall::firewalld(
 ) {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   # Oracle recommends to disable firewalld for RAC installations
   if ( $cluster_nodes ) {
     service { 'firewalld':

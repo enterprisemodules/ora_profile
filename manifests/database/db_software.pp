@@ -121,6 +121,8 @@ class ora_profile::database::db_software(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   #
   # On non-windows systems , ensure the unzip package is installed
   #

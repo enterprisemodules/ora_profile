@@ -61,6 +61,8 @@ class ora_profile::database::asm_storage(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Ensure ASM storage setup using ${storage_type} disk devices":
     withpath => false,
   }

@@ -132,6 +132,8 @@ class ora_profile::database::db_definition_template(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Ensure DB definition from template for database ${dbname} in ${oracle_home}":
     withpath => false,
   }

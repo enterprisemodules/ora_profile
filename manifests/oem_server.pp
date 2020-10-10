@@ -291,6 +291,9 @@ class ora_profile::oem_server(
     Class['ora_profile::database']
     -> Class['ora_profile::oem_server::limits']
   }
+
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   easy_type::staged_contain([
     ['ora_profile::database::em_license',       { 'onlyif' => $standalone }],
     ['ora_profile::database::sysctl',           { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],

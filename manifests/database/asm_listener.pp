@@ -38,6 +38,8 @@ class ora_profile::database::asm_listener(
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,
   }

@@ -31,6 +31,8 @@ class ora_profile::database::db_startup(
             $db_type,
 ) inherits ora_profile::database {
 
+  easy_type::debug_evaluation() # Show local variable on extended debug
+
   echo {"Ensure DB Startup for ${dbname} in ${oracle_home}":
     withpath => false,
   }
