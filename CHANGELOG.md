@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.24.1
+
+**Bug fixes**
+
+- [oem_agent] provide a sane default for tmp_dir
+- [oem_agent] Fix call to staged_contain
+- [oem_server] Fix call to staged_contain
+
 ## Release 0.24.0
 
 **New Features**
