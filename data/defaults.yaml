@@ -1034,6 +1034,7 @@ ora_profile::oem_agent::software::em_upload_port:                         1159
 ora_profile::oem_agent::software::sysman_user:                            sysman
 ora_profile::oem_agent::software::sysman_password:                        ~
 ora_profile::oem_agent::software::agent_registration_password:            ~
+ora_profile::oem_agent::software::temp_dir:                               /tmp
 ora_profile::oem_agent::software::agent_base_dir:                         /u01/app/agent
 ora_profile::oem_agent::software::oracle_base:                            /u01/app/oracle
 ora_profile::oem_agent::software::ora_inventory_dir:                      /u01/app
