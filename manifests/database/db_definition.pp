@@ -221,7 +221,7 @@ class ora_profile::database::db_definition(
     sys_password              => unwrap($sys_password),
     character_set             => 'AL32UTF8',
     national_character_set    => 'AL16UTF16',
-    container_database        => $container_database,
+    container_database        => $container_database,  # TODO: container_database has to be defined also in init_params
     extent_management         => 'local',
     instances                 => $db_cluster_nodes,
     spfile_location           => $data_file_destination,
