@@ -203,7 +203,11 @@ class ora_profile::database::db_patches(
 
         $homes_to_be_patched.each |$patch_home|  {
 
-          $running_sids = $ora_install_homes[$patch_home]['running_sids']
+          if ( has_key($ora_install_homes, $patch_home) ) {
+            $running_sids = $ora_install_homes[$patch_home]['running_sids']
+          } else {
+            $running_sids = []
+          }
           if $running_sids.length > 0 {
             echo {"Stopping and starting database(s) ${running_sids.join(',')} to apply DB patches on ${patch_home}":
               withpath => false,
@@ -218,7 +222,7 @@ class ora_profile::database::db_patches(
                 schedule      => $schedule,
               }
 
-              db_control {"database stop ${dbname}":
+              -> db_control {"database stop ${dbname}":
                 ensure                  => 'stop',
                 instance_name           => $dbname,
                 oracle_product_home_dir => $patch_home,
@@ -262,7 +266,11 @@ class ora_profile::database::db_patches(
 
         $homes_to_be_patched.each |$patch_home|  {
 
-          $running_sids = $ora_install_homes[$patch_home]['running_sids']
+          if ( has_key($ora_install_homes, $patch_home) ) {
+            $running_sids = $ora_install_homes[$patch_home]['running_sids']
+          } else {
+            $running_sids = []
+          }
           if $running_sids.length > 0 {
             $running_sids.each |$dbname| {
               ora_listener {"Start listener for ${dbname}":
@@ -272,7 +280,7 @@ class ora_profile::database::db_patches(
                 schedule      => $schedule,
               }
 
-              db_control {'database start':
+              db_control {"database start ${dbname}":
                 ensure                  => 'start',
                 instance_name           => $dbname,
                 oracle_product_home_dir => $patch_home,
@@ -284,7 +292,7 @@ class ora_profile::database::db_patches(
               -> exec { "Datapatch for ${dbname}":
                 cwd         => "${patch_home}/OPatch",
                 command     => "${patch_home}/OPatch/datapatch -verbose",
-                environment => ["PATH=/usr/bin:/bin:${patch_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${patch_home}"],
+                environment => ["PATH=/usr/bin:/bin:${patch_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${patch_home}", 'ORACLE_PATH=/tmp', 'SQLPATH=/tmp'],
                 user        => $os_user,
                 logoutput   => $logoutput,
                 timeout     => 3600,
