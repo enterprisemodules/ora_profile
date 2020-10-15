@@ -91,13 +91,13 @@ ora_profile::database::limits::list:
   '*/nofile':
     soft: 2048
     hard: 8192
-  "%{::ora_profile::database::os_user}/nofile":
+  "%{lookup('ora_profile::database::os_user')}/nofile":
     soft: 65536
     hard: 65536
-  "%{::ora_profile::database::os_user}/nproc":
+  "%{lookup('ora_profile::database::os_user')}/nproc":
     soft: 2048
     hard: 16384
-  "%{::ora_profile::database::os_user}/stack":
+  "%{lookup('ora_profile::database::os_user')}/stack":
     soft: 10240
     hard: 32768
 
@@ -229,7 +229,7 @@ ora_profile::database::asm_groups_and_users::users:
     - asmdba
     shell:      /bin/bash
     password:   "%{alias('ora_profile::database::os_user_password')}"
-    home:       "/home/%{::ora_profile::database::os_user}"
+    home:       "/home/%{lookup('ora_profile::database::os_user')}"
     comment:    This user oracle was created by Puppet
     managehome: true
   "%{lookup('ora_profile::database::grid_user')}":
@@ -324,7 +324,7 @@ ora_profile::database::asm_software::install_task:                        ALL
 #  Settings for database::asm_patches
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_patches::grid_home:                            "%{::ora_profile::database::grid_home}"
+ora_profile::database::asm_patches::grid_home:                            "%{lookup('ora_profile::database::grid_home')}"
 ora_profile::database::asm_patches::patch_file:                           "%{lookup('ora_profile::database::db_patches::patch_file')}"
 ora_profile::database::asm_patches::opversion:                            "%{lookup('ora_profile::database::db_patches::opversion')}"
 ora_profile::database::asm_patches::patch_list:                           {}
@@ -414,15 +414,15 @@ ora_profile::database::db_software::dirs:
   - /u02/oradata
   - /u03
   - /u03/fast_recovery_area
-ora_profile::database::db_software::dba_group:                            "%{::ora_profile::database::dba_group}"
-ora_profile::database::db_software::install_group:                        "%{::ora_profile::database::install_group}"
+ora_profile::database::db_software::dba_group:                            "%{lookup('ora_profile::database::dba_group')}"
+ora_profile::database::db_software::install_group:                        "%{lookup('ora_profile::database::install_group')}"
 ora_profile::database::db_software::oper_group:                           oper
-ora_profile::database::db_software::os_user:                              "%{::ora_profile::database::os_user}"
-ora_profile::database::db_software::version:                              "%{::ora_profile::database::version}"
+ora_profile::database::db_software::os_user:                              "%{lookup('ora_profile::database::os_user')}"
+ora_profile::database::db_software::version:                              "%{lookup('ora_profile::database::version')}"
 ora_profile::database::db_software::database_type:                        EE
-ora_profile::database::db_software::oracle_base:                          "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_software::oracle_home:                          "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_software::source:                               "%{::ora_profile::database::source}"
+ora_profile::database::db_software::oracle_base:                          "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::database::db_software::oracle_home:                          "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_software::source:                               "%{lookup('ora_profile::database::source')}"
 ora_profile::database::db_software::file_name:                            linuxx64_12201_database
 ora_profile::database::db_software::bash_profile:                         true
 ora_profile::database::db_software::bash_additions:                       ''
@@ -437,10 +437,10 @@ ora_profile::database::db_patches::level:                                 NONE
 ora_profile::database::db_patches::include_ojvm:                          false
 ora_profile::database::db_patches::patch_file:                            p6880880_122010_Linux-x86-64
 ora_profile::database::db_patches::opversion:                             12.2.0.1.13
-ora_profile::database::db_patches::install_group:                         "%{::ora_profile::database::install_group}"
-ora_profile::database::db_patches::os_user:                               "%{::ora_profile::database::os_user}"
-ora_profile::database::db_patches::source:                                "%{::ora_profile::database::source}"
-ora_profile::database::db_patches::oracle_home:                           "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_patches::install_group:                         "%{lookup('ora_profile::database::install_group')}"
+ora_profile::database::db_patches::os_user:                               "%{lookup('ora_profile::database::os_user')}"
+ora_profile::database::db_patches::source:                                "%{lookup('ora_profile::database::source')}"
+ora_profile::database::db_patches::oracle_home:                           "%{lookup('ora_profile::database::oracle_home')}"
 ora_profile::database::db_patches::patch_list:                            {}
 ora_profile::database::db_patches::patch_window:                          '0:00 - 23:59'
 ora_profile::database::db_patches::patch_levels:
@@ -452,114 +452,114 @@ ora_profile::database::db_patches::patch_levels:
   '12.2.0.1':
     JUL2017RU:
       "%{lookup('ora_profile::database::oracle_home')}:26133434-GIRU-12.2.0.1.170718":
-        source:                "%{::ora_profile::database::source}/p26133434_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p26133434_122010_Linux-x86-64.zip"
         sub_patches:           ['26123830','26002778']
     AUG2017RU:
       "%{lookup('ora_profile::database::oracle_home')}:26610291-GIRU-12.2.0.1.170814":
-        source:                "%{::ora_profile::database::source}/p26610291_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p26610291_122010_Linux-x86-64.zip"
         sub_patches:           ['26609817','26609966']
     OCT2017RU:
       "%{lookup('ora_profile::database::oracle_home')}:26737266-GIRU-12.2.0.1.171017":
-        source:                "%{::ora_profile::database::source}/p26737266_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p26737266_122010_Linux-x86-64.zip"
         sub_patches:           ['26710464','26925644']
     JAN2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:27100009-GIRU-12.2.0.1.180116":
-        source:                "%{::ora_profile::database::source}/p27100009_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p27100009_122010_Linux-x86-64.zip"
         sub_patches:           ['27105253','27335416']
     APR2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:27468969-GIRU-12.2.0.1.180417":
-        source:                "%{::ora_profile::database::source}/p27468969_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p27468969_122010_Linux-x86-64.zip"
         sub_patches:           ['27674384','27464465']
     JUL2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28163133-RU-12.2.0.1.180717":
-        source:                "%{::ora_profile::database::source}/p28163133_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28163133_122010_Linux-x86-64.zip"
         sub_patches:           ['28163133']
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28163133-GIRU-12.2.0.1.181016":
-        source:                "%{::ora_profile::database::source}/p28714316_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28714316_122010_Linux-x86-64.zip"
         sub_patches:           ['28662603','28662626']
     JAN2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:28828733-GIRU-12.2.0.1.190115":
-        source:                "%{::ora_profile::database::source}/p28828733_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28828733_122010_Linux-x86-64.zip"
         sub_patches:           ['28822515','28870605']
     APR2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29301687-GIRU-12.2.0.1.190416":
-        source:                "%{::ora_profile::database::source}/p29301687_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29301687_122010_Linux-x86-64.zip"
         sub_patches:           ['29314339','29314424']
     JUL2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29708720-GIRU-12.2.0.1.190716":
-        source:                "%{::ora_profile::database::source}/p29708720_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29708720_122010_Linux-x86-64.zip"
         sub_patches:           ['29757449','29770040']
     OCT2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:30116802-GIRU-12.2.0.1.191015":
-        source:                "%{::ora_profile::database::source}/p30116802_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30116802_122010_Linux-x86-64.zip"
         sub_patches:           ['30138470','30122814']
     JAN2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30501932-GIRU-12.2.0.1.200114":
-        source:                "%{::ora_profile::database::source}/p30501932_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30501932_122010_Linux-x86-64.zip"
         sub_patches:           ['30593149','30585969']
     APR2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30920127-GIRU-12.2.0.1.200414":
-        source:                "%{::ora_profile::database::source}/p30920127_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30920127_122010_Linux-x86-64.zip"
         sub_patches:           ['30886680','30882603']
     JUL2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:31305382-GIRU-12.2.0.1.200714":
-        source:                "%{::ora_profile::database::source}/p31305382_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p31305382_122010_Linux-x86-64.zip"
         sub_patches:           ['31312468','31309299']
   '18.0.0.0':
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28659165-GIRU-18.4.0.0.181016":
-        source:                "%{::ora_profile::database::source}/p28659165_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28659165_180000_Linux-x86-64.zip"
         sub_patches:           ['28655784','28656071']
     JAN2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:28828717-GIRU-18.5.0.0.190115":
-        source:                "%{::ora_profile::database::source}/p28828717_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28828717_180000_Linux-x86-64.zip"
         sub_patches:           ['28822489','28864593']
     APR2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29301682-GIRU-18.6.0.0.190416":
-        source:                "%{::ora_profile::database::source}/p29301682_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29301682_180000_Linux-x86-64.zip"
         sub_patches:           ['29301631','29302264']
     JUL2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29708703-GIRU-18.7.0.0.190716":
-        source:                "%{::ora_profile::database::source}/p29708703_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29708703_180000_Linux-x86-64.zip"
         sub_patches:           ['29757256','29782099']
     OCT2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:30116795-GIRU-18.8.0.0.191015":
-        source:                "%{::ora_profile::database::source}/p30116795_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30116795_180000_Linux-x86-64.zip"
         sub_patches:           ['30112122','30113775']
     JAN2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30480702-GIRU-18.9.0.0.200114":
-        source:                "%{::ora_profile::database::source}/p30480702_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30480702_180000_Linux-x86-64.zip"
         sub_patches:           ['30480385','30480408']
     APR2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30899645-GIRU-18.10.0.0.200414":
-        source:                "%{::ora_profile::database::source}/p30899645_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30899645_180000_Linux-x86-64.zip"
         sub_patches:           ['30872794','30882568']
     JUL2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:31305362-GIRU-18.11.0.0.200714":
-        source:                "%{::ora_profile::database::source}/p31305362_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p31305362_180000_Linux-x86-64.zip"
         sub_patches:           ['31308624','31309087']
   '19.0.0.0':
     APR2019RU: {}
     JUL2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29708769-GIRU-19.4.0.0.190716":
-        source:                "%{::ora_profile::database::source}/p29708769_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29708769_190000_Linux-x86-64.zip"
         sub_patches:           ['29834717','29850993']
     OCT2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:30116789-GIRU-19.5.0.0.191015":
-        source:                "%{::ora_profile::database::source}/p30116789_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30116789_190000_Linux-x86-64.zip"
         sub_patches:           ['30125133','30122149']
     JAN2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30501910-GIRU-19.6.0.0.200114":
-        source:                "%{::ora_profile::database::source}/p30501910_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30501910_190000_Linux-x86-64.zip"
         sub_patches:           ['30557433','30489227']
     APR2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30899722-GIRU-19.7.0.0.200414":
-        source:                "%{::ora_profile::database::source}/p30899722_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30899722_190000_Linux-x86-64.zip"
         sub_patches:           ['30869156','30894985']
     JUL2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:31305339-GIRU-19.8.0.0.200714":
-        source:                "%{::ora_profile::database::source}/p31305339_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p31305339_190000_Linux-x86-64.zip"
         sub_patches:           ['31281355','31305087']
 ora_profile::database::db_patches::ojvm_patch_levels:
   '11.2.0.1': {}
@@ -570,114 +570,114 @@ ora_profile::database::db_patches::ojvm_patch_levels:
   '12.2.0.1':
     JUL2017RU:
       "%{lookup('ora_profile::database::oracle_home')}:25811364-OJVM-12.2.0.1.170718":
-        source:                "%{::ora_profile::database::source}/p25811364_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p25811364_122010_Linux-x86-64.zip"
         sub_patches:           ['25811364']
     AUG2017RU: {}
     OCT2017RU:
       "%{lookup('ora_profile::database::oracle_home')}:26635944-OJVM-12.2.0.1.171017":
-        source:                "%{::ora_profile::database::source}/p26635944_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p26635944_122010_Linux-x86-64.zip"
         sub_patches:           ['26635944']
     JAN2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:27001739-OJVM-12.2.0.1.180116":
-        source:                "%{::ora_profile::database::source}/p27001739_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p27001739_122010_Linux-x86-64.zip"
         sub_patches:           ['27001739']
     APR2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:27475613-OJVM-12.2.0.1.180417":
-        source:                "%{::ora_profile::database::source}/p27475613_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p27475613_122010_Linux-x86-64.zip"
         sub_patches:           ['27475613']
     JUL2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:27923353-OJVM-12.2.0.1.180717":
-        source:                "%{::ora_profile::database::source}/p27923353_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p27923353_122010_Linux-x86-64.zip"
         sub_patches:           ['27923353']
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28440725-OJVM-12.2.0.1.181016":
-        source:                "%{::ora_profile::database::source}/p28440725_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28440725_122010_Linux-x86-64.zip"
         sub_patches:           ['28440725']
     JAN2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:28790651-OJVM-12.2.0.1.190115":
-        source:                "%{::ora_profile::database::source}/p28790651_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28790651_122010_Linux-x86-64.zip"
         sub_patches:           ['28790651']
     APR2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29249637-OJVM-12.2.0.1.190416":
-        source:                "%{::ora_profile::database::source}/p29249637_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29249637_122010_Linux-x86-64.zip"
         sub_patches:           ['29249637']
     JUL2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29774415-OJVM-12.2.0.1.190716":
-        source:                "%{::ora_profile::database::source}/p29774415_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29774415_122010_Linux-x86-64.zip"
         sub_patches:           ['29774415']
     OCT2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:30133625-OJVM-12.2.0.1.191015":
-        source:                "%{::ora_profile::database::source}/p30133625_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30133625_122010_Linux-x86-64.zip"
         sub_patches:           ['30133625']
     JAN2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30502018-OJVM-12.2.0.1.200114":
-        source:                "%{::ora_profile::database::source}/p30502018_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30502018_122010_Linux-x86-64.zip"
         sub_patches:           ['30502018']
     APR2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30805580-OJVM-12.2.0.1.200414":
-        source:                "%{::ora_profile::database::source}/p30805580_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30805580_122010_Linux-x86-64.zip"
         sub_patches:           ['30805580']
     JUL2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:31219919-OJVM-12.2.0.1.200714":
-        source:                "%{::ora_profile::database::source}/p31219919_122010_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p31219919_122010_Linux-x86-64.zip"
         sub_patches:           ['31219919']
   '18.0.0.0':
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28502229-OJVM-18.4.0.0.181016":
-        source:                "%{::ora_profile::database::source}/p28502229_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28502229_180000_Linux-x86-64.zip"
         sub_patches:           ['28502229']
     JAN2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:28790647-OJVM-18.5.0.0.190115":
-        source:                "%{::ora_profile::database::source}/p28790647_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p28790647_180000_Linux-x86-64.zip"
         sub_patches:           ['28790647']
     APR2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29249584-OJVM-18.6.0.0.190416":
-        source:                "%{::ora_profile::database::source}/p29249584_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29249584_180000_Linux-x86-64.zip"
         sub_patches:           ['29249584']
     JUL2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29774410-OJVM-18.7.0.0.190716":
-        source:                "%{::ora_profile::database::source}/p29774410_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29774410_180000_Linux-x86-64.zip"
         sub_patches:           ['29774410']
     OCT2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:30133603-OJVM-18.8.0.0.191015":
-        source:                "%{::ora_profile::database::source}/p30133603_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30133603_180000_Linux-x86-64.zip"
         sub_patches:           ['30133603']
     JAN2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30501926-OJVM-18.9.0.0.200114":
-        source:                "%{::ora_profile::database::source}/p30501926_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30501926_180000_Linux-x86-64.zip"
         sub_patches:           ['30501926']
     APR2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30805598-OJVM-18.10.0.0.200414":
-        source:                "%{::ora_profile::database::source}/p30805598_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30805598_180000_Linux-x86-64.zip"
         sub_patches:           ['30805598']
     JUL2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:31219909-OJVM-18.11.0.0.200714":
-        source:                "%{::ora_profile::database::source}/p31219909_180000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p31219909_180000_Linux-x86-64.zip"
         sub_patches:           ['31219909']
   '19.0.0.0':
     APR2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29548437-OJVM-19.3.0.0.190416":
-        source:                "%{::ora_profile::database::source}/p29548437_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29548437_190000_Linux-x86-64.zip"
         sub_patches:           ['29548437']
     JUL2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29774421-OJVM-19.4.0.0.190716":
-        source:                "%{::ora_profile::database::source}/p29774421_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p29774421_190000_Linux-x86-64.zip"
         sub_patches:           ['29774421']
     OCT2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:30128191-OJVM-19.5.0.0.191015":
-        source:                "%{::ora_profile::database::source}/p30128191_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30128191_190000_Linux-x86-64.zip"
         sub_patches:           ['30128191']
     JAN2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30484981-OJVM-19.6.0.0.200114":
-        source:                "%{::ora_profile::database::source}/p30484981_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30484981_190000_Linux-x86-64.zip"
         sub_patches:           ['30484981']
     APR2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:30805684-OJVM-19.7.0.0.200414":
-        source:                "%{::ora_profile::database::source}/p30805684_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p30805684_190000_Linux-x86-64.zip"
         sub_patches:           ['30805684']
     JUL2020RU:
       "%{lookup('ora_profile::database::oracle_home')}:31219897-OJVM-19.7.0.0.200714":
-        source:                "%{::ora_profile::database::source}/p31219897_190000_Linux-x86-64.zip"
+        source:                "%{lookup('ora_profile::database::source')}/p31219897_190000_Linux-x86-64.zip"
         sub_patches:           ['31219897']
 
 # ------------------------------------------------------------------------------
@@ -685,12 +685,12 @@ ora_profile::database::db_patches::ojvm_patch_levels:
 #  Settings for database::db_definition
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::db_definition::dbname:                             "%{::ora_profile::database::dbname}"
-ora_profile::database::db_definition::oracle_base:                        "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_definition::oracle_home:                        "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_definition::os_user:                            "%{::ora_profile::database::os_user}"
-ora_profile::database::db_definition::install_group:                      "%{::ora_profile::database::install_group}"
-ora_profile::database::db_definition::version:                            "%{::ora_profile::database::version}"
+ora_profile::database::db_definition::dbname:                             "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_definition::oracle_base:                        "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::database::db_definition::oracle_home:                        "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_definition::os_user:                            "%{lookup('ora_profile::database::os_user')}"
+ora_profile::database::db_definition::install_group:                      "%{lookup('ora_profile::database::install_group')}"
+ora_profile::database::db_definition::version:                            "%{lookup('ora_profile::database::version')}"
 ora_profile::database::db_definition::log_size:                           100M
 ora_profile::database::db_definition::user_tablespace_size:               5M
 ora_profile::database::db_definition::system_tablespace_size:             50M
@@ -731,11 +731,11 @@ ora_profile::database::db_definition::dbdomain:                           "%{fac
 #  Settings for database::db_definition_template
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::db_definition_template::dbname:                    "%{::ora_profile::database::dbname}"
-ora_profile::database::db_definition_template::oracle_base:               "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_definition_template::oracle_home:               "%{::ora_profile::database::oracle_home}"
-ora_profile::database::db_definition_template::version:                   "%{::ora_profile::database::version}"
-ora_profile::database::db_definition_template::template_name:             "General_Purpose.%{::ora_profile::database::version}"
+ora_profile::database::db_definition_template::dbname:                    "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_definition_template::oracle_base:               "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::database::db_definition_template::oracle_home:               "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::database::db_definition_template::version:                   "%{lookup('ora_profile::database::version')}"
+ora_profile::database::db_definition_template::template_name:             "General_Purpose.%{lookup('ora_profile::database::version')}"
 ora_profile::database::db_definition_template::template_type:             seed
 ora_profile::database::db_definition_template::data_file_destination:     +DATA
 ora_profile::database::db_definition_template::recovery_area_destination: +RECO
@@ -754,12 +754,12 @@ ora_profile::database::db_definition_template::dbdomain:                  ~
 #  Settings for database::db_listener
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::db_listener::dbname:                               "%{::ora_profile::database::dbname}"
-ora_profile::database::db_listener::oracle_base:                          "%{::ora_profile::database::oracle_base}"
-ora_profile::database::db_listener::oracle_home:                          "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_listener::dbname:                               "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_listener::oracle_base:                          "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::database::db_listener::oracle_home:                          "%{lookup('ora_profile::database::oracle_home')}"
 ora_profile::database::db_listener::sqlnet_version:                       '12.2'
-ora_profile::database::db_listener::os_user:                              "%{::ora_profile::database::os_user}"
-ora_profile::database::db_listener::dba_group:                            "%{::ora_profile::database::dba_group}"
+ora_profile::database::db_listener::os_user:                              "%{lookup('ora_profile::database::os_user')}"
+ora_profile::database::db_listener::dba_group:                            "%{lookup('ora_profile::database::dba_group')}"
 
 
 # ------------------------------------------------------------------------------
@@ -767,9 +767,9 @@ ora_profile::database::db_listener::dba_group:                            "%{::o
 #  Settings for database::asm_listener
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_listener::dbname:                              "%{::ora_profile::database::dbname}"
-ora_profile::database::asm_listener::oracle_home:                         "%{::ora_profile::database::grid_home}"
-ora_profile::database::asm_listener::oracle_base:                         "%{::ora_profile::database::oracle_base}"
+ora_profile::database::asm_listener::dbname:                              "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::asm_listener::oracle_home:                         "%{lookup('ora_profile::database::grid_home')}"
+ora_profile::database::asm_listener::oracle_base:                         "%{lookup('ora_profile::database::oracle_base')}"
 ora_profile::database::asm_listener::sqlnet_version:                      '12.2'
 
 
@@ -786,7 +786,7 @@ ora_profile::database::db_init_params::parameters:                        {}
 #  Settings for database::db_services
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::db_services::dbname:                               "%{::ora_profile::database::dbname}"
+ora_profile::database::db_services::dbname:                               "%{lookup('ora_profile::database::dbname')}"
 ora_profile::database::db_services::domain_name:                          ~
 
 
@@ -838,8 +838,8 @@ ora_profile::database::db_users::list:                                    {}
 #  Settings for database::db_startup
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::db_startup::dbname:                                "%{::ora_profile::database::dbname}"
-ora_profile::database::db_startup::oracle_home:                           "%{::ora_profile::database::oracle_home}"
+ora_profile::database::db_startup::dbname:                                "%{lookup('ora_profile::database::dbname')}"
+ora_profile::database::db_startup::oracle_home:                           "%{lookup('ora_profile::database::oracle_home')}"
 ora_profile::database::db_startup::db_type:                               database
 
 
@@ -854,7 +854,7 @@ ora_profile::database::cis_rules::ignore:
   - r_2_1_2
   - r_2_1_3
   - r_2_1_4
-ora_profile::database::cis_rules::dbname:                                 "%{::ora_profile::database::dbname}"
+ora_profile::database::cis_rules::dbname:                                 "%{lookup('ora_profile::database::dbname')}"
 
 
 # ------------------------------------------------------------------------------
@@ -1041,3 +1041,36 @@ ora_profile::oem_agent::software::ora_inventory_dir:                      /u01/a
 ora_profile::oem_agent::software::os_user:                                oracle
 ora_profile::oem_agent::software::install_group:                          oinstall
 ora_profile::oem_agent::software::download_dir:                           /install
+#
+#
+#
+ora_profile::extracted_database::version:               "%{lookup('ora_profile::database::version')}"
+ora_profile::extracted_database::dbname:                "%{lookup('ora_profile::database::dbname')}"
+ora_profile::extracted_database::os_user:               "%{lookup('ora_profile::database::os_user')}"
+ora_profile::extracted_database::dba_group:             "%{lookup('ora_profile::database::dba_group')}"
+ora_profile::extracted_database::install_group:         "%{lookup('ora_profile::database::install_group')}"
+ora_profile::extracted_database::source:                "%{lookup('ora_profile::database::source')}"
+ora_profile::extracted_database::oracle_base:           "%{lookup('ora_profile::database::oracle_base')}"
+ora_profile::extracted_database::oracle_home:           "%{lookup('ora_profile::database::oracle_home')}"
+ora_profile::extracted_database::ora_inventory_dir:     "%{lookup('ora_profile::database::ora_inventory_dir')}"
+ora_profile::extracted_database::db_control_provider:   "%{lookup('ora_profile::database::db_control_provider')}"
+ora_profile::extracted_database::download_dir:          "%{lookup('ora_profile::database::download_dir')}"
+ora_profile::extracted_database::temp_dir:              "%{lookup('ora_profile::database::temp_dir')}"
+#
+#
+#
+ora_profile::database::extracted_database_defition::resource_type:  ora_database
+ora_profile::database::extracted_init_params::resource_type:        ora_init_param
+ora_profile::database::extracted_services::resource_type:           ora_service
+ora_profile::database::extracted_users::resource_type:              ora_user
+ora_profile::database::extracted_tablespaces::resource_type:        ora_tablespace
+ora_profile::database::extracted_profiles::resource_type:           ora_profile
+#
+#
+#
+ora_profile::database::extracted_database_defition::list:  {}
+ora_profile::database::extracted_init_params::list:        {}
+ora_profile::database::extracted_services::list:           {}
+ora_profile::database::extracted_users::list:              {}
+ora_profile::database::extracted_tablespaces::list:        {}
+ora_profile::database::extracted_profiles::list:           {}

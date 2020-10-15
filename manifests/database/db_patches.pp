@@ -95,7 +95,7 @@ class ora_profile::database::db_patches(
   String[1] $patch_window,
   Variant[Boolean,Enum['on_failure']]
             $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
-) inherits ora_profile::database {
+) {
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug

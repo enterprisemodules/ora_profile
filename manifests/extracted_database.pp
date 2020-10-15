@@ -8,15 +8,12 @@
 #   ora_profile::database { 'database_name': }
 #++--++
 #--++--
-class ora_profile::database(
-  Enum['local','asm']  $storage,
+class ora_profile::extracted_database(
   Ora_Install::Version $version,
   String[1] $dbname,
   String[1] $os_user,
   String[1] $dba_group,
   String[1] $install_group,
-  String[1] $grid_user,
-  String[1] $grid_admingroup,
   String[1] $source,
   Stdlib::Absolutepath
             $oracle_base,
@@ -24,10 +21,6 @@ class ora_profile::database(
             $oracle_home,
   Stdlib::Absolutepath
             $ora_inventory_dir,
-  Stdlib::Absolutepath
-            $grid_base,
-  Stdlib::Absolutepath
-            $grid_home,
   String[1] $db_control_provider,
   Stdlib::Absolutepath
             $download_dir,
@@ -37,7 +30,6 @@ class ora_profile::database(
 # Optional settings
 #
   Optional[String] $oracle_user_password = undef,
- 
   Optional[String] $em_license = undef,
   Optional[String] $authenticated_nodes = undef,
   Optional[String] $sysctl = undef,
@@ -99,10 +91,10 @@ class ora_profile::database(
 
   easy_type::ordered_steps([
     'ora_profile::database::em_license',
-    ['ora_profile::database::sysctl',                   {'implementation' => 'easy_type::profile::sysctl' }],
-    ['ora_profile::database::limits',                   {'implementation' => 'easy_type::profile::limits' }],
+    ['ora_profile::database::sysctl',                   { 'implementation' => 'easy_type::profile::sysctl' }],
+    ['ora_profile::database::limits',                   { 'implementation' => 'easy_type::profile::limits' }],
     ['ora_profile::database::groups_and_users',         { 'implementation' => 'easy_type::profile::groups_and_users' }],
-    ['ora_profile::database::packages',                 {'implementation' => 'easy_type::profile::packages' }],
+    ['ora_profile::database::packages',                 { 'implementation' => 'easy_type::profile::packages' }],
     #
     # Although there is an easy_type::profile::firewall implementation, it doesn't fit here. We are doing more here
     #
@@ -110,13 +102,12 @@ class ora_profile::database(
     'ora_profile::database::tmpfiles',
     'ora_profile::database::db_software',
     'ora_profile::database::db_patches',
-    'ora_profile::database::database_definition',
-    'ora_profile::database::db_listener',
-    'ora_profile::database::db_init_params',
-    'ora_profile::database::db_services',
-    'ora_profile::database::db_tablespaces',
-    'ora_profile::database::db_profiles',
-    'ora_profile::database::db_users',
+    ['ora_profile::database::extracted_database_defition',  { 'implementation' => 'easy_type::profile::resources' }],
+    ['ora_profile::database::extracted_init_params',        { 'implementation' => 'easy_type::profile::resources' }],
+    ['ora_profile::database::extracted_services',           { 'implementation' => 'easy_type::profile::resources' }],
+    ['ora_profile::database::extracted_tablespaces',        { 'implementation' => 'easy_type::profile::resources' }],
+    ['ora_profile::database::extracted_profiles',           { 'implementation' => 'easy_type::profile::resources' }],
+    ['ora_profile::database::extracted_users',              { 'implementation' => 'easy_type::profile::resources' }],
     'ora_profile::database::db_startup',
   ])
 }
