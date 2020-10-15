@@ -43,7 +43,7 @@
 #--++--
 class ora_profile::database::tmpfiles(
   Hash $list,
-) inherits ora_profile::database {
+) {
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
