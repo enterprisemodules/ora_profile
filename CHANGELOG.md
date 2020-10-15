@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.24.2
+
+**Bug fixes**
+
+- [db_patches] Fix issue when adding new oracle_home to running system
+
 ## Release 0.24.1
 
 **Bug fixes**
