@@ -73,8 +73,8 @@ class ora_profile::database::asm_patches(
 
   $converted_patch_list = $patch_list.map |$patch, $props| { $props['sub_patches'].map | $sp | { "${patch.split(':')[0]}:${sp}" } }.flatten
 
-  if ( oracle_exists($grid_home) ) {
-    if ( ora_patches_installed($converted_patch_list) ) {
+  if ( ora_install::oracle_exists($grid_home) ) {
+    if ( ora_install::ora_patches_installed($converted_patch_list) ) {
       echo { 'All ASM patches already installed. Skipping patches.':
         withpath => false,
       }
