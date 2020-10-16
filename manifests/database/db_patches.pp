@@ -4,15 +4,15 @@
 #
 # @summary This class contains the definition for the Oracle patches.
 # It also contains the definition of the required `Opatch` version.
-# 
+#
 # The class allows you to specify a patch level and optionally include the OJVM pacthes for the level specified.
 # A patch_list to specify additional patches is also supported.
-# 
+#
 # Keep in mind that when changing the patch level and/or adding patches will cause the listener(s) and database(s) to be stopped and started.
-# 
+#
 # Applying patches to database software in a RAC environment is only supported on initial run.
 # There is no support yet to apply patches on a running system.
-# 
+#
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [String[1]] patch_file
@@ -148,12 +148,12 @@ class ora_profile::database::db_patches(
   # Now start with the patches themselves
   #
   # converted_patch_list contains all the patches in simple notation which is used for echo and to check if any patches need to be installed
-  $converted_patch_list = ora_physical_patches($complete_patch_list)
+  $converted_patch_list = ora_install::ora_physical_patches($complete_patch_list)
   # patch_list_to_apply is the hash with patches that need to be applied, without patches that have already been applied
   $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list)
   # apply_patches is the hash without the OPatch details which can be given to ora_opatch
   $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
-  $converted_apply_patch_list = ora_physical_patches($apply_patches)
+  $converted_apply_patch_list = ora_install::ora_physical_patches($apply_patches)
   $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
 
   schedule {'patchschedule':
@@ -182,7 +182,7 @@ class ora_profile::database::db_patches(
     }
   }
 
-  if ( ora_patches_installed($converted_patch_list) ) {
+  if ( ora_install::ora_patches_installed($converted_patch_list) ) {
     if ( $converted_patch_list.length > 0 ) {
       echo { 'All DB patches already installed. Skipping patches.':
         withpath => false,
