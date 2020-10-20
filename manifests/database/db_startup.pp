@@ -29,7 +29,7 @@ class ora_profile::database::db_startup(
   String[1] $dbname,
   Enum['database','grid']
             $db_type,
-) inherits ora_profile::database {
+) inherits ora_profile::database::common {
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
