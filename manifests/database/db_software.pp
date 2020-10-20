@@ -119,7 +119,7 @@ class ora_profile::database::db_software(
   String[1] $source,
   String[1] $file_name,
 ) inherits ora_profile::database::common {
-
+# lint:ignore:variable_scope
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   #
