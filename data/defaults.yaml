@@ -15,7 +15,6 @@ ora_profile::database::grid_base:                                         /u01/a
 ora_profile::database::grid_home:                                         /u01/app/grid/product/12.2.0.1/grid_home1
 ora_profile::database::source:                                            puppet:///modules/software
 ora_profile::database::oracle_base:                                       /u01/app/oracle
-ora_profile::database::version:                                           12.2.0.1
 ora_profile::database::oracle_home:                                       /u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1
 ora_profile::database::db_control_provider:                               sqlplus
 ora_profile::database::cluster_nodes:                                     ~
@@ -1059,18 +1058,24 @@ ora_profile::extracted_database::temp_dir:              "%{lookup('ora_profile::
 #
 #
 #
-ora_profile::database::extracted_database_defition::resource_type:  ora_database
-ora_profile::database::extracted_init_params::resource_type:        ora_init_param
-ora_profile::database::extracted_services::resource_type:           ora_service
-ora_profile::database::extracted_users::resource_type:              ora_user
-ora_profile::database::extracted_tablespaces::resource_type:        ora_tablespace
-ora_profile::database::extracted_profiles::resource_type:           ora_profile
+ora_profile::database::extracted_database_definition::resource_type:  ora_database
+ora_profile::database::extracted_database_definition::message:        Ensuring database
+ora_profile::database::extracted_init_params::resource_type:          ora_init_param
+ora_profile::database::extracted_init_params::message:                Ensuring init ora parameter(s)
+ora_profile::database::extracted_services::resource_type:             ora_service
+ora_profile::database::extracted_services::message:                   Ensuring Oracle service(s)
+ora_profile::database::extracted_users::resource_type:                ora_user
+ora_profile::database::extracted_users::message:                      Ensuring Oracle user(s)
+ora_profile::database::extracted_tablespaces::resource_type:          ora_tablespace
+ora_profile::database::extracted_tablespaces::message:                Ensuring Oracle tablespace(s)
+ora_profile::database::extracted_profiles::resource_type:             ora_profile
+ora_profile::database::extracted_profiles::message:                   Ensuring Oracle profile(s)
 #
 #
 #
-ora_profile::database::extracted_database_defition::list:  {}
-ora_profile::database::extracted_init_params::list:        {}
-ora_profile::database::extracted_services::list:           {}
-ora_profile::database::extracted_users::list:              {}
-ora_profile::database::extracted_tablespaces::list:        {}
-ora_profile::database::extracted_profiles::list:           {}
+ora_profile::database::extracted_database_definition::list:    {}
+ora_profile::database::extracted_init_params::list:            {}
+ora_profile::database::extracted_services::list:               {}
+ora_profile::database::extracted_users::list:                  {}
+ora_profile::database::extracted_tablespaces::list:            {}
+ora_profile::database::extracted_profiles::list:               {}
