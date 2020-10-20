@@ -10,6 +10,42 @@ hierarchy:
   - name: Operating system Major release
     path: "os-major/%{facts.os.family}-%{facts.os.release.major}.yaml"
 
+  - name: "Version data for all version 12.1 versions."
+    data_hash: 'easy_type::versioned_data'
+    path: oracle_versions/121.yaml
+    options:
+      variable: ora_profile::database::common::version
+      specification:
+        - '>= 12.1'
+        - '< 12.2'
+
+  - name: "Version data for all version 12.2 versions."
+    data_hash: 'easy_type::versioned_data'
+    path: oracle_versions/122.yaml
+    options:
+      variable: ora_profile::database::common::version
+      specification:
+        - '>= 12.2'
+        - '< 12.3'
+
+  - name: "Version data for all version 18 versions."
+    data_hash: 'easy_type::versioned_data'
+    path: oracle_versions/18.yaml
+    options:
+      variable: ora_profile::database::common::version
+      specification:
+        - '>= 18'
+        - '< 19'
+
+  - name: "Version data for all version 19 versions."
+    data_hash: 'easy_type::versioned_data'
+    path: oracle_versions/19.yaml
+    options:
+      variable: ora_profile::database::common::version
+      specification:
+        - '>= 19'
+        - '< 20'
+      
   - name: "ora_profile class parameter defaults"
     path: "defaults.yaml"
 
