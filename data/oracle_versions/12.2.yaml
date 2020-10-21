@@ -1,8 +1,4 @@
 ---
 ora_profile::database::db_software::file_name:                            linuxx64_12201_database
-ora_profile::database::db_software::dirs:
-- /u01/app/oracle/product
-- "/u01/app/oracle/product/%{lookup('ora_profile::database::version')}"
-
 ora_profile::database::db_listener::sqlnet_version:                       '12.2'
 ...
