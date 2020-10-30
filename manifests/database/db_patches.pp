@@ -291,8 +291,12 @@ class ora_profile::database::db_patches(
 
               -> exec { "Datapatch for ${dbname}":
                 cwd         => "${patch_home}/OPatch",
-                command     => "${patch_home}/OPatch/datapatch -verbose",
-                environment => ["PATH=/usr/bin:/bin:${patch_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${patch_home}", 'ORACLE_PATH=/tmp', 'SQLPATH=/tmp'],
+                command     => "/bin/sh -c 'unset ORACLE_PATH SQLPATH TWO_TASK TNS_ADMIN; ${patch_home}/OPatch/datapatch -verbose'",
+                environment => [
+                  "PATH=/usr/bin:/bin:${patch_home}/bin",
+                  "ORACLE_SID=${dbname}",
+                  "ORACLE_HOME=${patch_home}",
+                ],
                 user        => $os_user,
                 logoutput   => $logoutput,
                 timeout     => 3600,
@@ -301,8 +305,12 @@ class ora_profile::database::db_patches(
 
               -> exec { "SQLPlus UTLRP ${dbname}":
                 cwd         => $patch_home,
-                command     => "${patch_home}/bin/sqlplus / as sysdba @?/rdbms/admin/utlrp",
-                environment => ["PATH=/usr/bin:/bin:${patch_home}/bin", "ORACLE_SID=${dbname}", "ORACLE_HOME=${patch_home}"],
+                command     => "/bin/sh -c 'unset TWO_TASK TNS_ADMIN; ${patch_home}/bin/sqlplus / as sysdba @?/rdbms/admin/utlrp'",
+                environment => [
+                  "PATH=/usr/bin:/bin:${patch_home}/bin",
+                  "ORACLE_SID=${dbname}",
+                  "ORACLE_HOME=${patch_home}",
+                ],
                 user        => $os_user,
                 logoutput   => $logoutput,
                 timeout     => 3600,
