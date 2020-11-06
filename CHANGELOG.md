@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.25.0
+
+**New Features**
+
+- [extracted_database] Add required parameters to class
+- [core] Add support for oracle version specific yaml data
+- [extracted_database] Add initial implementation
+- [core] ora_install puppet functions occurances replaced to the newer version
+
+**Bug fixes**
+
+- [db_patches] Ensure datapatch and UTLRP when TWO_TASK is set
+
 ## Release 0.24.2
 
 **Bug fixes**
