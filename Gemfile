@@ -1,7 +1,8 @@
 
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
+latest_puppet_version = '6.19.1'
 
-puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "#{ENV['PUPPET_GEM_VERSION']}" :  '6.4.2'
+puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "#{ENV['PUPPET_GEM_VERSION']}" : latest_puppet_version
 
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
 if Gem::Version.new(puppetversion) > Gem::Version.new('5.0.0')
@@ -16,14 +17,15 @@ group :unit_test do
   gem 'mocha', '1.3.0'
 end
 
-group 'acceptance_test' do
-  gem 'bolt', git: 'https://github.com/enterprisemodules/bolt.git' if puppetversion == '6.4.2'
-  gem 'puppet_litmus', git: 'https://github.com/enterprisemodules/puppet_litmus.git' if puppetversion == '6.4.2'
+group :acceptance_test do
+  gem 'bolt', git: 'https://github.com/enterprisemodules/bolt.git'  if puppetversion == latest_puppet_version
+  gem 'puppet_litmus', git: 'https://github.com/enterprisemodules/puppet_litmus.git'  if puppetversion == latest_puppet_version
   gem 'serverspec'
   gem 'rspec-retry'
   if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.0.0')
     gem 'parallel_tests', '< 2.10.0'
-  else
+  end
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.0.0')
     gem 'parallel_tests'
   end
 end
