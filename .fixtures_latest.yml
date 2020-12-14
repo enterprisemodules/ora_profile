@@ -4,15 +4,14 @@
 fixtures:
   symlinks:
     ora_profile: "#{source_dir}"
-fixtures:
   repositories:
-    facts:          'git://github.com/puppetlabs/puppetlabs-facts.git'
-    puppet_agent:   'git://github.com/puppetlabs/puppetlabs-puppet_agent.git'
-    provision:      'git://github.com/enterprisemodules/provision.git'
-    easy_type:      'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/easy_type_src.git'
-    ora_install:    'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_install.git'
-    ora_config:     'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_config.git'
-    ora_cis:        'https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_cis.git'
+    facts:                 git://github.com/puppetlabs/puppetlabs-facts.git
+    puppet_agent:          git://github.com/puppetlabs/puppetlabs-puppet_agent.git
+    provision:             git://github.com/puppetlabs/provision.git
+    easy_type:             https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/easy_type_src.git
+    ora_install:           https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_install.git
+    ora_config:            https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_config.git
+    ora_cis:               https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_cis.git
   forge_modules:
     partition:              enterprisemodules-partition
     powershell:             puppetlabs/powershell
@@ -24,4 +23,4 @@ fixtures:
     augeasproviders_sysctl: herculesteam-augeasproviders_sysctl
     limits:                 saz/limits
     firewall:               puppetlabs-firewall
-    firewalld:              crayfishx-firewalld
+    firewalld:              puppet-firewalld
