@@ -32,9 +32,10 @@ end
 desc "Run Litmus setup"
 task :litmus do
   docker_image =  'enterprisemodules/acc_base'
-  node_name = 'orawls.example.com'
+  node_name = 'oradb.example.com'
   Rake::Task['litmus:litmus_setup'].invoke(docker_image, node_name)
 end
+
 if defined?(PuppetLint)
   PuppetLint.configuration.send("disable_140chars")
   # PuppetLint.configuration.send("disable_right_to_left_relationship")
