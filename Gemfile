@@ -1,8 +1,7 @@
 
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
-latest_puppet_version = '6.19.1'
 
-puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "#{ENV['PUPPET_GEM_VERSION']}" : latest_puppet_version
+puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "#{ENV['PUPPET_GEM_VERSION']}" : '7.1.0'
 
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
 if Gem::Version.new(puppetversion) > Gem::Version.new('5.0.0')
@@ -18,7 +17,7 @@ end
 group :acceptance_test do
   if Gem::Version.new(puppetversion) >= Gem::Version.new('6.11.0')
     gem 'bolt'
-    gem 'puppet_litmus', git: 'https://github.com/enterprisemodules/puppet_litmus.git', ref: 'add_support_for_append_cli_to_rake_task'
+    gem 'puppet_litmus', git: 'https://github.com/enterprisemodules/puppet_litmus.git', ref: 'remove_append_cli'
   end
   gem 'serverspec'
   gem 'rspec-retry'
