@@ -12,6 +12,7 @@ class ora_profile::database::common(){
   $temp_dir             = lookup('ora_profile::database::temp_dir', String[1])
   $cluster_nodes        = lookup('ora_profile::database::cluster_nodes', Optional[Array])
   $oracle_user_password = lookup('ora_profile::database::oracle_user_password', Optional[String[1]], undef, undef)
+  $db_control_provider  = lookup('ora_profile::database::db_control_provider', Optional[String[1]])
   $is_rac               = !empty($cluster_nodes)
   $is_linux             = $::kernel == 'Linux'
   $is_windows           = $::kernel == 'Windows'
