@@ -205,8 +205,28 @@ class ora_profile::database::db_patches(
 
           if ( has_key($ora_install_homes, $patch_home) ) {
             $running_sids = $ora_install_homes[$patch_home]['running_sids']
+            $running_listeners = $ora_install_homes[$patch_home]['running_listeners']
           } else {
             $running_sids = []
+            $running_listeners = []
+          }
+
+          if $running_listeners.length > 0 {
+            echo {"Stopping and starting listener(s) ${running_listeners.join(',')} to apply DB patches on ${patch_home}":
+              withpath => false,
+              schedule => $schedule,
+            }
+
+            $running_listeners.each |$listener| {
+              db_listener {"Stop listener ${listener} from home ${patch_home}":
+                ensure          => 'stop',
+                listener_name   => $listener,
+                oracle_home_dir => $patch_home,
+                os_user         => $os_user,
+                before          => Ora_opatch[$patch_list_to_apply.keys],
+                schedule        => $schedule,
+              }
+            }
           }
           if $running_sids.length > 0 {
             echo {"Stopping and starting database(s) ${running_sids.join(',')} to apply DB patches on ${patch_home}":
@@ -215,14 +235,7 @@ class ora_profile::database::db_patches(
             }
 
             $running_sids.each |$dbname| {
-              ora_listener {"Stop listener for ${dbname}":
-                ensure        => 'stopped',
-                instance_name => $dbname,
-                before        => Ora_opatch[$patch_list_to_apply.keys],
-                schedule      => $schedule,
-              }
-
-              -> db_control {"database stop ${dbname}":
+              db_control {"database stop ${dbname}":
                 ensure                  => 'stop',
                 instance_name           => $dbname,
                 oracle_product_home_dir => $patch_home,
@@ -268,18 +281,26 @@ class ora_profile::database::db_patches(
 
           if ( has_key($ora_install_homes, $patch_home) ) {
             $running_sids = $ora_install_homes[$patch_home]['running_sids']
+            $running_listeners = $ora_install_homes[$patch_home]['running_listeners']
           } else {
             $running_sids = []
+            $running_listeners = []
+          }
+
+          if $running_listeners.length > 0 {
+            $running_listeners.each |$listener| {
+              db_listener {"Start listener ${listener} from home ${patch_home}":
+                ensure          => 'start',
+                listener_name   => $listener,
+                oracle_home_dir => $patch_home,
+                os_user         => $os_user,
+                require         => Ora_opatch[$apply_patches.keys],
+                schedule        => $schedule,
+              }
+            }
           }
           if $running_sids.length > 0 {
             $running_sids.each |$dbname| {
-              ora_listener {"Start listener for ${dbname}":
-                ensure        => 'running',
-                instance_name => $dbname,
-                require       => Ora_opatch[$apply_patches.keys],
-                schedule      => $schedule,
-              }
-
               db_control {"database start ${dbname}":
                 ensure                  => 'start',
                 instance_name           => $dbname,
