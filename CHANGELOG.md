@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.26.0
+
+**New Features**
+
+- [common] Add db_control_provider
+- [db_patches] Add OCT2020 patch levels
+- [db_patches] Stop/Start all running listeners based on fact
+- [release] Add support for puppet 7 in metadata
+
 ## Release 0.25.0
 
 **New Features**
