@@ -22,7 +22,7 @@
     },
     {
       "name": "enterprisemodules/ora_install",
-      "version_requirement": ">= 5.5.0 < 6.0.0"
+      "version_requirement": ">= 5.10.0 < 6.0.0"
     },
     {
       "name": "enterprisemodules/ora_cis",
