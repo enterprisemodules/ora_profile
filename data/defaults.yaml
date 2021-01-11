@@ -106,6 +106,8 @@ ora_profile::database::limits::list:
 # Settings for database::groups_and_users
 #
 # ------------------------------------------------------------------------------
+ora_profile::database::groups_and_users::required_values:
+  - ora_profile::database::os_user_password
 ora_profile::database::groups_and_users::groups:
   "%{lookup('ora_profile::database::install_group')}":
     gid:  54321
@@ -217,6 +219,8 @@ ora_profile::database::asm_groups_and_users::groups:
     gid:  54325
   asmoper:
     gid:  54326
+ora_profile::database::asm_groups_and_users::required_values:
+  - ora_profile::database::grid_user_password
 ora_profile::database::asm_groups_and_users::users:
   "%{lookup('ora_profile::database::os_user')}":
     uid:        54321
