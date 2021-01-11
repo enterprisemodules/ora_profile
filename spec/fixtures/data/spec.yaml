@@ -1,7 +1,9 @@
 ---
-ora_profile::database::version:         19.0.0.0
-ora_profile::client::software::version: 18.0.0.0
-ora_profile::client::software::file:    myfile.zi
-ora_profile::database::master_node:     not_foo
-ora_profile::database::db_definition:   skip
-ora_profile::database::db_software:     skip
+ora_profile::database::version:             19.0.0.0
+ora_profile::client::software::version:     18.0.0.0
+ora_profile::client::software::file:        myfile.zi
+ora_profile::database::master_node:         not_foo
+ora_profile::database::db_definition:       skip
+ora_profile::database::db_software:         skip
+ora_profile::database::os_user_password:    mysecretpassword
+ora_profile::database::grid_user_password:  mysecretpassword
