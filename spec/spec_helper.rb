@@ -28,24 +28,3 @@ RSpec.configure do |c|
   #   Puppet::Util::Log.newdestination(:console)
   # end
 end
-
-RSpec.shared_context 'specify passwords' do
-
-  let(:pre_condition) { 
-    """
-      class { 'ora_profile::database::db_definition':
-        system_password => Sensitive('Welcome01!'),
-        sys_password    => Sensitive('Welcome01!'),
-      }
-
-      class { 'ora_profile::database':
-        os_user_password   => Sensitive('Welcome01!'),
-        grid_user_password => Sensitive('Welcome01!'),
-        system_password    => Sensitive('Welcome01!'),
-        sys_password       => Sensitive('Welcome01!'),
-      }
-
-    """
-  }
-
-end
