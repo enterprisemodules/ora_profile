@@ -140,24 +140,16 @@ class ora_profile::oem_server::software(
     withpath => false,
   }
 
-  # BEGIN
-  # DBMS_AUTO_TASK_ADMIN.DISABLE (
-  #   client_name  => 'auto optimizer stats collection'
-  #   ,   operation    => NULL
-  #   ,   window_name  => NULL
-  #   );
-  # END;
-  # /
-  # alter system set parallel_min_servers=0;
-  # alter system set parallel_max_servers=8;
-  # alter system set session_cached_cursors=300 scope=spfile;
-  # alter system set shared_pool_size=450000000;
-  # alter system set "_allow_insert_with_update_check"=true;
-
   unless ( $ora_profile::oem_server::standalone ) {
     $dbname = $database_service_sid_name.split('\.')[0]
-    ora_autotask { $dbname:
-      auto_optimizer_stats_collection => 'disabled',
+    if ( ora_install::oracle_exists( $oracle_home_dir ) ) {
+      ora_autotask { $dbname:
+        auto_optimizer_stats_collection => 'enabled',
+      }
+    } else {
+      ora_autotask { $dbname:
+        auto_optimizer_stats_collection => 'disabled',
+      }
     }
   }
 
