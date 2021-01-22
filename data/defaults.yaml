@@ -439,7 +439,7 @@ ora_profile::database::db_software::bash_additions:                       ''
 ora_profile::database::db_patches::level:                                 NONE
 ora_profile::database::db_patches::include_ojvm:                          false
 ora_profile::database::db_patches::patch_file:                            p6880880_122010_Linux-x86-64
-ora_profile::database::db_patches::opversion:                             12.2.0.1.13
+ora_profile::database::db_patches::opversion:                             12.2.0.1.23
 ora_profile::database::db_patches::install_group:                         "%{lookup('ora_profile::database::install_group')}"
 ora_profile::database::db_patches::os_user:                               "%{lookup('ora_profile::database::os_user')}"
 ora_profile::database::db_patches::source:                                "%{lookup('ora_profile::database::source')}"
@@ -513,6 +513,10 @@ ora_profile::database::db_patches::patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:31750094-GIRU-12.2.0.1.201020":
         source:                "%{lookup('ora_profile::database::source')}/p31750094_122010_Linux-x86-64.zip"
         sub_patches:           ['31741641','31802727']
+    JAN2021RU:
+      "%{lookup('ora_profile::database::oracle_home')}:32226491-GIRU-12.2.0.1.210119":
+        source:                "%{lookup('ora_profile::database::source')}/p32226491_122010_Linux-x86-64.zip"
+        sub_patches:           ['32228578','31802727']
   '18.0.0.0':
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28659165-GIRU-18.4.0.0.181016":
@@ -550,6 +554,10 @@ ora_profile::database::db_patches::patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:31748523-GIRU-18.12.0.0.201020":
         source:                "%{lookup('ora_profile::database::source')}/p31748523_180000_Linux-x86-64.zip"
         sub_patches:           ['31730250','31734716']
+    JAN2021RU:
+      "%{lookup('ora_profile::database::oracle_home')}:32226219-GIRU-18.13.0.0.210119":
+        source:                "%{lookup('ora_profile::database::source')}/p32226219_180000_Linux-x86-64.zip"
+        sub_patches:           ['32204699','32216973']
   '19.0.0.0':
     APR2019RU: {}
     JUL2019RU:
@@ -576,6 +584,10 @@ ora_profile::database::db_patches::patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:31750108-GIRU-19.9.0.0.201020":
         source:                "%{lookup('ora_profile::database::source')}/p31750108_190000_Linux-x86-64.zip"
         sub_patches:           ['31771877','31772784']
+    JAN2021RU:
+      "%{lookup('ora_profile::database::oracle_home')}:32226239-GIRU-19.10.0.0.210119":
+        source:                "%{lookup('ora_profile::database::source')}/p32226239_190000_Linux-x86-64.zip"
+        sub_patches:           ['32218454','32222571']
 ora_profile::database::db_patches::ojvm_patch_levels:
   '11.2.0.1': {}
   '11.2.0.3': {}
@@ -640,6 +652,10 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:31668898-OJVM-12.2.0.1.201020":
         source:                "%{lookup('ora_profile::database::source')}/p31668898_122010_Linux-x86-64.zip"
         sub_patches:           ['31668898']
+    JAN2021RU:
+      "%{lookup('ora_profile::database::oracle_home')}:32119931-OJVM-12.2.0.1.210119":
+        source:                "%{lookup('ora_profile::database::source')}/p32119931_122010_Linux-x86-64.zip"
+        sub_patches:           ['32119931']
   '18.0.0.0':
     OCT2018RU:
       "%{lookup('ora_profile::database::oracle_home')}:28502229-OJVM-18.4.0.0.181016":
@@ -677,6 +693,10 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:31668892-OJVM-18.12.0.0.201020":
         source:                "%{lookup('ora_profile::database::source')}/p31668892_180000_Linux-x86-64.zip"
         sub_patches:           ['31668892']
+    JAN2021RU:
+      "%{lookup('ora_profile::database::oracle_home')}:32119939-OJVM-18.13.0.0.210119":
+        source:                "%{lookup('ora_profile::database::source')}/p32119939_180000_Linux-x86-64.zip"
+        sub_patches:           ['32119939']
   '19.0.0.0':
     APR2019RU:
       "%{lookup('ora_profile::database::oracle_home')}:29548437-OJVM-19.3.0.0.190416":
@@ -706,6 +726,10 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:31668882-OJVM-19.9.0.0.201020":
         source:                "%{lookup('ora_profile::database::source')}/p31668882_190000_Linux-x86-64.zip"
         sub_patches:           ['31668882']
+    JAN2021RU:
+      "%{lookup('ora_profile::database::oracle_home')}:32067171-OJVM-19.10.0.0.210119":
+        source:                "%{lookup('ora_profile::database::source')}/p32067171_190000_Linux-x86-64.zip"
+        sub_patches:           ['32067171']
 
 # ------------------------------------------------------------------------------
 #
