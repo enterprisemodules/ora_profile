@@ -24,6 +24,10 @@ The `ora_profile` module allows an easy path from first simple installation to a
 
 This module support Oracle 10, 11, 12, 18 and 19
 
+## Want to try?
+
+You don't want to read about it, but really want to try it? You can! You can explore our Puppet modules for Oracle by checking out our [playgrounds](https://www.enterprisemodules.com/playgrounds?&product=oracle). Here we guide you around in some of the functionality of our modules.
+
 ## License
 
 Most of the [Enterprise Modules](https://www.enterprisemodules.com) modules are commercial modules. This one is **NOT**. It is an Open Source module. You are free to use it any way you like. It, however, is based on our commercial Puppet Oracle modules.
