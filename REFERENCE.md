@@ -26,6 +26,7 @@
 * [`ora_profile::database::asm_storage::udev`](#ora_profiledatabaseasm_storageudev): This class will apply udev rules to specified disk devices.
 * [`ora_profile::database::asm_sysctl`](#ora_profiledatabaseasm_sysctl): This class contains the definition all all required sysctl setings for your system.
 * [`ora_profile::database::cis_rules`](#ora_profiledatabasecis_rules): This class contains the actual code secureing the database.
+* [`ora_profile::database::common`](#ora_profiledatabasecommon): Common variables used my more then one class
 * [`ora_profile::database::db_definition`](#ora_profiledatabasedb_definition): This class contains the actual database definition using the `ora_database` type.
 * [`ora_profile::database::db_definition_template`](#ora_profiledatabasedb_definition_template): This class contains the actual database definition using the `ora_install::database` class.
 * [`ora_profile::database::db_init_params`](#ora_profiledatabasedb_init_params): This class configures initialization parameters for the databases instance(s)
@@ -37,6 +38,7 @@
 * [`ora_profile::database::db_startup`](#ora_profiledatabasedb_startup): This class contains the definition for the auto startup of Oracle after a system reboot.
 * [`ora_profile::database::db_tablespaces`](#ora_profiledatabasedb_tablespaces): This class contains the definition for all the tablespaces you'd like on your system.
 * [`ora_profile::database::db_users`](#ora_profiledatabasedb_users): This class contains the definition for all the database users you'd like on your system.
+* [`ora_profile::database::disable_thp`](#ora_profiledatabasedisable_thp): This class contains the definition of the Transparent HugePages settings required for running Oracle.
 * [`ora_profile::database::em_license`](#ora_profiledatabaseem_license): This class will deploy the Enterprise Modules license.
 * [`ora_profile::database::firewall`](#ora_profiledatabasefirewall): This class contains the definition of the firewall settings you need for Oracle.
 * [`ora_profile::database::firewall::firewalld`](#ora_profiledatabasefirewallfirewalld): Open up ports for Oracle using the firewalld firewall
@@ -47,6 +49,7 @@
 * [`ora_profile::database::rac::authenticated_nodes`](#ora_profiledatabaseracauthenticated_nodes): Setup authentication for the cluster nodes.
 * [`ora_profile::database::sysctl`](#ora_profiledatabasesysctl): This class contains the definition all all required sysctl setings for your system.
 * [`ora_profile::database::tmpfiles`](#ora_profiledatabasetmpfiles): This class contains the definition all the required OS limit settings on your system.
+* [`ora_profile::extracted_database`](#ora_profileextracted_database): A short summary of the purpose of this defined type.
 * [`ora_profile::oem_agent`](#ora_profileoem_agent): This is a highly customizable Puppet profile class to define an Oracle Enterprise Manager installation on your system.
 * [`ora_profile::oem_agent::limits`](#ora_profileoem_agentlimits): This class contains the definition all the required OS limit settings for OEM Agent on your system.
 * [`ora_profile::oem_agent::packages`](#ora_profileoem_agentpackages): This class contains the definition of the packages you need to have installed on your system.
@@ -126,6 +129,7 @@ ora_profile::client::packages:   my_profile::my_own_implementation
 ```
 
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
+
 ora_profile::client
 
 In it's core just adding:
@@ -608,6 +612,7 @@ But sometimes you have specific uses cases that are not handled well by the stan
 Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
 
 - `sysctl`           (Set all required sysctl parameters)
+- `disable_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
@@ -998,6 +1003,24 @@ ora_profile::database::sysctl:  my_module::my_class
 You can use hiera to set this value. Here is an example:
 ```yaml
 ora_profile::database::sysctl:  skip
+```
+
+Default value: ``undef``
+
+##### `disable_thp`
+
+Data type: `Optional[String]`
+
+Use this value if you want to skip or use your own class for stage `disable_thp`.
+## Use your own class
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::disable_thp:  my_module::my_class
+```
+## Skip
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::disable_thp:  skip
 ```
 
 Default value: ``undef``
@@ -1458,6 +1481,18 @@ ora_profile::database::before_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
+##### `before_disable_thp`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **before** the `disable_thp` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::before_disable_thp:  my_module::my_class
+```
+
+Default value: ``undef``
+
 ##### `before_limits`
 
 Data type: `Optional[String]`
@@ -1794,6 +1829,18 @@ ora_profile::database::after_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
+##### `after_disable_thp`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **after** the `disable_thp` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::after_disable_thp:  my_module::my_class
+```
+
+Default value: ``undef``
+
 ##### `after_limits`
 
 Data type: `Optional[String]`
@@ -2031,6 +2078,24 @@ You can use hiera to set this value. Here is an example:
 ```yaml
 ora_profile::database::after_db_startup:  my_module::my_class
 ```
+
+Default value: ``undef``
+
+##### `tmpfiles`
+
+Data type: `Optional[String]`
+
+Default value: ``undef``
+
+##### `before_tmpfiles`
+
+Data type: `Optional[String]`
+
+Default value: ``undef``
+
+##### `after_tmpfiles`
+
+Data type: `Optional[String]`
 
 Default value: ``undef``
 
@@ -3073,6 +3138,10 @@ The default is:
 ```
 These are actualy the rules that don't secure anything *inside* of a database.
 
+### `ora_profile::database::common`
+
+Common variables used my more then one class
+
 ### `ora_profile::database::db_definition`
 
 ora_profile::database::db_definition
@@ -3920,6 +3989,15 @@ The default value is: `{}`
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
 
+### `ora_profile::database::disable_thp`
+
+ora_profile::database::disable_thp
+
+As documented in Oracle support ALERT <https://support.oracle.com/epmos/faces/DocumentDisplay?id=1557478.1>,
+the class will disable Transparent HugePages on RedHat os family starting with version 6.
+
+When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
 ### `ora_profile::database::em_license`
 
 ora_profile::database::em_license
@@ -4296,6 +4374,497 @@ Data type: `Hash`
 
 The OS limits created for Oracle.
 The defaults are:
+
+### `ora_profile::extracted_database`
+
+ora_profile::database
+
+A description of what this defined type does
+
+++--++
+#### Examples
+
+##### 
+
+```puppet
+ora_profile::database { 'database_name': }
+```
+
+#### Parameters
+
+The following parameters are available in the `ora_profile::extracted_database` class.
+
+##### `version`
+
+Data type: `Ora_Install::Version`
+
+
+
+##### `dbname`
+
+Data type: `String[1]`
+
+
+
+##### `os_user`
+
+Data type: `String[1]`
+
+
+
+##### `dba_group`
+
+Data type: `String[1]`
+
+
+
+##### `install_group`
+
+Data type: `String[1]`
+
+
+
+##### `source`
+
+Data type: `String[1]`
+
+
+
+##### `oracle_base`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `oracle_home`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `ora_inventory_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `db_control_provider`
+
+Data type: `String[1]`
+
+
+
+##### `download_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `temp_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### `oracle_user_password`
+
+Data type: `Optional[String]`
+
+
+
+Default value: ``undef``
+
+##### `em_license`
+
+Data type: `Optional[String]`
+
+
+
+Default value: ``undef``
+
+##### `authenticated_nodes`
+
+Data type: `Optional[String]`
+
+
+
+Default value: ``undef``
+
+##### `before_em_license`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_em_license`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `sysctl`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_sysctl`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_sysctl`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `limits`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_limits`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_limits`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `groups_and_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_groups_and_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_groups_and_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `packages`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_packages`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_packages`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `firewall`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_firewall`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_firewall`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `tmpfiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_tmpfiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_tmpfiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `db_software`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_db_software`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_db_software`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `db_patches`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_db_patches`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_db_patches`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `extracted_database_definition`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_extracted_database_definition`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_extracted_database_definition`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `extracted_init_params`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_extracted_init_params`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_extracted_init_params`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `extracted_services`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_extracted_services`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_extracted_services`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `extracted_tablespaces`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_extracted_tablespaces`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_extracted_tablespaces`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `extracted_profiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_extracted_profiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_extracted_profiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `extracted_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_extracted_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_extracted_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `db_startup`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `before_db_startup`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### `after_db_startup`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
 
 ### `ora_profile::oem_agent`
 
