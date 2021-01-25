@@ -13,6 +13,7 @@ But sometimes you have specific uses cases that are not handled well by the stan
 Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
 
 - `sysctl`           (Set all required sysctl parameters)
+- `disable_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
@@ -121,6 +122,7 @@ class {'ora_profile::database':
   :asm_packages,
   :asm_listener,
   :sysctl,
+  :disable_thp,
   :limits,
   :packages,
   :groups_and_users,
@@ -149,6 +151,7 @@ class {'ora_profile::database':
   :before_asm_packages,
   :before_asm_listener,
   :before_sysctl,
+  :before_disable_thp,
   :before_limits,
   :before_packages,
   :before_groups_and_users,
@@ -177,6 +180,7 @@ class {'ora_profile::database':
   :after_asm_packages,
   :after_asm_listener,
   :after_sysctl,
+  :after_disable_thp,
   :after_limits,
   :after_packages,
   :after_groups_and_users,

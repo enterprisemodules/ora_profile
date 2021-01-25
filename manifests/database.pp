@@ -26,6 +26,7 @@
 # Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
 # 
 # - `sysctl`           (Set all required sysctl parameters)
+# - `disable_thp`      (Disable Transparent HugePages)
 # - `limits`           (Set all required OS limits)
 # - `packages`         (Install all required packages)
 # - `groups_and_users` (Create required groups and users)
@@ -96,7 +97,7 @@
 # 
 # ```puppet
 # 
-# class { 'ora_profile::database':
+# class {'ora_profile::database':
 #   dbname  => 'EM',
 #   source  => 'http://www.example.com/database_files',
 #   version => '11.2.0.3',
@@ -300,6 +301,19 @@
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
 #    ora_profile::database::sysctl:  skip
+#    ```
+#
+# @param [Optional[String]] disable_thp
+#    Use this value if you want to skip or use your own class for stage `disable_thp`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::disable_thp:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::disable_thp:  skip
 #    ```
 #
 # @param [Optional[String]] limits
@@ -618,6 +632,13 @@
 #    ora_profile::database::before_sysctl:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] before_disable_thp
+#    The name of the class you want to execute directly **before** the `disable_thp` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_disable_thp:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] before_limits
 #    The name of the class you want to execute directly **before** the `limits` class.
 #    You can use hiera to set this value. Here is an example:
@@ -814,6 +835,13 @@
 #    ora_profile::database::after_sysctl:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] after_disable_thp
+#    The name of the class you want to execute directly **after** the `disable_thp` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_disable_thp:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] after_limits
 #    The name of the class you want to execute directly **after** the `limits` class.
 #    You can use hiera to set this value. Here is an example:
@@ -994,6 +1022,7 @@ class ora_profile::database(
   Optional[String] $asm_packages = undef,
   Optional[String] $asm_listener = undef,
   Optional[String] $sysctl = undef,
+  Optional[String] $disable_thp = undef,
   Optional[String] $limits = undef,
   Optional[String] $packages = undef,
   Optional[String] $groups_and_users = undef,
@@ -1023,6 +1052,7 @@ class ora_profile::database(
   Optional[String] $before_asm_packages = undef,
   Optional[String] $before_asm_listener = undef,
   Optional[String] $before_sysctl = undef,
+  Optional[String] $before_disable_thp = undef,
   Optional[String] $before_limits = undef,
   Optional[String] $before_packages = undef,
   Optional[String] $before_groups_and_users = undef,
@@ -1052,6 +1082,7 @@ class ora_profile::database(
   Optional[String] $after_asm_packages = undef,
   Optional[String] $after_asm_listener = undef,
   Optional[String] $after_sysctl = undef,
+  Optional[String] $after_disable_thp = undef,
   Optional[String] $after_limits = undef,
   Optional[String] $after_packages = undef,
   Optional[String] $after_groups_and_users = undef,
@@ -1092,6 +1123,7 @@ class ora_profile::database(
   easy_type::ordered_steps([
     'ora_profile::database::em_license',
     ['ora_profile::database::sysctl',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::sysctl' }],
+    ['ora_profile::database::disable_thp',              { 'onlyif' => $is_linux}],
     ['ora_profile::database::limits',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::limits' }],
     ['ora_profile::database::groups_and_users',         { 'onlyif' => !$use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
     ['ora_profile::database::packages',                 { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::packages' }],
