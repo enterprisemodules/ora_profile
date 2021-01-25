@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.27.0
+
+**New Features**
+
+- [release] Add playground link to README
+- [disable_thp] Added functionality
+- [db_patches] Add JAN2021RU patch levels
+
+**Bug fixes**
+
+- [oem_server] Manage ora_autotask properly and lower password complexity for sysman
+- [groups_and_users] Leave hashing of passwords to class
+- [groups_and_users] Make sure the os passwords are specified
+
 ## Release 0.26.0
 
 **New Features**
