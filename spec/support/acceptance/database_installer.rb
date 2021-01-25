@@ -10,6 +10,7 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::source'                                            => '/software',
       'ora_profile::database::db_software::file_name'                            => file,
       'ora_profile::database::sysctl'                                            => 'skip',
+      'ora_profile::database::disable_thp'                                       => 'skip',
       'ora_profile::database::firewall'                                          => 'skip',
       'ora_profile::database::db_patches'                                        => 'skip',
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
