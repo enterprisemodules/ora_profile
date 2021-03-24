@@ -4,10 +4,6 @@ include:
   - project: 'enterprisemodules/gitlab_ci'
     file: 'module-defaults.yml'
 
-Puppet 4.10 Unit Test:
-  only:
-    - /we_dont_want_to_run_this_one/
-
 Oracle 12 database Acc test:
   extends: .puppet_acceptance_test
   variables:
