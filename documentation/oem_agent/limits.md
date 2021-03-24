@@ -12,6 +12,11 @@ This class contains the definition all the required OS limit settings for OEM Ag
 
 
 
+If you want to play and experiment with this type, please take a look at our playgrounds. At our playgrounds, 
+we provide you with a pre-installed environment, where you experiment with these Puppet types.
+
+Look at our playgrounds [here](/playgrounds#oracle)
+
 ## Attributes
 
 
@@ -35,8 +40,6 @@ ora_profile::oem_agent::limits::list:
     soft: 4096
     hard: 16384
 ```
-
-Type: `Hash`
 
 
 [Back to overview of oem_agent::limits](#attributes)

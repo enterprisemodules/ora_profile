@@ -12,6 +12,11 @@ This class contains the definition of the packages you need to have installed on
 
 
 
+If you want to play and experiment with this type, please take a look at our playgrounds. At our playgrounds, 
+we provide you with a pre-installed environment, where you experiment with these Puppet types.
+
+Look at our playgrounds [here](/playgrounds#oracle)
+
 ## Attributes
 
 
@@ -39,8 +44,6 @@ ora_profile::oem_agent::packages::list:
   libstdc++: {}
   sysstat: {}
 ```
-
-Type: `Hash`
 
 
 [Back to overview of oem_agent::packages](#attributes)

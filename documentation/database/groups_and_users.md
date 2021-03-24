@@ -14,6 +14,11 @@ When these customizations aren't enough, you can replace the class with your own
 
 
 
+If you want to play and experiment with this type, please take a look at our playgrounds. At our playgrounds, 
+we provide you with a pre-installed environment, where you experiment with these Puppet types.
+
+Look at our playgrounds [here](/playgrounds#oracle)
+
 ## Attributes
 
 
@@ -47,8 +52,6 @@ ora_profile::database::groups_and_users::users:
     comment:    This user oracle was created by Puppet
     managehome: true
 ```
-Type: `Hash`
-
 
 [Back to overview of database::groups_and_users](#attributes)
 
@@ -68,8 +71,6 @@ ora_profile::database::groups_and_users::groups:
     gid:  54323,
 
 ```
-
-Type: `Hash`
 
 
 [Back to overview of database::groups_and_users](#attributes)

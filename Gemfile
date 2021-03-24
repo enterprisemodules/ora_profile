@@ -7,6 +7,8 @@ gem 'puppet', puppetversion, :require => false, :groups => [:test]
 if Gem::Version.new(puppetversion) > Gem::Version.new('5.0.0')
   gem 'pdk',  '>1.9.0', '<1.14.0'
 end
+
+gem 'byebug'
 group :unit_test do
   gem 'hiera-puppet-helper'
   gem 'rspec-puppet'

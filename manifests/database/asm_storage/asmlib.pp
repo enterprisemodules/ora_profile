@@ -4,7 +4,7 @@
 #
 # @summary This class configures ASMLib devices.
 # Here is an example:
-#
+# 
 # ```puppet
 #   include ora_profile::database::asm_storage::asmlib
 # ```

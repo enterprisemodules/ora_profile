@@ -19,6 +19,11 @@ When these customizations aren't enough, you can replace the class with your own
 
 
 
+If you want to play and experiment with this type, please take a look at our playgrounds. At our playgrounds, 
+we provide you with a pre-installed environment, where you experiment with these Puppet types.
+
+Look at our playgrounds [here](/playgrounds#oracle)
+
 ## Attributes
 
 

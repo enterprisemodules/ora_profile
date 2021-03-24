@@ -26,7 +26,7 @@ This module support Oracle 10, 11, 12, 18 and 19
 
 ## Want to try?
 
-You don't want to read about it, but really want to try it? You can! You can explore our Puppet modules for Oracle by checking out our [playgrounds](https://www.enterprisemodules.com/playgrounds?&product=oracle). Here we guide you around in some of the functionality of our modules.
+You don't want to read about it, but really want to try it? You can! You can explore our Puppet modules for Oracle by checking out our [playgrounds](https://www.enterprisemodules.com/playgrounds#oracle). Here we guide you around in some of the functionality of our modules.
 
 ## License
 

@@ -12,6 +12,11 @@ This class contains the definition all the required OS limit settings for OEM Se
 
 
 
+If you want to play and experiment with this type, please take a look at our playgrounds. At our playgrounds, 
+we provide you with a pre-installed environment, where you experiment with these Puppet types.
+
+Look at our playgrounds [here](/playgrounds#oracle)
+
 ## Attributes
 
 
@@ -35,7 +40,5 @@ ora_profile::oem_server::limits::list:
     soft: 4098
     hard: 8192
 ```
-Type: `Hash`
-
 
 [Back to overview of oem_server::limits](#attributes)
