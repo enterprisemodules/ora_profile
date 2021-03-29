@@ -206,7 +206,7 @@ Attribute Name                                                       | Short Des
 [em_license](#database_em_license)                                   | Use this value if you want to skip or use your own class for stage `em_license`.                |
 [firewall](#database_firewall)                                       | Use this value if you want to skip or use your own class for stage `firewall`.                  |
 [grid_admingroup](#database_grid_admingroup)                         | The OS group to use for ASM admin.                                                              |
-[grid_base](#database_grid_base)                                     | The directory to use as grid base.                                                              |
+[grid_base](#database_grid_base)                                     | The ORACLE_BASE for the Grid Infrastructure installation.                                       |
 [grid_home](#database_grid_home)                                     | The oracle home directory to use for the GRID software.                                         |
 [grid_user](#database_grid_user)                                     | The name of the user that owns the Grid Infrastructure installation.                            |
 [groups_and_users](#database_groups_and_users)                       | Use this value if you want to skip or use your own class for stage `groups_and_users`.          |
@@ -373,6 +373,8 @@ The directory that contains the oracle inventory.
 
 The default value is: `/oracle_base/oraInventory`
 
+To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
+
 Type: `Stdlib::Absolutepath`
 
 
@@ -380,9 +382,11 @@ Type: `Stdlib::Absolutepath`
 
 ### grid_base<a name='database_grid_base'>
 
-The directory to use as grid base.
+The ORACLE_BASE for the Grid Infrastructure installation.
 
-The default value is: `/u01/app/grid/admin`
+The default is : `/u01/app/grid/admin`
+
+To customize this consistently use the hiera key `ora_profile::database::grid_base`.
 
 Type: `Stdlib::Absolutepath`
 
@@ -405,6 +409,9 @@ Type: `Stdlib::Absolutepath`
 Which provider should be used for the type db_control.
 
 The default value is: `sqlplus`
+
+To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
+
 Type: `String[1]`
 
 
@@ -417,6 +424,8 @@ The directory where the Puppet software puts all downloaded files.
 Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
 
 The default value is: `/install`
+
+To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
 Type: `Stdlib::Absolutepath`
 
@@ -436,6 +445,9 @@ Type: `Stdlib::Absolutepath`
 
 The password for the oracle os user.
 Only applicable for Windows systems.
+
+To customize this consistently use the hiera key `ora_profile::database::oracle_user_password`.
+
 Type: `Optional[String]`
 
 Default:`undef`
@@ -446,6 +458,9 @@ Default:`undef`
 
 The first node in RAC.
 This  is the node where the other nodes will clone the software installations from.
+
+To customize this consistently use the hiera key `ora_profile::database::master_node`.
+
 Type: `Optional[String]`
 
 Default:`$facts['hostname']`

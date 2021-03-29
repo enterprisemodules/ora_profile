@@ -15,6 +15,7 @@
 #    The directory where the Puppet software puts all downloaded files.
 #    Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
 #    The default value is: `/install`
+#    To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 #
 # @param [Integer] em_upload_port
 #    The port number of the HTTP port for the upload service.
@@ -42,6 +43,7 @@
 # @param [Stdlib::Absolutepath] ora_inventory_dir
 #    The directory that contains the oracle inventory.
 #    The default value is: `/oracle_base/oraInventory`
+#    To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 #
 # @param [Stdlib::Absolutepath] oracle_base
 #    The base directory to use for the Oracle installation.

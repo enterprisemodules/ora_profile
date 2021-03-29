@@ -11,16 +11,13 @@ There is no support yet to apply patches on a running system.
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
 <%- include_attributes [
+  :level,
+  :include_ojvm,
   :patch_file,
   :oracle_home,
   :opversion,
-  :install_group,
   :os_user,
-  :source,
   :patch_list,
-  :level,
-  :patch_window,
   :logoutput,
-  :include_ojvm,
 ]%>
 

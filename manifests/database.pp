@@ -161,10 +161,12 @@
 # @param [Stdlib::Absolutepath] ora_inventory_dir
 #    The directory that contains the oracle inventory.
 #    The default value is: `/oracle_base/oraInventory`
+#    To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 #
 # @param [Stdlib::Absolutepath] grid_base
-#    The directory to use as grid base.
-#    The default value is: `/u01/app/grid/admin`
+#    The ORACLE_BASE for the Grid Infrastructure installation.
+#    The default is : `/u01/app/grid/admin`
+#    To customize this consistently use the hiera key `ora_profile::database::grid_base`.
 #
 # @param [Stdlib::Absolutepath] grid_home
 #    The oracle home directory to use for the GRID software.
@@ -173,11 +175,13 @@
 # @param [String[1]] db_control_provider
 #    Which provider should be used for the type db_control.
 #    The default value is: `sqlplus`
+#    To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
 #
 # @param [Stdlib::Absolutepath] download_dir
 #    The directory where the Puppet software puts all downloaded files.
 #    Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
 #    The default value is: `/install`
+#    To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 #
 # @param [Stdlib::Absolutepath] temp_dir
 #    Directory to use for temporary files.
@@ -185,10 +189,12 @@
 # @param [Optional[String]] oracle_user_password
 #    The password for the oracle os user.
 #    Only applicable for Windows systems.
+#    To customize this consistently use the hiera key `ora_profile::database::oracle_user_password`.
 #
 # @param [Optional[String]] master_node
 #    The first node in RAC.
 #    This  is the node where the other nodes will clone the software installations from.
+#    To customize this consistently use the hiera key `ora_profile::database::master_node`.
 #
 # @param [Optional[Array]] cluster_nodes
 #    An array with cluster node names for RAC.

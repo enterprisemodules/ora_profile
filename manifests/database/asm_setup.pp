@@ -232,6 +232,7 @@ class ora_profile::database::asm_setup(
     syspriv     => 'sysasm',
     oracle_home => $grid_home,
     os_user     => $grid_user,
+    daemonized  => false,
   }
 
   -> ora_tab_entry{ $asm_instance_name:

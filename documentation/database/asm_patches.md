@@ -24,26 +24,30 @@ Look at our playgrounds [here](/playgrounds#oracle)
 
 
 
-Attribute Name                                  | Short Description                                         |
------------------------------------------------ | --------------------------------------------------------- |
-[grid_home](#database::asm_patches_grid_home)   | The ORACLE_HOME for the Grid Infrastructure installation. |
-[logoutput](#database::asm_patches_logoutput)   | log the outputs of Puppet exec or not.                    |
-[opversion](#database::asm_patches_opversion)   | The version of OPatch that is needed.                     |
-[patch_file](#database::asm_patches_patch_file) | The file containing the required Opatch version.          |
-[patch_list](#database::asm_patches_patch_list) | The list of patches to apply.                             |
+Attribute Name                                  | Short Description                                                         |
+----------------------------------------------- | ------------------------------------------------------------------------- |
+[level](#database::asm_patches_level)           | The patch level the database or grid infrastructure should be patched to. |
+[logoutput](#database::asm_patches_logoutput)   | log the outputs of Puppet exec or not.                                    |
+[opversion](#database::asm_patches_opversion)   | The version of OPatch that is needed.                                     |
+[patch_file](#database::asm_patches_patch_file) | The file containing the required Opatch version.                          |
+[patch_list](#database::asm_patches_patch_list) | The list of patches to apply.                                             |
 
 
 
 
-### grid_home<a name='database::asm_patches_grid_home'>
+### level<a name='database::asm_patches_level'>
 
-The ORACLE_HOME for the Grid Infrastructure installation.
+The patch level the database or grid infrastructure should be patched to.
 
-The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
+Default value is: `NONE`
 
-To customize this consistently use the hiera key `ora_profile::database::grid_home`.
+Valid values depend on your database/grid version, but it should like like below:
 
-Type: `Stdlib::Absolutepath`
+- `OCT2018RU`
+- `JAN2019RU`
+- `APR2019RU`
+- etc...
+Type: `String[1]`
 
 
 [Back to overview of database::asm_patches](#attributes)

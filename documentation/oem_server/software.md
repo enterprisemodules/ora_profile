@@ -132,6 +132,8 @@ Before Puppet can actually use remote files, they must be downloaded first. Pupp
 
 The default value is: `/install`
 
+To customize this consistently use the hiera key `ora_profile::database::download_dir`.
+
 Type: `Stdlib::Absolutepath`
 
 
@@ -181,6 +183,8 @@ Type: `Variant[Boolean,Enum['on_failure']]`
 The directory that contains the oracle inventory.
 
 The default value is: `/oracle_base/oraInventory`
+
+To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 
 Type: `Stdlib::Absolutepath`
 
