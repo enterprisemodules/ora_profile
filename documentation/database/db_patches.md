@@ -32,22 +32,46 @@ Look at our playgrounds [here](/playgrounds#oracle)
 
 
 
-Attribute Name                                       | Short Description                                                       |
----------------------------------------------------- | ----------------------------------------------------------------------- |
-[include_ojvm](#database::db_patches_include_ojvm)   | Specify if the OJVM patch for the patch level should also be installed. |
-[install_group](#database::db_patches_install_group) | The group to use for Oracle install.                                    |
-[level](#database::db_patches_level)                 | The patch level the database should be patched to.                      |
-[logoutput](#database::db_patches_logoutput)         | log the outputs of Puppet exec or not.                                  |
-[opversion](#database::db_patches_opversion)         | The version of OPatch that is needed.                                   |
-[oracle_home](#database::db_patches_oracle_home)     | The home directory to use for the Oracle installation.                  |
-[os_user](#database::db_patches_os_user)             | The OS user to use for Oracle install.                                  |
-[patch_file](#database::db_patches_patch_file)       | The file containing the required Opatch version.                        |
-[patch_list](#database::db_patches_patch_list)       | The list of patches to apply.                                           |
-[patch_window](#database::db_patches_patch_window)   | The patch window in which you want to do the patching.                  |
-[source](#database::db_patches_source)               | The location where the classes can find the software.                   |
+Attribute Name                                     | Short Description                                                         |
+-------------------------------------------------- | ------------------------------------------------------------------------- |
+[include_ojvm](#database::db_patches_include_ojvm) | Specify if the OJVM patch for the patch level should also be installed.   |
+[level](#database::db_patches_level)               | The patch level the database or grid infrastructure should be patched to. |
+[logoutput](#database::db_patches_logoutput)       | log the outputs of Puppet exec or not.                                    |
+[opversion](#database::db_patches_opversion)       | The version of OPatch that is needed.                                     |
+[oracle_home](#database::db_patches_oracle_home)   | The home directory to use for the Oracle installation.                    |
+[os_user](#database::db_patches_os_user)           | The OS user to use for Oracle install.                                    |
+[patch_file](#database::db_patches_patch_file)     | The file containing the required Opatch version.                          |
+[patch_list](#database::db_patches_patch_list)     | The list of patches to apply.                                             |
 
 
 
+
+### level<a name='database::db_patches_level'>
+
+The patch level the database or grid infrastructure should be patched to.
+
+Default value is: `NONE`
+
+Valid values depend on your database/grid version, but it should like like below:
+
+- `OCT2018RU`
+- `JAN2019RU`
+- `APR2019RU`
+- etc...
+Type: `String[1]`
+
+
+[Back to overview of database::db_patches](#attributes)
+
+### include_ojvm<a name='database::db_patches_include_ojvm'>
+
+Specify if the OJVM patch for the patch level should also be installed.
+
+Default value is: `false`
+Type: `Boolean`
+
+
+[Back to overview of database::db_patches](#attributes)
 
 ### patch_file<a name='database::db_patches_patch_file'>
 
@@ -87,19 +111,6 @@ Type: `String[1]`
 
 [Back to overview of database::db_patches](#attributes)
 
-### install_group<a name='database::db_patches_install_group'>
-
-The group to use for Oracle install.
-
-The default is : `oinstall`
-
-To customize this consistently use the hiera key `ora_profile::database::install_group`.
-
-Type: `String[1]`
-
-
-[Back to overview of database::db_patches](#attributes)
-
 ### os_user<a name='database::db_patches_os_user'>
 
 The OS user to use for Oracle install.
@@ -107,21 +118,6 @@ The OS user to use for Oracle install.
 The default is : `oracle`
 
 To customize this consistently use the hiera key `ora_profile::database::os_user`.
-
-Type: `String[1]`
-
-
-[Back to overview of database::db_patches](#attributes)
-
-### source<a name='database::db_patches_source'>
-
-The location where the classes can find the software. 
-
-You can specify a local directory, a Puppet url or an http url.
-
-The default is : `puppet:///modules/software/`
-
-To customize this consistently use the hiera key `ora_profile::database::source`.
 
 Type: `String[1]`
 
@@ -136,36 +132,6 @@ The default value is : `{}`
 
 
 Type: `Hash`
-
-
-[Back to overview of database::db_patches](#attributes)
-
-### level<a name='database::db_patches_level'>
-
-The patch level the database should be patched to.
-
-Default value is: `NONE`
-
-Valid values depend on your database version, but it should like like below:
-
-- `OCT2018RU`
-- `JAN2019RU`
-- `APR2019RU`
-- etc...
-Type: `String[1]`
-
-
-[Back to overview of database::db_patches](#attributes)
-
-### patch_window<a name='database::db_patches_patch_window'>
-
-The patch window in which you want to do the patching. Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
-
-an example on how to use this is:
-
-        patch_window => '2:00 - 4:00'
-
-Type: `String[1]`
 
 
 [Back to overview of database::db_patches](#attributes)
@@ -185,15 +151,5 @@ Valid values are:
 Type: `Variant[Boolean,Enum['on_failure']]`
 
 Default:`lookup({name => 'logoutput', default_value => 'on_failure'})`
-
-[Back to overview of database::db_patches](#attributes)
-
-### include_ojvm<a name='database::db_patches_include_ojvm'>
-
-Specify if the OJVM patch for the patch level should also be installed.
-
-Default value is: `false`
-Type: `Boolean`
-
 
 [Back to overview of database::db_patches](#attributes)

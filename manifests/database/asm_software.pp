@@ -329,6 +329,7 @@ class ora_profile::database::asm_software(
       oracle_home => $grid_home,
       os_user     => $grid_user,
       require     => $require_install,
+      daemonized  => false,
     }
 
     -> ora_tab_entry{ $asm_instance_name:
