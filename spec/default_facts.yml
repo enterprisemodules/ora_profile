@@ -41,3 +41,8 @@ ora_version:
 dmi:
   product:
     uuid: 'AAA-AAAA-BBBB-CCCC'
+ora_maintained_users_roles: []
+ora_non_maintained_users_roles: []
+ora_maintained_users: []
+ora_maintained_roles: []
+ora_global_profiles:  []

@@ -937,12 +937,11 @@ ora_profile::database::db_startup::db_type:                               databa
 #  Settings for database::cis_rules
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::cis_rules::ignore:
-  - r_1_1
-  - r_2_1_1
-  - r_2_1_2
-  - r_2_1_3
-  - r_2_1_4
+ora_profile::database::cis_rules::skip_list:
+  - secure_control_is_set_in_listener_ora
+  - extproc_is_not_present_in_listener_ora
+  - admin_restrictions_is_set_to_on
+  - secure_register_is_set_to_tcps_or_ipc
 ora_profile::database::cis_rules::dbname:                                 "%{lookup('ora_profile::database::dbname')}"
 
 

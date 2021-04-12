@@ -36,7 +36,7 @@
 #--++--
 class ora_profile::database::cis_rules(
   String[1]         $dbname,
-  Array[String[1]]  $ignore,
+  Array[String[1]]  $skip_list,
 ) inherits ora_profile::database {
 
   easy_type::debug_evaluation() # Show local variable on extended debug
@@ -46,6 +46,6 @@ class ora_profile::database::cis_rules(
   }
 
   ora_cis { $dbname:
-    ignore => $ignore,
+    skip_list => $skip_list,
   }
 }

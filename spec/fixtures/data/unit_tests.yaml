@@ -9,4 +9,4 @@ ora_profile::database::os_user_password:                mysecretpassword
 ora_profile::database::grid_user_password:              mysecretpassword
 ora_profile::database::db_definition::system_password:  mysecretpassword
 ora_profile::database::db_definition::sys_password:     mysecretpassword
-
+ora_profile::database::db_patches::level:               JUL2020RU
