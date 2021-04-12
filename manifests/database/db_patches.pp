@@ -124,7 +124,7 @@ class ora_profile::database::db_patches(
       $current_patch
     }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
   } else {
-    $patch_level_list = {}
+    fail "Patchlevel '${level}' not defined for database version '${db_version}"
   }
 
   if ( $include_ojvm ) {
