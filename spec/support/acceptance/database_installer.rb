@@ -13,6 +13,7 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::disable_thp'                                       => 'skip',
       'ora_profile::database::firewall'                                          => 'skip',
       'ora_profile::database::db_patches'                                        => 'skip',
+      'ora_profile::database::cis_controls::db_version'                          => 'db12c',  # This works on all versions
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
       'ora_profile::database::db_definition_template::recovery_area_destination' => '/u03/fast_recovery_area',
       'ora_profile::database::db_definition_template::storage_type'              => 'FS',

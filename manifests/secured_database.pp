@@ -24,5 +24,5 @@
 #--++--
 class ora_profile::secured_database() {
   contain ora_profile::database
-  include ora_profile::database::cis_rules
+  include ora_profile::database::cis_controls
 }

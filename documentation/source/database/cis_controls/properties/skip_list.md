@@ -1,0 +1,1 @@
+This is the list of controls that you want to skip. By default this value is empty, meaning `ora_cis` will apply **ALL** controls. You must specify the name of the control. 
