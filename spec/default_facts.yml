@@ -14,35 +14,37 @@ ora_install_homes:
     defined_sids:      ['TEST']
     running_sids:      ['TEST']
 puppet_confdir:       /etc/puppetlabs/puppet
+dmi:
+  product:
+    uuid: 'AAA-AAAA-BBBB-CCCC'
+
 #
 # CIS facts
 #
-ora_accounts_with_default_passwords: []
-ora_users_with_external_password:    []
-ora_access_to_aud: []
-ora_access_to_link: []
-ora_access_to_scheduler_credentials: []
-ora_access_to_user_history: []
-ora_access_to_user_mig: []
-ora_access_to_user: []
-ora_any_privileges: []
-ora_accounts_with_admin_grants: []
-ora_apex_users: []
-ora_access_to_dba_tables: []
-ora_profiles: []
-ora_proxy_users: []
-ora_roles: []
-ora_users: []
-ora_users_with_default_profile: []
+ora_cis_audit_policy_exists:          []
+ora_accounts_with_default_passwords:  []
+ora_users_with_external_password:     []
+ora_access_to_aud:                    []
+ora_access_to_link:                   []
+ora_access_to_scheduler_credentials:  []
+ora_access_to_user_history:           []
+ora_access_to_user_mig:               []
+ora_access_to_user:                   []
+ora_any_privileges:                   []
+ora_accounts_with_admin_grants:       []
+ora_apex_users:                       []
+ora_access_to_dba_tables:             []
+ora_profiles:                         []
+ora_proxy_users:                      []
+ora_roles:                            []
+ora_users:                            []
+ora_users_with_default_profile:       []
+ora_maintained_users_roles:           []
+ora_non_maintained_users_roles:       []
+ora_maintained_users:                 []
+ora_maintained_roles:                 []
+ora_global_profiles:                  []
 ora_version:
   -
     sid:   DB01
     name:   12.2.0.1.0
-dmi:
-  product:
-    uuid: 'AAA-AAAA-BBBB-CCCC'
-ora_maintained_users_roles: []
-ora_non_maintained_users_roles: []
-ora_maintained_users: []
-ora_maintained_roles: []
-ora_global_profiles:  []
