@@ -311,6 +311,7 @@ class ora_profile::database::db_patches(
                 instance_name           => $dbname,
                 oracle_product_home_dir => $patch_home,
                 os_user                 => $os_user,
+                provider                => $db_control_provider,
                 require                 => Ora_opatch[$apply_patches.keys],
                 schedule                => $schedule,
               }

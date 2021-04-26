@@ -1,3 +1,7 @@
+---
+ora_profile::database::firewall::manage_service:                          false # Doesn't work in RH6
+ora_profile::database::tmpfiles:                                          skip  # There is no tmpfiles service in RH6
+
 # ------------------------------------------------------------------------------
 #
 # Settings for database::packages
@@ -33,7 +37,7 @@ ora_profile::database::packages::list:
   libxcb.x86_64: {}
   libXrender.x86_64: {}
   libXrender-devel.x86_64: {}
-  makex86_64: {}
+  make.x86_64: {}
   sysstat.x86_64: {}
 
 

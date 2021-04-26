@@ -102,6 +102,4 @@ memory_max_target=<%= $memory_max_target %>
 ###########################################
 <% if $container_database == 'enabled' { -%>
 enable_pluggable_database=true
-<% } else { -%>
-enable_pluggable_database=false
 <% } -%>
