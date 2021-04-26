@@ -207,6 +207,7 @@ class ora_profile::database::db_definition(
   }
 
   $dbname_defaults = {
+    ensure                    => present,
     init_ora_params           => $init_ora_params + { is_windows => $is_windows },
     # ora_database parameters below
     disable_corrective_ensure => true,
@@ -306,23 +307,30 @@ class ora_profile::database::db_definition(
   if ( $master_node == $facts['hostname'] ) {
 
     $database.each |$db, $db_props| {
-      $init_ora = {init_ora_content => epp($init_ora_template, $db_props['init_ora_params'])}
+      if ( has_key($db_props, 'container_database') ) {
+        $cdb_prop = { container_database => $db_props['container_database'] }
+      } else {
+        $cdb_prop = { container_database => $container_database }
+      }
+      $init_ora = {init_ora_content => epp($init_ora_template, $db_props['init_ora_params'] + $cdb_prop)}
       # Add init_ora_content to hash and remove init_ora_params, which is only needed for the init_ora_content
       $all_db_props = $db_props + $init_ora - init_ora_params
 
       ora_database { $db:
-        ensure => present,
-        *      => $all_db_props,
+        * => $all_db_props,
       }
 
-      #
-      # Database is done. Now start it
-      #
-      -> db_control {"database started from ${all_db_props['oracle_home']}":
-        ensure                  => 'start',
-        provider                => $db_control_provider,
-        instance_name           => $db,
-        oracle_product_home_dir => $all_db_props['oracle_home'],
+      if ( $db_props['ensure'] == present ) {
+        #
+        # Database is done. Now start it
+        #
+        db_control {"database ${db} started from ${all_db_props['oracle_home']}":
+          ensure                  => 'start',
+          provider                => $db_control_provider,
+          instance_name           => $db,
+          oracle_product_home_dir => $all_db_props['oracle_home'],
+          require                 => Ora_database[$db],
+        }
       }
     }
 
@@ -332,50 +340,55 @@ class ora_profile::database::db_definition(
       $all_db_props = $db_props  - init_ora_params
       $instance_name = set_param('instance_name', $db, $cluster_nodes)
       $oh = $all_db_props['oracle_home']
-      file { "${oh}/dbs/init${instance_name}.ora":
-        ensure  => present,
-        content => "spfile='${data_file_destination}/spfile${db}.ora'"
-      }
+      if ( $db_props['ensure'] == present ) {
+        file { "${oh}/dbs/init${instance_name}.ora":
+          ensure  => present,
+          content => "spfile='${data_file_destination}/spfile${db}.ora'"
+        }
 
-      -> exec {'add_instance':
-        user        => $os_user,
-        environment => ["ORACLE_SID=${instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oh}"],
-        command     => "${oh}/bin/srvctl add instance -d ${db} -i ${instance_name} -n ${::hostname}",
-        unless      => "${oh}/bin/srvctl status instance -d ${db} -i ${instance_name}",
-        logoutput   => $logoutput,
-      }
+        -> exec {"add instance ${db}":
+          user        => $os_user,
+          environment => ["ORACLE_SID=${instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oh}"],
+          command     => "${oh}/bin/srvctl add instance -d ${db} -i ${instance_name} -n ${::hostname}",
+          unless      => "${oh}/bin/srvctl status instance -d ${db} -i ${instance_name}",
+          logoutput   => $logoutput,
+        }
 
-      -> exec {'start_instance':
-        user        => $os_user,
-        environment => ["ORACLE_SID=${instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oh}"],
-        command     => "${oh}/bin/srvctl start instance -d ${db} -i ${instance_name}",
-        onlyif      => "${oh}/bin/srvctl status instance -d ${db} -i ${instance_name} | grep not",
-        logoutput   => $logoutput,
-      }
+        -> exec {"start instance ${db}":
+          user        => $os_user,
+          environment => ["ORACLE_SID=${instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oh}"],
+          command     => "${oh}/bin/srvctl start instance -d ${db} -i ${instance_name}",
+          onlyif      => "${oh}/bin/srvctl status instance -d ${db} -i ${instance_name} | grep not",
+          logoutput   => $logoutput,
+        }
 
-      -> ora_setting { $instance_name:
-        default     => true,
-        oracle_home => $oh,
-        cdb         => case $container_database {
-          'enabled': {
-            true
-          }
-          default: {
-            false
-          }
-        },
-      }
+        -> ora_setting { $instance_name:
+          default     => true,
+          oracle_home => $oh,
+          cdb         => case $container_database {
+            'enabled': {
+              true
+            }
+            default: {
+              false
+            }
+          },
+        }
 
-      -> ora_tab_entry{ $instance_name:
-        ensure      => 'present',
-        oracle_home => $oh,
-        startup     => 'Y',
-        comment     => 'Oracle instance added by Puppet',
-      }
+        -> ora_tab_entry{ $instance_name:
+          ensure      => 'present',
+          oracle_home => $oh,
+          startup     => 'Y',
+          comment     => 'Oracle instance added by Puppet',
+        }
 
-      -> ora_database {$db:
-        ensure => present,
-        *      => $all_db_props,
+        -> ora_database {$db:
+          * => $all_db_props,
+        }
+      } else {
+        ora_database {$db:
+          * => $all_db_props,
+        }
       }
     }
   }
