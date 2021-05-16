@@ -12,11 +12,11 @@ shared_examples "a client installer" do | settings|
         )
       end
 
-    after(:all) do
-      # Cleanup all
-      run_shell('killall -u oracle -w || true')
-      run_shell('rm -rf /oracle /home/oracle/* || true')
-    end
+    # after(:all) do
+    #   # Cleanup all
+    #   run_shell('killall -u oracle -w || true')
+    #   run_shell('rm -rf /oracle /home/oracle/* || true')
+    # end
   
     manifest = <<-MANIFEST
       include ora_profile::client

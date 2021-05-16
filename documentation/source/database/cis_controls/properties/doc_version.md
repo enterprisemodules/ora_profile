@@ -1,1 +1,1 @@
-The version of the CIS benchmark you want to apply to your database. When you don't specify the `doc_version`, puppet automatically uses the latest version for your current `db_version`. 
+The version of the CIS benchmark you want to apply to your database. When you don't specify the `doc_version`, puppet automatically uses the latest version for your current `product_version`. 

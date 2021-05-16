@@ -5,7 +5,7 @@ When these customizations aren't enough, you can replace the class with your own
 
 <%- include_attributes [
   :dbname,
-  :db_version,
+  :product_version,
   :doc_version,
   :skip_list,
 ]%>

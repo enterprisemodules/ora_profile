@@ -7,15 +7,11 @@
 ### Classes
 
 * [`ora_profile::client`](#ora_profileclient): This is a highly customizable Puppet profile class to define an Oracle client on your system.
-* [`ora_profile::client::packages`](#ora_profileclientpackages): Installs the Oracle client software on your system.
 * [`ora_profile::client::software`](#ora_profileclientsoftware): Installs the Oracle client software on your system.
 * [`ora_profile::database`](#ora_profiledatabase): A short summary of the purpose of this defined type.
 * [`ora_profile::database::asm_diskgroup`](#ora_profiledatabaseasm_diskgroup): This class contains the code to create the ASM diskgroups.
-* [`ora_profile::database::asm_groups_and_users`](#ora_profiledatabaseasm_groups_and_users): This class contains the definition of all required OS users and groups on this system.
 * [`ora_profile::database::asm_init_params`](#ora_profiledatabaseasm_init_params): This class configures initialization parameters for the ASM instance
-* [`ora_profile::database::asm_limits`](#ora_profiledatabaseasm_limits): This class contains the definition all the required OS limit settings on your system.
 * [`ora_profile::database::asm_listener`](#ora_profiledatabaseasm_listener): This class contains the definition of the Oracle listener process.
-* [`ora_profile::database::asm_packages`](#ora_profiledatabaseasm_packages): This class contains the definition all the packages you need to have installed on your system.
 * [`ora_profile::database::asm_patches`](#ora_profiledatabaseasm_patches): This class contains the definition for the ASM patches.
 * [`ora_profile::database::asm_setup`](#ora_profiledatabaseasm_setup): This class contains the code to install Oracle Grid Infrastructure.
 * [`ora_profile::database::asm_software`](#ora_profiledatabaseasm_software): This class contains the code to install Oracle Grid Infrastructure.
@@ -24,7 +20,7 @@
 * [`ora_profile::database::asm_storage::asmlib`](#ora_profiledatabaseasm_storageasmlib): This class configures ASMLib devices.
 * [`ora_profile::database::asm_storage::nfs`](#ora_profiledatabaseasm_storagenfs): This class will create the specified mountpoint and mount the nfs share there.
 * [`ora_profile::database::asm_storage::udev`](#ora_profiledatabaseasm_storageudev): This class will apply udev rules to specified disk devices.
-* [`ora_profile::database::asm_sysctl`](#ora_profiledatabaseasm_sysctl): This class contains the definition all all required sysctl setings for your system.
+* [`ora_profile::database::cis_controls`](#ora_profiledatabasecis_controls): This class contains the actual code secureing the database.
 * [`ora_profile::database::cis_rules`](#ora_profiledatabasecis_rules): This class contains the actual code secureing the database.
 * [`ora_profile::database::common`](#ora_profiledatabasecommon): This class contains common variables used by more then one class.
 * [`ora_profile::database::db_definition`](#ora_profiledatabasedb_definition): This class contains the actual database definition using the `ora_database` type.
@@ -43,20 +39,12 @@
 * [`ora_profile::database::firewall`](#ora_profiledatabasefirewall): This class contains the definition of the firewall settings you need for Oracle.
 * [`ora_profile::database::firewall::firewalld`](#ora_profiledatabasefirewallfirewalld): Open up ports for Oracle using the firewalld firewall
 * [`ora_profile::database::firewall::iptables`](#ora_profiledatabasefirewalliptables): Open up ports for Oracle using the iptables
-* [`ora_profile::database::groups_and_users`](#ora_profiledatabasegroups_and_users): This class contains the definition of all required OS users and groups on this system.
-* [`ora_profile::database::limits`](#ora_profiledatabaselimits): This class contains the definition all the required OS limit settings on your system.
-* [`ora_profile::database::packages`](#ora_profiledatabasepackages): This class contains the definition all the packages you need to have installed on your system.
 * [`ora_profile::database::rac::authenticated_nodes`](#ora_profiledatabaseracauthenticated_nodes): Setup authentication for the cluster nodes.
-* [`ora_profile::database::sysctl`](#ora_profiledatabasesysctl): This class contains the definition all all required sysctl setings for your system.
 * [`ora_profile::database::tmpfiles`](#ora_profiledatabasetmpfiles): This class contains the definition all the required OS limit settings on your system.
 * [`ora_profile::extracted_database`](#ora_profileextracted_database): A short summary of the purpose of this defined type.
 * [`ora_profile::oem_agent`](#ora_profileoem_agent): This is a highly customizable Puppet profile class to define an Oracle Enterprise Manager installation on your system.
-* [`ora_profile::oem_agent::limits`](#ora_profileoem_agentlimits): This class contains the definition all the required OS limit settings for OEM Agent on your system.
-* [`ora_profile::oem_agent::packages`](#ora_profileoem_agentpackages): This class contains the definition of the packages you need to have installed on your system.
 * [`ora_profile::oem_agent::software`](#ora_profileoem_agentsoftware): Installs Oracle Enterprse Manager Agent.
 * [`ora_profile::oem_server`](#ora_profileoem_server): This is a highly customizable Puppet profile class to define an Oracle Enterprise Manager installation on your system.
-* [`ora_profile::oem_server::limits`](#ora_profileoem_serverlimits): This class contains the definition all the required OS limit settings for OEM Server on your system.
-* [`ora_profile::oem_server::packages`](#ora_profileoem_serverpackages): This class contains the definition of the packages you need to have installed on your system.
 * [`ora_profile::oem_server::software`](#ora_profileoem_serversoftware): Installs Oracle Enterprse Manager.
 * [`ora_profile::secured_database`](#ora_profilesecured_database): A short summary of the purpose of this class
 
@@ -129,6 +117,7 @@ ora_profile::client::packages:   my_profile::my_own_implementation
 ```
 
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
+++--++
 
 ora_profile::client
 
@@ -190,6 +179,8 @@ Here is an example:
 ```puppet
 contain ::ora_profile::client
 ```
+
+--++--
 
 #### Parameters
 
@@ -363,89 +354,15 @@ ora_profile::database::after_software:  my_module::my_class
 
 Default value: ``undef``
 
-### `ora_profile::client::packages`
-
-ora_profile::client::packages
-
-Using this classe you can install the Oracle client software on your system.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::client::packages` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The required packages for a succesfull Oracle client installation.
-The defaults are:
-```yaml
-ora_profile::client::packages::list:
-  psmisc:
-    ensure: present
-  unzip:
-    ensure: present
-  binutils.x86_64:
-    ensure: present
-  compat-libcap1.x86_64:
-    ensure: present
-  compat-libstdc++-33.i686:
-    ensure: present
-  compat-libstdc++-33.x86_64:
-    ensure: present
-  gcc.x86_64:
-    ensure: present
-  gcc-c++.x86_64:
-    ensure: present
-  glibc.i686:
-    ensure: present
-  glibc.x86_64:
-    ensure: present
-  glibc-devel.i686:
-    ensure: present
-  glibc-devel.x86_64:
-    ensure: present
-  ksh:
-    ensure: present
-  libaio.i686:
-    ensure: present
-  libaio.x86_64:
-    ensure: present
-  libaio-devel.i686:
-    ensure: present
-  libaio-devel.x86_64:
-    ensure: present
-  libgcc.i686:
-    ensure: present
-  libgcc.x86_64:
-    ensure: present
-  libstdc++.i686:
-    ensure: present
-  libstdc++.x86_64:
-    ensure: present
-  libstdc++-devel.i686:
-    ensure: present
-  libstdc++-devel.x86_64:
-    ensure: present
-  libXi.i686:
-    ensure: present
-  libXi.x86_64:
-    ensure: present
-  libXtst.i686:
-    ensure: present
-  libXtst.x86_64:
-    ensure: present
-  make.x86_64:
-    ensure: present
-  sysstat.x86_64:
-    ensure: present
-```
-
 ### `ora_profile::client::software`
+
+++--++
 
 ora_profile::client::software
 
 Using this classe you can install the Oracle client software on your system.
+
+--++--
 
 #### Parameters
 
@@ -595,6 +512,8 @@ ora_profile::database
 
 A description of what this defined type does
 
+++--++
+
 ora_profile::database
 
 In it's core just adding:
@@ -690,6 +609,8 @@ class {'ora_profile::database':
 }
 
 ```
+
+--++--
 
 #### Examples
 
@@ -2091,11 +2012,15 @@ Default value: ``undef``
 
 Data type: `Optional[String]`
 
+
+
 Default value: ``undef``
 
 ##### `before_tmpfiles`
 
 Data type: `Optional[String]`
+
+
 
 Default value: ``undef``
 
@@ -2103,15 +2028,21 @@ Default value: ``undef``
 
 Data type: `Optional[String]`
 
+
+
 Default value: ``undef``
 
 ### `ora_profile::database::asm_diskgroup`
+
+++--++
 
 ora_profile::database::asm_diskgroup
 
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -2141,59 +2072,15 @@ ora_profile::database::asm_diskgroup::disks:
 
 Default value: `{}`
 
-### `ora_profile::database::asm_groups_and_users`
-
-ora_profile::groups_and_users
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::asm_groups_and_users` class.
-
-##### `users`
-
-Data type: `Hash`
-
-The OS users to create for Oracle.
-The default value is:
-```yaml
-ora_profile::database::groups_and_users::users:
-  oracle:
-    uid:        54321
-    gid:        oinstall
-    groups:
-    - oinstall
-    - dba
-    - oper
-    shell:      /bin/bash
-    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
-    home:       /home/oracle
-    comment:    This user oracle was created by Puppet
-    managehome: true
-```
-
-##### `groups`
-
-Data type: `Hash`
-
-The list of groups to create for Oracle.
-The default value is:
-```yaml
-ora_profile::database::groups_and_users::groups:
-  oinstall:
-    gid:  54321,
-  dba:
-    gid:  54322,
-  oper:
-    gid:  54323,
-```
-
 ### `ora_profile::database::asm_init_params`
+
+++--++
 
 ora_profile::database::asm_init_params
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -2228,45 +2115,17 @@ See: [ora_init_params](https://www.enterprisemodules.com/docs/ora_config/ora_ini
 
 Default value: `{}`
 
-### `ora_profile::database::asm_limits`
-
-ora_profile::limits
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::asm_limits` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The OS limits created for Oracle.
-The defaults are:
-```yaml
-ora_profile::database::limits::list:
-  '*/nofile':
-    soft: 2048
-    hard: 8192
-  'oracle/nofile':
-    soft: 65536
-    hard: 65536
-  'oracle/nproc':
-    soft: 2048
-    hard: 16384
-  'oracle/stack':
-    soft: 10240
-    hard: 32768
-```
-
 ### `ora_profile::database::asm_listener`
+
+++--++
 
 ora_profile::database::asm_listener
 
 It installs the specified version of the SQL*net software and start's the listener.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -2303,60 +2162,17 @@ The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
-### `ora_profile::database::asm_packages`
-
-ora_profile::packages
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::asm_packages` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The required packages for a succesfull Oracle installation.
-The defaults are:
-```yaml
-ora_profile::database::packages::list:
-- binutils.x86_64
-- compat-libcap1.x86_64
-- compat-libstdc++-33.i686
-- compat-libstdc++-33.x86_64
-- gcc.x86_64
-- gcc-c++.x86_64
-- glibc.i686
-- glibc.x86_64
-- glibc-devel.i686
-- glibc-devel.x86_64
-- ksh
-- libaio.i686
-- libaio.x86_64
-- libaio-devel.i686
-- libaio-devel.x86_64
-- libgcc.i686
-- libgcc.x86_64
-- libstdc++.i686
-- libstdc++.x86_64
-- libstdc++-devel.i686
-- libstdc++-devel.x86_64
-- libXi.i686
-- libXi.x86_64
-- libXtst.i686
-- libXtst.x86_64
-- make.x86_64
-- sysstat.x86_64
-```
-
 ### `ora_profile::database::asm_patches`
+
+++--++
 
 ora_profile::database::asm_patches
 
 It also contains the definition of the required `Opatch` version.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -2416,6 +2232,7 @@ ora_profile::asm_software
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+++--++
 
 ora_profile::database::asm_setup
 
@@ -2431,6 +2248,8 @@ When these customizations aren't enough, you can replace the class with your own
    - `CLIENT_ASM_STORAGE`   (versions >= 12.2)
    - `FLEX_ASM_STORAGE`     (versions >= 12.1)
    The default value is: `undef`
+
+--++--
 
 #### Parameters
 
@@ -2621,6 +2440,8 @@ Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STO
 
 ### `ora_profile::database::asm_software`
 
+++--++
+
 ora_profile::database::asm_software
 
 Here you can customize some of the attributes of your database.
@@ -2635,6 +2456,8 @@ When these customizations aren't enough, you can replace the class with your own
    - `CLIENT_ASM_STORAGE`   (versions >= 12.2)
    - `FLEX_ASM_STORAGE`     (versions >= 12.1)
    The default value is: `undef`
+
+--++--
 
 #### Parameters
 
@@ -2839,11 +2662,15 @@ Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STO
 
 ### `ora_profile::database::asm_storage`
 
+++--++
+
 ora_profile::database::asm_storage
 
 Here you can customize some of the attributes of your storage.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -2918,6 +2745,8 @@ include ora_profile::database::asm_storage::afd_label
 
 ### `ora_profile::database::asm_storage::asmlib`
 
+++--++
+
 ora_profile::database::asm_storage::asmlib
 
 Here is an example:
@@ -2925,6 +2754,8 @@ Here is an example:
 ```puppet
   include ora_profile::database::asm_storage::asmlib
 ```
+
+--++--
 
 #### Parameters
 
@@ -2967,6 +2798,8 @@ The devices that need to be excluded during scanning of the devices.
 
 ### `ora_profile::database::asm_storage::nfs`
 
+++--++
+
 ora_profile::database::asm_storage::nfs
 
 Here is an example:
@@ -2974,6 +2807,8 @@ Here is an example:
 ```puppet
   include ora_profile::database::asm_storage::nfs
 ```
+
+--++--
 
 #### Parameters
 
@@ -3016,6 +2851,8 @@ The default value is: `localhost`.
 
 ### `ora_profile::database::asm_storage::udev`
 
+++--++
+
 ora_profile::database::asm_storage::udev
 
 Here is an example:
@@ -3023,6 +2860,8 @@ Here is an example:
 ```puppet
   include ora_profile::database::asm_storage::udev
 ```
+
+--++--
 
 #### Parameters
 
@@ -3057,55 +2896,56 @@ ora_profile::database::asm_storage::disk_devices:
     label: 'DATA1'
 ```
 
-### `ora_profile::database::asm_sysctl`
+### `ora_profile::database::cis_controls`
 
-ora_profile::sysctl
+++--++
 
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+ora_profile::database::cis_controls
+
+Here you ca customise the securtiy by specifying the CIS rules you *don't* want to apply.
+
+
+When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::secured_database](./secured_database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_sysctl` class.
+The following parameters are available in the `ora_profile::database::cis_controls` class.
 
-##### `list`
+##### `dbname`
 
-Data type: `Hash`
+Data type: `String[1]`
 
-The required sysctl parameters for Oracle.
-The defaults are:
-```yaml
-ora_profile::database::sysctl::list:
-  'kernel.msgmnb':
-    value:  65536
-  'kernel.msgmax':
-    value:  65536
-  'kernel.shmmax':
-    value:  4398046511104
-  'kernel.shmall':
-    value:  4294967296
-  'fs.file-max':
-    value:  6815744
-  'kernel.shmmni':
-    value:  4096
-  'fs.aio-max-nr':
-    value:  1048576
-  'kernel.sem':
-    value:  '250 32000 100 128'
-  'net.ipv4.ip_local_port_range':
-    value:  '9000 65500'
-  'net.core.rmem_default':
-    value:  262144
-  'net.core.rmem_max':
-    value:  4194304
-  'net.core.wmem_default':
-    value:  262144
-  'net.core.wmem_max':
-    value:  1048576
-  'kernel.panic_on_oops':
-    value:  1
-```
+The name of the database.
+The default is `DB01`
+To customize this consistently use the hiera key `ora_profile::database::dbname`.
+
+##### `product_version`
+
+Data type: `Optional[String[1]]`
+
+The database version of the CIS benchmark you want to apply.
+Although not very logical, you **can** apply an older (or newer) database version to your database.
+If you also don't specify a `db_version`, Puppet will detect the version of Oracle running and use this to determine the `db_version`. There is, however, one issue with the detection. On an initial run Puppet canot determine what the Oracle version is. In that case, the ora_secured::ensure_cis defined type will skip applying the CIS benchmark and wait until (hopefully) the next run the version of Oracle for specified sid is available.
+
+##### `doc_version`
+
+Data type: `Optional[String[1]]`
+
+The version of the CIS benchmark you want to apply to your database.
+When you don't specify the `doc_version`, puppet automatically uses the latest version for your current `product_version`.
+
+##### `skip_list`
+
+Data type: `Optional[Array[String[1]]]`
+
+This is the list of controls that you want to skip.
+By default this value is empty, meaning `ora_secured::ensure_cis` will apply **ALL** controls. You must specify the name of the control.
 
 ### `ora_profile::database::cis_rules`
+
+++--++
 
 ora_profile::database::cis_rules
 
@@ -3113,6 +2953,8 @@ Here you ca customise the securtiy by specifying the CIS rules you *don't* want 
 
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::secured_database](./secured_database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3149,12 +2991,21 @@ The default is:
 ```
 These are actualy the rules that don't secure anything *inside* of a database.
 
+##### `skip_list`
+
+Data type: `Array[String[1]]`
+
+
+
 ### `ora_profile::database::common`
 
 Common variables used by more then one class
 
+++--++
 
 ora_profile::database::common
+
+--++--
 
 #### Parameters
 
@@ -3271,11 +3122,15 @@ ora_profile::database::patch_levels:
 
 ### `ora_profile::database::db_definition`
 
+++--++
+
 ora_profile::database::db_definition
 
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3480,6 +3335,8 @@ Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 ### `ora_profile::database::db_definition_template`
 
+++--++
+
 ora_profile::database::db_definition_template
 
 In this class the database will be created from a template. When using a 'seed' template, this will significantly decrease the time it takes to create a database. Bij default the Oracle supplied General_Purpose template is used, which is probably not the best option for your production environment.
@@ -3490,6 +3347,8 @@ ora_profile::database::before_sysctl:  my_module::my_class
 ```
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3640,9 +3499,13 @@ Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 ### `ora_profile::database::db_init_params`
 
+++--++
+
 ora_profile::database::db_init_params
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3679,11 +3542,15 @@ Default value: `{}`
 
 ### `ora_profile::database::db_listener`
 
+++--++
+
 ora_profile::database::db_listener
 
 It installs the specified version of the SQL*net software and start's the listener.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3741,6 +3608,8 @@ The defaults for all key(s) in the Hash are the ones given to the class.
 
 ### `ora_profile::database::db_patches`
 
+++--++
+
 ora_profile::database::db_patches
 
 It also contains the definition of the required `Opatch` version.
@@ -3754,6 +3623,8 @@ Applying patches to database software in a RAC environment is only supported on 
 There is no support yet to apply patches on a running system.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3835,9 +3706,13 @@ Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 ### `ora_profile::database::db_profiles`
 
+++--++
+
 ora_profile::database::db_profiles
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3854,9 +3729,13 @@ and adds more consistency.
 
 ### `ora_profile::database::db_services`
 
+++--++
+
 ora_profile::database::db_services
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -3878,9 +3757,13 @@ Data type: `Optional[String[1]]`
 
 ### `ora_profile::database::db_software`
 
+++--++
+
 ora_profile::database::db_software
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -4018,9 +3901,13 @@ The default value is an empty string.
 
 ### `ora_profile::database::db_startup`
 
+++--++
+
 ora_profile::database::db_startup
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -4054,9 +3941,13 @@ The default value is: 'database'
 
 ### `ora_profile::database::db_tablespaces`
 
+++--++
+
 ora_profile::database::db_tablespaces
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -4073,9 +3964,13 @@ and adds more consistency.
 
 ### `ora_profile::database::db_users`
 
+++--++
+
 ora_profile::database::db_users
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -4092,6 +3987,8 @@ and adds more consistency.
 
 ### `ora_profile::database::disable_thp`
 
+++--++
+
 ora_profile::database::disable_thp
 
 As documented in Oracle support ALERT <https://support.oracle.com/epmos/faces/DocumentDisplay?id=1557478.1>,
@@ -4099,17 +3996,27 @@ the class will disable Transparent HugePages on RedHat os family starting with v
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
+--++--
+
 ### `ora_profile::database::em_license`
+
+++--++
 
 ora_profile::database::em_license
 
+--++--
+
 ### `ora_profile::database::firewall`
+
+++--++
 
 ora_profile::database::firewall
 
 When you are using a Redhat flavored version lower then release 7, this module uses the `puppetlabs-firewall` module to manage the `iptables` settings. When using a version 7 or higher, the puppet module `crayfishx-firewalld` to manage the `firewalld daemon`.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+--++--
 
 #### Parameters
 
@@ -4131,6 +4038,8 @@ The default value is `true` and will make sure the firewall service is started a
 
 ### `ora_profile::database::firewall::firewalld`
 
+++--++
+
 ora_profile::database::firewall::firewalld
 
 Here is an example:
@@ -4138,6 +4047,8 @@ Here is an example:
 ```puppet
   include ora_profile::database::firewall::firewalld
 ```
+
+--++--
 
 #### Parameters
 
@@ -4171,6 +4082,8 @@ ora_profile::database::cluster_nodes:
 
 ### `ora_profile::database::firewall::iptables`
 
+++--++
+
 ora_profile::database::firewall::iptables
 
 Here is an example:
@@ -4178,6 +4091,8 @@ Here is an example:
 ```puppet
   include ora_profile::database::firewall::iptables
 ```
+
+--++--
 
 #### Parameters
 
@@ -4209,138 +4124,15 @@ ora_profile::database::cluster_nodes:
 - node2
 ```
 
-### `ora_profile::database::groups_and_users`
-
-ora_profile::database::groups_and_users
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::groups_and_users` class.
-
-##### `users`
-
-Data type: `Hash`
-
-The OS users to create for Oracle.
-The default value is:
-```yaml
-ora_profile::database::groups_and_users::users:
-  oracle:
-    uid:        54321
-    gid:        oinstall
-    groups:
-    - oinstall
-    - dba
-    - oper
-    shell:      /bin/bash
-    password:   '$1$DSJ51vh6$4XzzwyIOk6Bi/54kglGk3.'
-    home:       /home/oracle
-    comment:    This user oracle was created by Puppet
-    managehome: true
-```
-
-##### `groups`
-
-Data type: `Hash`
-
-The list of groups to create for Oracle.
-The default value is:
-```yaml
-ora_profile::database::groups_and_users::groups:
-  oinstall:
-    gid:  54321,
-  dba:
-    gid:  54322,
-  oper:
-    gid:  54323,
-```
-
-### `ora_profile::database::limits`
-
-ora_profile::database::limits
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::limits` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The OS limits created for Oracle.
-The defaults are:
-```yaml
-ora_profile::database::limits::list:
-  '*/nofile':
-    soft: 2048
-    hard: 8192
-  'oracle/nofile':
-    soft: 65536
-    hard: 65536
-  'oracle/nproc':
-    soft: 2048
-    hard: 16384
-  'oracle/stack':
-    soft: 10240
-    hard: 32768
-```
-
-### `ora_profile::database::packages`
-
-ora_profile::database::packages
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::packages` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The required packages for a succesfull Oracle installation.
-The defaults are:
-```yaml
-ora_profile::database::packages::list:
-- binutils.x86_64
-- compat-libcap1.x86_64
-- compat-libstdc++-33.i686
-- compat-libstdc++-33.x86_64
-- gcc.x86_64
-- gcc-c++.x86_64
-- glibc.i686
-- glibc.x86_64
-- glibc-devel.i686
-- glibc-devel.x86_64
-- ksh
-- libaio.i686
-- libaio.x86_64
-- libaio-devel.i686
-- libaio-devel.x86_64
-- libgcc.i686
-- libgcc.x86_64
-- libstdc++.i686
-- libstdc++.x86_64
-- libstdc++-devel.i686
-- libstdc++-devel.x86_64
-- libXi.i686
-- libXi.x86_64
-- libXtst.i686
-- libXtst.x86_64
-- make.x86_64
-- sysstat.x86_64
-```
-
 ### `ora_profile::database::rac::authenticated_nodes`
+
+++--++
 
 ora_profile::database::rac::authenticated_nodes
 
 Only applicable for RAC.
+
+--++--
 
 #### Parameters
 
@@ -4380,55 +4172,9 @@ ora_profile::database::rac::authenticated_nodes::keys:
 
 Default value: `{}`
 
-### `ora_profile::database::sysctl`
-
-ora_profile::database::sysctl
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::sysctl` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The required sysctl parameters for Oracle.
-The defaults are:
-```yaml
-ora_profile::database::sysctl::list:
-  'kernel.msgmnb':
-    value:  65536
-  'kernel.msgmax':
-    value:  65536
-  'kernel.shmmax':
-    value:  4398046511104
-  'kernel.shmall':
-    value:  4294967296
-  'fs.file-max':
-    value:  6815744
-  'kernel.shmmni':
-    value:  4096
-  'fs.aio-max-nr':
-    value:  1048576
-  'kernel.sem':
-    value:  '250 32000 100 128'
-  'net.ipv4.ip_local_port_range':
-    value:  '9000 65500'
-  'net.core.rmem_default':
-    value:  262144
-  'net.core.rmem_max':
-    value:  4194304
-  'net.core.wmem_default':
-    value:  262144
-  'net.core.wmem_max':
-    value:  1048576
-  'kernel.panic_on_oops':
-    value:  1
-```
-
 ### `ora_profile::database::tmpfiles`
+
+++--++
 
 ora_profile::tmpfiles
 
@@ -4465,6 +4211,8 @@ ora_profile::database::tmpfiles::list:
      mode: 'x'
 
 
+--++--
+
 #### Parameters
 
 The following parameters are available in the `ora_profile::database::tmpfiles` class.
@@ -4481,6 +4229,9 @@ The defaults are:
 ora_profile::database
 
 A description of what this defined type does
+
+++--++
+--++--
 
 #### Examples
 
@@ -4968,6 +4719,8 @@ Default value: ``undef``
 
 ### `ora_profile::oem_agent`
 
+++--++
+
 ora_profile::oem_agent
 
 In it's core just adding:
@@ -5032,6 +4785,8 @@ Here is an example:
 ```puppet
 contain ::ora_profile::oem_server
 ```
+
+--++--
 
 #### Parameters
 
@@ -5340,55 +5095,13 @@ Valid values are `true` and `false`.
 
 Default value: ``undef``
 
-### `ora_profile::oem_agent::limits`
-
-ora_profile::oem_agent::limits
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::oem_agent::limits` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The OS limits created for Oracle.
-The defaults are:
-```yaml
-ora_profile::oem_agent::limits::list:
-  '*/nproc':
-    soft: 4096
-    hard: 16384
-```
-
-### `ora_profile::oem_agent::packages`
-
-ora_profile::oem_agent::packages
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::oem_agent::packages` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The required packages for a succesfull Oracle Enterprise Manager Agent installation.
-The defaults are:
-```yaml
-ora_profile::oem_agent::packages::list:
-  make: {}
-  binutils: {}
-  gcc: {}
-  libaio: {}
-  glibc-common: {}
-  libstdc++: {}
-  sysstat: {}
-```
-
 ### `ora_profile::oem_agent::software`
 
+++--++
+
 ora_profile::oem_agent::software
+
+--++--
 
 #### Parameters
 
@@ -5514,6 +5227,8 @@ The agent version to be installed
 
 ### `ora_profile::oem_server`
 
+++--++
+
 ora_profile::oem_server
 
 In it's core just adding:
@@ -5578,6 +5293,8 @@ Here is an example:
 ```puppet
 contain ::ora_profile::oem_server
 ```
+
+--++--
 
 #### Parameters
 
@@ -5886,58 +5603,13 @@ ora_profile::database::sysctl:  skip
 
 Default value: ``undef``
 
-### `ora_profile::oem_server::limits`
-
-ora_profile::oem_server::limits
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::oem_server::limits` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The OS limits created for Oracle.
-The defaults are:
-```yaml
-ora_profile::oem_server::limits::list:
-  '*/nproc':
-    soft: 4098
-    hard: 8192
-```
-
-### `ora_profile::oem_server::packages`
-
-ora_profile::oem_server::packages
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::oem_server::packages` class.
-
-##### `list`
-
-Data type: `Hash`
-
-The required packages for a succesfull Oracle Enterprise Manager installation.
-The defaults are:
-```yaml
-ora_profile::oem_server::packages::list:
-  gcc: {}
-  gcc-c++: {}
-  dejavu-serif-fonts: {}
-  numactl: {}
-  numactl-devel: {}
-  motif: {}
-  motif-devel: {}
-  redhat-lsb: {}
-  redhat-lsb-core: {}
-  openssl: {}
-```
-
 ### `ora_profile::oem_server::software`
 
+++--++
+
 ora_profile::oem_server::software
+
+--++--
 
 #### Parameters
 
@@ -6124,6 +5796,8 @@ ora_profile::secured_db
 
 A description of what this class does
 
+++--++
+
 ora_profile::secured_database
 
 In it's core just adding:
@@ -6135,6 +5809,8 @@ contain ora_profile::secured_database
 Is enough to get a secured Oracle database running on your system.
 
 This profile class is based on the more generic [`ora_profile::database`](./database.html) class, but extends this class with securing the database conforming to the Oracle Center for Internet Security (CIS) rules.
+
+--++--
 
 #### Examples
 
@@ -6150,6 +5826,8 @@ include ora_profile::secured_db
 
 ora_profile::database::asm_storage::partition
 
+++--++
+
 ora_profile::database::asm_storage::partition
 
 .
@@ -6159,6 +5837,8 @@ Here is an example:
 ```puppet
   include ora_profile::database::asm_storage::partition
 ```
+
+--++--
 
 #### Parameters
 
@@ -6204,7 +5884,11 @@ Default value: ``undef``
 
 ### `ora_profile::database::authenticated_nodes::user_equivalence`
 
+++--++
+
 ora_profile::database::authenticated_nodes::user_equivalence
+
+--++--
 
 #### Parameters
 
@@ -6226,10 +5910,14 @@ Default value: `['localhost']`
 
 ### `ora_profile::database::rac::instance`
 
+++--++
+
 ora_profile::database::rac::instance
 
 Here is an example:
   ora_profile::database::rac::instance{'instance_name'}
+
+--++--
 
 #### Parameters
 

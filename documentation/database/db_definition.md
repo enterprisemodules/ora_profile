@@ -314,6 +314,7 @@ Type: `Hash`
 
 The domain of the database.
 
+The default is `$facts['networking']['domain']`
 
 Type: `Optional[String[1]]`
 

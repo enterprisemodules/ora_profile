@@ -19,8 +19,7 @@ The `ora_profile` module allows an easy path from first simple installation to a
 
 - [ora_install](https://www.enterprisemodules.com/shop/products/puppet-ora_install-module) For installing an Oracle database and other database related Oracle products
 - [ora_config](https://www.enterprisemodules.com/shop/products/puppet-ora_config-module) For configuring every aspect of your Oracle database
-- [ora_cis](https://www.enterprisemodules.com/shop/products/puppet-oracle-security-module) To secure your databases according to the CIS benchmarks.
-- [ora_rac](https://forge.puppet.com/enterprisemodules/ora_rac) To use Puppet to create and manage Oracle RAC installations.
+- [ora_secured](https://www.enterprisemodules.com/shop/products/puppet-oracle-security-module) To secure your databases according to the CIS benchmarks or STIG documents.
 
 This module support Oracle 10, 11, 12, 18 and 19
 
@@ -91,7 +90,7 @@ The [`ora_profile`](https://www.enterprisemodules.com/shop/products/puppet-ora_c
 - Puppet module [`enterprisemodules-ora_config`](https://forge.puppet.com/enterprisemodules/ora_config) installed.
 - Puppet module [`enterprisemodules-ora_install`](https://forge.puppet.com/enterprisemodules/ora_install) installed.
 - Puppet module [`enterprisemodules-easy_type`](https://forge.puppet.com/enterprisemodules/easy_type) installed.
-- Puppet module [`enterprisemodules/ora_cis`](https://forge.puppet.com/enterprisemodules/ora_cis) installed.
+- Puppet module [`enterprisemodules/ora_secured`](https://forge.puppet.com/enterprisemodules/ora_secured) installed.
 - Puppet module [`ipcrm-echo`](https://forge.puppet.com/ipcrm/echo) installed.
 - Puppet module [`herculesteam-augeasproviders_core`](https://forge.puppet.com/herculesteam/augeasproviders_core) installed.
 - Puppet module [`herculesteam-augeasproviders_sysctl`](https://forge.puppet.com/herculesteam/augeasproviders_sysctl) installed.

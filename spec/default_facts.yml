@@ -21,7 +21,6 @@ dmi:
 #
 # CIS facts
 #
-ora_cis_audit_policy_exists:          []
 ora_accounts_with_default_passwords:  []
 ora_users_with_external_password:     []
 ora_access_to_aud:                    []

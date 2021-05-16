@@ -970,7 +970,7 @@ ora_profile::database::cis_controls::skip_list:
   - admin_restrictions_is_set_to_on
   - secure_register_is_set_to_tcps_or_ipc
 ora_profile::database::cis_controls::dbname:                                 "%{lookup('ora_profile::database::dbname')}"
-ora_profile::database::cis_controls::db_version:                             ~
+ora_profile::database::cis_controls::product_version:                        ~
 ora_profile::database::cis_controls::doc_version:                            ~
 
 # ------------------------------------------------------------------------------

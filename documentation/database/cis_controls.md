@@ -24,12 +24,12 @@ Look at our playgrounds [here](/playgrounds#oracle)
 
 
 
-Attribute Name                                     | Short Description                                                    |
--------------------------------------------------- | -------------------------------------------------------------------- |
-[db_version](#database::cis_controls_db_version)   | The database version of the CIS benchmark you want to apply.         |
-[dbname](#database::cis_controls_dbname)           | The name of the database.                                            |
-[doc_version](#database::cis_controls_doc_version) | The version of the CIS benchmark you want to apply to your database. |
-[skip_list](#database::cis_controls_skip_list)     | This is the list of controls that you want to skip.                  |
+Attribute Name                                             | Short Description                                                    |
+---------------------------------------------------------- | -------------------------------------------------------------------- |
+[dbname](#database::cis_controls_dbname)                   | The name of the database.                                            |
+[doc_version](#database::cis_controls_doc_version)         | The version of the CIS benchmark you want to apply to your database. |
+[product_version](#database::cis_controls_product_version) | The database version of the CIS benchmark you want to apply.         |
+[skip_list](#database::cis_controls_skip_list)             | This is the list of controls that you want to skip.                  |
 
 
 
@@ -46,11 +46,11 @@ Type: `String[1]`
 
 [Back to overview of database::cis_controls](#attributes)
 
-### db_version<a name='database::cis_controls_db_version'>
+### product_version<a name='database::cis_controls_product_version'>
 
 The database version of the CIS benchmark you want to apply. Although not very logical, you **can** apply an older (or newer) database version to your database.
 
-If you also don't specify a `db_version`, Puppet will detect the version of Oracle running and use this to determine the `db_version`. There is, however, one issue with the detection. On an initial run Puppet canot determine what the Oracle version is. In that case, the ora_cis defined type will skip applying the CIS benchmark and wait until (hopefully) the next run the version of Oracle for specified sid is available.
+If you also don't specify a `db_version`, Puppet will detect the version of Oracle running and use this to determine the `db_version`. There is, however, one issue with the detection. On an initial run Puppet canot determine what the Oracle version is. In that case, the ora_secured::ensure_cis defined type will skip applying the CIS benchmark and wait until (hopefully) the next run the version of Oracle for specified sid is available.
 
 
 Type: `Optional[String[1]]`
@@ -60,7 +60,7 @@ Type: `Optional[String[1]]`
 
 ### doc_version<a name='database::cis_controls_doc_version'>
 
-The version of the CIS benchmark you want to apply to your database. When you don't specify the `doc_version`, puppet automatically uses the latest version for your current `db_version`. 
+The version of the CIS benchmark you want to apply to your database. When you don't specify the `doc_version`, puppet automatically uses the latest version for your current `product_version`. 
 Type: `Optional[String[1]]`
 
 
@@ -68,8 +68,8 @@ Type: `Optional[String[1]]`
 
 ### skip_list<a name='database::cis_controls_skip_list'>
 
-This is the list of controls that you want to skip. By default this value is empty, meaning `ora_cis` will apply **ALL** controls. You must specify the name of the control. 
-Type: `Array[String[1]]`
+This is the list of controls that you want to skip. By default this value is empty, meaning `ora_secured::ensure_cis` will apply **ALL** controls. You must specify the name of the control. 
+Type: `Optional[Array[String[1]]]`
 
 
 [Back to overview of database::cis_controls](#attributes)

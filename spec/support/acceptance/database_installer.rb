@@ -13,7 +13,9 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::disable_thp'                                       => 'skip',
       'ora_profile::database::firewall'                                          => 'skip',
       'ora_profile::database::db_patches'                                        => 'skip',
-      'ora_profile::database::cis_controls::db_version'                          => 'db12c',  # This works on all versions
+      'ora_profile::database::cis_controls::product_version'                     => 'db12c',  # This works on all versions
+      'ora_profile::database::cis_controls::doc_version'                         => 'V3.0.0', 
+      'ora_profile::database::cis_controls::skip_list'                           => ['create_user_action_audit_is_enabled'],
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
       'ora_profile::database::db_definition_template::recovery_area_destination' => '/u03/fast_recovery_area',
       'ora_profile::database::db_definition_template::storage_type'              => 'FS',
@@ -64,12 +66,12 @@ shared_examples "a database installer" do | settings|
     )
   end
 
-  after(:all) do
-    # Cleanup all
-    run_shell('killall -u oracle -w || true')
-    run_shell('rm -rf /u01 /u02 /u03 /home/oracle || true')
-    run_shell('userdel oracle; groupdel dba; groupdel oinstall|| true')
-  end
+  # after(:all) do
+  #   # Cleanup all
+  #   run_shell('killall -u oracle -w || true')
+  #   run_shell('rm -rf /u01 /u02 /u03 /home/oracle || true')
+  #   run_shell('userdel oracle; groupdel dba; groupdel oinstall|| true')
+  # end
 
   manifest = <<-MANIFEST
     contain #{klass}
@@ -103,7 +105,7 @@ shared_examples "a database installer" do | settings|
 
   it 'is idempotent on next run' do
     #
-    # ora_cis needs some more run's before it is idempotent.
+    # ora_secured::ensure_cis needs some more run's before it is idempotent.
     #
     if klass == 'ora_profile::secured_database'
       apply_manifest(manifest, :expect_changes => true)

@@ -13,7 +13,7 @@ fixtures:
     easy_type:             https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/easy_type_src.git
     ora_install:           https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_install.git
     ora_config:            https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_config.git
-    ora_cis:               https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_cis.git
+    ora_secured:           https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/enterprisemodules/ora_secured.git
   forge_modules:
     partition:              enterprisemodules-partition
     powershell:             puppetlabs/powershell
