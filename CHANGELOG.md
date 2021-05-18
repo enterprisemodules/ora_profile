@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## Release 0.28.0
+
+
+**New Features**
+
+- [cis_controls] Update to use ora_secured
+- [db_definition] Enable dropping a database, set to ensure = absent
+- [asm_patches/db_patches] Add April 2021 patch level
+- [asm_patches] Support patching running system with Oracle Restart and RAC
+
+**Bug fixes**
+
+- [ora_profile] Small bug fixes
+- [db_patches] Fail when an undefined patchlevel is used
+
+
 ## Release 0.27.0
 
 **New Features**
