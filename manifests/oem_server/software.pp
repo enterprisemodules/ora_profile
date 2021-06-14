@@ -89,12 +89,14 @@
 #    The default value is: `oracle`
 #
 # @param [String[1]] version
-#    The agent version to be installed
+#    The server version to be installed
 #    - `12.1.0.4`
 #    - `12.1.0.5`
 #    - `13.1.0.0`
 #    - `13.2.0.0`
 #    - `13.3.0.0`
+#    - `13.4.0.0`
+#    - `13.5.0.0`
 #
 # @param [Easy_type::Password] weblogic_password
 #    The password to use for WebLogic.
@@ -152,6 +154,27 @@ class ora_profile::oem_server::software(
       ora_autotask { $dbname:
         auto_optimizer_stats_collection => 'disabled',
       }
+      # Restart the database to effectuate the changed init params
+      $db_home = lookup('ora_profile::database::oracle_home')
+      $db_os_user = lookup('ora_profile::database::os_user')
+      $db_control_provider = lookup('ora_profile::database::db_control_provider')
+      db_control {"stop database ${dbname}":
+        ensure                  => 'stop',
+        instance_name           => $dbname,
+        oracle_product_home_dir => $db_home,
+        os_user                 => $db_os_user,
+        provider                => $db_control_provider,
+        before                  => Db_control["start database ${dbname}"],
+      }
+      db_control {"start database ${dbname}":
+        ensure                  => 'start',
+        instance_name           => $dbname,
+        oracle_product_home_dir => $db_home,
+        os_user                 => $db_os_user,
+        provider                => $db_control_provider,
+        require                 => Db_control["stop database ${dbname}"],
+      }
+
     }
   }
 

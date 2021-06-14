@@ -43,8 +43,8 @@ Attribute Name                                                                  
 [sysman_password](#oem_server::software_sysman_password)                         | The password to use for sysman.                                        |
 [temp_dir](#oem_server::software_temp_dir)                                       | Directory to use for temporary files.                                  |
 [user](#oem_server::software_user)                                               | The user used for the specified installation.                          |
-[version](#oem_server::software_version)                                         | The agent version to be installed
-                                     |
+[version](#oem_server::software_version)                                         | The server version to be installed
+                                    |
 [weblogic_password](#oem_server::software_weblogic_password)                     | The password to use for WebLogic.                                      |
 [weblogic_user](#oem_server::software_weblogic_user)                             | The username to use for WebLogic.                                      |
 [zip_extract](#oem_server::software_zip_extract)                                 | The specified source file is a zip file that needs te be extracted.    |
@@ -271,13 +271,15 @@ Type: `String[1]`
 
 ### version<a name='oem_server::software_version'>
 
-The agent version to be installed
+The server version to be installed
 
 - `12.1.0.4`
 - `12.1.0.5`
 - `13.1.0.0`
 - `13.2.0.0`
 - `13.3.0.0`
+- `13.4.0.0`
+- `13.5.0.0`
 
 Type: `String[1]`
 
