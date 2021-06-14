@@ -219,6 +219,8 @@ The agent version to be installed
 - `13.1.0.0`
 - `13.2.0.0`
 - `13.3.0.0`
+- `13.4.0.0`
+- `13.5.0.0`
 
 Type: `String`
 

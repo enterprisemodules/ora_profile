@@ -21,7 +21,6 @@
 * [`ora_profile::database::asm_storage::nfs`](#ora_profiledatabaseasm_storagenfs): This class will create the specified mountpoint and mount the nfs share there.
 * [`ora_profile::database::asm_storage::udev`](#ora_profiledatabaseasm_storageudev): This class will apply udev rules to specified disk devices.
 * [`ora_profile::database::cis_controls`](#ora_profiledatabasecis_controls): This class contains the actual code secureing the database.
-* [`ora_profile::database::cis_rules`](#ora_profiledatabasecis_rules): This class contains the actual code secureing the database.
 * [`ora_profile::database::common`](#ora_profiledatabasecommon): This class contains common variables used by more then one class.
 * [`ora_profile::database::db_definition`](#ora_profiledatabasedb_definition): This class contains the actual database definition using the `ora_database` type.
 * [`ora_profile::database::db_definition_template`](#ora_profiledatabasedb_definition_template): This class contains the actual database definition using the `ora_install::database` class.
@@ -2943,60 +2942,6 @@ Data type: `Optional[Array[String[1]]]`
 This is the list of controls that you want to skip.
 By default this value is empty, meaning `ora_secured::ensure_cis` will apply **ALL** controls. You must specify the name of the control.
 
-### `ora_profile::database::cis_rules`
-
-++--++
-
-ora_profile::database::cis_rules
-
-Here you ca customise the securtiy by specifying the CIS rules you *don't* want to apply.
-
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::secured_database](./secured_database.html) for an explanation on how to do this.
-
---++--
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::cis_rules` class.
-
-##### `dbname`
-
-Data type: `String[1]`
-
-The name of the database.
-The default is `DB01`
-To customize this consistently use the hiera key `ora_profile::database::dbname`.
-
-##### `ignore`
-
-Data type: `Array[String[1]]`
-
-Name the CIS rules you don't want to apply (e.
-g. ignore) to your database.
-An example:
-```yaml
-ora_profile::database::cis_rules::ignore:
-  - r_1_1
-  ...
-  - r_2_1_4
-```
-The default is:
-```yaml
-  - r_1_1
-  - r_2_1_1
-  - r_2_1_2
-  - r_2_1_3
-  - r_2_1_4
-```
-These are actualy the rules that don't secure anything *inside* of a database.
-
-##### `skip_list`
-
-Data type: `Array[String[1]]`
-
-
-
 ### `ora_profile::database::common`
 
 Common variables used by more then one class
@@ -5224,6 +5169,8 @@ The agent version to be installed
 - `13.1.0.0`
 - `13.2.0.0`
 - `13.3.0.0`
+- `13.4.0.0`
+- `13.5.0.0`
 
 ### `ora_profile::oem_server`
 
@@ -5762,12 +5709,14 @@ The default value is: `oracle`
 
 Data type: `String[1]`
 
-The agent version to be installed
+The server version to be installed
 - `12.1.0.4`
 - `12.1.0.5`
 - `13.1.0.0`
 - `13.2.0.0`
 - `13.3.0.0`
+- `13.4.0.0`
+- `13.5.0.0`
 
 ##### `weblogic_password`
 
