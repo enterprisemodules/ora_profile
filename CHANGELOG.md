@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.29.0
+
+
+**New Features**
+
+- [oem_server/oem_agent] Add support for 13.4 and 13.5
+- [db_patches] Added patch_level NONE to all versions
 
 ## Release 0.28.0
 
