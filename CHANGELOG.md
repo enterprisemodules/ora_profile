@@ -2,8 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## Release 0.29.0
+## Release 0.30.0
 
+**New Features**
+
+- [asm_storage] Add storage_type none
+
+## Release 0.29.0
 
 **New Features**
 
