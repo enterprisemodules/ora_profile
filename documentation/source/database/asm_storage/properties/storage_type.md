@@ -5,5 +5,6 @@ Valid values are:
 - `asmlib`
 - `afd`
 - `raw`
+- `none`
 
 The default value is: `nfs`.

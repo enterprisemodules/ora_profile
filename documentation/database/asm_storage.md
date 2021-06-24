@@ -45,9 +45,10 @@ Valid values are:
 - `asmlib`
 - `afd`
 - `raw`
+- `none`
 
 The default value is: `nfs`.
-Type: `Enum['nfs','asmlib','afd','raw']`
+Type: `Enum['nfs','asmlib','afd','raw', 'none']`
 
 
 [Back to overview of database::asm_storage](#attributes)

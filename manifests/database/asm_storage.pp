@@ -7,13 +7,14 @@
 # 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-# @param [Enum['nfs', 'asmlib', 'afd', 'raw']] storage_type
+# @param [Enum['nfs', 'asmlib', 'afd', 'raw', 'none']] storage_type
 #    The type of ASM storage to use.
 #    Valid values are:
 #    - `nfs`
 #    - `asmlib`
 #    - `afd`
 #    - `raw`
+#    - `none`
 #    The default value is: `nfs`.
 #
 # @param [Optional[Stdlib::Absolutepath]] nfs_mountpoint
@@ -46,7 +47,7 @@
 #
 #--++--
 class ora_profile::database::asm_storage(
-  Enum['nfs','asmlib','afd','raw']
+  Enum['nfs','asmlib','afd','raw', 'none']
             $storage_type,
   Optional[Stdlib::Absolutepath]
             $nfs_mountpoint,
@@ -130,6 +131,9 @@ class ora_profile::database::asm_storage(
         disk_devices    => $disk_devices,
       }
       contain ora_profile::database::asm_storage::udev
+    }
+    'none': {
+      # do nothing. Can be used for example on oracle cloud devices
     }
     default: {}
   }
