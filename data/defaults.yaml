@@ -647,7 +647,7 @@ ora_profile::database::db_patches::ojvm_patch_levels:
   '11.2.0.4': {}
   '12.1.0.1': {}
   '12.1.0.2': {}
-  '12.2.0.1': {}
+  '12.2.0.1':
     JUL2017RU:
       "%{lookup('ora_profile::database::oracle_home')}:25811364-OJVM-12.2.0.1.170718":
         source:                "%{lookup('ora_profile::database::source')}/p25811364_122010_Linux-x86-64.zip"
