@@ -68,7 +68,10 @@ class ora_profile::database::asm_patches(
 
   $asm_version = lookup('ora_profile::database::asm_software::version', String)
   $sub_patch_type = 'grid'
-  if ( has_key($patch_levels[$asm_version], $level) ) {
+  if ( $level == 'NONE' ) {
+    $patch_level_list = {}
+    $patch_bundle_id = 'n/a'
+  } elsif ( has_key($patch_levels[$asm_version], $level) ) {
     $patch_level_list = $patch_levels[$asm_version][$level].map |$patch_name, $patch_details| {
       if ( has_key($patch_details, 'type') ) {
         if ( member(['psu', 'one-off'], $patch_details['type']) ) {
@@ -96,8 +99,7 @@ class ora_profile::database::asm_patches(
     }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
     $patch_bundle_id = split($patch_level_list.keys[0],':')[1]
   } else {
-    $patch_level_list = {}
-    $patch_bundle_id = 'n/a'
+    fail "Patchlevel '${level}' not defined for ASM version '${asm_version}'"
   }
   $complete_patch_list = ($patch_level_list + $patch_list)
 

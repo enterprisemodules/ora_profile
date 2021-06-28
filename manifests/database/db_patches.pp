@@ -104,7 +104,9 @@ class ora_profile::database::db_patches(
 
   $db_version = lookup('ora_profile::database::db_software::version', String)
   $sub_patch_type = 'db'
-  if ( has_key($patch_levels[$db_version], $level) ) {
+  if ( $level == 'NONE' ) {
+    $patch_level_list = {}
+  } elsif ( has_key($patch_levels[$db_version], $level) ) {
     $patch_level_list = $patch_levels[$db_version][$level].map |$patch_name, $patch_details| {
       if ( has_key($patch_details, "${sub_patch_type}_sub_patches") ) {
         $sub_patches = { 'sub_patches' => $patch_details["${sub_patch_type}_sub_patches"] }
@@ -124,15 +126,17 @@ class ora_profile::database::db_patches(
       $current_patch
     }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
   } else {
-    fail "Patchlevel '${level}' not defined for database version '${db_version}"
+    fail "Patchlevel '${level}' not defined for database version '${db_version}'"
   }
 
   if ( $include_ojvm ) {
     $ojvm_patch_levels = lookup('ora_profile::database::db_patches::ojvm_patch_levels', Hash)
-    if ( has_key($ojvm_patch_levels[$db_version], $level) ) {
+    if ( $level == 'NONE' ) {
+      $ojvm_patch_list = {}
+    } elsif ( has_key($ojvm_patch_levels[$db_version], $level) ) {
       $ojvm_patch_list = $ojvm_patch_levels[$db_version][$level]
     } else {
-      $ojvm_patch_list = {}
+      fail "OJVM patchlevel '${level}' not defined for database version '${db_version}'"
     }
   } else {
     $ojvm_patch_list = {}
