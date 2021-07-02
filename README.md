@@ -4,14 +4,15 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [License](#license)
-3. [Description - What the module does and why it is useful](#description)
-4. [Setup](#setup)
+2. [Experience the Power of Puppet for Oracle databases](#experience-the-power-of-puppet-for-oracle-databases)
+3. [License](#license)
+4. [Description - What the module does and why it is useful](#description)
+5. [Setup](#setup)
   * [Requirements](#requirements)
   * [Installing the ora_profile module](#installing-the-ora_profile-module)
-5. [Usage - Configuration options and additional functionality](#usage)
-6. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-7. [Limitations - OS compatibility, etc.](#limitations)
+6. [Usage - Configuration options and additional functionality](#usage)
+7. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+8. [Limitations - OS compatibility, etc.](#limitations)
 
 ## Overview
 
@@ -23,9 +24,12 @@ The `ora_profile` module allows an easy path from first simple installation to a
 
 This module support Oracle 10, 11, 12, 18 and 19
 
-## Want to try?
+## Experience the Power of Puppet for Oracle databases
 
-You don't want to read about it, but really want to try it? You can! You can explore our Puppet modules for Oracle by checking out our [playgrounds](https://www.enterprisemodules.com/playgrounds#oracle). Here we guide you around in some of the functionality of our modules.
+Managing the configuration of your Oracle databases can be hard. With Puppet at your side, you get super-powers when installing and managing Oracle Databases. If you want to play and experiment with this [please take a look at our playgrounds](https://www.enterprisemodules.com/playgrounds#oracle). 
+
+[![Experience the Power](https://raw.githubusercontent.com/enterprisemodules/public_images/master/superpowers-33-blanc.jpg)](https://www.enterprisemodules.com/playgrounds#oracle)
+
 
 ## License
 
