@@ -37,6 +37,8 @@ Attribute Name                 | Short Description                          |
 
 The required sysctl parameters for Oracle.
 
+You must specify a Hash of [sysctl](https://forge.puppet.com/modules/herculesteam/augeasproviders_sysctl)
+
 The defaults are:
 
 ```yaml

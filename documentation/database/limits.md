@@ -37,6 +37,9 @@ Attribute Name                 | Short Description                 |
 
 The OS limits created for Oracle.
 
+You must specify a Hash of [limits](https://forge.puppet.com/modules/saz/limits)
+
+
 The defaults are:
 
 ```yaml

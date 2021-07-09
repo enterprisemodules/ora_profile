@@ -6,7 +6,8 @@
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
 # @param [Hash] list
-#    A list of dataaase profiles to define.
+#    A list of database profiles to define.
+#    You must specify a Hash of [ora_profile](/docs/ora_config/ora_profile.html)
 #    The default value is: {}
 #    This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 #    and adds more consistency.

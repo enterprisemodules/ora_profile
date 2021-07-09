@@ -1,5 +1,7 @@
 The OS users to create for Oracle.
 
+You must specify a Hash of [users](https://puppet.com/docs/puppet/6/types/user.html)
+
 The default value is:
 
 ```yaml

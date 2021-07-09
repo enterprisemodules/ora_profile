@@ -1,4 +1,6 @@
-A list of dataaase profiles to define.
+A list of database profiles to define.
+
+You must specify a Hash of [ora_profile](/docs/ora_config/ora_profile.html)
 
 The default value is: {}
 

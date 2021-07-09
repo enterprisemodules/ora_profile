@@ -28,14 +28,16 @@ If you want to play and experiment with Puppet and Oracle, please take a look at
 
 Attribute Name                      | Short Description                      |
 ----------------------------------- | -------------------------------------- |
-[list](#database::db_profiles_list) | A list of dataaase profiles to define. |
+[list](#database::db_profiles_list) | A list of database profiles to define. |
 
 
 
 
 ### list<a name='database::db_profiles_list'>
 
-A list of dataaase profiles to define.
+A list of database profiles to define.
+
+You must specify a Hash of [ora_profile](/docs/ora_config/ora_profile.html)
 
 The default value is: {}
 

@@ -7,8 +7,7 @@
 #
 # @param [Hash] parameters
 #    The Hash with parameters that need to be configured.
-#    The keys of the hash represent the parameter you want to set.
-#    Notation: '<scope>/<parameter_name>[:for_sid][@sid]'
+#    You must specify a Hash of [ora_init_param](/docs/ora_config/ora_init_param.html)
 #    ```yaml
 #    ora_profile::database::asm_init_params::parameters:
 #      memory/asm_power_limit:

@@ -1,5 +1,7 @@
 The list of groups to create for Oracle.
 
+You must specify a Hash of [groups](https://puppet.com/docs/puppet/6/types/group.html)
+
 The default value is:
 
 ```yaml

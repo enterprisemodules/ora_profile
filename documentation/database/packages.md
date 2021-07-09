@@ -37,7 +37,10 @@ Attribute Name                   | Short Description                            
 
 The required packages for a succesfull Oracle installation.
 
-The defaults are:
+You must specify a Hash of [packages](https://puppet.com/docs/puppet/6/types/package.html)
+
+
+The default packages are:
 
 ```yaml
 ora_profile::database::packages::list:
