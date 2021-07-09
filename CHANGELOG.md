@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.30.1
+
+**Bug fixes**
+
+- [docs] Better description of the type of hashes to pass
+- [docs] Add Super powers link to playgrounds
+- [asm_patches/db_patches] Handle patch level NONE better and still catch missing levels
+
 ## Release 0.30.0
 
 **New Features**
