@@ -101,6 +101,8 @@ class {'ora_profile::database':
 
 ```
 
+Also check the set of [common parameters](./common) that is passed to this class.
+
 
 
 

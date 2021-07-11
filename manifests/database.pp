@@ -104,6 +104,8 @@
 # }
 # 
 # ```
+# 
+# Also check the set of [common parameters](./common) that is passed to this class.
 #
 # @param [Enum['local', 'asm']] storage
 #    The type of storage used.
