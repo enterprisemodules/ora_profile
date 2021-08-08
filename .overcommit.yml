@@ -14,7 +14,7 @@ PreCommit:
   PuppetMetadataJsonLint:
     enabled: true
   RakeTarget:
-    enabled: false
+    enabled: true
     description: Puppet lint with excludes
     targets:
     - lint
@@ -27,16 +27,12 @@ PreCommit:
   CaseConflicts:
     enabled: false
   PuppetLint:
-    enabled: true
+    enabled: false
   YamlSyntax:
     enabled: true
-  BundleCheck:
-    enabled: true
   RuboCop:
-    enabled: false
-  Fasterer:
     enabled: true
-  BundleAudit:
+  Fasterer:
     enabled: true
   Brakeman:
     enabled: true
