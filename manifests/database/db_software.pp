@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::db_software
 #
@@ -99,7 +98,9 @@
 #    This parameter will only be used when you have specified `true` for the parameter `bash_profile`
 #    The default value is an empty string.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::db_software(
   Ora_Install::Version
             $version,
@@ -225,7 +226,7 @@ class ora_profile::database::db_software(
       }
 
       case $version {
-        '12.2.0.1', '18.0.0.0', '19.0.0.0': {
+        '12.2.0.1', '18.0.0.0', '19.0.0.0', '21.0.0.0': {
           $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\""
         }
         '12.1.0.2': {

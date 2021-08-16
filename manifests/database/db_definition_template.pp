@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::db_definition_template
 #
@@ -83,6 +82,11 @@
 #    - `RACONE`
 #    The default value is `SINGLE`
 #
+# @param [Enum['enabled', 'disabled']] container_database
+#    Database is a container for pluggable databases.
+#    When you want to add pluggable database to this database, specify a value of `enabled`.
+#    The default value is: `disabled`
+#
 # @param [String[1]] log_size
 #    The log ize to use.
 #    The default is : `100M`
@@ -99,7 +103,9 @@
 #    - `false`
 #    - `on_failure`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::db_definition_template(
   Ora_Install::Version
                       $version,
@@ -126,6 +132,8 @@ class ora_profile::database::db_definition_template(
                       $sys_password,
   Enum['SINGLE','RAC','RACONE']
                       $db_conf_type,
+  Enum['enabled','disabled']
+                      $container_database,
   String[1]           $log_size,
   Optional[String[1]] $dbdomain,
   Variant[Boolean,Enum['on_failure']]
@@ -171,6 +179,11 @@ class ora_profile::database::db_definition_template(
       db_conf_type              => $db_conf_type,
       cluster_nodes             => $db_cluster_nodes,
       db_domain                 => $dbdomain,
+      container_database        => case $container_database {
+        'enabled':  { true }
+        'disabled': { false }
+        default:    { false }
+      },
       before                    => Ora_setting[$db_instance_name],
     }
   } else {
@@ -194,6 +207,11 @@ class ora_profile::database::db_definition_template(
   ora_setting { $db_instance_name:
     default     => true,
     oracle_home => $oracle_home,
+    cdb         => case $container_database {
+      'enabled':  { true }
+      'disabled': { false }
+      default:    { false }
+    },
   }
 
   -> ora_tab_entry{ $db_instance_name:

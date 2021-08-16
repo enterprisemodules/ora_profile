@@ -264,7 +264,7 @@ class ora_profile::database::asm_software(
         withpath => false,
       }
       case $version {
-        '18.0.0.0', '19.0.0.0': {
+        '18.0.0.0', '19.0.0.0', '21.0.0.0': {
           $add_node_rsp = "${download_dir}/add_node_${facts['hostname']}.rsp"
           $add_node_command = "${grid_home}/gridSetup.sh -silent -waitForCompletion -skipPrereqs -responseFile ${add_node_rsp}"
           $ora_inventory = "${ora_inventory_dir}/oraInventory"

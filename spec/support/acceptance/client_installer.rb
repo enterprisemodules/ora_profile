@@ -29,7 +29,7 @@ shared_examples "a client installer" do | settings|
     #
     # The database directory should be made
     #
-    describe file("/u01/app/oracle/#{version}/db_home1") do
+    describe file("/u01/app/oracle/#{version}/client_home1") do
       it { should be_directory }
       it { should be_owned_by('oracle') }
       it { should be_grouped_into('oinstall') }
@@ -44,8 +44,8 @@ shared_examples "a client installer" do | settings|
       it { should be_mode(775)}
       it { should be_grouped_into('dba') }
       it { should contain('ORACLE_BASE=/u01/app/oracle') }
-      it { should contain("ORACLE_HOME=/u01/app/oracle/#{version}/db_home1") }
-      it { should contain("SQLPLUS_HOME=/u01/app/oracle/#{version}/db_home1") }
+      it { should contain("ORACLE_HOME=/u01/app/oracle/#{version}/client_home1") }
+      it { should contain("SQLPLUS_HOME=/u01/app/oracle/#{version}/client_home1") }
       end
   
     it 'is idempotent on second run' do

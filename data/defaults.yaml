@@ -863,6 +863,7 @@ ora_profile::database::db_definition_template::db_conf_type:              'SINGL
 ora_profile::database::db_definition_template::cluster_nodes:             ~
 ora_profile::database::db_definition_template::log_size:                  "%{lookup('ora_profile::database::db_definition::log_size')}"
 ora_profile::database::db_definition_template::dbdomain:                  ~
+ora_profile::database::db_definition_template::container_database:        disabled
 
 
 # ------------------------------------------------------------------------------
@@ -979,7 +980,7 @@ ora_profile::database::cis_controls::doc_version:                            ~
 #
 # ------------------------------------------------------------------------------
 ora_profile::client::software::oracle_base:                               "%{lookup('ora_profile::database::oracle_base')}"
-ora_profile::client::software::oracle_home:                               "%{lookup('ora_profile::client::software::oracle_base')}/%{lookup('ora_profile::client::software::version')}/db_home1"
+ora_profile::client::software::oracle_home:                               "%{lookup('ora_profile::client::software::oracle_base')}/%{lookup('ora_profile::client::software::version')}/client_home1"
 ora_profile::client::software::db_port:                                   1521
 ora_profile::client::software::user:                                      "%{lookup('ora_profile::database::os_user')}"
 ora_profile::client::software::user_base_dir:                             "/home"

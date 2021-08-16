@@ -4,7 +4,7 @@ shared_examples "a database installer" do | settings|
   file    = settings.fetch(:file)
 
   before do
-    hiera_values_on_sut(
+    used_hiera_values = {
       'easy_type::generate_password_mode'                                        => 'development',
       'ora_profile::database::version'                                           => version,
       'ora_profile::database::source'                                            => '/software',
@@ -63,7 +63,9 @@ shared_examples "a database installer" do | settings|
             'temporary_tablespace' => 'TEMP',
           }
         }
-    )
+    }
+    used_hiera_values.merge!('ora_profile::database::db_definition_template::container_database' => 'enabled') if version == '21.0.0.0'
+    hiera_values_on_sut(used_hiera_values)
   end
 
   # after(:all) do
