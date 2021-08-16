@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::db_definition
 #
@@ -133,7 +132,9 @@
 #    - `false`
 #    - `on_failure`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::db_definition(
   Ora_Install::Version
             $version,
@@ -172,6 +173,12 @@ class ora_profile::database::db_definition(
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
+
+  if ( $version == '21.0.0.0' ) {
+    unless ( $container_database == 'enabled' ) {
+      fail "Oracle version ${version} only supports container_database='enabled', container_database='${container_database}' specified"
+    }
+  }
 
   if ( $is_rac ) {
     if ( $dbname =~ Hash and $dbname.length > 1 ) {
@@ -223,7 +230,7 @@ class ora_profile::database::db_definition(
     sys_password              => unwrap($sys_password),
     character_set             => 'AL32UTF8',
     national_character_set    => 'AL16UTF16',
-    container_database        => $container_database,  # TODO: container_database has to be defined also in init_params
+    container_database        => $container_database,
     extent_management         => 'local',
     instances                 => $db_cluster_nodes,
     spfile_location           => $data_file_destination,

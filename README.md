@@ -22,7 +22,7 @@ The `ora_profile` module allows an easy path from first simple installation to a
 - [ora_config](https://www.enterprisemodules.com/shop/products/puppet-ora_config-module) For configuring every aspect of your Oracle database
 - [ora_secured](https://www.enterprisemodules.com/shop/products/puppet-oracle-security-module) To secure your databases according to the CIS benchmarks or STIG documents.
 
-This module support Oracle 10, 11, 12, 18 and 19
+This module support Oracle 10, 11, 12, 18, 19 and 21
 
 ## Experience the Power of Puppet for Oracle databases
 
