@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.31.0
+
+**New Features**
+
+[core] Add support for Oracle 21c
+
 ## Release 0.30.1
 
 **Bug fixes**
