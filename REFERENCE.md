@@ -609,6 +609,8 @@ class {'ora_profile::database':
 
 ```
 
+Also check the set of [common parameters](./common) that is passed to this class.
+
 --++--
 
 #### Examples
@@ -2090,8 +2092,7 @@ The following parameters are available in the `ora_profile::database::asm_init_p
 Data type: `Hash`
 
 The Hash with parameters that need to be configured.
-The keys of the hash represent the parameter you want to set.
-Notation: '<scope>/<parameter_name>[:for_sid][@sid]'
+You must specify a Hash of [ora_init_param](/docs/ora_config/ora_init_param.html)
 ```yaml
 ora_profile::database::asm_init_params::parameters:
   memory/asm_power_limit:
@@ -2170,6 +2171,8 @@ ora_profile::database::asm_patches
 It also contains the definition of the required `Opatch` version.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+Also check the set of [common parameters](./common) that is passed to this class.
 
 --++--
 
@@ -2677,7 +2680,7 @@ The following parameters are available in the `ora_profile::database::asm_storag
 
 ##### `storage_type`
 
-Data type: `Enum['nfs','asmlib','afd','raw']`
+Data type: `Enum['nfs','asmlib','afd','raw', 'none']`
 
 The type of ASM storage to use.
 Valid values are:
@@ -2685,6 +2688,7 @@ Valid values are:
 - `asmlib`
 - `afd`
 - `raw`
+- `none`
 The default value is: `nfs`.
 
 ##### `nfs_mountpoint`
@@ -3067,15 +3071,13 @@ ora_profile::database::patch_levels:
 
 ### `ora_profile::database::db_definition`
 
-++--++
-
 ora_profile::database::db_definition
 
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
---++--
+See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
@@ -3280,8 +3282,6 @@ Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
 ### `ora_profile::database::db_definition_template`
 
-++--++
-
 ora_profile::database::db_definition_template
 
 In this class the database will be created from a template. When using a 'seed' template, this will significantly decrease the time it takes to create a database. Bij default the Oracle supplied General_Purpose template is used, which is probably not the best option for your production environment.
@@ -3293,7 +3293,7 @@ ora_profile::database::before_sysctl:  my_module::my_class
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
---++--
+See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
@@ -3415,6 +3415,14 @@ Valid values are:
 - `RACONE`
 The default value is `SINGLE`
 
+##### `container_database`
+
+Data type: `Enum['enabled','disabled']`
+
+Database is a container for pluggable databases.
+When you want to add pluggable database to this database, specify a value of `enabled`.
+The default value is: `disabled`
+
 ##### `log_size`
 
 Data type: `String[1]`
@@ -3461,8 +3469,7 @@ The following parameters are available in the `ora_profile::database::db_init_pa
 Data type: `Hash`
 
 The Hash with parameters that need to be configured.
-The keys of the hash represent the parameter you want to set.
-Notation: '<scope>/<parameter_name>[:for_sid][@sid]'
+You must specify a Hash of [ora_init_param](/docs/ora_config/ora_init_param.html)
 ```yaml
 ora_profile::database::asm_init_params::parameters:
   memory/asm_power_limit:
@@ -3569,6 +3576,8 @@ There is no support yet to apply patches on a running system.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
+Also check the set of [common parameters](./common) that is passed to this class.
+
 --++--
 
 #### Parameters
@@ -3667,7 +3676,8 @@ The following parameters are available in the `ora_profile::database::db_profile
 
 Data type: `Hash`
 
-A list of dataaase profiles to define.
+A list of database profiles to define.
+You must specify a Hash of [ora_profile](/docs/ora_config/ora_profile.html)
 The default value is: {}
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
@@ -3702,13 +3712,11 @@ Data type: `Optional[String[1]]`
 
 ### `ora_profile::database::db_software`
 
-++--++
-
 ora_profile::database::db_software
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
---++--
+See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
@@ -3852,6 +3860,8 @@ ora_profile::database::db_startup
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
+Also check the set of [common parameters](./common) that is passed to this class.
+
 --++--
 
 #### Parameters
@@ -3903,6 +3913,7 @@ The following parameters are available in the `ora_profile::database::db_tablesp
 Data type: `Hash`
 
 A list of database tablespaces to define.
+You must specify a Hash of [ora_tablespace](/docs/ora_config/ora_tablespace.html)
 The default value is: `{}`
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
@@ -3926,6 +3937,7 @@ The following parameters are available in the `ora_profile::database::db_users` 
 Data type: `Hash`
 
 A list of database users to define.
+You must specify a Hash of [ora_user](/docs/ora_config/ora_user.html)
 The default value is: `{}`
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.

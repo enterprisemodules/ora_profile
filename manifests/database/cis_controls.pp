@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::cis_controls
 #
@@ -26,7 +25,9 @@
 #    This is the list of controls that you want to skip.
 #    By default this value is empty, meaning `ora_secured::ensure_cis` will apply **ALL** controls. You must specify the name of the control.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::cis_controls(
   String[1]                   $dbname,
   Optional[String[1]]         $product_version,

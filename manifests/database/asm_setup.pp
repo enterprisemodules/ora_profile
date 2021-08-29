@@ -1,10 +1,3 @@
-# ora_profile::asm_software
-#
-# @summary This class contains the code to install Oracle Grid Infrastructure.
-# Here you can customize some of the attributes of your database.
-# 
-# When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-#++--++
 #
 # ora_profile::database::asm_setup
 #
@@ -145,7 +138,9 @@
 #    - `FLEX_ASM_STORAGE`     (versions >= 12.1)
 #    The default value is: `undef`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_setup(
   Ora_Install::Version
             $version,

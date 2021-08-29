@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_diskgroup
 #
@@ -26,7 +25,9 @@
 #          path: '/nfs_client/asm_sda_nfs_b4'
 #    ```
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_diskgroup(
   Hash    $disks         = {},
 ) inherits ora_profile::database {

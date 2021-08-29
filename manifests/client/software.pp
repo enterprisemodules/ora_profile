@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::client::software
 #
@@ -89,7 +88,9 @@
 # @param [Boolean] allow_insecure
 #    Allow insecure SSL connection for downloading the software.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::client::software(
   Ora_install::Version                $version,
   String[1]                           $file,

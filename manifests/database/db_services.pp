@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::db_services
 #
@@ -13,7 +12,9 @@
 # @param [Optional[String[1]]] domain_name
 #    
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::db_services(
   String[1] $dbname,
   Optional[String[1]]

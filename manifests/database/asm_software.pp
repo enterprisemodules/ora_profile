@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_software
 #
@@ -147,7 +146,9 @@
 #    - `FLEX_ASM_STORAGE`     (versions >= 12.1)
 #    The default value is: `undef`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_software(
   Ora_Install::Version
             $version,

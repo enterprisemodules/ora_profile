@@ -33,6 +33,7 @@ If you want to play and experiment with Puppet and Oracle, please take a look at
 
 Attribute Name                                                                           | Short Description                                                  |
 ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+[container_database](#database::db_definition_template_container_database)               | Database is a container for pluggable databases.                   |
 [data_file_destination](#database::db_definition_template_data_file_destination)         | The location where you want to store your database files.          |
 [db_conf_type](#database::db_definition_template_db_conf_type)                           | The type of database that needs to be installed.                   |
 [dbdomain](#database::db_definition_template_dbdomain)                                   | The domain of the database.                                        |
@@ -221,6 +222,18 @@ Valid values are:
 
 The default value is `SINGLE`
 Type: `Enum['SINGLE','RAC','RACONE']`
+
+
+[Back to overview of database::db_definition_template](#attributes)
+
+### container_database<a name='database::db_definition_template_container_database'>
+
+Database is a container for pluggable databases.
+When you want to add pluggable database to this database, specify a value of `enabled`.
+
+The default value is: `disabled`
+
+Type: `Enum['enabled','disabled']`
 
 
 [Back to overview of database::db_definition_template](#attributes)

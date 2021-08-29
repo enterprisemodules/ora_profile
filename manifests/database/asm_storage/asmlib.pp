@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_storage::asmlib
 #
@@ -32,7 +31,9 @@
 # @param [Optional[String[1]]] scan_exclude
 #    The devices that need to be excluded during scanning of the devices.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_storage::asmlib(
   String[1] $grid_user,
   String[1] $grid_admingroup,

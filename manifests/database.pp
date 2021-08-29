@@ -1,12 +1,3 @@
-# ora_profile::database
-#
-# A description of what this defined type does
-#
-# @summary A short summary of the purpose of this defined type.
-#
-# @example
-#   ora_profile::database { 'database_name': }
-#++--++
 #
 # ora_profile::database
 #
@@ -990,7 +981,9 @@
 #    ora_profile::database::after_db_startup:  my_module::my_class
 #    ```
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database(
   Enum['local','asm']  $storage,
   Ora_Install::Version $version,

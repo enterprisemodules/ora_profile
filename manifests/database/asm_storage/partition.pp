@@ -1,6 +1,3 @@
-# ora_profile::database::asm_storage::partition
-#
-#++--++
 #
 # ora_profile::database::asm_storage::partition
 #
@@ -28,7 +25,9 @@
 # @param [Optional[Easy_type::Size]] end
 #    The end point of the partition.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 define ora_profile::database::asm_storage::partition(
   Stdlib::Absolutepath
             $raw_device,

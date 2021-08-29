@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::oem_agent::software
 #
@@ -75,7 +74,9 @@
 #    - `13.4.0.0`
 #    - `13.5.0.0`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::oem_agent::software(
   String               $version,
   String               $install_version,

@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_storage::udev
 #
@@ -29,7 +28,9 @@
 #        label: 'DATA1'
 #    ```
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_storage::udev(
   String[1] $grid_user,
   String[1] $grid_admingroup,

@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_listener
 #
@@ -26,7 +25,9 @@
 #    The default is `DB01`
 #    To customize this consistently use the hiera key `ora_profile::database::dbname`.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_listener(
   Stdlib::Absolutepath
             $oracle_home,

@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_init_params
 #
@@ -28,7 +27,9 @@
 #    ```
 #    See: [ora_init_params](https://www.enterprisemodules.com/docs/ora_config/ora_init_param.html)
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_init_params(
   Hash    $parameters         = {},
 ) inherits ora_profile::database {

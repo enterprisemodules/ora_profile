@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_patches
 #
@@ -39,7 +38,9 @@
 #    - `false`
 #    - `on_failure`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_patches(
   String[1] $level,
   String[1] $patch_file,

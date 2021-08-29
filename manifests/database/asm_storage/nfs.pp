@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_storage::nfs
 #
@@ -29,7 +28,9 @@
 #    The name of the NFS server.
 #    The default value is: `localhost`.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_storage::nfs(
   String[1] $grid_user,
   String[1] $grid_admingroup,

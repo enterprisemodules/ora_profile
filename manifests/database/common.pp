@@ -1,8 +1,4 @@
 #
-# Common variables used by more then one class
-#
-#++--++
-#
 # ora_profile::database::common
 #
 # @summary This class contains common variables used by more then one class.
@@ -102,7 +98,9 @@
 #            grid_sub_patches:      ['31771877','31772784','31773437','31780966']
 #    ```
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::common(){
   $version              = lookup('ora_profile::database::version', Ora_Install::Version)
   $download_dir         = lookup('ora_profile::database::download_dir', String[1])

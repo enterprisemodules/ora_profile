@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::oem_server
 #
@@ -259,7 +258,9 @@
 #    ora_profile::database::sysctl:  skip
 #    ```
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::oem_server(
   Optional[Boolean] $standalone              = undef,
   Optional[String]  $before_em_license       = undef,

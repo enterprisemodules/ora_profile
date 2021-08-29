@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::rac::instance
 #
@@ -33,7 +32,9 @@
 # @param [Easy_type::Size] log_size
 #    The size of the redolog files of the instance.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 define ora_profile::database::rac::instance(
   String[1]        $on,
   Integer          $number,

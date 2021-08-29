@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::db_startup
 #
@@ -24,7 +23,9 @@
 #    - `database`
 #    The default value is: 'database'
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::db_startup(
   Stdlib::Absolutepath
             $oracle_home,

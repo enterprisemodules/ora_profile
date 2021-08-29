@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::oem_agent
 #
@@ -259,7 +258,9 @@
 #    Indicate if this is a standalone installation (Only install OEM Agent) or not (Installed on a database server)
 #    Valid values are `true` and `false`.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::oem_agent(
   Optional[Boolean] $standalone              = undef,
   Optional[String]  $before_em_license       = undef,

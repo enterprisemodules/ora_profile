@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::oem_server::software
 #
@@ -110,7 +109,9 @@
 #    When you specify a value of false, the source attribute must contain a reference to a directory instead of a zip file.
 #    The default value is: `true`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::oem_server::software(
   String[1]                           $version,
   String[1]                           $file,

@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::db_patches
 #
@@ -65,7 +64,9 @@
 #    - `false`
 #    - `on_failure`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::db_patches(
   String[1] $level,
   Boolean   $include_ojvm,

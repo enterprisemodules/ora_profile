@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::firewall::firewalld
 #
@@ -26,7 +25,9 @@
 #    - node2
 #    ```
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::firewall::firewalld(
   Hash            $ports,
   Boolean         $manage_service,

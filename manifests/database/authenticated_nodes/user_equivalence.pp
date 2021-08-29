@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::authenticated_nodes::user_equivalence
 #
@@ -11,7 +10,9 @@
 # @param [Array[String[1]]] nodes
 #    The cluster nodes.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 define ora_profile::database::authenticated_nodes::user_equivalence(
   String            $private_key,
   Array[String[1]]  $nodes        = ['localhost'],

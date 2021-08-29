@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::asm_storage
 #
@@ -45,7 +44,9 @@
 #    Specify which devices to exclude from scanning for ASMLib.
 #    The default value is: `undef`
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::asm_storage(
   Enum['nfs','asmlib','afd','raw', 'none']
             $storage_type,

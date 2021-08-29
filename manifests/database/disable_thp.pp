@@ -1,4 +1,3 @@
-#++--++
 #
 # ora_profile::database::disable_thp
 #
@@ -8,7 +7,9 @@
 # 
 # When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 #
-#--++--
+#
+# See the file "LICENSE" for the full license governing this code.
+#
 class ora_profile::database::disable_thp() {
 
   echo {'Ensure Transparent HugePages are disabled':
