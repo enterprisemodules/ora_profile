@@ -219,7 +219,7 @@ class ora_profile::database::db_patches(
         $homes_to_be_patched.each |$patch_home|  {
 
           if ( has_key($ora_install_homes, $patch_home) ) {
-            $running_sids = $ora_install_homes[$patch_home]['running_sids']
+            $running_sids = $ora_install_homes[$patch_home]['running_sids'].keys
             $running_listeners = $ora_install_homes[$patch_home]['running_listeners']
           } else {
             $running_sids = []
@@ -292,7 +292,7 @@ class ora_profile::database::db_patches(
         $homes_to_be_patched.each |$patch_home|  {
 
           if ( has_key($ora_install_homes, $patch_home) ) {
-            $running_sids = $ora_install_homes[$patch_home]['running_sids']
+            $running_sids = $ora_install_homes[$patch_home]['running_sids'].keys
             $running_listeners = $ora_install_homes[$patch_home]['running_listeners']
           } else {
             $running_sids = []
@@ -315,6 +315,12 @@ class ora_profile::database::db_patches(
             $running_sids.each |$dbname| {
               db_control {"database start ${dbname}":
                 ensure                  => 'start',
+                # Todo: Add mount option to db_control
+                # ensure                  => case $ora_install_homes[$patch_home]['running_sids'][$dbname]['open_mode'] {
+                #   'READ_WRITE', 'READ_ONLY_WITH_APPLY': { 'start' }
+                #   'MOUNTED':                            { 'mount' }
+                #   default:                              { 'start' }
+                # },
                 instance_name           => $dbname,
                 oracle_product_home_dir => $patch_home,
                 os_user                 => $os_user,
@@ -323,32 +329,35 @@ class ora_profile::database::db_patches(
                 schedule                => $schedule,
               }
 
-              -> exec { "Datapatch for ${dbname}":
-                cwd         => "${patch_home}/OPatch",
-                command     => "/bin/sh -c 'unset ORACLE_PATH SQLPATH TWO_TASK TNS_ADMIN; ${patch_home}/OPatch/datapatch -verbose'",
-                environment => [
-                  "PATH=/usr/bin:/bin:${patch_home}/bin",
-                  "ORACLE_SID=${dbname}",
-                  "ORACLE_HOME=${patch_home}",
-                ],
-                user        => $os_user,
-                logoutput   => $logoutput,
-                timeout     => 3600,
-                schedule    => $schedule,
-              }
+              if ( $ora_install_homes[$patch_home]['running_sids'][$dbname]['open_mode'] == 'READ_WRITE' ) {
+                exec { "Datapatch for ${dbname}":
+                  cwd         => "${patch_home}/OPatch",
+                  command     => "/bin/sh -c 'unset ORACLE_PATH SQLPATH TWO_TASK TNS_ADMIN; ${patch_home}/OPatch/datapatch -verbose'",
+                  environment => [
+                    "PATH=/usr/bin:/bin:${patch_home}/bin",
+                    "ORACLE_SID=${dbname}",
+                    "ORACLE_HOME=${patch_home}",
+                  ],
+                  user        => $os_user,
+                  logoutput   => $logoutput,
+                  timeout     => 3600,
+                  schedule    => $schedule,
+                  require     => Db_control["database start ${dbname}"],
+                }
 
-              -> exec { "SQLPlus UTLRP ${dbname}":
-                cwd         => $patch_home,
-                command     => "/bin/sh -c 'unset TWO_TASK TNS_ADMIN; ${patch_home}/bin/sqlplus / as sysdba @?/rdbms/admin/utlrp'",
-                environment => [
-                  "PATH=/usr/bin:/bin:${patch_home}/bin",
-                  "ORACLE_SID=${dbname}",
-                  "ORACLE_HOME=${patch_home}",
-                ],
-                user        => $os_user,
-                logoutput   => $logoutput,
-                timeout     => 3600,
-                schedule    => $schedule,
+                -> exec { "SQLPlus UTLRP ${dbname}":
+                  cwd         => $patch_home,
+                  command     => "/bin/sh -c 'unset TWO_TASK TNS_ADMIN; ${patch_home}/bin/sqlplus / as sysdba @?/rdbms/admin/utlrp'",
+                  environment => [
+                    "PATH=/usr/bin:/bin:${patch_home}/bin",
+                    "ORACLE_SID=${dbname}",
+                    "ORACLE_HOME=${patch_home}",
+                  ],
+                  user        => $os_user,
+                  logoutput   => $logoutput,
+                  timeout     => 3600,
+                  schedule    => $schedule,
+                }
               }
             }
           }
