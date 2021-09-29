@@ -183,8 +183,9 @@ class ora_profile::database::db_patches(
     $schedule = undef
   }
 
-  # Opatchupgrade in all homes that have patches defined
-  $complete_patch_list.map |$patch, $_details| { $patch.split(':')[0] }.unique.each |$home| {
+  # Opatchupgrade in all homes that are in the catalog
+  easy_type::resources_in_catalog('Ora_install::Installdb').map |$resource| {
+    $home = $resource['oracle_home']
     Ora_install::Opatchupgrade["DB OPatch upgrade to ${opversion} in ${home}"] -> Ora_opatch <| tag == 'db_patches' |>
     ora_install::opatchupgrade{"DB OPatch upgrade to ${opversion} in ${home}":
       oracle_home               => $home,
