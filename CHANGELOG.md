@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.32.0
+
+**Bug fixes**
+
+- [db_patches] Apply opatchupdate to ALL homes in the catalog
+
+**New Features**
+
+- [db_patches] Use open_mode to determine if datapatch and utlrp should run
+- [asm_patches/db_patches] Add support for July 2021 PSU for 12.2 and 19 (#115)
+
 ## Release 0.31.0
 
 **New Features**
