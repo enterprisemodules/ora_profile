@@ -307,6 +307,7 @@ class ora_profile::database::asm_software(
       exec{'add_grid_node':
         timeout => 0,
         user    => $grid_user,
+        umask   => '0022',
         command => "/usr/bin/ssh ${grid_user}@${master_node} \"${add_node_command}\"",
         creates => "${grid_home}/root.sh",
       }

@@ -4,8 +4,6 @@
   Optional[String[1]] $cluster_name = undef,
   Optional[String[1]] $hostname = undef,
   Optional[String[1]] $network_interface_list = undef,
-  Optional[Boolean]   $gimr_configure = undef,
-  Optional[Boolean]   $gimr_dg = undef,
 | %>
 ###############################################################################
 ## Copyright(c) Oracle Corporation 1998,2019. All rights reserved.           ##
@@ -220,7 +218,7 @@ oracle.install.crs.config.networkInterfaceList=<%= $network_interface_list %>
 # This option is only applicable when CRS_CONFIG is chosen as install option,
 # and STANDALONE is chosen as cluster configuration.
 #------------------------------------------------------------------------------
-oracle.install.crs.configureGIMR=<%= $gimr_configure %>
+oracle.install.crs.configureGIMR=
 
 #------------------------------------------------------------------------------
 # Create a separate ASM DiskGroup to store GIMR data.
@@ -229,4 +227,4 @@ oracle.install.crs.configureGIMR=<%= $gimr_configure %>
 # Value should be 'true' for DOMAIN cluster configurations
 # Value can be true/false for STANDALONE cluster configurations.
 #------------------------------------------------------------------------------
-oracle.install.asm.configureGIMRDataDG=<%= $gimr_dg %>
+oracle.install.asm.configureGIMRDataDG=
