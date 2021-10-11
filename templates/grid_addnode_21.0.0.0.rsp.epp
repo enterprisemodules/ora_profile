@@ -4,8 +4,6 @@
   Optional[String[1]] $cluster_name = undef,
   Optional[String[1]] $hostname = undef,
   Optional[String[1]] $network_interface_list = undef,
-  Optional[Boolean]   $gimr_configure = undef,
-  Optional[Boolean]   $gimr_dg = undef,
 | %>
 ###############################################################################
 ## Copyright(c) Oracle Corporation 1998,2021. All rights reserved.           ##
@@ -137,13 +135,13 @@ oracle.install.crs.config.autoConfigureClusterNodeVIP=false
 # Specify the type of GNS configuration for cluster
 # Allowed values are: CREATE_NEW_GNS and USE_SHARED_GNS
 #-------------------------------------------------------------------------------
-oracle.install.crs.config.gpnp.gnsOption=
+oracle.install.crs.config.gpnp.gnsOption=CREATE_NEW_GNS
 
 #-------------------------------------------------------------------------------
 # Applicable only if SHARED_GNS is being configured for cluster
 # Specify the path to the GNS client data file
 #-------------------------------------------------------------------------------
-oracle.install.crs.config.gpnp.gnsClientDataFile=false
+oracle.install.crs.config.gpnp.gnsClientDataFile=
 
 #-------------------------------------------------------------------------------
 # Applicable only for STANDALONE and DOMAIN cluster configuration if you choose to
@@ -203,32 +201,3 @@ oracle.install.crs.config.clusterNodes=<%= $hostname -%>:<%= $hostname %>-vip
 #
 #-------------------------------------------------------------------------------
 oracle.install.crs.config.networkInterfaceList=<%= $network_interface_list %>
-
-################################################################################
-#                                                                              #
-#                               SECTION I - GIMR                               #
-#                                                                              #
-################################################################################
-
-#------------------------------------------------------------------------------
-# Specify 'true' if you would like to configure Grid Infrastructure Management
-# Repository (GIMR), else specify 'false'. Applicable only if CRS_CONFIG is
-# chosen as install option and STANDALONE is chosen as cluster configuration.
-# If you want to use or configure
-# Local GIMR : oracle.install.crs.configureGIMR=true and oracle.install.crs.configureRemoteGIMR=false
-# Remote GIMR : oracle.install.crs.configureGIMR=true, oracle.install.crs.configureRemoteGIMR=true
-# and oracle.install.crs.RemoteGIMRCredFile= path of the GIMR cred file
-# No GIMR : oracle.install.crs.configureGIMR=false
-#------------------------------------------------------------------------------
-oracle.install.crs.configureGIMR=<%= $gimr_configure %>
-oracle.install.crs.configureRemoteGIMR=false
-oracle.install.crs.RemoteGIMRCredFile=
-
-#------------------------------------------------------------------------------
-# Create a separate ASM DiskGroup to store GIMR data.
-# Specify 'true' if you would like to separate GIMR data with clusterware data,
-# else specify 'false'
-# Value should be 'true' for DOMAIN cluster configurations
-# Value can be true/false for STANDALONE cluster configurations.
-#------------------------------------------------------------------------------
-oracle.install.asm.configureGIMRDataDG=<%= $gimr_dg %>
