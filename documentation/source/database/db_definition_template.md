@@ -26,5 +26,6 @@ When these customizations aren't enough, you can replace the class with your own
   :container_database,
   :log_size,
   :dbdomain,
+  :init_params,
   :logoutput,
 ]%>

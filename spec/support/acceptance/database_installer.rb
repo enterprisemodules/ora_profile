@@ -14,7 +14,7 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::firewall'                                          => 'skip',
       'ora_profile::database::db_patches'                                        => 'skip',
       'ora_profile::database::cis_controls::product_version'                     => 'db12c',  # This works on all versions
-      'ora_profile::database::cis_controls::doc_version'                         => 'V3.0.0', 
+      'ora_profile::database::cis_controls::doc_version'                         => 'V3.0.0',
       'ora_profile::database::cis_controls::skip_list'                           => ['create_user_action_audit_is_enabled'],
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
       'ora_profile::database::db_definition_template::recovery_area_destination' => '/u03/fast_recovery_area',
@@ -53,18 +53,57 @@ shared_examples "a database installer" do | settings|
           'sessions_per_user'         => 10,
         }
       },
-      'ora_profile::database::db_users::list'                                   => {'USER_TEST' => {
-            'ensure'               => 'present',
-            'default_tablespace'   => 'SYSTEM',
-            'expired'              => true,
-            'locked'               => true,
-            'password'             => 'S3cre#St8ff&',
-            'profile'              => 'DEFAULT',
-            'temporary_tablespace' => 'TEMP',
-          }
+      'ora_profile::database::db_users::list'                                    => { 'USER_TEST' => {
+          'ensure'               => 'present',
+          'default_tablespace'   => 'SYSTEM',
+          'expired'              => true,
+          'locked'               => true,
+          'password'             => 'S3cre#St8ff&',
+          'profile'              => 'DEFAULT',
+          'temporary_tablespace' => 'TEMP',
         }
+      }
     }
-    used_hiera_values.merge!('ora_profile::database::db_definition_template::container_database' => 'enabled') if version == '21.0.0.0'
+    version_21_hiera_values = {
+      'ora_profile::database::db_definition_template::container_database'        => 'enabled',
+      'ora_profile::database::db_definition_template::memory_mgmt_type'          => 'CUSTOM_SGA',
+      'ora_profile::database::db_definition_template::init_params'               => 'sga_max_size=1024m,java_pool_size=64m,shared_pool_size=512m',
+      'ora_profile::database::db_profiles::list'                                 => { 'C##TEST_PROFILE' => {
+          'ensure'                    => 'present',
+          'composite_limit'           => 'UNLIMITED',
+          'connect_time'              => 'UNLIMITED',
+          'container'                 => 'common',
+          'cpu_per_call'              => 'UNLIMITED',
+          'cpu_per_session'           => 'UNLIMITED',
+          'failed_login_attempts'     => 5,
+          'idle_time'                 => 'UNLIMITED',
+          'logical_reads_per_call'    => 'UNLIMITED',
+          'logical_reads_per_session' => 'UNLIMITED',
+          'password_grace_time'       => 5,
+          'password_life_time'        => 90,
+          'password_lock_time'        => 1,
+          'password_reuse_max'        => 20,
+          'password_reuse_time'       => 365,
+          'password_verify_function'  => 'ORA12C_STRONG_VERIFY_FUNCTION',
+          # 'private_sga'               => 'UNLIMITED', # Not idempotent for now
+          'sessions_per_user'         => 10,
+        }
+      },
+      'ora_profile::database::db_users::list'                                   => { 'C##USER_TEST' => {
+          'ensure'               => 'present',
+          'container'            => 'common',
+          'default_tablespace'   => 'SYSTEM',
+          'expired'              => true,
+          'locked'               => true,
+          'password'             => 'S3cre#St8ff&',
+          'profile'              => 'DEFAULT',
+          'temporary_tablespace' => 'TEMP',
+        }
+      }
+    }
+    used_hiera_values.delete('ora_profile::database::db_profiles::list') if version == '21.0.0.0'
+    used_hiera_values.delete('ora_profile::database::db_users::list') if version == '21.0.0.0'
+    used_hiera_values.merge!(version_21_hiera_values) if version == '21.0.0.0'
     hiera_values_on_sut(used_hiera_values)
   end
 

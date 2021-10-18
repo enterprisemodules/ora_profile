@@ -95,6 +95,23 @@
 #    The domain of the database.
 #    The default is `$facts['networking']['domain']`
 #
+# @param [Optional[String[1]]] init_params
+#    The init parameters to use for the database.
+#    You can use either a comma separated string for init_params or a Hash.
+#    ### Using comma separated string
+#    Here is an example using a comma separated string:
+#    ``` yaml
+#    ora_profile::database::db_definition_template::init_params: "open_cursors=1000,processes=600,job_queue_processes=4"
+#    ```
+#    ### Using a Hash
+#    Here is an example using a Hash:
+#    ``` yaml
+#    ora_profile::database::db_definition_template::init_params:
+#      open_cursors: 1000
+#      processes: 600
+#      job_queue_processes: 4
+#    ```
+#
 # @param [Variant[Boolean, Enum['on_failure']]] logoutput
 #    log the outputs of Puppet exec or not.
 #    When you specify `true` Puppet will log all output of `exec` types.
@@ -136,6 +153,7 @@ class ora_profile::database::db_definition_template(
                       $container_database,
   String[1]           $log_size,
   Optional[String[1]] $dbdomain,
+  Optional[String[1]] $init_params,
   Variant[Boolean,Enum['on_failure']]
                       $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
 ) inherits ora_profile::database {
@@ -171,6 +189,7 @@ class ora_profile::database::db_definition_template(
       recovery_area_destination => $recovery_area_destination,
       sample_schema             => $sample_schema,
       memory_mgmt_type          => $memory_mgmt_type,
+      init_params               => $init_params,
       storage_type              => $storage_type,
       puppet_download_mnt_point => $puppet_download_mnt_point,
       download_dir              => $download_dir,
