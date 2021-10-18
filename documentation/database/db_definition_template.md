@@ -38,6 +38,7 @@ Attribute Name                                                                  
 [db_conf_type](#database::db_definition_template_db_conf_type)                           | The type of database that needs to be installed.                   |
 [dbdomain](#database::db_definition_template_dbdomain)                                   | The domain of the database.                                        |
 [dbname](#database::db_definition_template_dbname)                                       | The name of the database.                                          |
+[init_params](#database::db_definition_template_init_params)                             | The init parameters to use for the database.                       |
 [log_size](#database::db_definition_template_log_size)                                   | The log ize to use.                                                |
 [logoutput](#database::db_definition_template_logoutput)                                 | log the outputs of Puppet exec or not.                             |
 [memory_mgmt_type](#database::db_definition_template_memory_mgmt_type)                   | How the database memory should be managed.                         |
@@ -253,6 +254,36 @@ Type: `String[1]`
 The domain of the database.
 
 The default is `$facts['networking']['domain']`
+
+Type: `Optional[String[1]]`
+
+
+[Back to overview of database::db_definition_template](#attributes)
+
+### init_params<a name='database::db_definition_template_init_params'>
+
+The init parameters to use for the database.
+
+You can use either a comma separated string for init_params or a Hash.
+
+### Using comma separated string
+
+Here is an example using a comma separated string:
+
+``` yaml
+ora_profile::database::db_definition_template::init_params: "open_cursors=1000,processes=600,job_queue_processes=4"
+```
+
+### Using a Hash
+
+Here is an example using a Hash:
+
+``` yaml
+ora_profile::database::db_definition_template::init_params:
+  open_cursors: 1000
+  processes: 600
+  job_queue_processes: 4
+```
 
 Type: `Optional[String[1]]`
 

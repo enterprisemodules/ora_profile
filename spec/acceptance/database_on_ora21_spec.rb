@@ -1,7 +1,7 @@
 require_relative '../spec_helper_acceptance'
 
 
-xdescribe 'ora_profile::database' do
+describe 'ora_profile::database' do
 
   context 'when applying Oracle 21.0.0.0' do
     it_should_behave_like "a database installer",
