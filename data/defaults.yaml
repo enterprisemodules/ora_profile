@@ -881,6 +881,7 @@ ora_profile::database::db_definition_template::db_conf_type:              'SINGL
 ora_profile::database::db_definition_template::cluster_nodes:             ~
 ora_profile::database::db_definition_template::log_size:                  "%{lookup('ora_profile::database::db_definition::log_size')}"
 ora_profile::database::db_definition_template::dbdomain:                  ~
+ora_profile::database::db_definition_template::init_params:               ~
 ora_profile::database::db_definition_template::container_database:        disabled
 
 

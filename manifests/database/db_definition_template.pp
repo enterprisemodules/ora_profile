@@ -153,7 +153,8 @@ class ora_profile::database::db_definition_template(
                       $container_database,
   String[1]           $log_size,
   Optional[String[1]] $dbdomain,
-  Optional[String[1]] $init_params,
+  Optional[Variant[String[1], Hash]]
+                      $init_params,
   Variant[Boolean,Enum['on_failure']]
                       $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
 ) inherits ora_profile::database {
