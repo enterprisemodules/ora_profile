@@ -50,8 +50,8 @@ Puppet::Functions.create_function(:set_param) do
         instance_number = cluster_nodes.map do |node|
           index += 1
           index if node == hostname
-        end.flatten.join
-        return_value = "#{dbname}#{instance_number}"
+        end
+        return_value = "#{dbname}#{instance_number.flatten.join}"
       elsif dbname
         return_value = dbname
       else
@@ -64,8 +64,8 @@ Puppet::Functions.create_function(:set_param) do
         instance_number = cluster_nodes.map do |node|
           index += 1
           index if node == hostname
-        end.flatten.join
-        return_value = instance_number
+        end
+        return_value = instance_number.flatten.join
       elsif dbname
         return_value = ''
       else

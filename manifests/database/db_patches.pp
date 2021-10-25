@@ -83,7 +83,9 @@ class ora_profile::database::db_patches(
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  if ( $include_ojvm ) {
+  $db_version = lookup('ora_profile::database::db_software::version', String)
+
+  if ( $include_ojvm and versioncmp($db_version, '21.0.0.0') < 0 ) {
     $ojvm_msg = 'including OJVM'
   } else {
     $ojvm_msg = ''
@@ -105,7 +107,6 @@ class ora_profile::database::db_patches(
     }
   }
 
-  $db_version = lookup('ora_profile::database::db_software::version', String)
   $sub_patch_type = 'db'
   if ( $level == 'NONE' ) {
     $patch_level_list = {}
@@ -133,13 +134,18 @@ class ora_profile::database::db_patches(
   }
 
   if ( $include_ojvm ) {
-    $ojvm_patch_levels = lookup('ora_profile::database::db_patches::ojvm_patch_levels', Hash)
-    if ( $level == 'NONE' ) {
-      $ojvm_patch_list = {}
-    } elsif ( has_key($ojvm_patch_levels[$db_version], $level) ) {
-      $ojvm_patch_list = $ojvm_patch_levels[$db_version][$level]
+    # Oracle 21c doesn't have OJVM patches anymore, they are included in the RU/RUR
+    if versioncmp($db_version, '21.0.0.0') < 0 {
+      $ojvm_patch_levels = lookup('ora_profile::database::db_patches::ojvm_patch_levels', Hash)
+      if ( $level == 'NONE' ) {
+        $ojvm_patch_list = {}
+      } elsif ( has_key($ojvm_patch_levels[$db_version], $level) ) {
+        $ojvm_patch_list = $ojvm_patch_levels[$db_version][$level]
+      } else {
+        fail "OJVM patchlevel '${level}' not defined for database version '${db_version}'"
+      }
     } else {
-      fail "OJVM patchlevel '${level}' not defined for database version '${db_version}'"
+      $ojvm_patch_list = {}
     }
   } else {
     $ojvm_patch_list = {}

@@ -291,7 +291,7 @@ class ora_profile::database::asm_patches(
               '12.2.0.1': {
                 $apply_type = 'PSU'
               }
-              '18.0.0.0', '19.0.0.0': {
+              '18.0.0.0', '19.0.0.0', '21.0.0.0': {
                 $apply_type = 'RU'
               }
               default: {
@@ -302,7 +302,7 @@ class ora_profile::database::asm_patches(
           }
           'one-off': {
             case $asm_version {
-              '12.2.0.1', '18.0.0.0', '19.0.0.0': {
+              '12.2.0.1', '18.0.0.0', '19.0.0.0', '21.0.0.0': {
                 $apply_type = 'OneOffs'
               }
               default: {
