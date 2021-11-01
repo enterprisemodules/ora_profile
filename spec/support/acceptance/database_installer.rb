@@ -65,6 +65,10 @@ shared_examples "a database installer" do | settings|
       }
     }
     version_21_hiera_values = {
+      'ora_profile::database::cis_controls::skip_list'                           => [
+        'remote_os_authent_is_set_to_false',
+        'sec_case_sensitive_logon_is_set_to_true',
+      ],
       'ora_profile::database::db_definition_template::container_database'        => 'enabled',
       'ora_profile::database::db_definition_template::memory_mgmt_type'          => 'CUSTOM_SGA',
       'ora_profile::database::db_definition_template::init_params'               => 'sga_max_size=1024m,java_pool_size=64m,shared_pool_size=512m',
