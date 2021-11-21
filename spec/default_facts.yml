@@ -21,30 +21,79 @@ dmi:
 #
 # CIS facts
 #
-ora_accounts_with_default_passwords:  []
-ora_users_with_external_password:     []
-ora_access_to_aud:                    []
-ora_access_to_link:                   []
-ora_access_to_scheduler_credentials:  []
-ora_access_to_user_history:           []
-ora_access_to_user_mig:               []
-ora_access_to_user:                   []
-ora_any_privileges:                   []
-ora_users_with_admin_grants:          []
-ora_roles_with_admin_grants:          []
-ora_apex_users:                       []
-ora_access_to_dba_tables:             []
-ora_profiles:                         []
-ora_proxy_users:                      []
-ora_roles:                            []
-ora_users:                            []
-ora_users_with_default_profile:       []
-ora_maintained_users_roles:           []
-ora_non_maintained_users_roles:       []
-ora_maintained_users:                 []
-ora_maintained_roles:                 []
-ora_global_profiles:                  []
+ora_accounts_with_default_passwords:
+- sid: CNTNR
+  name: 'USER'
+- sid: PLGBL
+  name: 'USER'
+ora_users_with_external_password: 
+- sid: CNTNR
+  name: 'USER'
+- sid: PLGBL
+  name: 'USER'
+ora_access_to_aud:
+- sid: CNTNR
+  name: 'GRANTEE'
+- sid: PLGBL
+  name: 'GRANTEE'
+ora_any_privileges: 
+- sid: CNTNR
+  name: 'ANY'
+- sid: PLGBL
+  name: 'ANY'
+ora_users_with_admin_grants:
+- sid: CNTNR
+  name: 'USER;GRANT'
+- sid: PLGBL
+  name: 'USER;GRANT'
+ora_roles_with_admin_grants:
+- sid: CNTNR
+  name: 'ROLE;GRANT'
+- sid: PLGBL
+  name: 'ROLE;GRANT'
+ora_profiles:
+- sid: CNTNR
+  name: 'PROFILE'
+- sid: PLGBL
+  name: 'PROFILE'
+ora_non_maintained_users:
+- sid: CNTNR
+  name: 'USER'
+- sid: PLGBL
+  name: 'USER'
+ora_non_maintained_roles:
+- sid: CNTNR
+  name: 'ROLE'
+- sid: PLGBL
+  name: 'ROLE'
+ora_non_maintained_users_roles:
+- sid: CNTNR
+  name: 'ROLE'
+- sid: PLGBL
+  name: 'ROLE'
+- sid: CNTNR
+  name: 'USER'
+- sid: PLGBL
+  name: 'USER'
+ora_users_with_default_profile:
+- sid: CNTNR
+  name: 'USER'
+- sid: PLGBL
+  name: 'USER'
+ora_global_profiles:
+- sid: CNTNR
+  name: 'GBL_PROFILE'
+- sid: PLGBL
+  name: 'GBL_PROFILE'
+ora_is_pluggable_db:
+- sid: CNTNR
+  name: 'FALSE'
+- sid: PLGBL
+  name: 'TRUE'
 ora_version:
-  -
-    sid:   DB01
-    name:   12.2.0.1.0
+- sid: CNTNR
+  name: 19.0.0.0
+- sid: PLGBL
+  name: 19.0.0.0
+ora_listener_parameter_file:  /u01/app/oracle/product/19.0.0.0/db_home1/network/admin/listener.ora
+ora_listener_name:            LISTENER
