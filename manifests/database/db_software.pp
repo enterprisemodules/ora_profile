@@ -220,7 +220,7 @@ class ora_profile::database::db_software(
       fail 'Multiple ORACLE_HOME\'s is not supported in a RAC environment yet'
     }
 
-    unless $oracle_home in $facts['ora_install_homes'].keys {
+    unless $oracle_home in $facts['ora_install_homes']['product_version'].keys {
       echo {"This is not the master node. Clone ORACLE_HOME from ${master_node}":
         withpath => false,
       }

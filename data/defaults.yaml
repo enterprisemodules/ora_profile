@@ -21,6 +21,7 @@ ora_profile::database::cluster_nodes:                                     ~
 ora_profile::database::ora_inventory_dir:                                 /u01/app
 ora_profile::database::download_dir:                                      /install
 ora_profile::database::temp_dir:                                          /tmp
+ora_profile::database::enable_fact_caching:                               false
 ora_profile::database::patch_window:                                      '0:00 - 23:59'
 ora_profile::database::patch_levels:
   '11.2.0.1': {}

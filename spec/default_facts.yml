@@ -7,12 +7,23 @@ ipaddress: "172.16.254.254"
 is_pe: false
 macaddress: "AA:AA:AA:AA:AA:AA"
 ora_install_homes:
-  /oracle/product/11.2/db:
-    product_version:  11.2.0.4.0
-    opatch_version:   11.2.0.3.4
-    installed_patches: []
-    defined_sids:      ['TEST']
-    running_sids:      ['TEST']
+  product_version:
+    /oracle/product/11.2/db:
+      version: 11.2.0.4.0
+      name: OraDB12Home1
+      os_user: oracle
+  opatch_version:
+    /oracle/product/11.2/db: 11.2.0.3.4
+  installed_patches:
+    /oracle/product/11.2/db: []
+  defined_sids:
+    /oracle/product/11.2/db: ['TEST']
+  running_sids:
+    /oracle/product/11.2/db:
+      sids:
+        TEST:
+          open_mode: READ_WRITE
+          database_role: PRIMARY
 puppet_confdir:       /etc/puppetlabs/puppet
 dmi:
   product:
@@ -26,7 +37,7 @@ ora_accounts_with_default_passwords:
   name: 'USER'
 - sid: PLGBL
   name: 'USER'
-ora_users_with_external_password: 
+ora_users_with_external_password:
 - sid: CNTNR
   name: 'USER'
 - sid: PLGBL
@@ -36,7 +47,7 @@ ora_access_to_aud:
   name: 'GRANTEE'
 - sid: PLGBL
   name: 'GRANTEE'
-ora_any_privileges: 
+ora_any_privileges:
 - sid: CNTNR
   name: 'ANY'
 - sid: PLGBL

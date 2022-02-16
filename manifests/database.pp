@@ -179,6 +179,10 @@
 # @param [Stdlib::Absolutepath] temp_dir
 #    Directory to use for temporary files.
 #
+# @param [Boolean] enable_fact_caching
+#    Enable fact caching for ora_config and ora_install modules.
+#    The default value is: `false`
+#
 # @param [Optional[String]] oracle_user_password
 #    The password for the oracle os user.
 #    Only applicable for Windows systems.
@@ -1009,6 +1013,7 @@ class ora_profile::database(
             $download_dir,
   Stdlib::Absolutepath
             $temp_dir,
+  Boolean   $enable_fact_caching,
 #
 # Optional settings
 #
@@ -1107,6 +1112,9 @@ class ora_profile::database(
   Optional[String] $after_db_startup = undef,
 )
 {
+  class{'::ora_config::fact_caching':  enabled => $enable_fact_caching}
+  class{'::ora_install::fact_caching': enabled => $enable_fact_caching}
+
   $asm_instance_name         = set_param('instance_name', '+ASM', $cluster_nodes)
   $db_instance_name          = set_param('instance_name', $dbname, $cluster_nodes)
   $instance_number           = set_param('instance_number', $dbname, $cluster_nodes)

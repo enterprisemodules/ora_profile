@@ -59,7 +59,7 @@
 
 ## Classes
 
-### `ora_profile::client`
+### <a name="ora_profileclient"></a>`ora_profile::client`
 
 ora_profile::client
 
@@ -126,9 +126,22 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::client` class.
+The following parameters are available in the `ora_profile::client` class:
 
-##### `before_em_license`
+* [`before_em_license`](#before_em_license)
+* [`em_license`](#em_license)
+* [`after_em_license`](#after_em_license)
+* [`before_groups_and_users`](#before_groups_and_users)
+* [`groups_and_users`](#groups_and_users)
+* [`after_groups_and_users`](#after_groups_and_users)
+* [`before_packages`](#before_packages)
+* [`packages`](#packages)
+* [`after_packages`](#after_packages)
+* [`before_software`](#before_software)
+* [`software`](#software)
+* [`after_software`](#after_software)
+
+##### <a name="before_em_license"></a>`before_em_license`
 
 Data type: `Optional[String]`
 
@@ -140,7 +153,7 @@ ora_profile::database::before_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `em_license`
+##### <a name="em_license"></a>`em_license`
 
 Data type: `Optional[String]`
 
@@ -158,7 +171,7 @@ ora_profile::database::em_license:  skip
 
 Default value: ``undef``
 
-##### `after_em_license`
+##### <a name="after_em_license"></a>`after_em_license`
 
 Data type: `Optional[String]`
 
@@ -170,7 +183,7 @@ ora_profile::database::after_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_groups_and_users`
+##### <a name="before_groups_and_users"></a>`before_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -182,7 +195,7 @@ ora_profile::database::before_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `groups_and_users`
+##### <a name="groups_and_users"></a>`groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -200,7 +213,7 @@ ora_profile::database::groups_and_users:  skip
 
 Default value: ``undef``
 
-##### `after_groups_and_users`
+##### <a name="after_groups_and_users"></a>`after_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -212,7 +225,7 @@ ora_profile::database::after_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_packages`
+##### <a name="before_packages"></a>`before_packages`
 
 Data type: `Optional[String]`
 
@@ -224,7 +237,7 @@ ora_profile::database::before_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `packages`
+##### <a name="packages"></a>`packages`
 
 Data type: `Optional[String]`
 
@@ -242,7 +255,7 @@ ora_profile::database::packages:  skip
 
 Default value: ``undef``
 
-##### `after_packages`
+##### <a name="after_packages"></a>`after_packages`
 
 Data type: `Optional[String]`
 
@@ -254,7 +267,7 @@ ora_profile::database::after_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_software`
+##### <a name="before_software"></a>`before_software`
 
 Data type: `Optional[String]`
 
@@ -266,7 +279,7 @@ ora_profile::database::before_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `software`
+##### <a name="software"></a>`software`
 
 Data type: `Optional[String]`
 
@@ -284,7 +297,7 @@ ora_profile::database::software:  skip
 
 Default value: ``undef``
 
-##### `after_software`
+##### <a name="after_software"></a>`after_software`
 
 Data type: `Optional[String]`
 
@@ -296,7 +309,7 @@ ora_profile::database::after_software:  my_module::my_class
 
 Default value: ``undef``
 
-### `ora_profile::client::software`
+### <a name="ora_profileclientsoftware"></a>`ora_profile::client::software`
 
 ora_profile::client::software
 
@@ -306,22 +319,41 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::client::software` class.
+The following parameters are available in the `ora_profile::client::software` class:
 
-##### `version`
+* [`version`](#version)
+* [`file`](#file)
+* [`oracle_base`](#oracle_base)
+* [`oracle_home`](#oracle_home)
+* [`db_port`](#db_port)
+* [`user`](#user)
+* [`user_base_dir`](#user_base_dir)
+* [`group`](#group)
+* [`group_install`](#group_install)
+* [`download_dir`](#download_dir)
+* [`temp_dir`](#temp_dir)
+* [`install_type`](#install_type)
+* [`install_options`](#install_options)
+* [`puppet_download_mnt_point`](#puppet_download_mnt_point)
+* [`bash_profile`](#bash_profile)
+* [`ora_inventory_dir`](#ora_inventory_dir)
+* [`logoutput`](#logoutput)
+* [`allow_insecure`](#allow_insecure)
+
+##### <a name="version"></a>`version`
 
 Data type: `Ora_install::Version`
 
 The version that is installed in the used Oracle home.
 Puppet uses this value to decide on version specific actions.
 
-##### `file`
+##### <a name="file"></a>`file`
 
 Data type: `String[1]`
 
 The source file to use.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -329,20 +361,20 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `oracle_home`
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
 A directory to be used as Oracle home directory for this software.
 
-##### `db_port`
+##### <a name="db_port"></a>`db_port`
 
 Data type: `Integer`
 
 The IP port to use for database communication.
 The default value is: `1521`
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String[1]`
 
@@ -350,27 +382,27 @@ The user used for the specified installation.
 The install class will not create the user for you. You must do that yourself.
 The default value is: `oracle`
 
-##### `user_base_dir`
+##### <a name="user_base_dir"></a>`user_base_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 The directory to use as base directory for the users.
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String[1]`
 
 The os group to use for these Oracle puppet definitions.
 The default value is: `dba`
 
-##### `group_install`
+##### <a name="group_install"></a>`group_install`
 
 Data type: `String[1]`
 
 The os group to use for installation.
 The default value is: `oinstall`
 
-##### `download_dir`
+##### <a name="download_dir"></a>`download_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -378,33 +410,33 @@ The directory where the Puppet software puts all downloaded files.
 Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
 The default value is: `/install`
 
-##### `temp_dir`
+##### <a name="temp_dir"></a>`temp_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory to use for temporary files.
 
-##### `install_type`
+##### <a name="install_type"></a>`install_type`
 
 Data type: `Enum['Administrator','Runtime','InstantClient','Custom']`
 
 Which type of client software should be installed.
 
-##### `install_options`
+##### <a name="install_options"></a>`install_options`
 
 Data type: `Optional[Array[String]]`
 
 List of Client Components you would like to install.
 This property is considered only if INSTALL_TYPE is set to "Custom"
 
-##### `puppet_download_mnt_point`
+##### <a name="puppet_download_mnt_point"></a>`puppet_download_mnt_point`
 
 Data type: `Optional[String[1]]`
 
 The base path of all remote files for the defined type or class.
 The default value is: `puppet:///modules/ora_install`
 
-##### `bash_profile`
+##### <a name="bash_profile"></a>`bash_profile`
 
 Data type: `Boolean`
 
@@ -422,14 +454,14 @@ ora_install::client { 'Oracle client':
 ```
 This snippet will create a bash profile called `/home/oracle/.bash_profile`.
 
-##### `ora_inventory_dir`
+##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 The directory that contains the oracle inventory.
 The default value is: `/oracle_base/oraInventory`
 
-##### `logoutput`
+##### <a name="logoutput"></a>`logoutput`
 
 Data type: `Variant[Boolean,Enum['on_failure']]`
 
@@ -440,13 +472,13 @@ Valid values are:
 - `false`
 - `on_failure`
 
-##### `allow_insecure`
+##### <a name="allow_insecure"></a>`allow_insecure`
 
 Data type: `Boolean`
 
 Allow insecure SSL connection for downloading the software.
 
-### `ora_profile::database`
+### <a name="ora_profiledatabase"></a>`ora_profile::database`
 
 ora_profile::database
 
@@ -550,16 +582,128 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database` class.
+The following parameters are available in the `ora_profile::database` class:
 
-##### `storage`
+* [`storage`](#storage)
+* [`version`](#version)
+* [`dbname`](#dbname)
+* [`os_user`](#os_user)
+* [`dba_group`](#dba_group)
+* [`install_group`](#install_group)
+* [`grid_user`](#grid_user)
+* [`grid_admingroup`](#grid_admingroup)
+* [`source`](#source)
+* [`oracle_base`](#oracle_base)
+* [`oracle_home`](#oracle_home)
+* [`ora_inventory_dir`](#ora_inventory_dir)
+* [`grid_base`](#grid_base)
+* [`grid_home`](#grid_home)
+* [`db_control_provider`](#db_control_provider)
+* [`download_dir`](#download_dir)
+* [`temp_dir`](#temp_dir)
+* [`enable_fact_caching`](#enable_fact_caching)
+* [`oracle_user_password`](#oracle_user_password)
+* [`master_node`](#master_node)
+* [`cluster_nodes`](#cluster_nodes)
+* [`em_license`](#em_license)
+* [`asm_sysctl`](#asm_sysctl)
+* [`asm_limits`](#asm_limits)
+* [`authenticated_nodes`](#authenticated_nodes)
+* [`asm_groups_and_users`](#asm_groups_and_users)
+* [`asm_packages`](#asm_packages)
+* [`asm_listener`](#asm_listener)
+* [`sysctl`](#sysctl)
+* [`disable_thp`](#disable_thp)
+* [`limits`](#limits)
+* [`packages`](#packages)
+* [`groups_and_users`](#groups_and_users)
+* [`firewall`](#firewall)
+* [`asm_storage`](#asm_storage)
+* [`asm_software`](#asm_software)
+* [`asm_patches`](#asm_patches)
+* [`asm_setup`](#asm_setup)
+* [`asm_init_params`](#asm_init_params)
+* [`asm_diskgroup`](#asm_diskgroup)
+* [`db_software`](#db_software)
+* [`db_patches`](#db_patches)
+* [`db_definition`](#db_definition)
+* [`db_listener`](#db_listener)
+* [`db_init_params`](#db_init_params)
+* [`db_services`](#db_services)
+* [`db_tablespaces`](#db_tablespaces)
+* [`db_profiles`](#db_profiles)
+* [`db_users`](#db_users)
+* [`db_startup`](#db_startup)
+* [`before_em_license`](#before_em_license)
+* [`before_asm_sysctl`](#before_asm_sysctl)
+* [`before_asm_limits`](#before_asm_limits)
+* [`before_authenticated_nodes`](#before_authenticated_nodes)
+* [`before_asm_groups_and_users`](#before_asm_groups_and_users)
+* [`before_asm_packages`](#before_asm_packages)
+* [`before_asm_listener`](#before_asm_listener)
+* [`before_sysctl`](#before_sysctl)
+* [`before_disable_thp`](#before_disable_thp)
+* [`before_limits`](#before_limits)
+* [`before_packages`](#before_packages)
+* [`before_groups_and_users`](#before_groups_and_users)
+* [`before_firewall`](#before_firewall)
+* [`before_asm_storage`](#before_asm_storage)
+* [`before_asm_software`](#before_asm_software)
+* [`before_asm_patches`](#before_asm_patches)
+* [`before_asm_setup`](#before_asm_setup)
+* [`before_asm_init_params`](#before_asm_init_params)
+* [`before_asm_diskgroup`](#before_asm_diskgroup)
+* [`before_db_software`](#before_db_software)
+* [`before_db_patches`](#before_db_patches)
+* [`before_db_definition`](#before_db_definition)
+* [`before_db_listener`](#before_db_listener)
+* [`before_db_init_params`](#before_db_init_params)
+* [`before_db_services`](#before_db_services)
+* [`before_db_tablespaces`](#before_db_tablespaces)
+* [`before_db_profiles`](#before_db_profiles)
+* [`before_db_users`](#before_db_users)
+* [`before_db_startup`](#before_db_startup)
+* [`after_em_license`](#after_em_license)
+* [`after_asm_sysctl`](#after_asm_sysctl)
+* [`after_asm_limits`](#after_asm_limits)
+* [`after_authenticated_nodes`](#after_authenticated_nodes)
+* [`after_asm_groups_and_users`](#after_asm_groups_and_users)
+* [`after_asm_packages`](#after_asm_packages)
+* [`after_asm_listener`](#after_asm_listener)
+* [`after_sysctl`](#after_sysctl)
+* [`after_disable_thp`](#after_disable_thp)
+* [`after_limits`](#after_limits)
+* [`after_packages`](#after_packages)
+* [`after_groups_and_users`](#after_groups_and_users)
+* [`after_firewall`](#after_firewall)
+* [`after_asm_storage`](#after_asm_storage)
+* [`after_asm_software`](#after_asm_software)
+* [`after_asm_patches`](#after_asm_patches)
+* [`after_asm_setup`](#after_asm_setup)
+* [`after_asm_init_params`](#after_asm_init_params)
+* [`after_asm_diskgroup`](#after_asm_diskgroup)
+* [`after_db_software`](#after_db_software)
+* [`after_db_patches`](#after_db_patches)
+* [`after_db_definition`](#after_db_definition)
+* [`after_db_listener`](#after_db_listener)
+* [`after_db_init_params`](#after_db_init_params)
+* [`after_db_services`](#after_db_services)
+* [`after_db_tablespaces`](#after_db_tablespaces)
+* [`after_db_profiles`](#after_db_profiles)
+* [`after_db_users`](#after_db_users)
+* [`after_db_startup`](#after_db_startup)
+* [`tmpfiles`](#tmpfiles)
+* [`before_tmpfiles`](#before_tmpfiles)
+* [`after_tmpfiles`](#after_tmpfiles)
+
+##### <a name="storage"></a>`storage`
 
 Data type: `Enum['local','asm']`
 
 The type of storage used.
 The default is `local`
 
-##### `version`
+##### <a name="version"></a>`version`
 
 Data type: `Ora_Install::Version`
 
@@ -567,7 +711,7 @@ The version of Oracle you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
-##### `dbname`
+##### <a name="dbname"></a>`dbname`
 
 Data type: `String[1]`
 
@@ -575,7 +719,7 @@ The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
-##### `os_user`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String[1]`
 
@@ -583,7 +727,7 @@ The OS user to use for Oracle install.
 The default is : `oracle`
 To customize this consistently use the hiera key `ora_profile::database::os_user`.
 
-##### `dba_group`
+##### <a name="dba_group"></a>`dba_group`
 
 Data type: `String[1]`
 
@@ -591,7 +735,7 @@ The group to use for Oracle DBA users.
 The default is : `dba`
 To customize this consistently use the hiera key `ora_profile::database::dba_group`.
 
-##### `install_group`
+##### <a name="install_group"></a>`install_group`
 
 Data type: `String[1]`
 
@@ -599,21 +743,21 @@ The group to use for Oracle install.
 The default is : `oinstall`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `grid_user`
+##### <a name="grid_user"></a>`grid_user`
 
 Data type: `String[1]`
 
 The name of the user that owns the Grid Infrastructure installation.
 The default value is: `grid`.
 
-##### `grid_admingroup`
+##### <a name="grid_admingroup"></a>`grid_admingroup`
 
 Data type: `String[1]`
 
 The OS group to use for ASM admin.
 The default value is: `asmadmin`
 
-##### `source`
+##### <a name="source"></a>`source`
 
 Data type: `String[1]`
 
@@ -622,7 +766,7 @@ You can specify a local directory, a Puppet url or an http url.
 The default is : `puppet:///modules/software/`
 To customize this consistently use the hiera key `ora_profile::database::source`.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -630,7 +774,7 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `oracle_home`
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -638,7 +782,7 @@ The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
-##### `ora_inventory_dir`
+##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -646,7 +790,7 @@ The directory that contains the oracle inventory.
 The default value is: `/oracle_base/oraInventory`
 To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 
-##### `grid_base`
+##### <a name="grid_base"></a>`grid_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -654,14 +798,14 @@ The ORACLE_BASE for the Grid Infrastructure installation.
 The default is : `/u01/app/grid/admin`
 To customize this consistently use the hiera key `ora_profile::database::grid_base`.
 
-##### `grid_home`
+##### <a name="grid_home"></a>`grid_home`
 
 Data type: `Stdlib::Absolutepath`
 
 The oracle home directory to use for the GRID software.
 The default value is: `/u01/app/grid/product/12.2.0.1/grid_home1`
 
-##### `db_control_provider`
+##### <a name="db_control_provider"></a>`db_control_provider`
 
 Data type: `String[1]`
 
@@ -669,7 +813,7 @@ Which provider should be used for the type db_control.
 The default value is: `sqlplus`
 To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
 
-##### `download_dir`
+##### <a name="download_dir"></a>`download_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -678,13 +822,20 @@ Before Puppet can actually use remote files, they must be downloaded first. Pupp
 The default value is: `/install`
 To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
-##### `temp_dir`
+##### <a name="temp_dir"></a>`temp_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory to use for temporary files.
 
-##### `oracle_user_password`
+##### <a name="enable_fact_caching"></a>`enable_fact_caching`
+
+Data type: `Boolean`
+
+Enable fact caching for ora_config and ora_install modules.
+The default value is: `false`
+
+##### <a name="oracle_user_password"></a>`oracle_user_password`
 
 Data type: `Optional[String]`
 
@@ -694,7 +845,7 @@ To customize this consistently use the hiera key `ora_profile::database::oracle_
 
 Default value: ``undef``
 
-##### `master_node`
+##### <a name="master_node"></a>`master_node`
 
 Data type: `Optional[String]`
 
@@ -704,7 +855,7 @@ To customize this consistently use the hiera key `ora_profile::database::master_
 
 Default value: `$facts['hostname']`
 
-##### `cluster_nodes`
+##### <a name="cluster_nodes"></a>`cluster_nodes`
 
 Data type: `Optional[Array]`
 
@@ -718,7 +869,7 @@ ora_profile::database::cluster_nodes:
 
 Default value: ``undef``
 
-##### `em_license`
+##### <a name="em_license"></a>`em_license`
 
 Data type: `Optional[String]`
 
@@ -736,7 +887,7 @@ ora_profile::database::em_license:  skip
 
 Default value: ``undef``
 
-##### `asm_sysctl`
+##### <a name="asm_sysctl"></a>`asm_sysctl`
 
 Data type: `Optional[String]`
 
@@ -754,7 +905,7 @@ ora_profile::database::asm_sysctl:  skip
 
 Default value: ``undef``
 
-##### `asm_limits`
+##### <a name="asm_limits"></a>`asm_limits`
 
 Data type: `Optional[String]`
 
@@ -772,7 +923,7 @@ ora_profile::database::asm_limits:  skip
 
 Default value: ``undef``
 
-##### `authenticated_nodes`
+##### <a name="authenticated_nodes"></a>`authenticated_nodes`
 
 Data type: `Optional[String]`
 
@@ -790,7 +941,7 @@ ora_profile::database::authenticated_nodes:  skip
 
 Default value: ``undef``
 
-##### `asm_groups_and_users`
+##### <a name="asm_groups_and_users"></a>`asm_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -808,7 +959,7 @@ ora_profile::database::asm_groups_and_users:  skip
 
 Default value: ``undef``
 
-##### `asm_packages`
+##### <a name="asm_packages"></a>`asm_packages`
 
 Data type: `Optional[String]`
 
@@ -826,7 +977,7 @@ ora_profile::database::asm_packages:  skip
 
 Default value: ``undef``
 
-##### `asm_listener`
+##### <a name="asm_listener"></a>`asm_listener`
 
 Data type: `Optional[String]`
 
@@ -844,7 +995,7 @@ ora_profile::database::asm_listener:  skip
 
 Default value: ``undef``
 
-##### `sysctl`
+##### <a name="sysctl"></a>`sysctl`
 
 Data type: `Optional[String]`
 
@@ -862,7 +1013,7 @@ ora_profile::database::sysctl:  skip
 
 Default value: ``undef``
 
-##### `disable_thp`
+##### <a name="disable_thp"></a>`disable_thp`
 
 Data type: `Optional[String]`
 
@@ -880,7 +1031,7 @@ ora_profile::database::disable_thp:  skip
 
 Default value: ``undef``
 
-##### `limits`
+##### <a name="limits"></a>`limits`
 
 Data type: `Optional[String]`
 
@@ -898,7 +1049,7 @@ ora_profile::database::limits:  skip
 
 Default value: ``undef``
 
-##### `packages`
+##### <a name="packages"></a>`packages`
 
 Data type: `Optional[String]`
 
@@ -916,7 +1067,7 @@ ora_profile::database::packages:  skip
 
 Default value: ``undef``
 
-##### `groups_and_users`
+##### <a name="groups_and_users"></a>`groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -934,7 +1085,7 @@ ora_profile::database::groups_and_users:  skip
 
 Default value: ``undef``
 
-##### `firewall`
+##### <a name="firewall"></a>`firewall`
 
 Data type: `Optional[String]`
 
@@ -952,7 +1103,7 @@ ora_profile::database::firewall:  skip
 
 Default value: ``undef``
 
-##### `asm_storage`
+##### <a name="asm_storage"></a>`asm_storage`
 
 Data type: `Optional[String]`
 
@@ -970,7 +1121,7 @@ ora_profile::database::asm_storage:  skip
 
 Default value: ``undef``
 
-##### `asm_software`
+##### <a name="asm_software"></a>`asm_software`
 
 Data type: `Optional[String]`
 
@@ -988,7 +1139,7 @@ ora_profile::database::asm_software:  skip
 
 Default value: ``undef``
 
-##### `asm_patches`
+##### <a name="asm_patches"></a>`asm_patches`
 
 Data type: `Optional[String]`
 
@@ -1006,7 +1157,7 @@ ora_profile::database::asm_patches:  skip
 
 Default value: ``undef``
 
-##### `asm_setup`
+##### <a name="asm_setup"></a>`asm_setup`
 
 Data type: `Optional[String]`
 
@@ -1024,7 +1175,7 @@ ora_profile::database::asm_setup:  skip
 
 Default value: ``undef``
 
-##### `asm_init_params`
+##### <a name="asm_init_params"></a>`asm_init_params`
 
 Data type: `Optional[String]`
 
@@ -1042,7 +1193,7 @@ ora_profile::database::asm_init_params:  skip
 
 Default value: ``undef``
 
-##### `asm_diskgroup`
+##### <a name="asm_diskgroup"></a>`asm_diskgroup`
 
 Data type: `Optional[String]`
 
@@ -1060,7 +1211,7 @@ ora_profile::database::asm_diskgroup:  skip
 
 Default value: ``undef``
 
-##### `db_software`
+##### <a name="db_software"></a>`db_software`
 
 Data type: `Optional[String]`
 
@@ -1078,7 +1229,7 @@ ora_profile::database::db_software:  skip
 
 Default value: ``undef``
 
-##### `db_patches`
+##### <a name="db_patches"></a>`db_patches`
 
 Data type: `Optional[String]`
 
@@ -1096,7 +1247,7 @@ ora_profile::database::db_patches:  skip
 
 Default value: ``undef``
 
-##### `db_definition`
+##### <a name="db_definition"></a>`db_definition`
 
 Data type: `Optional[String]`
 
@@ -1114,7 +1265,7 @@ ora_profile::database::db_definition:  skip
 
 Default value: ``undef``
 
-##### `db_listener`
+##### <a name="db_listener"></a>`db_listener`
 
 Data type: `Optional[String]`
 
@@ -1132,7 +1283,7 @@ ora_profile::database::db_listener:  skip
 
 Default value: ``undef``
 
-##### `db_init_params`
+##### <a name="db_init_params"></a>`db_init_params`
 
 Data type: `Optional[String]`
 
@@ -1150,7 +1301,7 @@ ora_profile::database::db_init_params:  skip
 
 Default value: ``undef``
 
-##### `db_services`
+##### <a name="db_services"></a>`db_services`
 
 Data type: `Optional[String]`
 
@@ -1168,7 +1319,7 @@ ora_profile::database::db_services:  skip
 
 Default value: ``undef``
 
-##### `db_tablespaces`
+##### <a name="db_tablespaces"></a>`db_tablespaces`
 
 Data type: `Optional[String]`
 
@@ -1186,7 +1337,7 @@ ora_profile::database::db_tablespaces:  skip
 
 Default value: ``undef``
 
-##### `db_profiles`
+##### <a name="db_profiles"></a>`db_profiles`
 
 Data type: `Optional[String]`
 
@@ -1204,7 +1355,7 @@ ora_profile::database::db_profiles:  skip
 
 Default value: ``undef``
 
-##### `db_users`
+##### <a name="db_users"></a>`db_users`
 
 Data type: `Optional[String]`
 
@@ -1222,7 +1373,7 @@ ora_profile::database::db_users:  skip
 
 Default value: ``undef``
 
-##### `db_startup`
+##### <a name="db_startup"></a>`db_startup`
 
 Data type: `Optional[String]`
 
@@ -1240,7 +1391,7 @@ ora_profile::database::db_startup:  skip
 
 Default value: ``undef``
 
-##### `before_em_license`
+##### <a name="before_em_license"></a>`before_em_license`
 
 Data type: `Optional[String]`
 
@@ -1252,7 +1403,7 @@ ora_profile::database::before_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_sysctl`
+##### <a name="before_asm_sysctl"></a>`before_asm_sysctl`
 
 Data type: `Optional[String]`
 
@@ -1264,7 +1415,7 @@ ora_profile::database::before_asm_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_limits`
+##### <a name="before_asm_limits"></a>`before_asm_limits`
 
 Data type: `Optional[String]`
 
@@ -1276,7 +1427,7 @@ ora_profile::database::before_asm_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_authenticated_nodes`
+##### <a name="before_authenticated_nodes"></a>`before_authenticated_nodes`
 
 Data type: `Optional[String]`
 
@@ -1288,7 +1439,7 @@ ora_profile::database::before_authenticated_nodes:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_groups_and_users`
+##### <a name="before_asm_groups_and_users"></a>`before_asm_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -1300,7 +1451,7 @@ ora_profile::database::before_asm_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_packages`
+##### <a name="before_asm_packages"></a>`before_asm_packages`
 
 Data type: `Optional[String]`
 
@@ -1312,7 +1463,7 @@ ora_profile::database::before_asm_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_listener`
+##### <a name="before_asm_listener"></a>`before_asm_listener`
 
 Data type: `Optional[String]`
 
@@ -1324,7 +1475,7 @@ ora_profile::database::before_asm_listener:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_sysctl`
+##### <a name="before_sysctl"></a>`before_sysctl`
 
 Data type: `Optional[String]`
 
@@ -1336,7 +1487,7 @@ ora_profile::database::before_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_disable_thp`
+##### <a name="before_disable_thp"></a>`before_disable_thp`
 
 Data type: `Optional[String]`
 
@@ -1348,7 +1499,7 @@ ora_profile::database::before_disable_thp:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_limits`
+##### <a name="before_limits"></a>`before_limits`
 
 Data type: `Optional[String]`
 
@@ -1360,7 +1511,7 @@ ora_profile::database::before_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_packages`
+##### <a name="before_packages"></a>`before_packages`
 
 Data type: `Optional[String]`
 
@@ -1372,7 +1523,7 @@ ora_profile::database::before_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_groups_and_users`
+##### <a name="before_groups_and_users"></a>`before_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -1384,7 +1535,7 @@ ora_profile::database::before_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_firewall`
+##### <a name="before_firewall"></a>`before_firewall`
 
 Data type: `Optional[String]`
 
@@ -1396,7 +1547,7 @@ ora_profile::database::before_firewall:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_storage`
+##### <a name="before_asm_storage"></a>`before_asm_storage`
 
 Data type: `Optional[String]`
 
@@ -1408,7 +1559,7 @@ ora_profile::database::before_asm_storage:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_software`
+##### <a name="before_asm_software"></a>`before_asm_software`
 
 Data type: `Optional[String]`
 
@@ -1420,7 +1571,7 @@ ora_profile::database::before_asm_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_patches`
+##### <a name="before_asm_patches"></a>`before_asm_patches`
 
 Data type: `Optional[String]`
 
@@ -1432,7 +1583,7 @@ ora_profile::database::before_asm_patches:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_setup`
+##### <a name="before_asm_setup"></a>`before_asm_setup`
 
 Data type: `Optional[String]`
 
@@ -1444,7 +1595,7 @@ ora_profile::database::before_asm_setup:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_init_params`
+##### <a name="before_asm_init_params"></a>`before_asm_init_params`
 
 Data type: `Optional[String]`
 
@@ -1456,7 +1607,7 @@ ora_profile::database::before_asm_init_params:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_asm_diskgroup`
+##### <a name="before_asm_diskgroup"></a>`before_asm_diskgroup`
 
 Data type: `Optional[String]`
 
@@ -1468,7 +1619,7 @@ ora_profile::database::before_asm_diskgroup:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_software`
+##### <a name="before_db_software"></a>`before_db_software`
 
 Data type: `Optional[String]`
 
@@ -1480,7 +1631,7 @@ ora_profile::database::before_db_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_patches`
+##### <a name="before_db_patches"></a>`before_db_patches`
 
 Data type: `Optional[String]`
 
@@ -1492,7 +1643,7 @@ ora_profile::database::before_db_patches:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_definition`
+##### <a name="before_db_definition"></a>`before_db_definition`
 
 Data type: `Optional[String]`
 
@@ -1504,7 +1655,7 @@ ora_profile::database::before_db_definition:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_listener`
+##### <a name="before_db_listener"></a>`before_db_listener`
 
 Data type: `Optional[String]`
 
@@ -1516,7 +1667,7 @@ ora_profile::database::before_db_listener:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_init_params`
+##### <a name="before_db_init_params"></a>`before_db_init_params`
 
 Data type: `Optional[String]`
 
@@ -1528,7 +1679,7 @@ ora_profile::database::before_db_init_params:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_services`
+##### <a name="before_db_services"></a>`before_db_services`
 
 Data type: `Optional[String]`
 
@@ -1540,7 +1691,7 @@ ora_profile::database::before_db_services:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_tablespaces`
+##### <a name="before_db_tablespaces"></a>`before_db_tablespaces`
 
 Data type: `Optional[String]`
 
@@ -1552,7 +1703,7 @@ ora_profile::database::before_db_tablespaces:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_profiles`
+##### <a name="before_db_profiles"></a>`before_db_profiles`
 
 Data type: `Optional[String]`
 
@@ -1564,7 +1715,7 @@ ora_profile::database::before_db_profiles:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_users`
+##### <a name="before_db_users"></a>`before_db_users`
 
 Data type: `Optional[String]`
 
@@ -1576,7 +1727,7 @@ ora_profile::database::before_db_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_db_startup`
+##### <a name="before_db_startup"></a>`before_db_startup`
 
 Data type: `Optional[String]`
 
@@ -1588,7 +1739,7 @@ ora_profile::database::before_db_startup:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_em_license`
+##### <a name="after_em_license"></a>`after_em_license`
 
 Data type: `Optional[String]`
 
@@ -1600,7 +1751,7 @@ ora_profile::database::after_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_sysctl`
+##### <a name="after_asm_sysctl"></a>`after_asm_sysctl`
 
 Data type: `Optional[String]`
 
@@ -1612,7 +1763,7 @@ ora_profile::database::after_asm_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_limits`
+##### <a name="after_asm_limits"></a>`after_asm_limits`
 
 Data type: `Optional[String]`
 
@@ -1624,7 +1775,7 @@ ora_profile::database::after_asm_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_authenticated_nodes`
+##### <a name="after_authenticated_nodes"></a>`after_authenticated_nodes`
 
 Data type: `Optional[String]`
 
@@ -1636,7 +1787,7 @@ ora_profile::database::after_authenticated_nodes:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_groups_and_users`
+##### <a name="after_asm_groups_and_users"></a>`after_asm_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -1648,7 +1799,7 @@ ora_profile::database::after_asm_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_packages`
+##### <a name="after_asm_packages"></a>`after_asm_packages`
 
 Data type: `Optional[String]`
 
@@ -1660,7 +1811,7 @@ ora_profile::database::after_asm_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_listener`
+##### <a name="after_asm_listener"></a>`after_asm_listener`
 
 Data type: `Optional[String]`
 
@@ -1672,7 +1823,7 @@ ora_profile::database::after_asm_listener:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_sysctl`
+##### <a name="after_sysctl"></a>`after_sysctl`
 
 Data type: `Optional[String]`
 
@@ -1684,7 +1835,7 @@ ora_profile::database::after_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_disable_thp`
+##### <a name="after_disable_thp"></a>`after_disable_thp`
 
 Data type: `Optional[String]`
 
@@ -1696,7 +1847,7 @@ ora_profile::database::after_disable_thp:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_limits`
+##### <a name="after_limits"></a>`after_limits`
 
 Data type: `Optional[String]`
 
@@ -1708,7 +1859,7 @@ ora_profile::database::after_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_packages`
+##### <a name="after_packages"></a>`after_packages`
 
 Data type: `Optional[String]`
 
@@ -1720,7 +1871,7 @@ ora_profile::database::after_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_groups_and_users`
+##### <a name="after_groups_and_users"></a>`after_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -1732,7 +1883,7 @@ ora_profile::database::after_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_firewall`
+##### <a name="after_firewall"></a>`after_firewall`
 
 Data type: `Optional[String]`
 
@@ -1744,7 +1895,7 @@ ora_profile::database::after_firewall:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_storage`
+##### <a name="after_asm_storage"></a>`after_asm_storage`
 
 Data type: `Optional[String]`
 
@@ -1756,7 +1907,7 @@ ora_profile::database::after_asm_storage:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_software`
+##### <a name="after_asm_software"></a>`after_asm_software`
 
 Data type: `Optional[String]`
 
@@ -1768,7 +1919,7 @@ ora_profile::database::after_asm_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_patches`
+##### <a name="after_asm_patches"></a>`after_asm_patches`
 
 Data type: `Optional[String]`
 
@@ -1780,7 +1931,7 @@ ora_profile::database::after_asm_patches:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_setup`
+##### <a name="after_asm_setup"></a>`after_asm_setup`
 
 Data type: `Optional[String]`
 
@@ -1792,7 +1943,7 @@ ora_profile::database::after_asm_setup:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_init_params`
+##### <a name="after_asm_init_params"></a>`after_asm_init_params`
 
 Data type: `Optional[String]`
 
@@ -1804,7 +1955,7 @@ ora_profile::database::after_asm_init_params:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_asm_diskgroup`
+##### <a name="after_asm_diskgroup"></a>`after_asm_diskgroup`
 
 Data type: `Optional[String]`
 
@@ -1816,7 +1967,7 @@ ora_profile::database::after_asm_diskgroup:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_software`
+##### <a name="after_db_software"></a>`after_db_software`
 
 Data type: `Optional[String]`
 
@@ -1828,7 +1979,7 @@ ora_profile::database::after_db_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_patches`
+##### <a name="after_db_patches"></a>`after_db_patches`
 
 Data type: `Optional[String]`
 
@@ -1840,7 +1991,7 @@ ora_profile::database::after_db_patches:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_definition`
+##### <a name="after_db_definition"></a>`after_db_definition`
 
 Data type: `Optional[String]`
 
@@ -1852,7 +2003,7 @@ ora_profile::database::after_db_definition:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_listener`
+##### <a name="after_db_listener"></a>`after_db_listener`
 
 Data type: `Optional[String]`
 
@@ -1864,7 +2015,7 @@ ora_profile::database::after_db_listener:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_init_params`
+##### <a name="after_db_init_params"></a>`after_db_init_params`
 
 Data type: `Optional[String]`
 
@@ -1876,7 +2027,7 @@ ora_profile::database::after_db_init_params:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_services`
+##### <a name="after_db_services"></a>`after_db_services`
 
 Data type: `Optional[String]`
 
@@ -1888,7 +2039,7 @@ ora_profile::database::after_db_services:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_tablespaces`
+##### <a name="after_db_tablespaces"></a>`after_db_tablespaces`
 
 Data type: `Optional[String]`
 
@@ -1900,7 +2051,7 @@ ora_profile::database::after_db_tablespaces:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_profiles`
+##### <a name="after_db_profiles"></a>`after_db_profiles`
 
 Data type: `Optional[String]`
 
@@ -1912,7 +2063,7 @@ ora_profile::database::after_db_profiles:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_users`
+##### <a name="after_db_users"></a>`after_db_users`
 
 Data type: `Optional[String]`
 
@@ -1924,7 +2075,7 @@ ora_profile::database::after_db_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_db_startup`
+##### <a name="after_db_startup"></a>`after_db_startup`
 
 Data type: `Optional[String]`
 
@@ -1936,7 +2087,7 @@ ora_profile::database::after_db_startup:  my_module::my_class
 
 Default value: ``undef``
 
-##### `tmpfiles`
+##### <a name="tmpfiles"></a>`tmpfiles`
 
 Data type: `Optional[String]`
 
@@ -1944,7 +2095,7 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
-##### `before_tmpfiles`
+##### <a name="before_tmpfiles"></a>`before_tmpfiles`
 
 Data type: `Optional[String]`
 
@@ -1952,7 +2103,7 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
-##### `after_tmpfiles`
+##### <a name="after_tmpfiles"></a>`after_tmpfiles`
 
 Data type: `Optional[String]`
 
@@ -1960,7 +2111,7 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
-### `ora_profile::database::asm_diskgroup`
+### <a name="ora_profiledatabaseasm_diskgroup"></a>`ora_profile::database::asm_diskgroup`
 
 ora_profile::database::asm_diskgroup
 
@@ -1972,9 +2123,11 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_diskgroup` class.
+The following parameters are available in the `ora_profile::database::asm_diskgroup` class:
 
-##### `disks`
+* [`disks`](#disks)
+
+##### <a name="disks"></a>`disks`
 
 Data type: `Hash`
 
@@ -1998,7 +2151,7 @@ ora_profile::database::asm_diskgroup::disks:
 
 Default value: `{}`
 
-### `ora_profile::database::asm_init_params`
+### <a name="ora_profiledatabaseasm_init_params"></a>`ora_profile::database::asm_init_params`
 
 ora_profile::database::asm_init_params
 
@@ -2008,9 +2161,11 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_init_params` class.
+The following parameters are available in the `ora_profile::database::asm_init_params` class:
 
-##### `parameters`
+* [`parameters`](#parameters)
+
+##### <a name="parameters"></a>`parameters`
 
 Data type: `Hash`
 
@@ -2038,7 +2193,7 @@ See: [ora_init_params](https://www.enterprisemodules.com/docs/ora_config/ora_ini
 
 Default value: `{}`
 
-### `ora_profile::database::asm_listener`
+### <a name="ora_profiledatabaseasm_listener"></a>`ora_profile::database::asm_listener`
 
 ora_profile::database::asm_listener
 
@@ -2050,9 +2205,14 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_listener` class.
+The following parameters are available in the `ora_profile::database::asm_listener` class:
 
-##### `oracle_home`
+* [`oracle_home`](#oracle_home)
+* [`oracle_base`](#oracle_base)
+* [`sqlnet_version`](#sqlnet_version)
+* [`dbname`](#dbname)
+
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -2060,7 +2220,7 @@ The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -2068,14 +2228,14 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `sqlnet_version`
+##### <a name="sqlnet_version"></a>`sqlnet_version`
 
 Data type: `Ora_install::ShortVersion`
 
 The SQLnet version to use.
 The default is: 12.2
 
-##### `dbname`
+##### <a name="dbname"></a>`dbname`
 
 Data type: `String[1]`
 
@@ -2083,7 +2243,7 @@ The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
-### `ora_profile::database::asm_patches`
+### <a name="ora_profiledatabaseasm_patches"></a>`ora_profile::database::asm_patches`
 
 ora_profile::database::asm_patches
 
@@ -2097,9 +2257,15 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_patches` class.
+The following parameters are available in the `ora_profile::database::asm_patches` class:
 
-##### `level`
+* [`level`](#level)
+* [`patch_file`](#patch_file)
+* [`opversion`](#opversion)
+* [`patch_list`](#patch_list)
+* [`logoutput`](#logoutput)
+
+##### <a name="level"></a>`level`
 
 Data type: `String[1]`
 
@@ -2111,14 +2277,14 @@ Valid values depend on your database/grid version, but it should like like below
 - `APR2019RU`
 - etc...
 
-##### `patch_file`
+##### <a name="patch_file"></a>`patch_file`
 
 Data type: `String[1]`
 
 The file containing the required Opatch version.
 The default value is: `p6880880_122010_Linux-x86-64`
 
-##### `opversion`
+##### <a name="opversion"></a>`opversion`
 
 Data type: `String[1]`
 
@@ -2126,14 +2292,14 @@ The version of OPatch that is needed.
 If it is not installed, Puppet will install the specfied version.
 The default value is: `12.2.0.1.13`
 
-##### `patch_list`
+##### <a name="patch_list"></a>`patch_list`
 
 Data type: `Hash`
 
 The list of patches to apply.
 The default value is : `{}`
 
-##### `logoutput`
+##### <a name="logoutput"></a>`logoutput`
 
 Data type: `Variant[Boolean,Enum['on_failure']]`
 
@@ -2146,7 +2312,7 @@ Valid values are:
 
 Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
-### `ora_profile::database::asm_setup`
+### <a name="ora_profiledatabaseasm_setup"></a>`ora_profile::database::asm_setup`
 
 ora_profile::database::asm_setup
 
@@ -2168,9 +2334,31 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_setup` class.
+The following parameters are available in the `ora_profile::database::asm_setup` class:
 
-##### `version`
+* [`version`](#version)
+* [`dirs`](#dirs)
+* [`file_name`](#file_name)
+* [`asm_sys_password`](#asm_sys_password)
+* [`disk_discovery_string`](#disk_discovery_string)
+* [`asm_diskgroup`](#asm_diskgroup)
+* [`asm_disks`](#asm_disks)
+* [`group`](#group)
+* [`oper_group`](#oper_group)
+* [`asm_group`](#asm_group)
+* [`configure_afd`](#configure_afd)
+* [`grid_type`](#grid_type)
+* [`disk_redundancy`](#disk_redundancy)
+* [`bash_profile`](#bash_profile)
+* [`disks_failgroup_names`](#disks_failgroup_names)
+* [`cluster_name`](#cluster_name)
+* [`scan_name`](#scan_name)
+* [`scan_port`](#scan_port)
+* [`cluster_node_types`](#cluster_node_types)
+* [`network_interface_list`](#network_interface_list)
+* [`storage_option`](#storage_option)
+
+##### <a name="version"></a>`version`
 
 Data type: `Ora_Install::Version`
 
@@ -2178,7 +2366,7 @@ The version of Oracle you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
-##### `dirs`
+##### <a name="dirs"></a>`dirs`
 
 Data type: `Array[Stdlib::Absolutepath]`
 
@@ -2192,14 +2380,14 @@ ora_profile::database::asm_setup::dirs:
 - /u01/app/grid/product
 ```
 
-##### `file_name`
+##### <a name="file_name"></a>`file_name`
 
 Data type: `String[1]`
 
 The file name containing the Oracle Grid Infrastructure software kit.
 The default is: `linuxx64_12201_grid_home`
 
-##### `asm_sys_password`
+##### <a name="asm_sys_password"></a>`asm_sys_password`
 
 Data type: `Easy_type::Password`
 
@@ -2207,7 +2395,7 @@ The `sys` password to use for ASM.
 The default is: `Welcome01`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_sys_password`.
 
-##### `disk_discovery_string`
+##### <a name="disk_discovery_string"></a>`disk_discovery_string`
 
 Data type: `String[1]`
 
@@ -2215,7 +2403,7 @@ The disk discovery string for ASM.
 The default value is: `/nfs_client/asm*`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::disk_discovery_string`.
 
-##### `asm_diskgroup`
+##### <a name="asm_diskgroup"></a>`asm_diskgroup`
 
 Data type: `String[1]`
 
@@ -2223,7 +2411,7 @@ The name of the ASM diskgroup to use.
 The default value is: `DATA`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_diskgroup`.
 
-##### `asm_disks`
+##### <a name="asm_disks"></a>`asm_disks`
 
 Data type: `String[1]`
 
@@ -2231,7 +2419,7 @@ List of disks to create a ASM DiskGroup.
 The default value is: `/nfs_client/asm_sda_nfs_b1,/nfs_client/asm_sda_nfs_b2`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_disks`.
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String[1]`
 
@@ -2239,7 +2427,7 @@ The dba group for ASM.
 The default is : `asmdba`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::group`.
 
-##### `oper_group`
+##### <a name="oper_group"></a>`oper_group`
 
 Data type: `String[1]`
 
@@ -2247,7 +2435,7 @@ The oper group for ASM.
 The default is : `asmoper`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::oper_group`.
 
-##### `asm_group`
+##### <a name="asm_group"></a>`asm_group`
 
 Data type: `String[1]`
 
@@ -2255,7 +2443,7 @@ The admin group for ASM.
 The default is : `asmadmin`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_group`.
 
-##### `configure_afd`
+##### <a name="configure_afd"></a>`configure_afd`
 
 Data type: `Boolean`
 
@@ -2263,7 +2451,7 @@ Specify whether or not to configure ASM Filter Driver instead of ASMLib.
 The default value is: `false`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::configure_afd`.
 
-##### `grid_type`
+##### <a name="grid_type"></a>`grid_type`
 
 Data type: `Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']`
 
@@ -2277,7 +2465,7 @@ Valid values are:
 The default value is: `HA_CONFIG`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::grid_type`.
 
-##### `disk_redundancy`
+##### <a name="disk_redundancy"></a>`disk_redundancy`
 
 Data type: `Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']`
 
@@ -2290,14 +2478,14 @@ Valid values are:
 - `NORMAL`
 The default value is: `EXTERNAL`
 
-##### `bash_profile`
+##### <a name="bash_profile"></a>`bash_profile`
 
 Data type: `Boolean`
 
 Whether or not to deploy bash_profile for $os_user or $grid_user
 The default is : `true`
 
-##### `disks_failgroup_names`
+##### <a name="disks_failgroup_names"></a>`disks_failgroup_names`
 
 Data type: `Optional[String[1]]`
 
@@ -2308,28 +2496,28 @@ Valid values are:
 - `/dev/sdb,CRSFG1,/dev/sdc,CRSFG2,/dev/sdd,CRSFG3,/dev/sde,CRSFG4,/dev/sdf,CRSFG5` (HIGH redundancy)
 The default value is: `/nfs_client/asm_sda_nfs_b1,`
 
-##### `cluster_name`
+##### <a name="cluster_name"></a>`cluster_name`
 
 Data type: `Optional[String[1]]`
 
 The name of the cluster.
 The default value is: `undef`
 
-##### `scan_name`
+##### <a name="scan_name"></a>`scan_name`
 
 Data type: `Optional[String[1]]`
 
 The hostname to use for the SCAN service.
 The default value is: `undef`
 
-##### `scan_port`
+##### <a name="scan_port"></a>`scan_port`
 
 Data type: `Optional[Integer]`
 
 The IP portnumber to use for the SCAN service.
 The default value is: `undef`
 
-##### `cluster_node_types`
+##### <a name="cluster_node_types"></a>`cluster_node_types`
 
 Data type: `Optional[String[1]]`
 
@@ -2341,19 +2529,19 @@ Valid values are:
 - `node1:node1-vip:HUB:site1,node2:node2-vip:HUB:site2` (version = 12.2 Extended Cluster)
 The default value is: `undef`
 
-##### `network_interface_list`
+##### <a name="network_interface_list"></a>`network_interface_list`
 
 Data type: `Optional[String[1]]`
 
 The list of interfaces to use for RAC.The value should be a comma separated strings where each string is as shown below```InterfaceName:SubnetAddress:InterfaceType```where InterfaceType can be either "1", "2", "3", "4" or "5" (1 indicates public, 2 indicates private, 3 indicates the interface is not used, 4 indicates ASM and 5 indicates ASM & Private)The default value is: `undef`
 
-##### `storage_option`
+##### <a name="storage_option"></a>`storage_option`
 
 Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
 
 
 
-### `ora_profile::database::asm_software`
+### <a name="ora_profiledatabaseasm_software"></a>`ora_profile::database::asm_software`
 
 ora_profile::database::asm_software
 
@@ -2375,9 +2563,33 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_software` class.
+The following parameters are available in the `ora_profile::database::asm_software` class:
 
-##### `version`
+* [`version`](#version)
+* [`dirs`](#dirs)
+* [`file_name`](#file_name)
+* [`asm_sys_password`](#asm_sys_password)
+* [`disk_discovery_string`](#disk_discovery_string)
+* [`asm_diskgroup`](#asm_diskgroup)
+* [`asm_disks`](#asm_disks)
+* [`group`](#group)
+* [`oper_group`](#oper_group)
+* [`asm_group`](#asm_group)
+* [`configure_afd`](#configure_afd)
+* [`grid_type`](#grid_type)
+* [`disk_redundancy`](#disk_redundancy)
+* [`install_task`](#install_task)
+* [`bash_profile`](#bash_profile)
+* [`bash_additions`](#bash_additions)
+* [`disks_failgroup_names`](#disks_failgroup_names)
+* [`cluster_name`](#cluster_name)
+* [`scan_name`](#scan_name)
+* [`scan_port`](#scan_port)
+* [`cluster_node_types`](#cluster_node_types)
+* [`network_interface_list`](#network_interface_list)
+* [`storage_option`](#storage_option)
+
+##### <a name="version"></a>`version`
 
 Data type: `Ora_Install::Version`
 
@@ -2385,7 +2597,7 @@ The version of Oracle Grid Infrastructure you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::version`.
 
-##### `dirs`
+##### <a name="dirs"></a>`dirs`
 
 Data type: `Array[Stdlib::Absolutepath]`
 
@@ -2399,14 +2611,14 @@ ora_profile::database::asm_software::dirs:
 - /u01/app/grid/product
 ```
 
-##### `file_name`
+##### <a name="file_name"></a>`file_name`
 
 Data type: `String[1]`
 
 The file name containing the Oracle Grid Infrastructure software kit.
 The default is: `linuxx64_12201_grid_home`
 
-##### `asm_sys_password`
+##### <a name="asm_sys_password"></a>`asm_sys_password`
 
 Data type: `Easy_type::Password`
 
@@ -2414,7 +2626,7 @@ The `sys` password to use for ASM.
 The default is: `Welcome01`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_sys_password`.
 
-##### `disk_discovery_string`
+##### <a name="disk_discovery_string"></a>`disk_discovery_string`
 
 Data type: `String[1]`
 
@@ -2422,7 +2634,7 @@ The disk discovery string for ASM.
 The default value is: `/nfs_client/asm*`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::disk_discovery_string`.
 
-##### `asm_diskgroup`
+##### <a name="asm_diskgroup"></a>`asm_diskgroup`
 
 Data type: `String[1]`
 
@@ -2430,7 +2642,7 @@ The name of the ASM diskgroup to use.
 The default value is: `DATA`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_diskgroup`.
 
-##### `asm_disks`
+##### <a name="asm_disks"></a>`asm_disks`
 
 Data type: `String[1]`
 
@@ -2438,7 +2650,7 @@ List of disks to create a ASM DiskGroup.
 The default value is: `/nfs_client/asm_sda_nfs_b1,/nfs_client/asm_sda_nfs_b2`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_disks`.
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String[1]`
 
@@ -2446,7 +2658,7 @@ The dba group for ASM.
 The default is : `asmdba`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::group`.
 
-##### `oper_group`
+##### <a name="oper_group"></a>`oper_group`
 
 Data type: `String[1]`
 
@@ -2454,7 +2666,7 @@ The oper group for ASM.
 The default is : `asmoper`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::oper_group`.
 
-##### `asm_group`
+##### <a name="asm_group"></a>`asm_group`
 
 Data type: `String[1]`
 
@@ -2462,7 +2674,7 @@ The admin group for ASM.
 The default is : `asmadmin`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::asm_group`.
 
-##### `configure_afd`
+##### <a name="configure_afd"></a>`configure_afd`
 
 Data type: `Boolean`
 
@@ -2470,7 +2682,7 @@ Specify whether or not to configure ASM Filter Driver instead of ASMLib.
 The default value is: `false`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::configure_afd`.
 
-##### `grid_type`
+##### <a name="grid_type"></a>`grid_type`
 
 Data type: `Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']`
 
@@ -2484,7 +2696,7 @@ Valid values are:
 The default value is: `HA_CONFIG`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::grid_type`.
 
-##### `disk_redundancy`
+##### <a name="disk_redundancy"></a>`disk_redundancy`
 
 Data type: `Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']`
 
@@ -2497,20 +2709,20 @@ Valid values are:
 - `NORMAL`
 The default value is: `EXTERNAL`
 
-##### `install_task`
+##### <a name="install_task"></a>`install_task`
 
 Data type: `Enum['ALL','EXTRACT']`
 
 The installation task that should be executed.
 
-##### `bash_profile`
+##### <a name="bash_profile"></a>`bash_profile`
 
 Data type: `Boolean`
 
 Whether or not to deploy bash_profile for $os_user or $grid_user
 The default is : `true`
 
-##### `bash_additions`
+##### <a name="bash_additions"></a>`bash_additions`
 
 Data type: `String`
 
@@ -2518,7 +2730,7 @@ The text to add at the end of the bash_profile.
 This parameter will only be used when you have specified `true` for the parameter `bash_profile`
 The default value is an empty string.
 
-##### `disks_failgroup_names`
+##### <a name="disks_failgroup_names"></a>`disks_failgroup_names`
 
 Data type: `Optional[String[1]]`
 
@@ -2529,28 +2741,28 @@ Valid values are:
 - `/dev/sdb,CRSFG1,/dev/sdc,CRSFG2,/dev/sdd,CRSFG3,/dev/sde,CRSFG4,/dev/sdf,CRSFG5` (HIGH redundancy)
 The default value is: `/nfs_client/asm_sda_nfs_b1,`
 
-##### `cluster_name`
+##### <a name="cluster_name"></a>`cluster_name`
 
 Data type: `Optional[String[1]]`
 
 The name of the cluster.
 The default value is: `undef`
 
-##### `scan_name`
+##### <a name="scan_name"></a>`scan_name`
 
 Data type: `Optional[String[1]]`
 
 The hostname to use for the SCAN service.
 The default value is: `undef`
 
-##### `scan_port`
+##### <a name="scan_port"></a>`scan_port`
 
 Data type: `Optional[Integer]`
 
 The IP portnumber to use for the SCAN service.
 The default value is: `undef`
 
-##### `cluster_node_types`
+##### <a name="cluster_node_types"></a>`cluster_node_types`
 
 Data type: `Optional[String[1]]`
 
@@ -2562,19 +2774,19 @@ Valid values are:
 - `node1:node1-vip:HUB:site1,node2:node2-vip:HUB:site2` (version = 12.2 Extended Cluster)
 The default value is: `undef`
 
-##### `network_interface_list`
+##### <a name="network_interface_list"></a>`network_interface_list`
 
 Data type: `Optional[String[1]]`
 
 The list of interfaces to use for RAC.The value should be a comma separated strings where each string is as shown below```InterfaceName:SubnetAddress:InterfaceType```where InterfaceType can be either "1", "2", "3", "4" or "5" (1 indicates public, 2 indicates private, 3 indicates the interface is not used, 4 indicates ASM and 5 indicates ASM & Private)The default value is: `undef`
 
-##### `storage_option`
+##### <a name="storage_option"></a>`storage_option`
 
 Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
 
 
 
-### `ora_profile::database::asm_storage`
+### <a name="ora_profiledatabaseasm_storage"></a>`ora_profile::database::asm_storage`
 
 ora_profile::database::asm_storage
 
@@ -2586,9 +2798,16 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_storage` class.
+The following parameters are available in the `ora_profile::database::asm_storage` class:
 
-##### `storage_type`
+* [`storage_type`](#storage_type)
+* [`nfs_mountpoint`](#nfs_mountpoint)
+* [`nfs_export`](#nfs_export)
+* [`nfs_server`](#nfs_server)
+* [`disk_devices`](#disk_devices)
+* [`scan_exclude`](#scan_exclude)
+
+##### <a name="storage_type"></a>`storage_type`
 
 Data type: `Enum['nfs','asmlib','afd','raw', 'none']`
 
@@ -2601,28 +2820,28 @@ Valid values are:
 - `none`
 The default value is: `nfs`.
 
-##### `nfs_mountpoint`
+##### <a name="nfs_mountpoint"></a>`nfs_mountpoint`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 The mountpoint where the NFS volume will be mounted.
 The default value is: `/nfs_client`.
 
-##### `nfs_export`
+##### <a name="nfs_export"></a>`nfs_export`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 The name of the NFS volume that will be mounted to nfs_mountpoint.
 The default value is: `/home/nfs_server_data`.
 
-##### `nfs_server`
+##### <a name="nfs_server"></a>`nfs_server`
 
 Data type: `Optional[String[1]]`
 
 The name of the NFS server.
 The default value is: `localhost`.
 
-##### `disk_devices`
+##### <a name="disk_devices"></a>`disk_devices`
 
 Data type: `Optional[Hash]`
 
@@ -2637,14 +2856,14 @@ ora_profile::database::asm_storage::disk_devices:
     label: 'DATA1'
 ```
 
-##### `scan_exclude`
+##### <a name="scan_exclude"></a>`scan_exclude`
 
 Data type: `Optional[String[1]]`
 
 Specify which devices to exclude from scanning for ASMLib.
 The default value is: `undef`
 
-### `ora_profile::database::asm_storage::afd_label`
+### <a name="ora_profiledatabaseasm_storageafd_label"></a>`ora_profile::database::asm_storage::afd_label`
 
 ora_profile::database::asm_storage::afd_label
 
@@ -2656,7 +2875,7 @@ ora_profile::database::asm_storage::afd_label
 include ora_profile::database::asm_storage::afd_label
 ```
 
-### `ora_profile::database::asm_storage::asmlib`
+### <a name="ora_profiledatabaseasm_storageasmlib"></a>`ora_profile::database::asm_storage::asmlib`
 
 ora_profile::database::asm_storage::asmlib
 
@@ -2670,23 +2889,28 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_storage::asmlib` class.
+The following parameters are available in the `ora_profile::database::asm_storage::asmlib` class:
 
-##### `grid_user`
+* [`grid_user`](#grid_user)
+* [`grid_admingroup`](#grid_admingroup)
+* [`disk_devices`](#disk_devices)
+* [`scan_exclude`](#scan_exclude)
+
+##### <a name="grid_user"></a>`grid_user`
 
 Data type: `String[1]`
 
 The name of the user that owns the Grid Infrastructure installation.
 The default value is: `grid`.
 
-##### `grid_admingroup`
+##### <a name="grid_admingroup"></a>`grid_admingroup`
 
 Data type: `String[1]`
 
 The OS group to use for ASM admin.
 The default value is: `asmadmin`
 
-##### `disk_devices`
+##### <a name="disk_devices"></a>`disk_devices`
 
 Data type: `Hash`
 
@@ -2701,13 +2925,13 @@ ora_profile::database::asm_storage::disk_devices:
     label: 'DATA1'
 ```
 
-##### `scan_exclude`
+##### <a name="scan_exclude"></a>`scan_exclude`
 
 Data type: `Optional[String[1]]`
 
 The devices that need to be excluded during scanning of the devices.
 
-### `ora_profile::database::asm_storage::nfs`
+### <a name="ora_profiledatabaseasm_storagenfs"></a>`ora_profile::database::asm_storage::nfs`
 
 ora_profile::database::asm_storage::nfs
 
@@ -2721,44 +2945,50 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_storage::nfs` class.
+The following parameters are available in the `ora_profile::database::asm_storage::nfs` class:
 
-##### `grid_user`
+* [`grid_user`](#grid_user)
+* [`grid_admingroup`](#grid_admingroup)
+* [`nfs_mountpoint`](#nfs_mountpoint)
+* [`nfs_export`](#nfs_export)
+* [`nfs_server`](#nfs_server)
+
+##### <a name="grid_user"></a>`grid_user`
 
 Data type: `String[1]`
 
 The name of the user that owns the Grid Infrastructure installation.
 The default value is: `grid`.
 
-##### `grid_admingroup`
+##### <a name="grid_admingroup"></a>`grid_admingroup`
 
 Data type: `String[1]`
 
 The OS group to use for ASM admin.
 The default value is: `asmadmin`
 
-##### `nfs_mountpoint`
+##### <a name="nfs_mountpoint"></a>`nfs_mountpoint`
 
 Data type: `Stdlib::Absolutepath`
 
 The mountpoint where the NFS volume will be mounted.
 The default value is: `/nfs_client`.
 
-##### `nfs_export`
+##### <a name="nfs_export"></a>`nfs_export`
 
 Data type: `Stdlib::Absolutepath`
 
 The name of the NFS volume that will be mounted to nfs_mountpoint.
 The default value is: `/home/nfs_server_data`.
 
-##### `nfs_server`
+##### <a name="nfs_server"></a>`nfs_server`
 
 Data type: `String[1]`
 
 The name of the NFS server.
 The default value is: `localhost`.
 
-### `ora_profile::database::asm_storage::udev`
+### <a name="ora_profiledatabaseasm_storageudev"></a>`ora_profile::database::asm_storage::udev`
 
 ora_profile::database::asm_storage::udev
 
@@ -2772,23 +3002,27 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_storage::udev` class.
+The following parameters are available in the `ora_profile::database::asm_storage::udev` class:
 
-##### `grid_user`
+* [`grid_user`](#grid_user)
+* [`grid_admingroup`](#grid_admingroup)
+* [`disk_devices`](#disk_devices)
+
+##### <a name="grid_user"></a>`grid_user`
 
 Data type: `String[1]`
 
 The name of the user that owns the Grid Infrastructure installation.
 The default value is: `grid`.
 
-##### `grid_admingroup`
+##### <a name="grid_admingroup"></a>`grid_admingroup`
 
 Data type: `String[1]`
 
 The OS group to use for ASM admin.
 The default value is: `asmadmin`
 
-##### `disk_devices`
+##### <a name="disk_devices"></a>`disk_devices`
 
 Data type: `Hash`
 
@@ -2803,7 +3037,7 @@ ora_profile::database::asm_storage::disk_devices:
     label: 'DATA1'
 ```
 
-### `ora_profile::database::cis_controls`
+### <a name="ora_profiledatabasecis_controls"></a>`ora_profile::database::cis_controls`
 
 ora_profile::database::cis_controls
 
@@ -2816,9 +3050,14 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::cis_controls` class.
+The following parameters are available in the `ora_profile::database::cis_controls` class:
 
-##### `dbname`
+* [`dbname`](#dbname)
+* [`product_version`](#product_version)
+* [`doc_version`](#doc_version)
+* [`skip_list`](#skip_list)
+
+##### <a name="dbname"></a>`dbname`
 
 Data type: `String[1]`
 
@@ -2826,7 +3065,7 @@ The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
-##### `product_version`
+##### <a name="product_version"></a>`product_version`
 
 Data type: `Optional[String[1]]`
 
@@ -2834,21 +3073,21 @@ The database version of the CIS benchmark you want to apply.
 Although not very logical, you **can** apply an older (or newer) database version to your database.
 If you also don't specify a `db_version`, Puppet will detect the version of Oracle running and use this to determine the `db_version`. There is, however, one issue with the detection. On an initial run Puppet canot determine what the Oracle version is. In that case, the ora_secured::ensure_cis defined type will skip applying the CIS benchmark and wait until (hopefully) the next run the version of Oracle for specified sid is available.
 
-##### `doc_version`
+##### <a name="doc_version"></a>`doc_version`
 
 Data type: `Optional[String[1]]`
 
 The version of the CIS benchmark you want to apply to your database.
 When you don't specify the `doc_version`, puppet automatically uses the latest version for your current `product_version`.
 
-##### `skip_list`
+##### <a name="skip_list"></a>`skip_list`
 
 Data type: `Optional[Array[String[1]]]`
 
 This is the list of controls that you want to skip.
 By default this value is empty, meaning `ora_secured::ensure_cis` will apply **ALL** controls. You must specify the name of the control.
 
-### `ora_profile::database::common`
+### <a name="ora_profiledatabasecommon"></a>`ora_profile::database::common`
 
 ora_profile::database::common
 
@@ -2856,68 +3095,84 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::common` class.
+The following parameters are available in the `ora_profile::database::common` class:
 
-##### `version`
+* [`version`](#version)
+* [`download_dir`](#download_dir)
+* [`install_group`](#install_group)
+* [`master_node`](#master_node)
+* [`ora_inventory_dir`](#ora_inventory_dir)
+* [`grid_home`](#grid_home)
+* [`grid_base`](#grid_base)
+* [`grid_user`](#grid_user)
+* [`temp_dir`](#temp_dir)
+* [`source`](#source)
+* [`cluster_nodes`](#cluster_nodes)
+* [`oracle_user_password`](#oracle_user_password)
+* [`db_control_provider`](#db_control_provider)
+* [`patch_window`](#patch_window)
+* [`patch_levels`](#patch_levels)
+
+##### <a name="version"></a>`version`
 
 The version of Oracle you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
-##### `download_dir`
+##### <a name="download_dir"></a>`download_dir`
 
 The directory where the Puppet software puts all downloaded files.
 Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
 The default value is: `/install`
 To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
-##### `install_group`
+##### <a name="install_group"></a>`install_group`
 
 The group to use for Oracle install.
 The default is : `oinstall`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `master_node`
+##### <a name="master_node"></a>`master_node`
 
 The first node in RAC.
 This  is the node where the other nodes will clone the software installations from.
 To customize this consistently use the hiera key `ora_profile::database::master_node`.
 
-##### `ora_inventory_dir`
+##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
 
 The directory that contains the oracle inventory.
 The default value is: `/oracle_base/oraInventory`
 To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 
-##### `grid_home`
+##### <a name="grid_home"></a>`grid_home`
 
 The ORACLE_HOME for the Grid Infrastructure installation.
 The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
 To customize this consistently use the hiera key `ora_profile::database::grid_home`.
 
-##### `grid_base`
+##### <a name="grid_base"></a>`grid_base`
 
 The ORACLE_BASE for the Grid Infrastructure installation.
 The default is : `/u01/app/grid/admin`
 To customize this consistently use the hiera key `ora_profile::database::grid_base`.
 
-##### `grid_user`
+##### <a name="grid_user"></a>`grid_user`
 
 The name of the user that owns the Grid Infrastructure installation.
 The default value is: `grid`.
 
-##### `temp_dir`
+##### <a name="temp_dir"></a>`temp_dir`
 
 Directory to use for temporary files.
 
-##### `source`
+##### <a name="source"></a>`source`
 
 The location where the classes can find the software.
 You can specify a local directory, a Puppet url or an http url.
 The default is : `puppet:///modules/software/`
 To customize this consistently use the hiera key `ora_profile::database::source`.
 
-##### `cluster_nodes`
+##### <a name="cluster_nodes"></a>`cluster_nodes`
 
 An array with cluster node names for RAC.
 Example:
@@ -2927,26 +3182,26 @@ ora_profile::database::cluster_nodes:
 - node2
 ```
 
-##### `oracle_user_password`
+##### <a name="oracle_user_password"></a>`oracle_user_password`
 
 The password for the oracle os user.
 Only applicable for Windows systems.
 To customize this consistently use the hiera key `ora_profile::database::oracle_user_password`.
 
-##### `db_control_provider`
+##### <a name="db_control_provider"></a>`db_control_provider`
 
 Which provider should be used for the type db_control.
 The default value is: `sqlplus`
 To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
 
-##### `patch_window`
+##### <a name="patch_window"></a>`patch_window`
 
 The patch window in which you want to do the patching.
 Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
 an example on how to use this is:
         patch_window => '2:00 - 4:00'
 
-##### `patch_levels`
+##### <a name="patch_levels"></a>`patch_levels`
 
 Defines all the patch levels for both database and grid infrastructure formost common versions 12.
 2, 18c and 19c.
@@ -2967,7 +3222,7 @@ ora_profile::database::patch_levels:
         grid_sub_patches:      ['31771877','31772784','31773437','31780966']
 ```
 
-### `ora_profile::database::db_definition`
+### <a name="ora_profiledatabasedb_definition"></a>`ora_profile::database::db_definition`
 
 ora_profile::database::db_definition
 
@@ -2979,9 +3234,33 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_definition` class.
+The following parameters are available in the `ora_profile::database::db_definition` class:
 
-##### `version`
+* [`version`](#version)
+* [`oracle_home`](#oracle_home)
+* [`oracle_base`](#oracle_base)
+* [`os_user`](#os_user)
+* [`install_group`](#install_group)
+* [`dbname`](#dbname)
+* [`log_size`](#log_size)
+* [`user_tablespace_size`](#user_tablespace_size)
+* [`system_tablespace_size`](#system_tablespace_size)
+* [`temporary_tablespace_size`](#temporary_tablespace_size)
+* [`undo_tablespace_size`](#undo_tablespace_size)
+* [`sysaux_tablespace_size`](#sysaux_tablespace_size)
+* [`system_password`](#system_password)
+* [`sys_password`](#sys_password)
+* [`container_database`](#container_database)
+* [`archivelog`](#archivelog)
+* [`init_ora_template`](#init_ora_template)
+* [`init_ora_params`](#init_ora_params)
+* [`data_file_destination`](#data_file_destination)
+* [`db_recovery_file_dest`](#db_recovery_file_dest)
+* [`ora_database_override`](#ora_database_override)
+* [`dbdomain`](#dbdomain)
+* [`logoutput`](#logoutput)
+
+##### <a name="version"></a>`version`
 
 Data type: `Ora_Install::Version`
 
@@ -2989,7 +3268,7 @@ The version of Oracle you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
-##### `oracle_home`
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -2997,7 +3276,7 @@ The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3005,7 +3284,7 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `os_user`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String[1]`
 
@@ -3013,7 +3292,7 @@ The OS user to use for Oracle install.
 The default is : `oracle`
 To customize this consistently use the hiera key `ora_profile::database::os_user`.
 
-##### `install_group`
+##### <a name="install_group"></a>`install_group`
 
 Data type: `String[1]`
 
@@ -3021,7 +3300,7 @@ The group to use for Oracle install.
 The default is : `oinstall`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `dbname`
+##### <a name="dbname"></a>`dbname`
 
 Data type: `Variant[String[1], Hash]`
 
@@ -3032,63 +3311,63 @@ This parameter can also be defined as Hash in which case the key(s) of the Hash 
 The defaults for all the database(s) in the Hash are the ones given to the db_definition class.
 In addition all properties and parameters taken by ora_database can be defined in hiera data.
 
-##### `log_size`
+##### <a name="log_size"></a>`log_size`
 
 Data type: `String[1]`
 
 The log ize to use.
 The default is : `100M`
 
-##### `user_tablespace_size`
+##### <a name="user_tablespace_size"></a>`user_tablespace_size`
 
 Data type: `String[1]`
 
 The size for the `USER` tablespace.
 The default value is `50M`
 
-##### `system_tablespace_size`
+##### <a name="system_tablespace_size"></a>`system_tablespace_size`
 
 Data type: `String[1]`
 
 The size for the `SYSTEM` tablespace.
 The default value is `50M`
 
-##### `temporary_tablespace_size`
+##### <a name="temporary_tablespace_size"></a>`temporary_tablespace_size`
 
 Data type: `String[1]`
 
 The size for the `TEMP` tablespace.
 The default value is `50M`
 
-##### `undo_tablespace_size`
+##### <a name="undo_tablespace_size"></a>`undo_tablespace_size`
 
 Data type: `String[1]`
 
 The size for the `UNDO` tablespace.
 The default value is `50M`
 
-##### `sysaux_tablespace_size`
+##### <a name="sysaux_tablespace_size"></a>`sysaux_tablespace_size`
 
 Data type: `String[1]`
 
 The size for the `SYSAUX` tablespace.
 The default value is `50M`
 
-##### `system_password`
+##### <a name="system_password"></a>`system_password`
 
 Data type: `Easy_type::Password`
 
 The `system` password to use for the database.
 The default value is: `Welcome01`
 
-##### `sys_password`
+##### <a name="sys_password"></a>`sys_password`
 
 Data type: `Easy_type::Password`
 
 The `sys` password to use for the database.
 The default value is: `Change_on_1nstall`
 
-##### `container_database`
+##### <a name="container_database"></a>`container_database`
 
 Data type: `Enum['enabled','disabled']`
 
@@ -3096,13 +3375,13 @@ Database is a container for pluggable databases.
 When you want to add pluggable database to this database, specify a value of `enabled`.
 The default value is: `disabled`
 
-##### `archivelog`
+##### <a name="archivelog"></a>`archivelog`
 
 Data type: `Enum['enabled','disabled']`
 
 The database should be running in archivelog mode.
 
-##### `init_ora_template`
+##### <a name="init_ora_template"></a>`init_ora_template`
 
 Data type: `String[1]`
 
@@ -3111,7 +3390,7 @@ ora parameters.
 This needs to be an epp template.
 The default value is: 'ora_profile/init.ora.epp'
 
-##### `init_ora_params`
+##### <a name="init_ora_params"></a>`init_ora_params`
 
 Data type: `Hash`
 
@@ -3140,32 +3419,32 @@ ora_profile::database::db_definition::init_ora_params:
   memory_max_target: 0
 ```
 
-##### `data_file_destination`
+##### <a name="data_file_destination"></a>`data_file_destination`
 
 Data type: `String[1]`
 
 The location of the datafiles.
 
-##### `db_recovery_file_dest`
+##### <a name="db_recovery_file_dest"></a>`db_recovery_file_dest`
 
 Data type: `String[1]`
 
 The location of the Flash Recovery Area.
 
-##### `ora_database_override`
+##### <a name="ora_database_override"></a>`ora_database_override`
 
 Data type: `Hash`
 
 A hash with database settings that will override the default database settings.
 
-##### `dbdomain`
+##### <a name="dbdomain"></a>`dbdomain`
 
 Data type: `Optional[String[1]]`
 
 The domain of the database.
 The default is `$facts['networking']['domain']`
 
-##### `logoutput`
+##### <a name="logoutput"></a>`logoutput`
 
 Data type: `Variant[Boolean,Enum['on_failure']]`
 
@@ -3178,7 +3457,7 @@ Valid values are:
 
 Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
-### `ora_profile::database::db_definition_template`
+### <a name="ora_profiledatabasedb_definition_template"></a>`ora_profile::database::db_definition_template`
 
 ora_profile::database::db_definition_template
 
@@ -3195,9 +3474,30 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_definition_template` class.
+The following parameters are available in the `ora_profile::database::db_definition_template` class:
 
-##### `version`
+* [`version`](#version)
+* [`oracle_home`](#oracle_home)
+* [`oracle_base`](#oracle_base)
+* [`dbname`](#dbname)
+* [`template_name`](#template_name)
+* [`template_type`](#template_type)
+* [`data_file_destination`](#data_file_destination)
+* [`recovery_area_destination`](#recovery_area_destination)
+* [`sample_schema`](#sample_schema)
+* [`memory_mgmt_type`](#memory_mgmt_type)
+* [`storage_type`](#storage_type)
+* [`puppet_download_mnt_point`](#puppet_download_mnt_point)
+* [`system_password`](#system_password)
+* [`sys_password`](#sys_password)
+* [`db_conf_type`](#db_conf_type)
+* [`container_database`](#container_database)
+* [`log_size`](#log_size)
+* [`dbdomain`](#dbdomain)
+* [`init_params`](#init_params)
+* [`logoutput`](#logoutput)
+
+##### <a name="version"></a>`version`
 
 Data type: `Ora_Install::Version`
 
@@ -3205,7 +3505,7 @@ The version of Oracle you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
-##### `oracle_home`
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3213,7 +3513,7 @@ The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3221,7 +3521,7 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `dbname`
+##### <a name="dbname"></a>`dbname`
 
 Data type: `String[1]`
 
@@ -3229,21 +3529,21 @@ The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
-##### `template_name`
+##### <a name="template_name"></a>`template_name`
 
 Data type: `String[1]`
 
 The name of the template to use for creating the database
 The default value is `General_Purpose.${version}`
 
-##### `template_type`
+##### <a name="template_type"></a>`template_type`
 
 Data type: `Enum['non-seed','seed']`
 
 What type of template is used for creating the database.
 The default value is `seed`
 
-##### `data_file_destination`
+##### <a name="data_file_destination"></a>`data_file_destination`
 
 Data type: `String[1]`
 
@@ -3251,7 +3551,7 @@ The location where you want to store your database files.
 A filesystem or ASM location can be specified.
 The default value is `+DATA`
 
-##### `recovery_area_destination`
+##### <a name="recovery_area_destination"></a>`recovery_area_destination`
 
 Data type: `String[1]`
 
@@ -3259,28 +3559,28 @@ The location where you want to store your flash recovery area.
 A filesystem or ASM location can be specified.
 The default value is `+RECO`
 
-##### `sample_schema`
+##### <a name="sample_schema"></a>`sample_schema`
 
 Data type: `Enum['TRUE','FALSE']`
 
 Specify if you want the sample schemas installed in your database.
 The default value is `FALSE`
 
-##### `memory_mgmt_type`
+##### <a name="memory_mgmt_type"></a>`memory_mgmt_type`
 
 Data type: `Enum['AUTO','AUTO_SGA','CUSTOM_SGA']`
 
 How the database memory should be managed.
 The default value is `AUTO_SGA`
 
-##### `storage_type`
+##### <a name="storage_type"></a>`storage_type`
 
 Data type: `Enum['FS','CFS','ASM']`
 
 What type of storage is used for your database.
 The default value is `ASM`
 
-##### `puppet_download_mnt_point`
+##### <a name="puppet_download_mnt_point"></a>`puppet_download_mnt_point`
 
 Data type: `String[1]`
 
@@ -3288,21 +3588,21 @@ Where to get the source of your template from.
 This is the module where the xml file for your template is stored as a puppet template(erb).
 The default value is `ora_profile`
 
-##### `system_password`
+##### <a name="system_password"></a>`system_password`
 
 Data type: `Easy_type::Password`
 
 The `system` password to use for the database.
 The default value is: `Welcome01`
 
-##### `sys_password`
+##### <a name="sys_password"></a>`sys_password`
 
 Data type: `Easy_Type::Password`
 
 The `sys` password to use for the database.
 The default value is: `Change_on_1nstall`
 
-##### `db_conf_type`
+##### <a name="db_conf_type"></a>`db_conf_type`
 
 Data type: `Enum['SINGLE','RAC','RACONE']`
 
@@ -3313,7 +3613,7 @@ Valid values are:
 - `RACONE`
 The default value is `SINGLE`
 
-##### `container_database`
+##### <a name="container_database"></a>`container_database`
 
 Data type: `Enum['enabled','disabled']`
 
@@ -3321,23 +3621,23 @@ Database is a container for pluggable databases.
 When you want to add pluggable database to this database, specify a value of `enabled`.
 The default value is: `disabled`
 
-##### `log_size`
+##### <a name="log_size"></a>`log_size`
 
 Data type: `String[1]`
 
 The log ize to use.
 The default is : `100M`
 
-##### `dbdomain`
+##### <a name="dbdomain"></a>`dbdomain`
 
 Data type: `Optional[String[1]]`
 
 The domain of the database.
 The default is `$facts['networking']['domain']`
 
-##### `init_params`
+##### <a name="init_params"></a>`init_params`
 
-Data type: `Optional[String[1]]`
+Data type: `Optional[Variant[String[1], Hash]]`
 
 The init parameters to use for the database.
 You can use either a comma separated string for init_params or a Hash.
@@ -3355,7 +3655,7 @@ ora_profile::database::db_definition_template::init_params:
   job_queue_processes: 4
 ```
 
-##### `logoutput`
+##### <a name="logoutput"></a>`logoutput`
 
 Data type: `Variant[Boolean,Enum['on_failure']]`
 
@@ -3368,7 +3668,7 @@ Valid values are:
 
 Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
-### `ora_profile::database::db_init_params`
+### <a name="ora_profiledatabasedb_init_params"></a>`ora_profile::database::db_init_params`
 
 ora_profile::database::db_init_params
 
@@ -3378,9 +3678,11 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_init_params` class.
+The following parameters are available in the `ora_profile::database::db_init_params` class:
 
-##### `parameters`
+* [`parameters`](#parameters)
+
+##### <a name="parameters"></a>`parameters`
 
 Data type: `Hash`
 
@@ -3408,7 +3710,7 @@ See: [ora_init_params](https://www.enterprisemodules.com/docs/ora_config/ora_ini
 
 Default value: `{}`
 
-### `ora_profile::database::db_listener`
+### <a name="ora_profiledatabasedb_listener"></a>`ora_profile::database::db_listener`
 
 ora_profile::database::db_listener
 
@@ -3420,9 +3722,16 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_listener` class.
+The following parameters are available in the `ora_profile::database::db_listener` class:
 
-##### `oracle_home`
+* [`oracle_home`](#oracle_home)
+* [`oracle_base`](#oracle_base)
+* [`os_user`](#os_user)
+* [`dba_group`](#dba_group)
+* [`sqlnet_version`](#sqlnet_version)
+* [`dbname`](#dbname)
+
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3430,7 +3739,7 @@ The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3438,7 +3747,7 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `os_user`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String[1]`
 
@@ -3446,7 +3755,7 @@ The OS user to use for Oracle install.
 The default is : `oracle`
 To customize this consistently use the hiera key `ora_profile::database::os_user`.
 
-##### `dba_group`
+##### <a name="dba_group"></a>`dba_group`
 
 Data type: `String[1]`
 
@@ -3454,14 +3763,14 @@ The group to use for Oracle DBA users.
 The default is : `dba`
 To customize this consistently use the hiera key `ora_profile::database::dba_group`.
 
-##### `sqlnet_version`
+##### <a name="sqlnet_version"></a>`sqlnet_version`
 
 Data type: `Ora_install::ShortVersion`
 
 The SQLnet version to use.
 The default is: 12.2
 
-##### `dbname`
+##### <a name="dbname"></a>`dbname`
 
 Data type: `Variant[String[1], Hash]`
 
@@ -3472,7 +3781,7 @@ This parameter can also be defined as Hash in case you need multiple listeners.
 The keys of the hash are the database names, and for every key you can specify all valid parameters for the class.
 The defaults for all key(s) in the Hash are the ones given to the class.
 
-### `ora_profile::database::db_patches`
+### <a name="ora_profiledatabasedb_patches"></a>`ora_profile::database::db_patches`
 
 ora_profile::database::db_patches
 
@@ -3494,9 +3803,18 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_patches` class.
+The following parameters are available in the `ora_profile::database::db_patches` class:
 
-##### `level`
+* [`level`](#level)
+* [`include_ojvm`](#include_ojvm)
+* [`patch_file`](#patch_file)
+* [`oracle_home`](#oracle_home)
+* [`opversion`](#opversion)
+* [`os_user`](#os_user)
+* [`patch_list`](#patch_list)
+* [`logoutput`](#logoutput)
+
+##### <a name="level"></a>`level`
 
 Data type: `String[1]`
 
@@ -3508,21 +3826,21 @@ Valid values depend on your database/grid version, but it should like like below
 - `APR2019RU`
 - etc...
 
-##### `include_ojvm`
+##### <a name="include_ojvm"></a>`include_ojvm`
 
 Data type: `Boolean`
 
 Specify if the OJVM patch for the patch level should also be installed.
 Default value is: `false`
 
-##### `patch_file`
+##### <a name="patch_file"></a>`patch_file`
 
 Data type: `String[1]`
 
 The file containing the required Opatch version.
 The default value is: `p6880880_122010_Linux-x86-64`
 
-##### `oracle_home`
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3530,7 +3848,7 @@ The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
-##### `opversion`
+##### <a name="opversion"></a>`opversion`
 
 Data type: `String[1]`
 
@@ -3542,7 +3860,7 @@ the same for Oracle versions 12.1 through 19, so it doesn't matter for which Ora
 downloaded it.
 The default value is: `12.2.0.1.13`
 
-##### `os_user`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String[1]`
 
@@ -3550,14 +3868,14 @@ The OS user to use for Oracle install.
 The default is : `oracle`
 To customize this consistently use the hiera key `ora_profile::database::os_user`.
 
-##### `patch_list`
+##### <a name="patch_list"></a>`patch_list`
 
 Data type: `Hash`
 
 The list of patches to apply.
 The default value is : `{}`
 
-##### `logoutput`
+##### <a name="logoutput"></a>`logoutput`
 
 Data type: `Variant[Boolean,Enum['on_failure']]`
 
@@ -3570,7 +3888,7 @@ Valid values are:
 
 Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
 
-### `ora_profile::database::db_profiles`
+### <a name="ora_profiledatabasedb_profiles"></a>`ora_profile::database::db_profiles`
 
 ora_profile::database::db_profiles
 
@@ -3580,9 +3898,11 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_profiles` class.
+The following parameters are available in the `ora_profile::database::db_profiles` class:
 
-##### `list`
+* [`list`](#list)
+
+##### <a name="list"></a>`list`
 
 Data type: `Hash`
 
@@ -3592,7 +3912,7 @@ The default value is: {}
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
 
-### `ora_profile::database::db_services`
+### <a name="ora_profiledatabasedb_services"></a>`ora_profile::database::db_services`
 
 ora_profile::database::db_services
 
@@ -3602,9 +3922,12 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_services` class.
+The following parameters are available in the `ora_profile::database::db_services` class:
 
-##### `dbname`
+* [`dbname`](#dbname)
+* [`domain_name`](#domain_name)
+
+##### <a name="dbname"></a>`dbname`
 
 Data type: `String[1]`
 
@@ -3612,13 +3935,13 @@ The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
-##### `domain_name`
+##### <a name="domain_name"></a>`domain_name`
 
 Data type: `Optional[String[1]]`
 
 
 
-### `ora_profile::database::db_software`
+### <a name="ora_profiledatabasedb_software"></a>`ora_profile::database::db_software`
 
 ora_profile::database::db_software
 
@@ -3628,9 +3951,22 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_software` class.
+The following parameters are available in the `ora_profile::database::db_software` class:
 
-##### `version`
+* [`version`](#version)
+* [`database_type`](#database_type)
+* [`dirs`](#dirs)
+* [`dba_group`](#dba_group)
+* [`oper_group`](#oper_group)
+* [`os_user`](#os_user)
+* [`oracle_base`](#oracle_base)
+* [`oracle_home`](#oracle_home)
+* [`source`](#source)
+* [`file_name`](#file_name)
+* [`bash_profile`](#bash_profile)
+* [`bash_additions`](#bash_additions)
+
+##### <a name="version"></a>`version`
 
 Data type: `Ora_Install::Version`
 
@@ -3638,14 +3974,14 @@ The version of Oracle you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
-##### `database_type`
+##### <a name="database_type"></a>`database_type`
 
 Data type: `Enum['SE2', 'SE', 'EE', 'SEONE']`
 
 The type of database to define.
 The default value is: `SE2`.
 
-##### `dirs`
+##### <a name="dirs"></a>`dirs`
 
 Data type: `Array[Stdlib::Absolutepath]`
 
@@ -3659,7 +3995,7 @@ ora_profile::database::db_software::dirs:
   - /u03/fast_recovery_area
 ```
 
-##### `dba_group`
+##### <a name="dba_group"></a>`dba_group`
 
 Data type: `String[1]`
 
@@ -3667,14 +4003,14 @@ The group to use for Oracle DBA users.
 The default is : `dba`
 To customize this consistently use the hiera key `ora_profile::database::dba_group`.
 
-##### `oper_group`
+##### <a name="oper_group"></a>`oper_group`
 
 Data type: `String[1]`
 
 The oper group for the database.
 The default is : `oper`
 
-##### `os_user`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String[1]`
 
@@ -3682,7 +4018,7 @@ The OS user to use for Oracle install.
 The default is : `oracle`
 To customize this consistently use the hiera key `ora_profile::database::os_user`.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3690,7 +4026,7 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `oracle_home`
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Variant[Stdlib::Absolutepath, Hash]`
 
@@ -3729,7 +4065,7 @@ ora_profile::database::db_software::oracle_home:
     oracle_home: /u01/app/oracle/product/12.2.0.1/db_home1
 ```
 
-##### `source`
+##### <a name="source"></a>`source`
 
 Data type: `String[1]`
 
@@ -3738,21 +4074,21 @@ You can specify a local directory, a Puppet url or an http url.
 The default is : `puppet:///modules/software/`
 To customize this consistently use the hiera key `ora_profile::database::source`.
 
-##### `file_name`
+##### <a name="file_name"></a>`file_name`
 
 Data type: `String[1]`
 
 The file name containing the Oracle database software kit.
 The default is: `linuxx64_12201_database`
 
-##### `bash_profile`
+##### <a name="bash_profile"></a>`bash_profile`
 
 Data type: `Boolean`
 
 Whether or not to deploy bash_profile for $os_user or $grid_user
 The default is : `true`
 
-##### `bash_additions`
+##### <a name="bash_additions"></a>`bash_additions`
 
 Data type: `String`
 
@@ -3760,7 +4096,7 @@ The text to add at the end of the bash_profile.
 This parameter will only be used when you have specified `true` for the parameter `bash_profile`
 The default value is an empty string.
 
-### `ora_profile::database::db_startup`
+### <a name="ora_profiledatabasedb_startup"></a>`ora_profile::database::db_startup`
 
 ora_profile::database::db_startup
 
@@ -3772,9 +4108,13 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_startup` class.
+The following parameters are available in the `ora_profile::database::db_startup` class:
 
-##### `oracle_home`
+* [`oracle_home`](#oracle_home)
+* [`dbname`](#dbname)
+* [`db_type`](#db_type)
+
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -3782,7 +4122,7 @@ The home directory to use for the Oracle installation.
 The default is : `/u01/app/oracle/product/#{version}/db_home1`
 To customize this consistently use the hiera key `ora_profile::database::oracle_home`.
 
-##### `dbname`
+##### <a name="dbname"></a>`dbname`
 
 Data type: `String[1]`
 
@@ -3790,7 +4130,7 @@ The name of the database.
 The default is `DB01`
 To customize this consistently use the hiera key `ora_profile::database::dbname`.
 
-##### `db_type`
+##### <a name="db_type"></a>`db_type`
 
 Data type: `Enum['database','grid']`
 
@@ -3800,7 +4140,7 @@ Valid values are:
 - `database`
 The default value is: 'database'
 
-### `ora_profile::database::db_tablespaces`
+### <a name="ora_profiledatabasedb_tablespaces"></a>`ora_profile::database::db_tablespaces`
 
 ora_profile::database::db_tablespaces
 
@@ -3810,9 +4150,11 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_tablespaces` class.
+The following parameters are available in the `ora_profile::database::db_tablespaces` class:
 
-##### `list`
+* [`list`](#list)
+
+##### <a name="list"></a>`list`
 
 Data type: `Hash`
 
@@ -3822,7 +4164,7 @@ The default value is: `{}`
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
 
-### `ora_profile::database::db_users`
+### <a name="ora_profiledatabasedb_users"></a>`ora_profile::database::db_users`
 
 ora_profile::database::db_users
 
@@ -3832,9 +4174,11 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::db_users` class.
+The following parameters are available in the `ora_profile::database::db_users` class:
 
-##### `list`
+* [`list`](#list)
+
+##### <a name="list"></a>`list`
 
 Data type: `Hash`
 
@@ -3844,7 +4188,7 @@ The default value is: `{}`
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
 
-### `ora_profile::database::disable_thp`
+### <a name="ora_profiledatabasedisable_thp"></a>`ora_profile::database::disable_thp`
 
 ora_profile::database::disable_thp
 
@@ -3856,13 +4200,13 @@ When these customizations aren't enough, you can replace the class with your own
 
 See the file "LICENSE" for the full license governing this code.
 
-### `ora_profile::database::em_license`
+### <a name="ora_profiledatabaseem_license"></a>`ora_profile::database::em_license`
 
 ora_profile::database::em_license
 
 See the file "LICENSE" for the full license governing this code.
 
-### `ora_profile::database::firewall`
+### <a name="ora_profiledatabasefirewall"></a>`ora_profile::database::firewall`
 
 ora_profile::database::firewall
 
@@ -3874,23 +4218,26 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::firewall` class.
+The following parameters are available in the `ora_profile::database::firewall` class:
 
-##### `ports`
+* [`ports`](#ports)
+* [`manage_service`](#manage_service)
+
+##### <a name="ports"></a>`ports`
 
 Data type: `Hash`
 
 A list of TCP ports to open in the firewall.
 The default value is: `[1521]`
 
-##### `manage_service`
+##### <a name="manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
 Using this setting you can specify if you want this module to manage the firewall service.
 The default value is `true` and will make sure the firewall service is started and enabled.
 
-### `ora_profile::database::firewall::firewalld`
+### <a name="ora_profiledatabasefirewallfirewalld"></a>`ora_profile::database::firewall::firewalld`
 
 ora_profile::database::firewall::firewalld
 
@@ -3904,23 +4251,27 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::firewall::firewalld` class.
+The following parameters are available in the `ora_profile::database::firewall::firewalld` class:
 
-##### `ports`
+* [`ports`](#ports)
+* [`manage_service`](#manage_service)
+* [`cluster_nodes`](#cluster_nodes)
+
+##### <a name="ports"></a>`ports`
 
 Data type: `Hash`
 
 A list of TCP ports to open in the firewall.
 The default value is: `[1521]`
 
-##### `manage_service`
+##### <a name="manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
 Using this setting you can specify if you want this module to manage the firewall service.
 The default value is `true` and will make sure the firewall service is started and enabled.
 
-##### `cluster_nodes`
+##### <a name="cluster_nodes"></a>`cluster_nodes`
 
 Data type: `Optional[Array]`
 
@@ -3932,7 +4283,7 @@ ora_profile::database::cluster_nodes:
 - node2
 ```
 
-### `ora_profile::database::firewall::iptables`
+### <a name="ora_profiledatabasefirewalliptables"></a>`ora_profile::database::firewall::iptables`
 
 ora_profile::database::firewall::iptables
 
@@ -3946,23 +4297,27 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::firewall::iptables` class.
+The following parameters are available in the `ora_profile::database::firewall::iptables` class:
 
-##### `ports`
+* [`ports`](#ports)
+* [`manage_service`](#manage_service)
+* [`cluster_nodes`](#cluster_nodes)
+
+##### <a name="ports"></a>`ports`
 
 Data type: `Hash`
 
 A list of TCP ports to open in the firewall.
 The default value is: `[1521]`
 
-##### `manage_service`
+##### <a name="manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
 Using this setting you can specify if you want this module to manage the firewall service.
 The default value is `true` and will make sure the firewall service is started and enabled.
 
-##### `cluster_nodes`
+##### <a name="cluster_nodes"></a>`cluster_nodes`
 
 Data type: `Optional[Array]`
 
@@ -3974,7 +4329,7 @@ ora_profile::database::cluster_nodes:
 - node2
 ```
 
-### `ora_profile::database::rac::authenticated_nodes`
+### <a name="ora_profiledatabaseracauthenticated_nodes"></a>`ora_profile::database::rac::authenticated_nodes`
 
 ora_profile::database::rac::authenticated_nodes
 
@@ -3984,21 +4339,25 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::rac::authenticated_nodes` class.
+The following parameters are available in the `ora_profile::database::rac::authenticated_nodes` class:
 
-##### `oracle_private_key`
+* [`oracle_private_key`](#oracle_private_key)
+* [`grid_private_key`](#grid_private_key)
+* [`keys`](#keys)
+
+##### <a name="oracle_private_key"></a>`oracle_private_key`
 
 Data type: `String[1]`
 
 The private key of the oracle user.
 
-##### `grid_private_key`
+##### <a name="grid_private_key"></a>`grid_private_key`
 
 Data type: `String[1]`
 
 The private key of the grid user.
 
-##### `keys`
+##### <a name="keys"></a>`keys`
 
 Data type: `Hash`
 
@@ -4020,7 +4379,7 @@ ora_profile::database::rac::authenticated_nodes::keys:
 
 Default value: `{}`
 
-### `ora_profile::database::tmpfiles`
+### <a name="ora_profiledatabasetmpfiles"></a>`ora_profile::database::tmpfiles`
 
 ++--++
 
@@ -4063,16 +4422,18 @@ ora_profile::database::tmpfiles::list:
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::tmpfiles` class.
+The following parameters are available in the `ora_profile::database::tmpfiles` class:
 
-##### `list`
+* [`list`](#list)
+
+##### <a name="list"></a>`list`
 
 Data type: `Hash`
 
 The OS limits created for Oracle.
 The defaults are:
 
-### `ora_profile::extracted_database`
+### <a name="ora_profileextracted_database"></a>`ora_profile::extracted_database`
 
 ora_profile::database
 
@@ -4091,81 +4452,144 @@ ora_profile::database { 'database_name': }
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::extracted_database` class.
+The following parameters are available in the `ora_profile::extracted_database` class:
 
-##### `version`
+* [`version`](#version)
+* [`dbname`](#dbname)
+* [`os_user`](#os_user)
+* [`dba_group`](#dba_group)
+* [`install_group`](#install_group)
+* [`source`](#source)
+* [`oracle_base`](#oracle_base)
+* [`oracle_home`](#oracle_home)
+* [`ora_inventory_dir`](#ora_inventory_dir)
+* [`db_control_provider`](#db_control_provider)
+* [`download_dir`](#download_dir)
+* [`temp_dir`](#temp_dir)
+* [`oracle_user_password`](#oracle_user_password)
+* [`em_license`](#em_license)
+* [`authenticated_nodes`](#authenticated_nodes)
+* [`before_em_license`](#before_em_license)
+* [`after_em_license`](#after_em_license)
+* [`sysctl`](#sysctl)
+* [`before_sysctl`](#before_sysctl)
+* [`after_sysctl`](#after_sysctl)
+* [`limits`](#limits)
+* [`before_limits`](#before_limits)
+* [`after_limits`](#after_limits)
+* [`groups_and_users`](#groups_and_users)
+* [`before_groups_and_users`](#before_groups_and_users)
+* [`after_groups_and_users`](#after_groups_and_users)
+* [`packages`](#packages)
+* [`before_packages`](#before_packages)
+* [`after_packages`](#after_packages)
+* [`firewall`](#firewall)
+* [`before_firewall`](#before_firewall)
+* [`after_firewall`](#after_firewall)
+* [`tmpfiles`](#tmpfiles)
+* [`before_tmpfiles`](#before_tmpfiles)
+* [`after_tmpfiles`](#after_tmpfiles)
+* [`db_software`](#db_software)
+* [`before_db_software`](#before_db_software)
+* [`after_db_software`](#after_db_software)
+* [`db_patches`](#db_patches)
+* [`before_db_patches`](#before_db_patches)
+* [`after_db_patches`](#after_db_patches)
+* [`extracted_database_definition`](#extracted_database_definition)
+* [`before_extracted_database_definition`](#before_extracted_database_definition)
+* [`after_extracted_database_definition`](#after_extracted_database_definition)
+* [`extracted_init_params`](#extracted_init_params)
+* [`before_extracted_init_params`](#before_extracted_init_params)
+* [`after_extracted_init_params`](#after_extracted_init_params)
+* [`extracted_services`](#extracted_services)
+* [`before_extracted_services`](#before_extracted_services)
+* [`after_extracted_services`](#after_extracted_services)
+* [`extracted_tablespaces`](#extracted_tablespaces)
+* [`before_extracted_tablespaces`](#before_extracted_tablespaces)
+* [`after_extracted_tablespaces`](#after_extracted_tablespaces)
+* [`extracted_profiles`](#extracted_profiles)
+* [`before_extracted_profiles`](#before_extracted_profiles)
+* [`after_extracted_profiles`](#after_extracted_profiles)
+* [`extracted_users`](#extracted_users)
+* [`before_extracted_users`](#before_extracted_users)
+* [`after_extracted_users`](#after_extracted_users)
+* [`db_startup`](#db_startup)
+* [`before_db_startup`](#before_db_startup)
+* [`after_db_startup`](#after_db_startup)
+
+##### <a name="version"></a>`version`
 
 Data type: `Ora_Install::Version`
 
 
 
-##### `dbname`
+##### <a name="dbname"></a>`dbname`
 
 Data type: `String[1]`
 
 
 
-##### `os_user`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String[1]`
 
 
 
-##### `dba_group`
+##### <a name="dba_group"></a>`dba_group`
 
 Data type: `String[1]`
 
 
 
-##### `install_group`
+##### <a name="install_group"></a>`install_group`
 
 Data type: `String[1]`
 
 
 
-##### `source`
+##### <a name="source"></a>`source`
 
 Data type: `String[1]`
 
 
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
 
 
-##### `oracle_home`
+##### <a name="oracle_home"></a>`oracle_home`
 
 Data type: `Stdlib::Absolutepath`
 
 
 
-##### `ora_inventory_dir`
+##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 
 
-##### `db_control_provider`
+##### <a name="db_control_provider"></a>`db_control_provider`
 
 Data type: `String[1]`
 
 
 
-##### `download_dir`
+##### <a name="download_dir"></a>`download_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 
 
-##### `temp_dir`
+##### <a name="temp_dir"></a>`temp_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 
 
-##### `oracle_user_password`
+##### <a name="oracle_user_password"></a>`oracle_user_password`
 
 Data type: `Optional[String]`
 
@@ -4173,7 +4597,7 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
-##### `em_license`
+##### <a name="em_license"></a>`em_license`
 
 Data type: `Optional[String]`
 
@@ -4181,7 +4605,7 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
-##### `authenticated_nodes`
+##### <a name="authenticated_nodes"></a>`authenticated_nodes`
 
 Data type: `Optional[String]`
 
@@ -4189,7 +4613,7 @@ Data type: `Optional[String]`
 
 Default value: ``undef``
 
-##### `before_em_license`
+##### <a name="before_em_license"></a>`before_em_license`
 
 Data type: `Optional[String[1]]`
 
@@ -4197,7 +4621,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_em_license`
+##### <a name="after_em_license"></a>`after_em_license`
 
 Data type: `Optional[String[1]]`
 
@@ -4205,7 +4629,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `sysctl`
+##### <a name="sysctl"></a>`sysctl`
 
 Data type: `Optional[String[1]]`
 
@@ -4213,7 +4637,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_sysctl`
+##### <a name="before_sysctl"></a>`before_sysctl`
 
 Data type: `Optional[String[1]]`
 
@@ -4221,7 +4645,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_sysctl`
+##### <a name="after_sysctl"></a>`after_sysctl`
 
 Data type: `Optional[String[1]]`
 
@@ -4229,7 +4653,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `limits`
+##### <a name="limits"></a>`limits`
 
 Data type: `Optional[String[1]]`
 
@@ -4237,7 +4661,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_limits`
+##### <a name="before_limits"></a>`before_limits`
 
 Data type: `Optional[String[1]]`
 
@@ -4245,7 +4669,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_limits`
+##### <a name="after_limits"></a>`after_limits`
 
 Data type: `Optional[String[1]]`
 
@@ -4253,7 +4677,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `groups_and_users`
+##### <a name="groups_and_users"></a>`groups_and_users`
 
 Data type: `Optional[String[1]]`
 
@@ -4261,7 +4685,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_groups_and_users`
+##### <a name="before_groups_and_users"></a>`before_groups_and_users`
 
 Data type: `Optional[String[1]]`
 
@@ -4269,7 +4693,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_groups_and_users`
+##### <a name="after_groups_and_users"></a>`after_groups_and_users`
 
 Data type: `Optional[String[1]]`
 
@@ -4277,7 +4701,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `packages`
+##### <a name="packages"></a>`packages`
 
 Data type: `Optional[String[1]]`
 
@@ -4285,7 +4709,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_packages`
+##### <a name="before_packages"></a>`before_packages`
 
 Data type: `Optional[String[1]]`
 
@@ -4293,7 +4717,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_packages`
+##### <a name="after_packages"></a>`after_packages`
 
 Data type: `Optional[String[1]]`
 
@@ -4301,7 +4725,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `firewall`
+##### <a name="firewall"></a>`firewall`
 
 Data type: `Optional[String[1]]`
 
@@ -4309,7 +4733,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_firewall`
+##### <a name="before_firewall"></a>`before_firewall`
 
 Data type: `Optional[String[1]]`
 
@@ -4317,7 +4741,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_firewall`
+##### <a name="after_firewall"></a>`after_firewall`
 
 Data type: `Optional[String[1]]`
 
@@ -4325,7 +4749,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `tmpfiles`
+##### <a name="tmpfiles"></a>`tmpfiles`
 
 Data type: `Optional[String[1]]`
 
@@ -4333,7 +4757,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_tmpfiles`
+##### <a name="before_tmpfiles"></a>`before_tmpfiles`
 
 Data type: `Optional[String[1]]`
 
@@ -4341,7 +4765,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_tmpfiles`
+##### <a name="after_tmpfiles"></a>`after_tmpfiles`
 
 Data type: `Optional[String[1]]`
 
@@ -4349,7 +4773,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `db_software`
+##### <a name="db_software"></a>`db_software`
 
 Data type: `Optional[String[1]]`
 
@@ -4357,7 +4781,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_db_software`
+##### <a name="before_db_software"></a>`before_db_software`
 
 Data type: `Optional[String[1]]`
 
@@ -4365,7 +4789,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_db_software`
+##### <a name="after_db_software"></a>`after_db_software`
 
 Data type: `Optional[String[1]]`
 
@@ -4373,7 +4797,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `db_patches`
+##### <a name="db_patches"></a>`db_patches`
 
 Data type: `Optional[String[1]]`
 
@@ -4381,7 +4805,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_db_patches`
+##### <a name="before_db_patches"></a>`before_db_patches`
 
 Data type: `Optional[String[1]]`
 
@@ -4389,7 +4813,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_db_patches`
+##### <a name="after_db_patches"></a>`after_db_patches`
 
 Data type: `Optional[String[1]]`
 
@@ -4397,7 +4821,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `extracted_database_definition`
+##### <a name="extracted_database_definition"></a>`extracted_database_definition`
 
 Data type: `Optional[String[1]]`
 
@@ -4405,7 +4829,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_extracted_database_definition`
+##### <a name="before_extracted_database_definition"></a>`before_extracted_database_definition`
 
 Data type: `Optional[String[1]]`
 
@@ -4413,7 +4837,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_extracted_database_definition`
+##### <a name="after_extracted_database_definition"></a>`after_extracted_database_definition`
 
 Data type: `Optional[String[1]]`
 
@@ -4421,7 +4845,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `extracted_init_params`
+##### <a name="extracted_init_params"></a>`extracted_init_params`
 
 Data type: `Optional[String[1]]`
 
@@ -4429,7 +4853,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_extracted_init_params`
+##### <a name="before_extracted_init_params"></a>`before_extracted_init_params`
 
 Data type: `Optional[String[1]]`
 
@@ -4437,7 +4861,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_extracted_init_params`
+##### <a name="after_extracted_init_params"></a>`after_extracted_init_params`
 
 Data type: `Optional[String[1]]`
 
@@ -4445,7 +4869,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `extracted_services`
+##### <a name="extracted_services"></a>`extracted_services`
 
 Data type: `Optional[String[1]]`
 
@@ -4453,7 +4877,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_extracted_services`
+##### <a name="before_extracted_services"></a>`before_extracted_services`
 
 Data type: `Optional[String[1]]`
 
@@ -4461,7 +4885,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_extracted_services`
+##### <a name="after_extracted_services"></a>`after_extracted_services`
 
 Data type: `Optional[String[1]]`
 
@@ -4469,7 +4893,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `extracted_tablespaces`
+##### <a name="extracted_tablespaces"></a>`extracted_tablespaces`
 
 Data type: `Optional[String[1]]`
 
@@ -4477,7 +4901,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_extracted_tablespaces`
+##### <a name="before_extracted_tablespaces"></a>`before_extracted_tablespaces`
 
 Data type: `Optional[String[1]]`
 
@@ -4485,7 +4909,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_extracted_tablespaces`
+##### <a name="after_extracted_tablespaces"></a>`after_extracted_tablespaces`
 
 Data type: `Optional[String[1]]`
 
@@ -4493,7 +4917,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `extracted_profiles`
+##### <a name="extracted_profiles"></a>`extracted_profiles`
 
 Data type: `Optional[String[1]]`
 
@@ -4501,7 +4925,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_extracted_profiles`
+##### <a name="before_extracted_profiles"></a>`before_extracted_profiles`
 
 Data type: `Optional[String[1]]`
 
@@ -4509,7 +4933,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_extracted_profiles`
+##### <a name="after_extracted_profiles"></a>`after_extracted_profiles`
 
 Data type: `Optional[String[1]]`
 
@@ -4517,7 +4941,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `extracted_users`
+##### <a name="extracted_users"></a>`extracted_users`
 
 Data type: `Optional[String[1]]`
 
@@ -4525,7 +4949,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_extracted_users`
+##### <a name="before_extracted_users"></a>`before_extracted_users`
 
 Data type: `Optional[String[1]]`
 
@@ -4533,7 +4957,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_extracted_users`
+##### <a name="after_extracted_users"></a>`after_extracted_users`
 
 Data type: `Optional[String[1]]`
 
@@ -4541,7 +4965,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `db_startup`
+##### <a name="db_startup"></a>`db_startup`
 
 Data type: `Optional[String[1]]`
 
@@ -4549,7 +4973,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `before_db_startup`
+##### <a name="before_db_startup"></a>`before_db_startup`
 
 Data type: `Optional[String[1]]`
 
@@ -4557,7 +4981,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### `after_db_startup`
+##### <a name="after_db_startup"></a>`after_db_startup`
 
 Data type: `Optional[String[1]]`
 
@@ -4565,7 +4989,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-### `ora_profile::oem_agent`
+### <a name="ora_profileoem_agent"></a>`ora_profile::oem_agent`
 
 ora_profile::oem_agent
 
@@ -4636,9 +5060,32 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::oem_agent` class.
+The following parameters are available in the `ora_profile::oem_agent` class:
 
-##### `before_em_license`
+* [`before_em_license`](#before_em_license)
+* [`em_license`](#em_license)
+* [`after_em_license`](#after_em_license)
+* [`before_sysctl`](#before_sysctl)
+* [`sysctl`](#sysctl)
+* [`after_sysctl`](#after_sysctl)
+* [`before_groups_and_users`](#before_groups_and_users)
+* [`groups_and_users`](#groups_and_users)
+* [`after_groups_and_users`](#after_groups_and_users)
+* [`before_firewall`](#before_firewall)
+* [`firewall`](#firewall)
+* [`after_firewall`](#after_firewall)
+* [`before_limits`](#before_limits)
+* [`limits`](#limits)
+* [`after_limits`](#after_limits)
+* [`before_packages`](#before_packages)
+* [`packages`](#packages)
+* [`after_packages`](#after_packages)
+* [`before_software`](#before_software)
+* [`software`](#software)
+* [`after_software`](#after_software)
+* [`standalone`](#standalone)
+
+##### <a name="before_em_license"></a>`before_em_license`
 
 Data type: `Optional[String]`
 
@@ -4650,7 +5097,7 @@ ora_profile::database::before_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `em_license`
+##### <a name="em_license"></a>`em_license`
 
 Data type: `Optional[String]`
 
@@ -4668,7 +5115,7 @@ ora_profile::database::em_license:  skip
 
 Default value: ``undef``
 
-##### `after_em_license`
+##### <a name="after_em_license"></a>`after_em_license`
 
 Data type: `Optional[String]`
 
@@ -4680,7 +5127,7 @@ ora_profile::database::after_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_sysctl`
+##### <a name="before_sysctl"></a>`before_sysctl`
 
 Data type: `Optional[String]`
 
@@ -4692,7 +5139,7 @@ ora_profile::database::before_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `sysctl`
+##### <a name="sysctl"></a>`sysctl`
 
 Data type: `Optional[String]`
 
@@ -4710,7 +5157,7 @@ ora_profile::database::sysctl:  skip
 
 Default value: ``undef``
 
-##### `after_sysctl`
+##### <a name="after_sysctl"></a>`after_sysctl`
 
 Data type: `Optional[String]`
 
@@ -4722,7 +5169,7 @@ ora_profile::database::after_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_groups_and_users`
+##### <a name="before_groups_and_users"></a>`before_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -4734,7 +5181,7 @@ ora_profile::database::before_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `groups_and_users`
+##### <a name="groups_and_users"></a>`groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -4752,7 +5199,7 @@ ora_profile::database::groups_and_users:  skip
 
 Default value: ``undef``
 
-##### `after_groups_and_users`
+##### <a name="after_groups_and_users"></a>`after_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -4764,7 +5211,7 @@ ora_profile::database::after_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_firewall`
+##### <a name="before_firewall"></a>`before_firewall`
 
 Data type: `Optional[String]`
 
@@ -4776,7 +5223,7 @@ ora_profile::database::before_firewall:  my_module::my_class
 
 Default value: ``undef``
 
-##### `firewall`
+##### <a name="firewall"></a>`firewall`
 
 Data type: `Optional[String]`
 
@@ -4794,7 +5241,7 @@ ora_profile::database::firewall:  skip
 
 Default value: ``undef``
 
-##### `after_firewall`
+##### <a name="after_firewall"></a>`after_firewall`
 
 Data type: `Optional[String]`
 
@@ -4806,7 +5253,7 @@ ora_profile::database::after_firewall:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_limits`
+##### <a name="before_limits"></a>`before_limits`
 
 Data type: `Optional[String]`
 
@@ -4818,7 +5265,7 @@ ora_profile::oem_server::before_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `limits`
+##### <a name="limits"></a>`limits`
 
 Data type: `Optional[String]`
 
@@ -4836,7 +5283,7 @@ ora_profile::oem_server::limits:  skip
 
 Default value: ``undef``
 
-##### `after_limits`
+##### <a name="after_limits"></a>`after_limits`
 
 Data type: `Optional[String]`
 
@@ -4848,7 +5295,7 @@ ora_profile::oem_agent::after_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_packages`
+##### <a name="before_packages"></a>`before_packages`
 
 Data type: `Optional[String]`
 
@@ -4860,7 +5307,7 @@ ora_profile::oem_server::before_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `packages`
+##### <a name="packages"></a>`packages`
 
 Data type: `Optional[String]`
 
@@ -4878,7 +5325,7 @@ ora_profile::oem_server::packages:  skip
 
 Default value: ``undef``
 
-##### `after_packages`
+##### <a name="after_packages"></a>`after_packages`
 
 Data type: `Optional[String]`
 
@@ -4890,7 +5337,7 @@ ora_profile::oem_server::after_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_software`
+##### <a name="before_software"></a>`before_software`
 
 Data type: `Optional[String]`
 
@@ -4902,7 +5349,7 @@ ora_profile::oem_server::before_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `software`
+##### <a name="software"></a>`software`
 
 Data type: `Optional[String]`
 
@@ -4920,7 +5367,7 @@ ora_profile::oem_server::software:  skip
 
 Default value: ``undef``
 
-##### `after_software`
+##### <a name="after_software"></a>`after_software`
 
 Data type: `Optional[String]`
 
@@ -4932,7 +5379,7 @@ ora_profile::oem_server::after_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `standalone`
+##### <a name="standalone"></a>`standalone`
 
 Data type: `Optional[Boolean]`
 
@@ -4941,7 +5388,7 @@ Valid values are `true` and `false`.
 
 Default value: ``undef``
 
-### `ora_profile::oem_agent::software`
+### <a name="ora_profileoem_agentsoftware"></a>`ora_profile::oem_agent::software`
 
 ora_profile::oem_agent::software
 
@@ -4949,21 +5396,38 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::oem_agent::software` class.
+The following parameters are available in the `ora_profile::oem_agent::software` class:
 
-##### `agent_base_dir`
+* [`agent_base_dir`](#agent_base_dir)
+* [`agent_registration_password`](#agent_registration_password)
+* [`download_dir`](#download_dir)
+* [`em_upload_port`](#em_upload_port)
+* [`install_agent`](#install_agent)
+* [`install_group`](#install_group)
+* [`install_version`](#install_version)
+* [`oms_host`](#oms_host)
+* [`oms_port`](#oms_port)
+* [`ora_inventory_dir`](#ora_inventory_dir)
+* [`oracle_base`](#oracle_base)
+* [`os_user`](#os_user)
+* [`sysman_password`](#sysman_password)
+* [`sysman_user`](#sysman_user)
+* [`temp_dir`](#temp_dir)
+* [`version`](#version)
+
+##### <a name="agent_base_dir"></a>`agent_base_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 The directory to use as instance home.
 
-##### `agent_registration_password`
+##### <a name="agent_registration_password"></a>`agent_registration_password`
 
 Data type: `Easy_type::Password`
 
 The password to use to register the agent.
 
-##### `download_dir`
+##### <a name="download_dir"></a>`download_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -4972,14 +5436,14 @@ Before Puppet can actually use remote files, they must be downloaded first. Pupp
 The default value is: `/install`
 To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
-##### `em_upload_port`
+##### <a name="em_upload_port"></a>`em_upload_port`
 
 Data type: `Integer`
 
 The port number of the HTTP port for the upload service.
 The default value is: `1159`
 
-##### `install_agent`
+##### <a name="install_agent"></a>`install_agent`
 
 Data type: `Boolean`
 
@@ -4988,7 +5452,7 @@ In case your OEM Server hasn't been installed yet, set this to `false`
 
 Default value: ``true``
 
-##### `install_group`
+##### <a name="install_group"></a>`install_group`
 
 Data type: `String`
 
@@ -4996,26 +5460,26 @@ The group to use for Oracle install.
 The default is : `oinstall`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `install_version`
+##### <a name="install_version"></a>`install_version`
 
 Data type: `String`
 
 The version you want to install.
 The default value is: `12.1.0.5.0`
 
-##### `oms_host`
+##### <a name="oms_host"></a>`oms_host`
 
 Data type: `String`
 
 The OMS host to use.
 
-##### `oms_port`
+##### <a name="oms_port"></a>`oms_port`
 
 Data type: `Integer`
 
 The IP port to use for connecting to the OMS host.
 
-##### `ora_inventory_dir`
+##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -5023,7 +5487,7 @@ The directory that contains the oracle inventory.
 The default value is: `/oracle_base/oraInventory`
 To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 
-##### `oracle_base`
+##### <a name="oracle_base"></a>`oracle_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -5031,7 +5495,7 @@ The base directory to use for the Oracle installation.
 The default is : `/u01/app/oracle`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
-##### `os_user`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String`
 
@@ -5039,26 +5503,26 @@ The OS user to use for Oracle install.
 The default is : `oracle`
 To customize this consistently use the hiera key `ora_profile::database::os_user`.
 
-##### `sysman_password`
+##### <a name="sysman_password"></a>`sysman_password`
 
 Data type: `Easy_type::Password`
 
 The password to use for sysman.
 
-##### `sysman_user`
+##### <a name="sysman_user"></a>`sysman_user`
 
 Data type: `String`
 
 The sysman user.
 The default value is: `sysman`
 
-##### `temp_dir`
+##### <a name="temp_dir"></a>`temp_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory to use for temporary files.
 
-##### `version`
+##### <a name="version"></a>`version`
 
 Data type: `String`
 
@@ -5071,7 +5535,7 @@ The agent version to be installed
 - `13.4.0.0`
 - `13.5.0.0`
 
-### `ora_profile::oem_server`
+### <a name="ora_profileoem_server"></a>`ora_profile::oem_server`
 
 ora_profile::oem_server
 
@@ -5142,9 +5606,32 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::oem_server` class.
+The following parameters are available in the `ora_profile::oem_server` class:
 
-##### `after_em_license`
+* [`after_em_license`](#after_em_license)
+* [`after_firewall`](#after_firewall)
+* [`after_groups_and_users`](#after_groups_and_users)
+* [`after_limits`](#after_limits)
+* [`after_packages`](#after_packages)
+* [`after_software`](#after_software)
+* [`after_sysctl`](#after_sysctl)
+* [`before_em_license`](#before_em_license)
+* [`before_firewall`](#before_firewall)
+* [`before_groups_and_users`](#before_groups_and_users)
+* [`before_limits`](#before_limits)
+* [`before_packages`](#before_packages)
+* [`before_software`](#before_software)
+* [`before_sysctl`](#before_sysctl)
+* [`em_license`](#em_license)
+* [`firewall`](#firewall)
+* [`groups_and_users`](#groups_and_users)
+* [`limits`](#limits)
+* [`packages`](#packages)
+* [`software`](#software)
+* [`standalone`](#standalone)
+* [`sysctl`](#sysctl)
+
+##### <a name="after_em_license"></a>`after_em_license`
 
 Data type: `Optional[String]`
 
@@ -5156,7 +5643,7 @@ ora_profile::database::after_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_firewall`
+##### <a name="after_firewall"></a>`after_firewall`
 
 Data type: `Optional[String]`
 
@@ -5168,7 +5655,7 @@ ora_profile::database::after_firewall:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_groups_and_users`
+##### <a name="after_groups_and_users"></a>`after_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -5180,7 +5667,7 @@ ora_profile::database::after_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_limits`
+##### <a name="after_limits"></a>`after_limits`
 
 Data type: `Optional[String]`
 
@@ -5192,7 +5679,7 @@ ora_profile::oem_server::after_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_packages`
+##### <a name="after_packages"></a>`after_packages`
 
 Data type: `Optional[String]`
 
@@ -5204,7 +5691,7 @@ ora_profile::oem_server::after_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_software`
+##### <a name="after_software"></a>`after_software`
 
 Data type: `Optional[String]`
 
@@ -5216,7 +5703,7 @@ ora_profile::oem_server::after_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `after_sysctl`
+##### <a name="after_sysctl"></a>`after_sysctl`
 
 Data type: `Optional[String]`
 
@@ -5228,7 +5715,7 @@ ora_profile::database::after_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_em_license`
+##### <a name="before_em_license"></a>`before_em_license`
 
 Data type: `Optional[String]`
 
@@ -5240,7 +5727,7 @@ ora_profile::database::before_em_license:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_firewall`
+##### <a name="before_firewall"></a>`before_firewall`
 
 Data type: `Optional[String]`
 
@@ -5252,7 +5739,7 @@ ora_profile::database::before_firewall:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_groups_and_users`
+##### <a name="before_groups_and_users"></a>`before_groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -5264,7 +5751,7 @@ ora_profile::database::before_groups_and_users:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_limits`
+##### <a name="before_limits"></a>`before_limits`
 
 Data type: `Optional[String]`
 
@@ -5276,7 +5763,7 @@ ora_profile::oem_server::before_limits:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_packages`
+##### <a name="before_packages"></a>`before_packages`
 
 Data type: `Optional[String]`
 
@@ -5288,7 +5775,7 @@ ora_profile::oem_server::before_packages:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_software`
+##### <a name="before_software"></a>`before_software`
 
 Data type: `Optional[String]`
 
@@ -5300,7 +5787,7 @@ ora_profile::oem_server::before_software:  my_module::my_class
 
 Default value: ``undef``
 
-##### `before_sysctl`
+##### <a name="before_sysctl"></a>`before_sysctl`
 
 Data type: `Optional[String]`
 
@@ -5312,7 +5799,7 @@ ora_profile::database::before_sysctl:  my_module::my_class
 
 Default value: ``undef``
 
-##### `em_license`
+##### <a name="em_license"></a>`em_license`
 
 Data type: `Optional[String]`
 
@@ -5330,7 +5817,7 @@ ora_profile::database::em_license:  skip
 
 Default value: ``undef``
 
-##### `firewall`
+##### <a name="firewall"></a>`firewall`
 
 Data type: `Optional[String]`
 
@@ -5348,7 +5835,7 @@ ora_profile::database::firewall:  skip
 
 Default value: ``undef``
 
-##### `groups_and_users`
+##### <a name="groups_and_users"></a>`groups_and_users`
 
 Data type: `Optional[String]`
 
@@ -5366,7 +5853,7 @@ ora_profile::database::groups_and_users:  skip
 
 Default value: ``undef``
 
-##### `limits`
+##### <a name="limits"></a>`limits`
 
 Data type: `Optional[String]`
 
@@ -5384,7 +5871,7 @@ ora_profile::oem_server::limits:  skip
 
 Default value: ``undef``
 
-##### `packages`
+##### <a name="packages"></a>`packages`
 
 Data type: `Optional[String]`
 
@@ -5402,7 +5889,7 @@ ora_profile::oem_server::packages:  skip
 
 Default value: ``undef``
 
-##### `software`
+##### <a name="software"></a>`software`
 
 Data type: `Optional[String]`
 
@@ -5420,7 +5907,7 @@ ora_profile::oem_server::software:  skip
 
 Default value: ``undef``
 
-##### `standalone`
+##### <a name="standalone"></a>`standalone`
 
 Data type: `Optional[Boolean]`
 
@@ -5429,7 +5916,7 @@ Valid values are `true` and `false`.
 
 Default value: ``undef``
 
-##### `sysctl`
+##### <a name="sysctl"></a>`sysctl`
 
 Data type: `Optional[String]`
 
@@ -5447,7 +5934,7 @@ ora_profile::database::sysctl:  skip
 
 Default value: ``undef``
 
-### `ora_profile::oem_server::software`
+### <a name="ora_profileoem_serversoftware"></a>`ora_profile::oem_server::software`
 
 ora_profile::oem_server::software
 
@@ -5455,46 +5942,71 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::oem_server::software` class.
+The following parameters are available in the `ora_profile::oem_server::software` class:
 
-##### `agent_base_dir`
+* [`agent_base_dir`](#agent_base_dir)
+* [`agent_registration_password`](#agent_registration_password)
+* [`database_hostname`](#database_hostname)
+* [`database_listener_port`](#database_listener_port)
+* [`database_service_sid_name`](#database_service_sid_name)
+* [`database_sys_password`](#database_sys_password)
+* [`deployment_size`](#deployment_size)
+* [`download_dir`](#download_dir)
+* [`file`](#file)
+* [`group`](#group)
+* [`logoutput`](#logoutput)
+* [`ora_inventory_dir`](#ora_inventory_dir)
+* [`oracle_base_dir`](#oracle_base_dir)
+* [`oracle_home_dir`](#oracle_home_dir)
+* [`puppet_download_mnt_point`](#puppet_download_mnt_point)
+* [`software_library_dir`](#software_library_dir)
+* [`swonly`](#swonly)
+* [`sysman_password`](#sysman_password)
+* [`temp_dir`](#temp_dir)
+* [`user`](#user)
+* [`version`](#version)
+* [`weblogic_password`](#weblogic_password)
+* [`weblogic_user`](#weblogic_user)
+* [`zip_extract`](#zip_extract)
+
+##### <a name="agent_base_dir"></a>`agent_base_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 The directory to use as base for the agent software.
 
-##### `agent_registration_password`
+##### <a name="agent_registration_password"></a>`agent_registration_password`
 
 Data type: `Easy_type::Password`
 
 The password to use to register the agent.
 
-##### `database_hostname`
+##### <a name="database_hostname"></a>`database_hostname`
 
 Data type: `String[1]`
 
 The DNS name of the database host.
 
-##### `database_listener_port`
+##### <a name="database_listener_port"></a>`database_listener_port`
 
 Data type: `Integer`
 
 The IP port for the database listener.
 The default value is: `1521`
 
-##### `database_service_sid_name`
+##### <a name="database_service_sid_name"></a>`database_service_sid_name`
 
 Data type: `String[1]`
 
 The database service SID name for the database.
 
-##### `database_sys_password`
+##### <a name="database_sys_password"></a>`database_sys_password`
 
 Data type: `Easy_type::Password`
 
 The password of the SYS user of the database.
 
-##### `deployment_size`
+##### <a name="deployment_size"></a>`deployment_size`
 
 Data type: `String[1]`
 
@@ -5505,7 +6017,7 @@ Valid values are:
 - `LARGE`
 The default value is: `SMALL`
 
-##### `download_dir`
+##### <a name="download_dir"></a>`download_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -5514,13 +6026,13 @@ Before Puppet can actually use remote files, they must be downloaded first. Pupp
 The default value is: `/install`
 To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
-##### `file`
+##### <a name="file"></a>`file`
 
 Data type: `String[1]`
 
 The source file to use.
 
-##### `group`
+##### <a name="group"></a>`group`
 
 Data type: `String[1]`
 
@@ -5528,7 +6040,7 @@ The dba group for ASM.
 The default is : `asmdba`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::group`.
 
-##### `logoutput`
+##### <a name="logoutput"></a>`logoutput`
 
 Data type: `Variant[Boolean,Enum['on_failure']]`
 
@@ -5539,7 +6051,7 @@ Valid values are:
 - `false`
 - `on_failure`
 
-##### `ora_inventory_dir`
+##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -5547,19 +6059,19 @@ The directory that contains the oracle inventory.
 The default value is: `/oracle_base/oraInventory`
 To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 
-##### `oracle_base_dir`
+##### <a name="oracle_base_dir"></a>`oracle_base_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 A directory to use as Oracle base directory.
 
-##### `oracle_home_dir`
+##### <a name="oracle_home_dir"></a>`oracle_home_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 A directory to be used as Oracle home directory for this software.
 
-##### `puppet_download_mnt_point`
+##### <a name="puppet_download_mnt_point"></a>`puppet_download_mnt_point`
 
 Data type: `String[1]`
 
@@ -5567,32 +6079,32 @@ Where to get the source of your template from.
 This is the module where the xml file for your template is stored as a puppet template(erb).
 The default value is `ora_profile`
 
-##### `software_library_dir`
+##### <a name="software_library_dir"></a>`software_library_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 The directory to use for the software library.
 
-##### `swonly`
+##### <a name="swonly"></a>`swonly`
 
 Data type: `Boolean`
 
 Only install the software without configuration (true) or not (false).
 The default value is: `false`
 
-##### `sysman_password`
+##### <a name="sysman_password"></a>`sysman_password`
 
 Data type: `Easy_type::Password`
 
 The password to use for sysman.
 
-##### `temp_dir`
+##### <a name="temp_dir"></a>`temp_dir`
 
 Data type: `Stdlib::Absolutepath`
 
 Directory to use for temporary files.
 
-##### `user`
+##### <a name="user"></a>`user`
 
 Data type: `String[1]`
 
@@ -5600,7 +6112,7 @@ The user used for the specified installation.
 The install class will not create the user for you. You must do that yourself.
 The default value is: `oracle`
 
-##### `version`
+##### <a name="version"></a>`version`
 
 Data type: `String[1]`
 
@@ -5613,20 +6125,20 @@ The server version to be installed
 - `13.4.0.0`
 - `13.5.0.0`
 
-##### `weblogic_password`
+##### <a name="weblogic_password"></a>`weblogic_password`
 
 Data type: `Easy_type::Password`
 
 The password to use for WebLogic.
 
-##### `weblogic_user`
+##### <a name="weblogic_user"></a>`weblogic_user`
 
 Data type: `String[1]`
 
 The username to use for WebLogic.
 The default value is: `weblogic`
 
-##### `zip_extract`
+##### <a name="zip_extract"></a>`zip_extract`
 
 Data type: `Boolean`
 
@@ -5634,7 +6146,7 @@ The specified source file is a zip file that needs te be extracted.
 When you specify a value of false, the source attribute must contain a reference to a directory instead of a zip file.
 The default value is: `true`
 
-### `ora_profile::secured_database`
+### <a name="ora_profilesecured_database"></a>`ora_profile::secured_database`
 
 ora_profile::secured_database
 
@@ -5653,7 +6165,7 @@ See the file "LICENSE" for the full license governing this code.
 
 ## Defined types
 
-### `ora_profile::database::asm_storage::partition`
+### <a name="ora_profiledatabaseasm_storagepartition"></a>`ora_profile::database::asm_storage::partition`
 
 ora_profile::database::asm_storage::partition
 
@@ -5669,15 +6181,21 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::asm_storage::partition` defined type.
+The following parameters are available in the `ora_profile::database::asm_storage::partition` defined type:
 
-##### `raw_device`
+* [`raw_device`](#raw_device)
+* [`table_type`](#table_type)
+* [`wait_for_device`](#wait_for_device)
+* [`start`](#start)
+* [`end`](#end)
+
+##### <a name="raw_device"></a>`raw_device`
 
 Data type: `Stdlib::Absolutepath`
 
 The device that needs to be partitioned.
 
-##### `table_type`
+##### <a name="table_type"></a>`table_type`
 
 Data type: `Enum['gpt','msdos']`
 
@@ -5685,7 +6203,7 @@ The type of partition table.
 
 Default value: `'msdos'`
 
-##### `wait_for_device`
+##### <a name="wait_for_device"></a>`wait_for_device`
 
 Data type: `Boolean`
 
@@ -5693,7 +6211,7 @@ Should we wait for the device to be available?
 
 Default value: ``false``
 
-##### `start`
+##### <a name="start"></a>`start`
 
 Data type: `Optional[Easy_type::Size]`
 
@@ -5701,7 +6219,7 @@ The start point of the partition.
 
 Default value: ``undef``
 
-##### `end`
+##### <a name="end"></a>`end`
 
 Data type: `Optional[Easy_type::Size]`
 
@@ -5709,7 +6227,7 @@ The end point of the partition.
 
 Default value: ``undef``
 
-### `ora_profile::database::authenticated_nodes::user_equivalence`
+### <a name="ora_profiledatabaseauthenticated_nodesuser_equivalence"></a>`ora_profile::database::authenticated_nodes::user_equivalence`
 
 ora_profile::database::authenticated_nodes::user_equivalence
 
@@ -5717,15 +6235,18 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::authenticated_nodes::user_equivalence` defined type.
+The following parameters are available in the `ora_profile::database::authenticated_nodes::user_equivalence` defined type:
 
-##### `private_key`
+* [`private_key`](#private_key)
+* [`nodes`](#nodes)
+
+##### <a name="private_key"></a>`private_key`
 
 Data type: `String`
 
 The private key of the user.
 
-##### `nodes`
+##### <a name="nodes"></a>`nodes`
 
 Data type: `Array[String[1]]`
 
@@ -5733,7 +6254,7 @@ The cluster nodes.
 
 Default value: `['localhost']`
 
-### `ora_profile::database::rac::instance`
+### <a name="ora_profiledatabaseracinstance"></a>`ora_profile::database::rac::instance`
 
 ora_profile::database::rac::instance
 
@@ -5744,57 +6265,67 @@ See the file "LICENSE" for the full license governing this code.
 
 #### Parameters
 
-The following parameters are available in the `ora_profile::database::rac::instance` defined type.
+The following parameters are available in the `ora_profile::database::rac::instance` defined type:
 
-##### `on`
+* [`on`](#on)
+* [`number`](#number)
+* [`thread`](#thread)
+* [`datafile`](#datafile)
+* [`undo_initial_size`](#undo_initial_size)
+* [`undo_next`](#undo_next)
+* [`undo_autoextend`](#undo_autoextend)
+* [`undo_max_size`](#undo_max_size)
+* [`log_size`](#log_size)
+
+##### <a name="on"></a>`on`
 
 Data type: `String[1]`
 
 The instance for which it should be executed.
 
-##### `number`
+##### <a name="number"></a>`number`
 
 Data type: `Integer`
 
 The instance number.
 
-##### `thread`
+##### <a name="thread"></a>`thread`
 
 Data type: `Integer`
 
 The thread of the instance.
 
-##### `datafile`
+##### <a name="datafile"></a>`datafile`
 
 Data type: `String[1]`
 
 The datafile for the Undo tablespace for the instance.
 
-##### `undo_initial_size`
+##### <a name="undo_initial_size"></a>`undo_initial_size`
 
 Data type: `Easy_type::Size`
 
 The size of the Undo tablespace for the instance.
 
-##### `undo_next`
+##### <a name="undo_next"></a>`undo_next`
 
 Data type: `Easy_type::Size`
 
 The size of the next extent for the Undo tablesapce of the instance.
 
-##### `undo_autoextend`
+##### <a name="undo_autoextend"></a>`undo_autoextend`
 
 Data type: `Enum['on','off']`
 
 Auto extensibility of the Undo tablespace for the instance.
 
-##### `undo_max_size`
+##### <a name="undo_max_size"></a>`undo_max_size`
 
 Data type: `Easy_type::Size`
 
 The maximum size of the datafile of the Undo tablespace for the instance.
 
-##### `log_size`
+##### <a name="log_size"></a>`log_size`
 
 Data type: `Easy_type::Size`
 
@@ -5802,7 +6333,7 @@ The size of the redolog files of the instance.
 
 ## Functions
 
-### `set_param`
+### <a name="set_param"></a>`set_param`
 
 Type: Ruby 4.x API
 

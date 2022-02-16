@@ -260,7 +260,7 @@ class ora_profile::database::asm_software(
     $require_install = Ora_install::Installasm["Install GRID version ${version} in ${grid_home}"]
 
   } else {
-    unless ( $grid_home in $facts['ora_install_homes'].keys ) {
+    unless ( $grid_home in $facts['ora_install_homes']['product_version'].keys ) {
       echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
         withpath => false,
       }
