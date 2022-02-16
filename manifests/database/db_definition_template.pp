@@ -95,7 +95,7 @@
 #    The domain of the database.
 #    The default is `$facts['networking']['domain']`
 #
-# @param [Optional[String[1]]] init_params
+# @param [Optional[Variant[String[1], Hash]]] init_params
 #    The init parameters to use for the database.
 #    You can use either a comma separated string for init_params or a Hash.
 #    ### Using comma separated string

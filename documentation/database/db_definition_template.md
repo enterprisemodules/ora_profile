@@ -285,7 +285,7 @@ ora_profile::database::db_definition_template::init_params:
   job_queue_processes: 4
 ```
 
-Type: `Optional[String[1]]`
+Type: `Optional[Variant[String[1], Hash]]`
 
 
 [Back to overview of database::db_definition_template](#attributes)

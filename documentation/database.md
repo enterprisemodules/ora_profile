@@ -209,6 +209,7 @@ Attribute Name                                                       | Short Des
 [disable_thp](#database_disable_thp)                                 | Use this value if you want to skip or use your own class for stage `disable_thp`.               |
 [download_dir](#database_download_dir)                               | The directory where the Puppet software puts all downloaded files.                              |
 [em_license](#database_em_license)                                   | Use this value if you want to skip or use your own class for stage `em_license`.                |
+[enable_fact_caching](#database_enable_fact_caching)                 | Enable fact caching for ora_config and ora_install modules.                                     |
 [firewall](#database_firewall)                                       | Use this value if you want to skip or use your own class for stage `firewall`.                  |
 [grid_admingroup](#database_grid_admingroup)                         | The OS group to use for ASM admin.                                                              |
 [grid_base](#database_grid_base)                                     | The ORACLE_BASE for the Grid Infrastructure installation.                                       |
@@ -442,6 +443,17 @@ Type: `Stdlib::Absolutepath`
 Directory to use for temporary files.
 
 Type: `Stdlib::Absolutepath`
+
+
+[Back to overview of database](#attributes)
+
+### enable_fact_caching<a name='database_enable_fact_caching'>
+
+Enable fact caching for ora_config and ora_install modules.
+
+The default value is: `false`
+
+Type: `Boolean`
 
 
 [Back to overview of database](#attributes)

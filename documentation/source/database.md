@@ -113,6 +113,7 @@ Also check the set of [common parameters](./common) that is passed to this class
   :db_control_provider,
   :download_dir,
   :temp_dir,
+  :enable_fact_caching,
   :oracle_user_password,
   :master_node,
   :cluster_nodes,

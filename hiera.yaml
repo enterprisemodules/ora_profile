@@ -53,8 +53,8 @@ hierarchy:
     lookup_key: 'easy_type::generated_passwords'
     options:
       use_for:
-        'ora_profile::.*::os_user_password':               'aA1#.12'
-        'ora_profile::.*::grid_user_password':             'aA1#.12'
+        'ora_profile::.*::os_user_password':               'aA1.12'
+        'ora_profile::.*::grid_user_password':             'aA1.12'
         'ora_profile::.*::system_password':                'aA1#.12'
         'ora_profile::.*::sys_password':                   'aA1#.12'
         'ora_profile::.*::asm_sys_password':               'aA1#.12'

@@ -225,9 +225,9 @@ class ora_profile::database::db_patches(
 
         $homes_to_be_patched.each |$patch_home|  {
 
-          if ( has_key($ora_install_homes, $patch_home) ) {
-            $running_sids = $ora_install_homes[$patch_home]['running_sids'].keys
-            $running_listeners = $ora_install_homes[$patch_home]['running_listeners']
+          if ( has_key($ora_install_homes['running_processes'], $patch_home) ) {
+            $running_sids = $ora_install_homes['running_processes'][$patch_home]['sids'].keys
+            $running_listeners = $ora_install_homes['running_processes'][$patch_home]['listeners']
           } else {
             $running_sids = []
             $running_listeners = []
@@ -298,9 +298,9 @@ class ora_profile::database::db_patches(
 
         $homes_to_be_patched.each |$patch_home|  {
 
-          if ( has_key($ora_install_homes, $patch_home) ) {
-            $running_sids = $ora_install_homes[$patch_home]['running_sids'].keys
-            $running_listeners = $ora_install_homes[$patch_home]['running_listeners']
+          if ( has_key($ora_install_homes['running_processes'], $patch_home) ) {
+            $running_sids = $ora_install_homes['running_processes'][$patch_home]['sids'].keys
+            $running_listeners = $ora_install_homes['running_processes'][$patch_home]['listeners']
           } else {
             $running_sids = []
             $running_listeners = []
@@ -336,7 +336,7 @@ class ora_profile::database::db_patches(
                 schedule                => $schedule,
               }
 
-              if ( $ora_install_homes[$patch_home]['running_sids'][$dbname]['open_mode'] == 'READ_WRITE' ) {
+              if ( $ora_install_homes['running_processes'][$patch_home]['sids'][$dbname]['open_mode'] == 'READ_WRITE' ) {
                 exec { "Datapatch for ${dbname}":
                   cwd         => "${patch_home}/OPatch",
                   command     => "/bin/sh -c 'unset ORACLE_PATH SQLPATH TWO_TASK TNS_ADMIN; ${patch_home}/OPatch/datapatch -verbose'",
