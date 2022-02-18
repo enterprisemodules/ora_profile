@@ -18,6 +18,8 @@ ora_install_homes:
     /oracle/product/11.2/db: []
   defined_sids:
     /oracle/product/11.2/db: ['TEST']
+  running_processes:
+    /oracle/product/11.2/db:  []
   running_sids:
     /oracle/product/11.2/db:
       sids:
