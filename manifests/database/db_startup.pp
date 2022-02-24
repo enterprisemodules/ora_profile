@@ -26,22 +26,23 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::db_startup(
-  Stdlib::Absolutepath
-            $oracle_home,
-  String[1] $dbname,
+class ora_profile::database::db_startup (
+# lint:ignore:strict_indent
   Enum['database','grid']
             $db_type,
+  String[1] $dbname,
+  Stdlib::Absolutepath
+            $oracle_home
 ) inherits ora_profile::database::common {
-
+# lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure DB Startup for ${dbname} in ${oracle_home}":
+  echo { "Ensure DB Startup for ${dbname} in ${oracle_home}":
     withpath => false,
   }
 
   # In RHEL7.2 RemoveIPC defaults to true, which will cause the database and ASM to crash
-  if $::os['release']['major'] == '7' and $::os['release']['minor'] == '2' {
+  if $facts['os']['release']['major'] == '7' and $facts['os']['release']['minor'] == '2' {
     # lint:ignore:double_quoted_strings
     file_line { 'Do not remove ipc':
       path   => '/etc/systemd/logind.conf',
@@ -63,10 +64,9 @@ class ora_profile::database::db_startup(
     }
   }
 
-  ora_install::autostartdatabase{ "autostart ${dbname}":
+  ora_install::autostartdatabase { "autostart ${dbname}":
     oracle_home => $oracle_home,
     db_name     => $dbname,
     db_type     => $db_type,
   }
-
 }

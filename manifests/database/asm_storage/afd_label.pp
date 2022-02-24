@@ -4,8 +4,7 @@
 #
 # @example
 #   include ora_profile::database::asm_storage::afd_label
-class ora_profile::database::asm_storage::afd_label()
-{
+class ora_profile::database::asm_storage::afd_label () {
   $grid_home = lookup('ora_profile::database::grid_home')
   $grid_user = lookup('ora_profile::database::grid_user')
   $grid_base = lookup('ora_profile::database::grid_base')
@@ -21,5 +20,4 @@ class ora_profile::database::asm_storage::afd_label()
       unless      => "${grid_home}/bin/asmcmd afd_lslbl /dev/${device} | grep '^${values['label']} .* /dev/${device}$'",
     }
   }
-
 }

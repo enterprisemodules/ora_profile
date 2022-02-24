@@ -91,31 +91,30 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::client::software(
-  Ora_install::Version                $version,
-  String[1]                           $file,
-  Stdlib::Absolutepath                $oracle_base,
-  Stdlib::Absolutepath                $oracle_home,
+class ora_profile::client::software (
+  Boolean                             $allow_insecure,
+  Boolean                             $bash_profile,
   Integer                             $db_port,
-  String[1]                           $user,
-  Stdlib::Absolutepath                $user_base_dir,
+  Stdlib::Absolutepath                $download_dir,
+  String[1]                           $file,
   String[1]                           $group,
   String[1]                           $group_install,
-  Stdlib::Absolutepath                $download_dir,
-  Stdlib::Absolutepath                $temp_dir,
-  Enum['Administrator','Runtime','InstantClient','Custom']
-                                      $install_type,
   Optional[Array[String]]             $install_options,
-  Optional[String[1]]                 $puppet_download_mnt_point,
-  Boolean                             $bash_profile,
-  Optional[Stdlib::Absolutepath]      $ora_inventory_dir,
+  Enum['Administrator','Runtime','InstantClient','Custom']
+  $install_type,
   Variant[Boolean,Enum['on_failure']] $logoutput,
-  Boolean                             $allow_insecure,
-){
-
+  Optional[Stdlib::Absolutepath]      $ora_inventory_dir,
+  Stdlib::Absolutepath                $oracle_base,
+  Stdlib::Absolutepath                $oracle_home,
+  Optional[String[1]]                 $puppet_download_mnt_point,
+  Stdlib::Absolutepath                $temp_dir,
+  String[1]                           $user,
+  Stdlib::Absolutepath                $user_base_dir,
+  Ora_install::Version                $version
+) {
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure Client Software ${version} in ${oracle_home}":
+  echo { "Ensure Client Software ${version} in ${oracle_home}":
     withpath => false,
   }
   ora_install::client { "Install client ${version} into ${oracle_home}":

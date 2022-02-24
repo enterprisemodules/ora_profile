@@ -41,25 +41,23 @@
 #
 #
 #--++--
-class ora_profile::database::tmpfiles(
+class ora_profile::database::tmpfiles (
   Hash $list,
 ) {
-
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   $list.map | Array $item | {
     $file = $item[0]
 
     $statement = $list[$file].map | Hash $item | {
-        $dir      = $item[dir]
-        $mode     = $item[mode]
-        $perm     = $item[perm]
-        $owner    = $item[owner]
-        $group    = $item[group]
-        $interval = $item[interval]
+      $dir      = $item[dir]
+      $mode     = $item[mode]
+      $perm     = $item[perm]
+      $owner    = $item[owner]
+      $group    = $item[group]
+      $interval = $item[interval]
 
-        "${mode} ${dir} ${perm} ${owner} ${group} ${interval}\n"
-
+      "${mode} ${dir} ${perm} ${owner} ${group} ${interval}\n"
     }.reduce | $statements, $statement | { "${statements}${statement}" }
 
     file { "/etc/tmpfiles.d/${file}.conf":

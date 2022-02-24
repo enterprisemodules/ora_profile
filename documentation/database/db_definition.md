@@ -134,7 +134,7 @@ This parameter can also be defined as Hash in which case the key(s) of the Hash 
 The defaults for all the database(s) in the Hash are the ones given to the db_definition class.
 In addition all properties and parameters taken by ora_database can be defined in hiera data.
 
-Type: `Variant[String[1], Hash]`
+Type: `Variant[String[1],Hash]`
 
 
 [Back to overview of database::db_definition](#attributes)
@@ -338,6 +338,6 @@ Valid values are:
 
 Type: `Variant[Boolean,Enum['on_failure']]`
 
-Default:`lookup({name => 'logoutput', default_value => 'on_failure'})`
+Default:`lookup( { name => 'logoutput', default_value => 'on_failure' })`
 
 [Back to overview of database::db_definition](#attributes)

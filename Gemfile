@@ -43,6 +43,23 @@ group :release, :acceptance_test do
 end
 
 group :quality do
+  gem 'voxpupuli-puppet-lint-plugins'
+  gem 'puppet-lint-uncuddled_else-check'
+  gem 'puppet-lint-no_symbolic_file_modes-check'
+  gem 'puppet-lint-no_erb_template-check'
+  gem 'puppet-lint-package_ensure-check'
+  gem 'puppet-lint-absolute_template_path'
+  gem 'puppet-lint-no_file_path_attribute-check'
+  gem 'puppet-lint-template_file_extension-check'
+  gem 'puppet-lint-numericvariable'
+  gem 'puppet-lint-appends-check'
+  gem 'puppet-lint-class_parameter-check'
+  gem 'puppet-lint-world_writable_files-check'
+  gem 'puppet-lint-empty_trailing_lines'
+  gem 'puppet-lint-empty_lines_around_body-check'
+  gem 'puppet-lint-recurse_file-check'
+  gem 'puppet-lint-explicit_hiera_class_param_lookup-check'
+  gem 'puppet-lint-param-types'
   gem 'brakeman'
   gem 'bundle-audit'
   gem 'fasterer'

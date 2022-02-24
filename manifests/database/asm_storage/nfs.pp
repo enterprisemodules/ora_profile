@@ -31,17 +31,17 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_storage::nfs(
-  String[1] $grid_user,
+class ora_profile::database::asm_storage::nfs (
+# lint:ignore:strict_indent
   String[1] $grid_admingroup,
-  Stdlib::Absolutepath
-            $nfs_mountpoint,
+  String[1] $grid_user,
   Stdlib::Absolutepath
             $nfs_export,
-  String[1] $nfs_server,
-)
-{
-
+  Stdlib::Absolutepath
+            $nfs_mountpoint,
+  String[1] $nfs_server
+) {
+# lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   file { $nfs_mountpoint:

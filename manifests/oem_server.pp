@@ -261,33 +261,34 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::oem_server(
-  Optional[Boolean] $standalone              = undef,
-  Optional[String]  $before_em_license       = undef,
-  Optional[String]  $em_license              = undef,
+class ora_profile::oem_server (
+# lint:ignore:strict_indent
   Optional[String]  $after_em_license        = undef,
-  Optional[String]  $before_sysctl           = undef,
-  Optional[String]  $sysctl                  = undef,
-  Optional[String]  $after_sysctl            = undef,
-  Optional[String]  $before_groups_and_users = undef,
-  Optional[String]  $groups_and_users        = undef,
-  Optional[String]  $after_groups_and_users  = undef,
-  Optional[String]  $before_firewall         = undef,
-  Optional[String]  $firewall                = undef,
   Optional[String]  $after_firewall          = undef,
-  Optional[String]  $before_limits           = undef,
-  Optional[String]  $limits                  = undef,
+  Optional[String]  $after_groups_and_users  = undef,
   Optional[String]  $after_limits            = undef,
-  Optional[String]  $before_packages         = undef,
-  Optional[String]  $packages                = undef,
   Optional[String]  $after_packages          = undef,
-  Optional[String]  $before_software         = undef,
-  Optional[String]  $software                = undef,
   Optional[String]  $after_software          = undef,
-)
-{
+  Optional[String]  $after_sysctl            = undef,
+  Optional[String]  $before_em_license       = undef,
+  Optional[String]  $before_firewall         = undef,
+  Optional[String]  $before_groups_and_users = undef,
+  Optional[String]  $before_limits           = undef,
+  Optional[String]  $before_packages         = undef,
+  Optional[String]  $before_software         = undef,
+  Optional[String]  $before_sysctl           = undef,
+  Optional[String]  $em_license              = undef,
+  Optional[String]  $firewall                = undef,
+  Optional[String]  $groups_and_users        = undef,
+  Optional[String]  $limits                  = undef,
+  Optional[String]  $packages                = undef,
+  Optional[String]  $software                = undef,
+  Optional[Boolean] $standalone              = undef,
+  Optional[String]  $sysctl                  = undef
+) {
+# lint:endignore:strict_indent
   unless ( $standalone ) {
-    contain ::ora_profile::database
+    contain ora_profile::database
 
     Class['ora_profile::database']
     -> Class['ora_profile::oem_server::limits']
@@ -296,12 +297,12 @@ class ora_profile::oem_server(
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   easy_type::ordered_steps([
-    ['ora_profile::database::em_license',       { 'onlyif' => $standalone }],
-    ['ora_profile::database::sysctl',           { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],
-    ['ora_profile::database::groups_and_users', { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::groups_and_users' }],
-    ['ora_profile::database::firewall',         { 'onlyif' => $standalone }],
-    ['ora_profile::oem_server::limits',         { 'implementation' => 'easy_type::profile::limits' }],
-    ['ora_profile::oem_server::packages',       { 'implementation' => 'easy_type::profile::packages' }],
-    'ora_profile::oem_server::software',
+      ['ora_profile::database::em_license',       { 'onlyif' => $standalone }],
+      ['ora_profile::database::sysctl',           { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],
+      ['ora_profile::database::groups_and_users', { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::groups_and_users' }],
+      ['ora_profile::database::firewall',         { 'onlyif' => $standalone }],
+      ['ora_profile::oem_server::limits',         { 'implementation' => 'easy_type::profile::limits' }],
+      ['ora_profile::oem_server::packages',       { 'implementation' => 'easy_type::profile::packages' }],
+      'ora_profile::oem_server::software',
   ])
 }

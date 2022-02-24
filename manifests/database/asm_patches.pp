@@ -41,14 +41,16 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_patches(
+class ora_profile::database::asm_patches (
+# lint:ignore:strict_indent
   String[1] $level,
-  String[1] $patch_file,
   String[1] $opversion,
+  String[1] $patch_file,
   Hash      $patch_list,
   Variant[Boolean,Enum['on_failure']]
-            $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
+            $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database::common {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
@@ -59,7 +61,7 @@ class ora_profile::database::asm_patches(
   #
   # First make sure the correct version of opatch is installed
   #
-  ora_install::opatchupgrade{"ASM OPatch upgrade to ${opversion}":
+  ora_install::opatchupgrade { "ASM OPatch upgrade to ${opversion}":
     oracle_home               => $grid_home,
     patch_file                => "${patch_file}.zip",
     opversion                 => $opversion,
@@ -96,22 +98,22 @@ class ora_profile::database::asm_patches(
         fail "patch_levels Hash is missing 'file' key for patch ${patch_name}"
       }
       $current_patch = {
-        "${grid_home}:${split($patch_name,'-')[0]}" => ($patch_details + $patch_type + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file')
+        "${grid_home}:${split($patch_name,'-')[0]}" => ($patch_details + $patch_type + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file'),
       }
       $current_patch
-    }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
+    }.reduce( {}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
     $patch_bundle_id = split($patch_level_list.keys[0],':')[1]
   } else {
     fail "Patchlevel '${level}' not defined for ASM version '${asm_version}'"
   }
   $complete_patch_list = ($patch_level_list + $patch_list)
 
-  schedule {'asm_patchschedule':
+  schedule { 'asm_patchschedule':
     range  => $patch_window,
   }
 
   if ( $::facts['ora_version'] ) {
-    echo {"Ensure ASM patch(es) in patch window: ${patch_window}":
+    echo { "Ensure ASM patch(es) in patch window: ${patch_window}":
       withpath => false,
     }
     $schedule = 'asm_patchschedule'
@@ -126,7 +128,7 @@ class ora_profile::database::asm_patches(
       }
     }
     if ( $level == 'NONE' ) {
-      echo {"Ensure ASM Patch(es) ${patch_list.keys.join(',')} on ${grid_home}":
+      echo { "Ensure ASM Patch(es) ${patch_list.keys.join(',')} on ${grid_home}":
         withpath => false,
       }
     } else {
@@ -165,12 +167,12 @@ class ora_profile::database::asm_patches(
           # Remove sub_patches because for opatchauto (type=psu) we cannot feed sub_patches to ora_opatch
           #                            for opatch (type=one-off) we cannot have sub_patches the same as in title
           # Remove type because it's not supported by ora_opatch
-          $patch_name => ($patch_details + $provider - 'sub_patches' - 'type')
+          $patch_name => ($patch_details + $provider - 'sub_patches' - 'type'),
         }
         $current_patch
-      }.reduce({}) |$memo, $hash| { $memo + $hash } # Turn Array of Hashes into Hash
+      }.reduce( {}) |$memo, $hash| { $memo + $hash } # Turn Array of Hashes into Hash
 
-      echo {"Apply ASM patch(es) ${apply_patches.keys.join(',')} CAUSING DOWNTIME ON THIS NODE":
+      echo { "Apply ASM patch(es) ${apply_patches.keys.join(',')} CAUSING DOWNTIME ON THIS NODE":
         withpath => false,
         schedule => $schedule,
       }
@@ -180,14 +182,14 @@ class ora_profile::database::asm_patches(
       $psu_patches = $apply_patches.filter |$patch, $patch_details| { $patch_details['provider'] == 'opatchauto' }
 
       # Apply the PSU patches first using opatchauto which means the stopping and starting is taken care of by the utility
-      $psu_patches.each |String $patch, Hash $patch_properties = {}| {
+      $psu_patches.each | String $patch, Hash $patch_properties = {} | {
         ora_opatch {
           default:
             ensure   => present,
             tmp_dir  => "${download_dir}/patches", # always use subdir, the whole directory will be removed when done
             schedule => $schedule,
             tag      => 'asm_patches',
-          ;
+            ;
           $patch:
             * => $patch_properties,
         }
@@ -207,7 +209,7 @@ class ora_profile::database::asm_patches(
           logoutput   => $logoutput,
           require     => Ora_opatch[$psu_patches.keys],
         }
-        $one_off_patches.each |String $patch, Hash $patch_properties = {}| {
+        $one_off_patches.each | String $patch, Hash $patch_properties = {} | {
           ora_opatch {
             default:
               ensure   => present,
@@ -219,7 +221,7 @@ class ora_profile::database::asm_patches(
                 Ora_opatch[$psu_patches.keys]
               ],
               before   => Exec['rootadd_rdbms.sh'],
-            ;
+              ;
             $patch:
               * => $patch_properties,
           }
@@ -245,18 +247,20 @@ class ora_profile::database::asm_patches(
     }
   } else {
     # ORACLE_HOME is not registered in oraInventory so we will install the patch using gridSetup.sh on master_node
-    if ( $master_node == $facts['hostname'] ) {
+    if ( $master_node == $facts['networking']['hostname'] ) {
+      # lint:ignore:world_writable_files
       file { "${download_dir}/patches":
         ensure => directory,
         mode   => '0777',
       }
+      # lint:endignore:world_writable_files
 
       $complete_patch_list.each |$patch, $props| {
         $home = split($patch, ':')[0]
         $patch_num = split($patch, ':')[1]
         $file_name = split($props['source'], '/')[-1]
 
-        archive{ "${download_dir}/${file_name}":
+        archive { "${download_dir}/${file_name}":
           ensure       => present,
           cleanup      => true,
           creates      => "${download_dir}/patches/${patch_num}",
@@ -322,16 +326,16 @@ class ora_profile::database::asm_patches(
           group   => $install_group,
           mode    => '0744',
           content => epp('ora_profile/patch_grid.sh.epp',{
-            'home'          => $home,
-            'grid_base'     => $grid_base,
-            'download_dir'  => $download_dir,
-            'patch_num'     => $patch_num,
-            'apply_type'    => $apply_type,
-            'apply_patches' => $apply_patches,
+              'home'          => $home,
+              'grid_base'     => $grid_base,
+              'download_dir'  => $download_dir,
+              'patch_num'     => $patch_num,
+              'apply_type'    => $apply_type,
+              'apply_patches' => $apply_patches,
           }),
         }
 
-        exec{ "Apply ${props['type']} patch(es) ${patch_num} to ${home}":
+        exec { "Apply ${props['type']} patch(es) ${patch_num} to ${home}":
           command     => "${download_dir}/patches/patch_grid_${patch_num}.sh",
           refreshonly => true,
           timeout     => 0,
@@ -342,7 +346,7 @@ class ora_profile::database::asm_patches(
           logoutput   => $logoutput,
         }
 
-        exec{ "Cleanup ${download_dir}/patches/${patch_num}":
+        exec { "Cleanup ${download_dir}/patches/${patch_num}":
           command     => "/bin/rm -rf ${download_dir}/patches/${patch_num}",
           refreshonly => true,
         }

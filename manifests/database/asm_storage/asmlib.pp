@@ -34,35 +34,36 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_storage::asmlib(
-  String[1] $grid_user,
-  String[1] $grid_admingroup,
+class ora_profile::database::asm_storage::asmlib (
+# lint:ignore:strict_indent
   Hash      $disk_devices,
+  String[1] $grid_admingroup,
+  String[1] $grid_user,
   Optional[String[1]]
-            $scan_exclude,
+            $scan_exclude
 ) inherits ora_profile::database {
-
+# lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  file{'/etc/sysconfig/oracleasm-_dev_oracleasm':
+  file { '/etc/sysconfig/oracleasm-_dev_oracleasm':
     ensure  => file,
     owner   => root,
     group   => root,
     mode    => '0775',
     content => epp('ora_profile/oracleasm-_dev_oracleasm.epp',{
-      'grid_user'       => $grid_user,
-      'grid_admingroup' => $grid_admingroup,
-      'scan_exclude'    => $scan_exclude,
+        'grid_user'       => $grid_user,
+        'grid_admingroup' => $grid_admingroup,
+        'scan_exclude'    => $scan_exclude,
     }),
   }
 
-  file{'/etc/sysconfig/oracleasm':
+  file { '/etc/sysconfig/oracleasm':
     ensure  => link,
     target  => '/etc/sysconfig/oracleasm-_dev_oracleasm',
     require => File['/etc/sysconfig/oracleasm-_dev_oracleasm'],
   }
 
-  service{'oracleasm':
+  service { 'oracleasm':
     ensure    => 'running',
     subscribe => File['/etc/sysconfig/oracleasm'],
     require   => Package['oracleasm-support'],
@@ -75,7 +76,7 @@ class ora_profile::database::asm_storage::asmlib(
       require => [
         Service['oracleasm'],
         Partition["/dev/${device}:1"],
-      ]
+      ],
     }
   }
 }

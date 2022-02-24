@@ -28,24 +28,26 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_listener(
-  Stdlib::Absolutepath
-            $oracle_home,
+class ora_profile::database::asm_listener (
+# lint:ignore:strict_indent
+  String[1] $dbname,
   Stdlib::Absolutepath
             $oracle_base,
+  Stdlib::Absolutepath
+            $oracle_home,
   Ora_install::ShortVersion
-            $sqlnet_version,
-  String[1] $dbname,
+            $sqlnet_version
 ) inherits ora_profile::database {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure Listener for ${dbname} in ${oracle_home}":
+  echo { "Ensure Listener for ${dbname} in ${oracle_home}":
     withpath => false,
   }
 
-  ora_install::net{ 'config net8':
+  ora_install::net { 'config net8':
     oracle_home  => $oracle_home,
     version      => $sqlnet_version,        # Different version then the oracle version
     download_dir => '/tmp',
@@ -53,13 +55,11 @@ class ora_profile::database::asm_listener(
     group        => $install_group,
   }
 
-  -> ora_install::listener{"start_${dbname}":
-    oracle_base => $oracle_base,
-    oracle_home => $oracle_home,
-    action      => 'start',
-    user        => $grid_user,
-    group       => $install_group,
+  -> db_listener { "start_${dbname}":
+    ensure          => 'running',
+    oracle_home_dir => $oracle_home,
+    oracle_base_dir => $oracle_base,
+    os_user         => $grid_user,
   }
-
 }
 # lint:endignore

@@ -371,6 +371,19 @@
 #    ora_profile::database::firewall:  skip
 #    ```
 #
+# @param [Optional[String]] tmpfiles
+#    Use this value if you want to skip or use your own class for stage `tmpfiles`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::tmpfiles:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::tmpfiles:  skip
+#    ```
+#
 # @param [Optional[String]] asm_storage
 #    Use this value if you want to skip or use your own class for stage `asm_storage`.
 #    ## Use your own class
@@ -670,6 +683,13 @@
 #    ora_profile::database::before_firewall:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] before_tmpfiles
+#    The name of the class you want to execute directly **before** the `tmpfiles` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_tmpfiles:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] before_asm_storage
 #    The name of the class you want to execute directly **before** the `asm_storage` class.
 #    You can use hiera to set this value. Here is an example:
@@ -873,6 +893,13 @@
 #    ora_profile::database::after_firewall:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] after_tmpfiles
+#    The name of the class you want to execute directly **after** the `tmpfiles` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_tmpfiles:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] after_asm_storage
 #    The name of the class you want to execute directly **after** the `asm_storage` class.
 #    You can use hiera to set this value. Here is an example:
@@ -988,140 +1015,141 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database(
-  Enum['local','asm']  $storage,
-  Ora_Install::Version $version,
-  String[1] $dbname,
-  String[1] $os_user,
+class ora_profile::database (
+# lint:ignore:strict_indent
+  String[1] $db_control_provider,
   String[1] $dba_group,
-  String[1] $install_group,
-  String[1] $grid_user,
+  String[1] $dbname,
+  Stdlib::Absolutepath
+            $download_dir,
+  Boolean   $enable_fact_caching,
   String[1] $grid_admingroup,
-  String[1] $source,
-  Stdlib::Absolutepath
-            $oracle_base,
-  Stdlib::Absolutepath
-            $oracle_home,
-  Stdlib::Absolutepath
-            $ora_inventory_dir,
   Stdlib::Absolutepath
             $grid_base,
   Stdlib::Absolutepath
             $grid_home,
-  String[1] $db_control_provider,
+  String[1] $grid_user,
+  String[1] $install_group,
   Stdlib::Absolutepath
-            $download_dir,
+            $ora_inventory_dir,
+  Stdlib::Absolutepath
+            $oracle_base,
+  Stdlib::Absolutepath
+            $oracle_home,
+  String[1] $os_user,
+  String[1] $source,
+  Enum['local','asm']  $storage,
   Stdlib::Absolutepath
             $temp_dir,
-  Boolean   $enable_fact_caching,
-#
-# Optional settings
-#
-  Optional[String] $oracle_user_password = undef,
-  Optional[String] $master_node = $facts['hostname'],
-  Optional[Array]  $cluster_nodes = undef,
-  Optional[String] $em_license = undef,
-  Optional[String] $asm_sysctl = undef,
-  Optional[String] $asm_limits = undef,
-  Optional[String] $authenticated_nodes = undef,
-  Optional[String] $asm_groups_and_users = undef,
-  Optional[String] $asm_packages = undef,
-  Optional[String] $asm_listener = undef,
-  Optional[String] $sysctl = undef,
-  Optional[String] $disable_thp = undef,
-  Optional[String] $limits = undef,
-  Optional[String] $packages = undef,
-  Optional[String] $groups_and_users = undef,
-  Optional[String] $firewall = undef,
-  Optional[String] $tmpfiles = undef,
-  Optional[String] $asm_storage = undef,
-  Optional[String] $asm_software = undef,
-  Optional[String] $asm_patches = undef,
-  Optional[String] $asm_setup = undef,
-  Optional[String] $asm_init_params = undef,
-  Optional[String] $asm_diskgroup = undef,
-  Optional[String] $db_software = undef,
-  Optional[String] $db_patches = undef,
-  Optional[String] $db_definition = undef,
-  Optional[String] $db_listener = undef,
-  Optional[String] $db_init_params = undef,
-  Optional[String] $db_services = undef,
-  Optional[String] $db_tablespaces = undef,
-  Optional[String] $db_profiles = undef,
-  Optional[String] $db_users = undef,
-  Optional[String] $db_startup = undef,
-  Optional[String] $before_em_license = undef,
-  Optional[String] $before_asm_sysctl = undef,
-  Optional[String] $before_asm_limits = undef,
-  Optional[String] $before_authenticated_nodes = undef,
-  Optional[String] $before_asm_groups_and_users = undef,
-  Optional[String] $before_asm_packages = undef,
-  Optional[String] $before_asm_listener = undef,
-  Optional[String] $before_sysctl = undef,
-  Optional[String] $before_disable_thp = undef,
-  Optional[String] $before_limits = undef,
-  Optional[String] $before_packages = undef,
-  Optional[String] $before_groups_and_users = undef,
-  Optional[String] $before_firewall = undef,
-  Optional[String] $before_tmpfiles = undef,
-  Optional[String] $before_asm_storage = undef,
-  Optional[String] $before_asm_software = undef,
-  Optional[String] $before_asm_patches = undef,
-  Optional[String] $before_asm_setup = undef,
-  Optional[String] $before_asm_init_params = undef,
-  Optional[String] $before_asm_diskgroup = undef,
-  Optional[String] $before_db_software = undef,
-  Optional[String] $before_db_patches = undef,
-  Optional[String] $before_db_definition = undef,
-  Optional[String] $before_db_listener = undef,
-  Optional[String] $before_db_init_params = undef,
-  Optional[String] $before_db_services = undef,
-  Optional[String] $before_db_tablespaces = undef,
-  Optional[String] $before_db_profiles = undef,
-  Optional[String] $before_db_users = undef,
-  Optional[String] $before_db_startup = undef,
-  Optional[String] $after_em_license = undef,
-  Optional[String] $after_asm_sysctl = undef,
-  Optional[String] $after_asm_limits = undef,
-  Optional[String] $after_authenticated_nodes = undef,
+  Ora_Install::Version $version,
+  Optional[String] $after_asm_diskgroup        = undef,
   Optional[String] $after_asm_groups_and_users = undef,
-  Optional[String] $after_asm_packages = undef,
-  Optional[String] $after_asm_listener = undef,
-  Optional[String] $after_sysctl = undef,
-  Optional[String] $after_disable_thp = undef,
-  Optional[String] $after_limits = undef,
-  Optional[String] $after_packages = undef,
-  Optional[String] $after_groups_and_users = undef,
-  Optional[String] $after_firewall = undef,
-  Optional[String] $after_tmpfiles = undef,
-  Optional[String] $after_asm_storage = undef,
-  Optional[String] $after_asm_software = undef,
-  Optional[String] $after_asm_patches = undef,
-  Optional[String] $after_asm_setup = undef,
-  Optional[String] $after_asm_init_params = undef,
-  Optional[String] $after_asm_diskgroup = undef,
-  Optional[String] $after_db_software = undef,
-  Optional[String] $after_db_patches = undef,
-  Optional[String] $after_db_definition = undef,
-  Optional[String] $after_db_listener = undef,
-  Optional[String] $after_db_init_params = undef,
-  Optional[String] $after_db_services = undef,
-  Optional[String] $after_db_tablespaces = undef,
-  Optional[String] $after_db_profiles = undef,
-  Optional[String] $after_db_users = undef,
-  Optional[String] $after_db_startup = undef,
-)
-{
-  class{'::ora_config::fact_caching':  enabled => $enable_fact_caching}
-  class{'::ora_install::fact_caching': enabled => $enable_fact_caching}
+  Optional[String] $after_asm_init_params      = undef,
+  Optional[String] $after_asm_limits           = undef,
+  Optional[String] $after_asm_listener         = undef,
+  Optional[String] $after_asm_packages         = undef,
+  Optional[String] $after_asm_patches          = undef,
+  Optional[String] $after_asm_setup            = undef,
+  Optional[String] $after_asm_software         = undef,
+  Optional[String] $after_asm_storage          = undef,
+  Optional[String] $after_asm_sysctl           = undef,
+  Optional[String] $after_authenticated_nodes  = undef,
+  Optional[String] $after_db_definition        = undef,
+  Optional[String] $after_db_init_params       = undef,
+  Optional[String] $after_db_listener          = undef,
+  Optional[String] $after_db_patches           = undef,
+  Optional[String] $after_db_profiles          = undef,
+  Optional[String] $after_db_services          = undef,
+  Optional[String] $after_db_software          = undef,
+  Optional[String] $after_db_startup           = undef,
+  Optional[String] $after_db_tablespaces       = undef,
+  Optional[String] $after_db_users             = undef,
+  Optional[String] $after_disable_thp          = undef,
+  Optional[String] $after_em_license           = undef,
+  Optional[String] $after_firewall             = undef,
+  Optional[String] $after_groups_and_users     = undef,
+  Optional[String] $after_limits               = undef,
+  Optional[String] $after_packages             = undef,
+  Optional[String] $after_sysctl               = undef,
+  Optional[String] $after_tmpfiles             = undef,
+  Optional[String] $asm_diskgroup              = undef,
+  Optional[String] $asm_groups_and_users       = undef,
+  Optional[String] $asm_init_params            = undef,
+  Optional[String] $asm_limits                 = undef,
+  Optional[String] $asm_listener               = undef,
+  Optional[String] $asm_packages               = undef,
+  Optional[String] $asm_patches                = undef,
+  Optional[String] $asm_setup                  = undef,
+  Optional[String] $asm_software               = undef,
+  Optional[String] $asm_storage                = undef,
+  Optional[String] $asm_sysctl                 = undef,
+  Optional[String] $authenticated_nodes        = undef,
+  Optional[String] $before_asm_diskgroup       = undef,
+  Optional[String] $before_asm_groups_and_users= undef,
+  Optional[String] $before_asm_init_params     = undef,
+  Optional[String] $before_asm_limits          = undef,
+  Optional[String] $before_asm_listener        = undef,
+  Optional[String] $before_asm_packages        = undef,
+  Optional[String] $before_asm_patches         = undef,
+  Optional[String] $before_asm_setup           = undef,
+  Optional[String] $before_asm_software        = undef,
+  Optional[String] $before_asm_storage         = undef,
+  Optional[String] $before_asm_sysctl          = undef,
+  Optional[String] $before_authenticated_nodes = undef,
+  Optional[String] $before_db_definition       = undef,
+  Optional[String] $before_db_init_params      = undef,
+  Optional[String] $before_db_listener         = undef,
+  Optional[String] $before_db_patches          = undef,
+  Optional[String] $before_db_profiles         = undef,
+  Optional[String] $before_db_services         = undef,
+  Optional[String] $before_db_software         = undef,
+  Optional[String] $before_db_startup          = undef,
+  Optional[String] $before_db_tablespaces      = undef,
+  Optional[String] $before_db_users            = undef,
+  Optional[String] $before_disable_thp         = undef,
+  Optional[String] $before_em_license          = undef,
+  Optional[String] $before_firewall            = undef,
+  Optional[String] $before_groups_and_users    = undef,
+  Optional[String] $before_limits              = undef,
+  Optional[String] $before_packages            = undef,
+  Optional[String] $before_sysctl              = undef,
+  Optional[String] $before_tmpfiles            = undef,
+  Optional[Array]  $cluster_nodes              = undef,
+  Optional[String] $db_definition              = undef,
+  Optional[String] $db_init_params             = undef,
+  Optional[String] $db_listener                = undef,
+  Optional[String] $db_patches                 = undef,
+  Optional[String] $db_profiles                = undef,
+  Optional[String] $db_services                = undef,
+  Optional[String] $db_software                = undef,
+  Optional[String] $db_startup                 = undef,
+  Optional[String] $db_tablespaces             = undef,
+  Optional[String] $db_users                   = undef,
+  Optional[String] $disable_thp                = undef,
+  Optional[String] $em_license                 = undef,
+  Optional[String] $firewall                   = undef,
+  Optional[String] $groups_and_users           = undef,
+  Optional[String] $limits                     = undef,
+  Optional[String] $master_node                = $facts['networking']['hostname'],
+  #
+  # Optional settings
+  #
+  Optional[String] $oracle_user_password = undef,
+  Optional[String] $packages = undef,
+  Optional[String] $sysctl = undef,
+  Optional[String] $tmpfiles = undef
+) {
+# lint:endignore:strict_indent
+  class { 'ora_config::fact_caching':  enabled => $enable_fact_caching }
+  class { 'ora_install::fact_caching': enabled => $enable_fact_caching }
 
   $asm_instance_name         = set_param('instance_name', '+ASM', $cluster_nodes)
   $db_instance_name          = set_param('instance_name', $dbname, $cluster_nodes)
   $instance_number           = set_param('instance_number', $dbname, $cluster_nodes)
   $thread_number             = set_param('instance_number', $dbname, $cluster_nodes)
 
-  $is_linux                  = $::kernel == 'Linux'
-  $is_windows                = $::kernel == 'Windows'
+  $is_linux                  = $facts['kernel'] == 'Linux'
+  $is_windows                = $facts['kernel'] == 'Windows'
   $use_asm                   = $storage == 'asm'
   $is_rac                    = !empty($cluster_nodes)
   $asm_software_install_task = lookup('ora_profile::database::asm_software::install_task')
@@ -1130,38 +1158,38 @@ class ora_profile::database(
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   easy_type::ordered_steps([
-    'ora_profile::database::em_license',
-    ['ora_profile::database::sysctl',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::sysctl' }],
-    ['ora_profile::database::disable_thp',              { 'onlyif' => $is_linux}],
-    ['ora_profile::database::limits',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::limits' }],
-    ['ora_profile::database::groups_and_users',         { 'onlyif' => !$use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
-    ['ora_profile::database::packages',                 { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::packages' }],
-    #
-    # Although there is an easy_type::profile::firewall implementation, it doesn't fit here. We are doing more here
-    #
-    ['ora_profile::database::firewall',                 { 'onlyif' => $is_linux}],
-    ['ora_profile::database::tmpfiles',                 { 'onlyif' => $is_linux}],
-    ['ora_profile::database::asm_sysctl',               { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::sysctl' }],
-    ['ora_profile::database::asm_limits',               { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::limits' }],
-    ['ora_profile::database::asm_groups_and_users',     { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
-    ['ora_profile::database::rac::authenticated_nodes', { 'onlyif' => $is_rac}],
-    ['ora_profile::database::asm_packages',             { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::packages' }],
-    ['ora_profile::database::asm_storage',              { 'onlyif' => $use_asm}],
-    ['ora_profile::database::asm_software',             { 'onlyif' => $use_asm}],
-    ['ora_profile::database::asm_patches',              { 'onlyif' => $use_asm}],
-    ['ora_profile::database::asm_setup',                { 'onlyif' => $asm_inline_patch}],
-    ['ora_profile::database::asm_init_params',          { 'onlyif' => $use_asm}],
-    ['ora_profile::database::asm_diskgroup',            { 'onlyif' => $use_asm}],
-    'ora_profile::database::db_software',
-    'ora_profile::database::db_patches',
-    'ora_profile::database::db_definition',
-    ['ora_profile::database::db_listener',              { 'onlyif' => !$use_asm}],
-    ['ora_profile::database::asm_listener',             { 'onlyif' => $use_asm}],
-    'ora_profile::database::db_init_params',
-    'ora_profile::database::db_services',
-    'ora_profile::database::db_tablespaces',
-    'ora_profile::database::db_profiles',
-    'ora_profile::database::db_users',
-    ['ora_profile::database::db_startup',             { 'onlyif' => !$is_rac}],
+      'ora_profile::database::em_license',
+      ['ora_profile::database::sysctl',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::sysctl' }],
+      ['ora_profile::database::disable_thp',              { 'onlyif' => $is_linux }],
+      ['ora_profile::database::limits',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::limits' }],
+      ['ora_profile::database::groups_and_users',         { 'onlyif' => !$use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
+      ['ora_profile::database::packages',                 { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::packages' }],
+      #
+      # Although there is an easy_type::profile::firewall implementation, it doesn't fit here. We are doing more here
+      #
+      ['ora_profile::database::firewall',                 { 'onlyif' => $is_linux }],
+      ['ora_profile::database::tmpfiles',                 { 'onlyif' => $is_linux }],
+      ['ora_profile::database::asm_sysctl',               { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::sysctl' }],
+      ['ora_profile::database::asm_limits',               { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::limits' }],
+      ['ora_profile::database::asm_groups_and_users',     { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
+      ['ora_profile::database::rac::authenticated_nodes', { 'onlyif' => $is_rac }],
+      ['ora_profile::database::asm_packages',             { 'onlyif' => $use_asm, 'implementation' => 'easy_type::profile::packages' }],
+      ['ora_profile::database::asm_storage',              { 'onlyif' => $use_asm }],
+      ['ora_profile::database::asm_software',             { 'onlyif' => $use_asm }],
+      ['ora_profile::database::asm_patches',              { 'onlyif' => $use_asm }],
+      ['ora_profile::database::asm_setup',                { 'onlyif' => $asm_inline_patch }],
+      ['ora_profile::database::asm_init_params',          { 'onlyif' => $use_asm }],
+      ['ora_profile::database::asm_diskgroup',            { 'onlyif' => $use_asm }],
+      'ora_profile::database::db_software',
+      'ora_profile::database::db_patches',
+      'ora_profile::database::db_definition',
+      ['ora_profile::database::db_listener',              { 'onlyif' => !$use_asm }],
+      ['ora_profile::database::asm_listener',             { 'onlyif' => $use_asm }],
+      'ora_profile::database::db_init_params',
+      'ora_profile::database::db_services',
+      'ora_profile::database::db_tablespaces',
+      'ora_profile::database::db_profiles',
+      'ora_profile::database::db_users',
+      ['ora_profile::database::db_startup',             { 'onlyif' => !$is_rac }],
   ])
 }

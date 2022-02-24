@@ -63,7 +63,7 @@ Type: `Ora_Install::Version`
 The type of database to define. 
 
 The default value is: `SE2`.
-Type: `Enum['SE2', 'SE', 'EE', 'SEONE']`
+Type: `Enum['SE2','SE','EE','SEONE']`
 
 
 [Back to overview of database::db_software](#attributes)
@@ -180,7 +180,7 @@ ora_profile::database::db_software::oracle_home:
     oracle_home: /u01/app/oracle/product/12.2.0.1/db_home1
 ```
 
-Type: `Variant[Stdlib::Absolutepath, Hash]`
+Type: `Variant[Stdlib::Absolutepath,Hash]`
 
 
 [Back to overview of database::db_software](#attributes)

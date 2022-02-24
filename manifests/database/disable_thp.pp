@@ -10,16 +10,14 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::disable_thp() {
-
-  echo {'Ensure Transparent HugePages are disabled':
+class ora_profile::database::disable_thp () {
+  echo { 'Ensure Transparent HugePages are disabled':
     withpath => false,
   }
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   if $facts['os']['family'] == 'RedHat' and versioncmp($facts['os']['release']['major'], '5') > 0 {
-
     if versioncmp($facts['os']['release']['major'], '6') == 0 {
       $thp_conf = '/sys/kernel/mm/redhat_transparent_hugepage'
     } else {

@@ -13,7 +13,6 @@ This class contains common variables used by more then one class.
 
 
 
-
 ## Experience the Power of Puppet for Oracle
 
 If you want to play and experiment with Puppet and Oracle, please take a look at our playgrounds. At our playgrounds, we provide you with a pre-installed environment, where you experiment fast and easy.
@@ -46,13 +45,27 @@ Attribute Name                                                 | Short Descripti
 
 
 
-### version<a name='database::common_version'>
+### cluster_nodes<a name='database::common_cluster_nodes'>
 
-The version of Oracle you want to install.
+An array with cluster node names for RAC.
 
-The default is : `12.2.0.1`
+Example:
+```yaml
+ora_profile::database::cluster_nodes:
+- node1
+- node2
+```
 
-To customize this consistently use the hiera key `ora_profile::database::version`.
+
+[Back to overview of database::common](#attributes)
+
+### db_control_provider<a name='database::common_db_control_provider'>
+
+Which provider should be used for the type db_control.
+
+The default value is: `sqlplus`
+
+To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
 
 
 [Back to overview of database::common](#attributes)
@@ -67,6 +80,36 @@ The default value is: `/install`
 
 To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
+
+[Back to overview of database::common](#attributes)
+
+### grid_base<a name='database::common_grid_base'>
+
+The ORACLE_BASE for the Grid Infrastructure installation.
+
+The default is : `/u01/app/grid/admin`
+
+To customize this consistently use the hiera key `ora_profile::database::grid_base`.
+
+
+[Back to overview of database::common](#attributes)
+
+### grid_home<a name='database::common_grid_home'>
+
+The ORACLE_HOME for the Grid Infrastructure installation.
+
+The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
+
+To customize this consistently use the hiera key `ora_profile::database::grid_home`.
+
+
+[Back to overview of database::common](#attributes)
+
+### grid_user<a name='database::common_grid_user'>
+
+The name of the user that owns the Grid Infrastructure installation.
+
+The default value is: `grid`.
 
 [Back to overview of database::common](#attributes)
 
@@ -102,98 +145,12 @@ To customize this consistently use the hiera key `ora_profile::database::ora_inv
 
 [Back to overview of database::common](#attributes)
 
-### grid_home<a name='database::common_grid_home'>
-
-The ORACLE_HOME for the Grid Infrastructure installation.
-
-The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
-
-To customize this consistently use the hiera key `ora_profile::database::grid_home`.
-
-
-[Back to overview of database::common](#attributes)
-
-### grid_base<a name='database::common_grid_base'>
-
-The ORACLE_BASE for the Grid Infrastructure installation.
-
-The default is : `/u01/app/grid/admin`
-
-To customize this consistently use the hiera key `ora_profile::database::grid_base`.
-
-
-[Back to overview of database::common](#attributes)
-
-### grid_user<a name='database::common_grid_user'>
-
-The name of the user that owns the Grid Infrastructure installation.
-
-The default value is: `grid`.
-
-[Back to overview of database::common](#attributes)
-
-### temp_dir<a name='database::common_temp_dir'>
-
-Directory to use for temporary files.
-
-
-[Back to overview of database::common](#attributes)
-
-### source<a name='database::common_source'>
-
-The location where the classes can find the software. 
-
-You can specify a local directory, a Puppet url or an http url.
-
-The default is : `puppet:///modules/software/`
-
-To customize this consistently use the hiera key `ora_profile::database::source`.
-
-
-[Back to overview of database::common](#attributes)
-
-### cluster_nodes<a name='database::common_cluster_nodes'>
-
-An array with cluster node names for RAC.
-
-Example:
-```yaml
-ora_profile::database::cluster_nodes:
-- node1
-- node2
-```
-
-
-[Back to overview of database::common](#attributes)
-
 ### oracle_user_password<a name='database::common_oracle_user_password'>
 
 The password for the oracle os user.
 Only applicable for Windows systems.
 
 To customize this consistently use the hiera key `ora_profile::database::oracle_user_password`.
-
-
-[Back to overview of database::common](#attributes)
-
-### db_control_provider<a name='database::common_db_control_provider'>
-
-Which provider should be used for the type db_control.
-
-The default value is: `sqlplus`
-
-To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
-
-
-[Back to overview of database::common](#attributes)
-
-### patch_window<a name='database::common_patch_window'>
-
-The patch window in which you want to do the patching. Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
-
-an example on how to use this is:
-
-        patch_window => '2:00 - 4:00'
 
 
 [Back to overview of database::common](#attributes)
@@ -221,6 +178,48 @@ ora_profile::database::patch_levels:
         grid_sub_patches:      ['31771877','31772784','31773437','31780966']
 
 ```
+
+
+[Back to overview of database::common](#attributes)
+
+### patch_window<a name='database::common_patch_window'>
+
+The patch window in which you want to do the patching. Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
+
+an example on how to use this is:
+
+        patch_window => '2:00 - 4:00'
+
+
+[Back to overview of database::common](#attributes)
+
+### source<a name='database::common_source'>
+
+The location where the classes can find the software. 
+
+You can specify a local directory, a Puppet url or an http url.
+
+The default is : `puppet:///modules/software/`
+
+To customize this consistently use the hiera key `ora_profile::database::source`.
+
+
+[Back to overview of database::common](#attributes)
+
+### temp_dir<a name='database::common_temp_dir'>
+
+Directory to use for temporary files.
+
+
+[Back to overview of database::common](#attributes)
+
+### version<a name='database::common_version'>
+
+The version of Oracle you want to install.
+
+The default is : `12.2.0.1`
+
+To customize this consistently use the hiera key `ora_profile::database::version`.
 
 
 [Back to overview of database::common](#attributes)

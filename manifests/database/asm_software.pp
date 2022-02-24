@@ -132,11 +132,7 @@
 #    
 #    The list of interfaces to use for RAC.The value should be a comma separated strings where each string is as shown below```InterfaceName:SubnetAddress:InterfaceType```where InterfaceType can be either "1", "2", "3", "4" or "5" (1 indicates public, 2 indicates private, 3 indicates the interface is not used, 4 indicates ASM and 5 indicates ASM & Private)The default value is: `undef`
 #
-# @param [Optional[Enum['FLEX_ASM_STORAGE',
-#     'CLIENT_ASM_STORAGE',
-#     'LOCAL_ASM_STORAGE',
-#     'FILE_SYSTEM_STORAGE',
-#     'ASM_STORAGE']]] storage_option
+# @param [Optional[Enum['FLEX_ASM_STORAGE', 'CLIENT_ASM_STORAGE', 'LOCAL_ASM_STORAGE', 'FILE_SYSTEM_STORAGE', 'ASM_STORAGE']]] storage_option
 #    The type of storage to use.
 #    Valid values are:
 #    - `ASM_STORAGE`          (versions = 11)
@@ -149,55 +145,57 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_software(
-  Ora_Install::Version
-            $version,
-  Array[Stdlib::Absolutepath]
-            $dirs,
-  String[1] $file_name,
-  Easy_type::Password
-            $asm_sys_password,
-  String[1] $disk_discovery_string,
+class ora_profile::database::asm_software (
+# lint:ignore:strict_indent
   String[1] $asm_diskgroup,
   String[1] $asm_disks,
-  String[1] $group,
-  String[1] $oper_group,
   String[1] $asm_group,
-  Boolean   $configure_afd,
-  Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
-            $grid_type,
-  Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
-            $disk_redundancy,
-  Enum['ALL','EXTRACT']
-            $install_task,
-  Boolean   $bash_profile,
+  Easy_type::Password
+            $asm_sys_password,
   String    $bash_additions,
-  Optional[String[1]]
-            $disks_failgroup_names,
+  Boolean   $bash_profile,
   Optional[String[1]]
             $cluster_name,
+  Optional[String[1]]
+            $cluster_node_types,
+  Boolean   $configure_afd,
+  Array[Stdlib::Absolutepath]
+            $dirs,
+  String[1] $disk_discovery_string,
+  Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
+            $disk_redundancy,
+  Optional[String[1]]
+            $disks_failgroup_names,
+  String[1] $file_name,
+  Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
+            $grid_type,
+  String[1] $group,
+  Enum['ALL','EXTRACT']
+            $install_task,
+  Optional[String[1]]
+            $network_interface_list,
+  String[1] $oper_group,
   Optional[String[1]]
             $scan_name,
   Optional[Integer]
             $scan_port,
-  Optional[String[1]]
-            $cluster_node_types,
-  Optional[String[1]]
-            $network_interface_list,
   Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]
             $storage_option,
+  Ora_Install::Version
+            $version
 ) inherits ora_profile::database {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure ASM Software ${version} in ${grid_home}":
+  echo { "Ensure ASM Software ${version} in ${grid_home}":
     withpath => false,
   }
 
   $dirs.each |$dir| {
     unless defined(File[$dir]) {
-      file{$dir:
+      file { $dir:
         ensure  => directory,
         owner   => $grid_user,
         group   => $install_group,
@@ -207,14 +205,14 @@ class ora_profile::database::asm_software(
     }
   }
 
-  file{ '/u01/app':
+  file { '/u01/app':
     ensure => directory,
     owner  => $grid_user,
     group  => $install_group,
     mode   => '0775',
   }
 
-  -> file {$download_dir:
+  -> file { $download_dir:
     ensure  => directory,
     owner   => $os_user,
     group   => $install_group,
@@ -222,8 +220,8 @@ class ora_profile::database::asm_software(
     mode    => '0775',
   }
 
-  if ( $master_node == $facts['hostname'] ) {
-    ora_install::installasm{ "Install GRID version ${version} in ${grid_home}":
+  if ( $master_node == $facts['networking']['hostname'] ) {
+    ora_install::installasm { "Install GRID version ${version} in ${grid_home}":
       version                   => $version,
       file                      => $file_name,
       grid_base                 => $grid_base,
@@ -258,25 +256,24 @@ class ora_profile::database::asm_software(
       install_task              => $install_task,
     }
     $require_install = Ora_install::Installasm["Install GRID version ${version} in ${grid_home}"]
-
   } else {
     unless ( $grid_home in $facts['ora_install_homes']['product_version'].keys ) {
-      echo {"This is not the master node. Clone GRID_HOME from ${master_node}":
+      echo { "This is not the master node. Clone GRID_HOME from ${master_node}":
         withpath => false,
       }
       case $version {
         '18.0.0.0', '19.0.0.0', '21.0.0.0': {
-          $add_node_rsp = "${download_dir}/add_node_${facts['hostname']}.rsp"
+          $add_node_rsp = "${download_dir}/add_node_${facts['networking']['hostname']}.rsp"
           $add_node_command = "${grid_home}/gridSetup.sh -silent -waitForCompletion -skipPrereqs -responseFile ${add_node_rsp}"
           $ora_inventory = "${ora_inventory_dir}/oraInventory"
-          file{ $add_node_rsp:
-            ensure  => present,
+          file { $add_node_rsp:
+            ensure  => file,
             content => epp("ora_profile/grid_addnode_${version}.rsp.epp",{
-              'ora_inventory'          => $ora_inventory,
-              'grid_base'              => $grid_base,
-              'cluster_name'           => $cluster_name,
-              'hostname'               => $facts['hostname'],
-              'network_interface_list' => $network_interface_list,
+                'ora_inventory'          => $ora_inventory,
+                'grid_base'              => $grid_base,
+                'cluster_name'           => $cluster_name,
+                'hostname'               => $facts['networking']['hostname'],
+                'network_interface_list' => $network_interface_list,
             }),
             mode    => '0770',
             owner   => $grid_user,
@@ -292,19 +289,19 @@ class ora_profile::database::asm_software(
           }
         }
         '12.2.0.1': {
-          $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
+          $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['networking']['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['networking']['hostname']}-vip}\" \"CLUSTER_NEW_NODE_ROLES={HUB}\""
         }
         '12.1.0.2': {
-          $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
+          $add_node_command = "${grid_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['networking']['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['networking']['hostname']}-vip}\""
         }
         '11.2.0.4': {
-          $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${grid_home}/oui/bin/addNode.sh -silent -ignorePrereq -ignoreSysPrereqs \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
+          $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${grid_home}/oui/bin/addNode.sh -silent -ignorePrereq -ignoreSysPrereqs \"CLUSTER_NEW_NODES={${facts['networking']['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['networking']['hostname']}-vip}\""
         }
         default: {
           notice('Version not supported yet')
         }
       }
-      exec{'add_grid_node':
+      exec { 'add_grid_node':
         timeout => 0,
         user    => $grid_user,
         umask   => '0022',
@@ -312,7 +309,7 @@ class ora_profile::database::asm_software(
         creates => "${grid_home}/root.sh",
       }
 
-      ~> exec{'register_grid_node':
+      ~> exec { 'register_grid_node':
         refreshonly => true,
         timeout     => 0,
         user        => 'root',
@@ -324,7 +321,7 @@ class ora_profile::database::asm_software(
   }
 
   if ( $install_task == 'ALL' ) {
-    ora_setting{ $asm_instance_name:
+    ora_setting { $asm_instance_name:
       default     => false,
       user        => 'sys',
       syspriv     => 'sysasm',
@@ -334,7 +331,7 @@ class ora_profile::database::asm_software(
       daemonized  => false,
     }
 
-    -> ora_tab_entry{ $asm_instance_name:
+    -> ora_tab_entry { $asm_instance_name:
       ensure      => 'present',
       oracle_home => $grid_home,
       startup     => 'N',

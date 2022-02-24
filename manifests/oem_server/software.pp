@@ -112,36 +112,37 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::oem_server::software(
-  String[1]                           $version,
-  String[1]                           $file,
-  Stdlib::Absolutepath                $oracle_base_dir,
-  Stdlib::Absolutepath                $oracle_home_dir,
+class ora_profile::oem_server::software (
+# lint:ignore:strict_indent
   Stdlib::Absolutepath                $agent_base_dir,
-  Stdlib::Absolutepath                $software_library_dir,
-  Stdlib::Absolutepath                $ora_inventory_dir,
-  String[1]                           $weblogic_user,
-  Easy_type::Password                 $weblogic_password,
+  Easy_type::Password                 $agent_registration_password,
   String[1]                           $database_hostname,
   Integer                             $database_listener_port,
   String[1]                           $database_service_sid_name,
   Easy_type::Password                 $database_sys_password,
-  Easy_type::Password                 $sysman_password,
-  Easy_type::Password                 $agent_registration_password,
   String[1]                           $deployment_size,
-  String[1]                           $user,
-  String[1]                           $group,
   Stdlib::Absolutepath                $download_dir,
-  Stdlib::Absolutepath                $temp_dir,
-  Boolean                             $zip_extract,
-  String[1]                           $puppet_download_mnt_point,
+  String[1]                           $file,
+  String[1]                           $group,
   Variant[Boolean,Enum['on_failure']] $logoutput,
+  Stdlib::Absolutepath                $ora_inventory_dir,
+  Stdlib::Absolutepath                $oracle_base_dir,
+  Stdlib::Absolutepath                $oracle_home_dir,
+  String[1]                           $puppet_download_mnt_point,
+  Stdlib::Absolutepath                $software_library_dir,
   Boolean                             $swonly,
+  Easy_type::Password                 $sysman_password,
+  Stdlib::Absolutepath                $temp_dir,
+  String[1]                           $user,
+  String[1]                           $version,
+  Easy_type::Password                 $weblogic_password,
+  String[1]                           $weblogic_user,
+  Boolean                             $zip_extract
 ) inherits ora_profile::oem_server {
-
+# lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure OEM Server version ${version} in ${oracle_home_dir}":
+  echo { "Ensure OEM Server version ${version} in ${oracle_home_dir}":
     withpath => false,
   }
 
@@ -159,7 +160,7 @@ class ora_profile::oem_server::software(
       $db_home = lookup('ora_profile::database::oracle_home')
       $db_os_user = lookup('ora_profile::database::os_user')
       $db_control_provider = lookup('ora_profile::database::db_control_provider')
-      db_control {"stop database ${dbname}":
+      db_control { "stop database ${dbname}":
         ensure                  => 'stop',
         instance_name           => $dbname,
         oracle_product_home_dir => $db_home,
@@ -167,7 +168,7 @@ class ora_profile::oem_server::software(
         provider                => $db_control_provider,
         before                  => Db_control["start database ${dbname}"],
       }
-      db_control {"start database ${dbname}":
+      db_control { "start database ${dbname}":
         ensure                  => 'start',
         instance_name           => $dbname,
         oracle_product_home_dir => $db_home,
@@ -175,11 +176,10 @@ class ora_profile::oem_server::software(
         provider                => $db_control_provider,
         require                 => Db_control["stop database ${dbname}"],
       }
-
     }
   }
 
-  ora_install::installem{ "Install Enterprise Manager ${version}":
+  ora_install::installem { "Install Enterprise Manager ${version}":
     version                     => $version,
     file                        => $file,
     oracle_base_dir             => $oracle_base_dir,
