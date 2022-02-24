@@ -31,20 +31,19 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_storage::udev(
-  String[1] $grid_user,
-  String[1] $grid_admingroup,
+class ora_profile::database::asm_storage::udev (
   Hash      $disk_devices,
+  String[1] $grid_admingroup,
+  String[1] $grid_user
 ) inherits ora_profile::database {
-
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   file { '/etc/udev/rules.d/99-oracle-asmdevices.rules':
-    ensure  => present,
+    ensure  => file,
     content => epp("ora_profile/99-oracle-asmdevices-el${facts['os']['release']['major']}.rules.epp",{
-      'grid_user'       => $grid_user,
-      'grid_admingroup' => $grid_admingroup,
-      'disk_devices'    => $disk_devices,
+        'grid_user'       => $grid_user,
+        'grid_admingroup' => $grid_admingroup,
+        'disk_devices'    => $disk_devices,
     }),
     notify  => Exec['apply_udev_rules'],
   }
@@ -52,5 +51,4 @@ class ora_profile::database::asm_storage::udev(
     command     => '/sbin/udevadm control --reload-rules && /sbin/udevadm trigger',
     refreshonly => true,
   }
-
 }

@@ -124,11 +124,7 @@
 #    
 #    The list of interfaces to use for RAC.The value should be a comma separated strings where each string is as shown below```InterfaceName:SubnetAddress:InterfaceType```where InterfaceType can be either "1", "2", "3", "4" or "5" (1 indicates public, 2 indicates private, 3 indicates the interface is not used, 4 indicates ASM and 5 indicates ASM & Private)The default value is: `undef`
 #
-# @param [Optional[Enum['FLEX_ASM_STORAGE',
-#     'CLIENT_ASM_STORAGE',
-#     'LOCAL_ASM_STORAGE',
-#     'FILE_SYSTEM_STORAGE',
-#     'ASM_STORAGE']]] storage_option
+# @param [Optional[Enum['FLEX_ASM_STORAGE', 'CLIENT_ASM_STORAGE', 'LOCAL_ASM_STORAGE', 'FILE_SYSTEM_STORAGE', 'ASM_STORAGE']]] storage_option
 #    The type of storage to use.
 #    Valid values are:
 #    - `ASM_STORAGE`          (versions = 11)
@@ -141,51 +137,53 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_setup(
-  Ora_Install::Version
-            $version,
-  Array[Stdlib::Absolutepath]
-            $dirs,
-  String[1] $file_name,
-  Easy_type::Password
-            $asm_sys_password,
-  String[1] $disk_discovery_string,
+class ora_profile::database::asm_setup (
+# lint:ignore:strict_indent
   String[1] $asm_diskgroup,
   String[1] $asm_disks,
-  String[1] $group,
-  String[1] $oper_group,
   String[1] $asm_group,
-  Boolean   $configure_afd,
-  Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
-            $grid_type,
-  Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
-            $disk_redundancy,
+  Easy_type::Password
+            $asm_sys_password,
   Boolean   $bash_profile,
   Optional[String[1]]
-            $disks_failgroup_names,
-  Optional[String[1]]
             $cluster_name,
+  Optional[String[1]]
+            $cluster_node_types,
+  Boolean   $configure_afd,
+  Array[Stdlib::Absolutepath]
+            $dirs,
+  String[1] $disk_discovery_string,
+  Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
+            $disk_redundancy,
+  Optional[String[1]]
+            $disks_failgroup_names,
+  String[1] $file_name,
+  Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
+            $grid_type,
+  String[1] $group,
+  Optional[String[1]]
+            $network_interface_list,
+  String[1] $oper_group,
   Optional[String[1]]
             $scan_name,
   Optional[Integer]
             $scan_port,
-  Optional[String[1]]
-            $cluster_node_types,
-  Optional[String[1]]
-            $network_interface_list,
   Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]
             $storage_option,
+  Ora_Install::Version
+            $version
 ) inherits ora_profile::database::asm_software {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure ASM Setup ${version} in ${grid_home}":
+  echo { "Ensure ASM Setup ${version} in ${grid_home}":
     withpath => false,
   }
 
-  if ( $master_node == $facts['hostname'] ) {
-    ora_install::installasm{ "Setup GRID version ${version} in ${grid_home}":
+  if ( $master_node == $facts['networking']['hostname'] ) {
+    ora_install::installasm { "Setup GRID version ${version} in ${grid_home}":
       version                   => $version,
       file                      => $file_name,
       grid_base                 => $grid_base,
@@ -221,7 +219,7 @@ class ora_profile::database::asm_setup(
     }
   }
 
-  ora_setting{ $asm_instance_name:
+  ora_setting { $asm_instance_name:
     default     => false,
     user        => 'sys',
     syspriv     => 'sysasm',
@@ -230,7 +228,7 @@ class ora_profile::database::asm_setup(
     daemonized  => false,
   }
 
-  -> ora_tab_entry{ $asm_instance_name:
+  -> ora_tab_entry { $asm_instance_name:
     ensure      => 'present',
     oracle_home => $grid_home,
     startup     => 'N',

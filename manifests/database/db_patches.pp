@@ -67,18 +67,20 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::db_patches(
-  String[1] $level,
+class ora_profile::database::db_patches (
+# lint:ignore:strict_indent
   Boolean   $include_ojvm,
-  String[1] $patch_file,
+  String[1] $level,
+  String[1] $opversion,
   Stdlib::Absolutepath
             $oracle_home,
-  String[1] $opversion,
   String[1] $os_user,
+  String[1] $patch_file,
   Hash      $patch_list,
   Variant[Boolean,Enum['on_failure']]
-            $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
+            $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database::common {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
@@ -93,7 +95,7 @@ class ora_profile::database::db_patches(
 
   if ( $patch_list.keys.size > 0 ) {
     if ( $level == 'NONE' ) {
-      echo {"Ensure DB Patch(es) ${patch_list.keys.join(',')} on ${oracle_home}":
+      echo { "Ensure DB Patch(es) ${patch_list.keys.join(',')} on ${oracle_home}":
         withpath => false,
       }
     } else {
@@ -125,10 +127,10 @@ class ora_profile::database::db_patches(
       $current_patch = {
         # Add sub_patches and source
         # Remove db_sub_patches, grid_sub_patches and type
-        "${oracle_home}:${patch_name}" => ($patch_details + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file' - 'type')
+        "${oracle_home}:${patch_name}" => ($patch_details + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file' - 'type'),
       }
       $current_patch
-    }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
+    }.reduce( {}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
   } else {
     fail "Patchlevel '${level}' not defined for database version '${db_version}'"
   }
@@ -172,16 +174,16 @@ class ora_profile::database::db_patches(
   # patch_list_to_apply is the hash with homes and their specified patch details of which at least one need to be applied
   $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list, 'db')
   # apply_patches is the hash without the OPatch details which can be given to ora_opatch
-  $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
+  $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce( {}) |$memo, $array| { $memo + $array }
   $converted_apply_patch_list = ora_install::ora_physical_patches($apply_patches)
   $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
 
-  schedule {'db_patchschedule':
+  schedule { 'db_patchschedule':
     range  => $patch_window,
   }
 
   if ( $::facts['ora_version'] ) {
-    echo {"Ensure DB patch(es) in patch window: ${patch_window}":
+    echo { "Ensure DB patch(es) in patch window: ${patch_window}":
       withpath => false,
     }
     $schedule = 'db_patchschedule'
@@ -193,7 +195,7 @@ class ora_profile::database::db_patches(
   easy_type::resources_in_catalog('Ora_install::Installdb').map |$resource| {
     $home = $resource['oracle_home']
     Ora_install::Opatchupgrade["DB OPatch upgrade to ${opversion} in ${home}"] -> Ora_opatch <| tag == 'db_patches' |>
-    ora_install::opatchupgrade{"DB OPatch upgrade to ${opversion} in ${home}":
+    ora_install::opatchupgrade { "DB OPatch upgrade to ${opversion} in ${home}":
       oracle_home               => $home,
       patch_file                => "${patch_file}.zip",
       opversion                 => $opversion,
@@ -212,19 +214,17 @@ class ora_profile::database::db_patches(
     }
   } else {
     if ( $facts['ora_version'] ) {
-
       unless ( $is_rac ) {
         $ora_install_homes = $facts['ora_install_homes']
 
         if ( $converted_apply_patch_list.length > 0 ) {
-          echo {"Apply DB patch(es) ${converted_apply_patch_list.join(',')}":
+          echo { "Apply DB patch(es) ${converted_apply_patch_list.join(',')}":
             withpath => false,
             schedule => $schedule,
           }
         }
 
-        $homes_to_be_patched.each |$patch_home|  {
-
+        $homes_to_be_patched.each |$patch_home| {
           if ( has_key($ora_install_homes['running_processes'], $patch_home) ) {
             $running_sids = $ora_install_homes['running_processes'][$patch_home]['sids'].keys
             $running_listeners = $ora_install_homes['running_processes'][$patch_home]['listeners']
@@ -234,13 +234,13 @@ class ora_profile::database::db_patches(
           }
 
           if $running_listeners.length > 0 {
-            echo {"Stopping and starting listener(s) ${running_listeners.join(',')} to apply DB patches on ${patch_home}":
+            echo { "Stopping and starting listener(s) ${running_listeners.join(',')} to apply DB patches on ${patch_home}":
               withpath => false,
               schedule => $schedule,
             }
 
             $running_listeners.each |$listener| {
-              db_listener {"Stop listener ${listener} from home ${patch_home}":
+              db_listener { "Stop listener ${listener} from home ${patch_home}":
                 ensure          => 'stop',
                 listener_name   => $listener,
                 oracle_home_dir => $patch_home,
@@ -251,13 +251,13 @@ class ora_profile::database::db_patches(
             }
           }
           if $running_sids.length > 0 {
-            echo {"Stopping and starting database(s) ${running_sids.join(',')} to apply DB patches on ${patch_home}":
+            echo { "Stopping and starting database(s) ${running_sids.join(',')} to apply DB patches on ${patch_home}":
               withpath => false,
               schedule => $schedule,
             }
 
             $running_sids.each |$dbname| {
-              db_control {"database stop ${dbname}":
+              db_control { "database stop ${dbname}":
                 ensure                  => 'stop',
                 instance_name           => $dbname,
                 oracle_product_home_dir => $patch_home,
@@ -275,7 +275,7 @@ class ora_profile::database::db_patches(
     #
     # Some patches need to be installed
     #
-    $apply_patches.each |String $patch, Hash $patch_properties = {}| {
+    $apply_patches.each | String $patch, Hash $patch_properties = {} | {
       ora_opatch {
         default:
           ensure   => present,
@@ -283,7 +283,7 @@ class ora_profile::database::db_patches(
           schedule => $schedule,
           provider => 'regular',
           tag      => 'db_patches',
-        ;
+          ;
         $patch:
           * => $patch_properties,
       }
@@ -295,9 +295,7 @@ class ora_profile::database::db_patches(
       # Now we need to start it again.
       #
       unless ( $is_rac ) {
-
-        $homes_to_be_patched.each |$patch_home|  {
-
+        $homes_to_be_patched.each |$patch_home| {
           if ( has_key($ora_install_homes['running_processes'], $patch_home) ) {
             $running_sids = $ora_install_homes['running_processes'][$patch_home]['sids'].keys
             $running_listeners = $ora_install_homes['running_processes'][$patch_home]['listeners']
@@ -308,7 +306,7 @@ class ora_profile::database::db_patches(
 
           if $running_listeners.length > 0 {
             $running_listeners.each |$listener| {
-              db_listener {"Start listener ${listener} from home ${patch_home}":
+              db_listener { "Start listener ${listener} from home ${patch_home}":
                 ensure          => 'start',
                 listener_name   => $listener,
                 oracle_home_dir => $patch_home,
@@ -320,7 +318,7 @@ class ora_profile::database::db_patches(
           }
           if $running_sids.length > 0 {
             $running_sids.each |$dbname| {
-              db_control {"database start ${dbname}":
+              db_control { "database start ${dbname}":
                 ensure                  => 'start',
                 # Todo: Add mount option to db_control
                 # ensure                  => case $ora_install_homes[$patch_home]['running_sids'][$dbname]['open_mode'] {

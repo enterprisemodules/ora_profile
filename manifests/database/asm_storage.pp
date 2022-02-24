@@ -47,25 +47,27 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_storage(
-  Enum['nfs','asmlib','afd','raw', 'none']
-            $storage_type,
-  Optional[Stdlib::Absolutepath]
-            $nfs_mountpoint,
-  Optional[Stdlib::Absolutepath]
-            $nfs_export,
-  Optional[String[1]]
-            $nfs_server,
+class ora_profile::database::asm_storage (
+# lint:ignore:strict_indent
   Optional[Hash]
             $disk_devices,
+  Optional[Stdlib::Absolutepath]
+            $nfs_export,
+  Optional[Stdlib::Absolutepath]
+            $nfs_mountpoint,
+  Optional[String[1]]
+            $nfs_server,
   Optional[String[1]]
             $scan_exclude,
+  Enum['nfs','asmlib','afd','raw', 'none']
+            $storage_type
 ) inherits ora_profile::database {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure ASM storage setup using ${storage_type} disk devices":
+  echo { "Ensure ASM storage setup using ${storage_type} disk devices":
     withpath => false,
   }
   case $storage_type {
@@ -73,7 +75,7 @@ class ora_profile::database::asm_storage(
       unless ( $nfs_mountpoint or $nfs_export or $nfs_server) {
         fail 'Parameters nfs_mountpoint, nfs_export and nfs_server should all be specified'
       }
-      class {'ora_profile::database::asm_storage::nfs':
+      class { 'ora_profile::database::asm_storage::nfs':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
         nfs_mountpoint  => $nfs_mountpoint,
@@ -86,7 +88,7 @@ class ora_profile::database::asm_storage(
       unless ( $disk_devices ) {
         fail 'Parameters disk_devices should be specified'
       }
-      class {'ora_profile::database::asm_storage::udev':
+      class { 'ora_profile::database::asm_storage::udev':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
         disk_devices    => $disk_devices,
@@ -97,13 +99,13 @@ class ora_profile::database::asm_storage(
       }
       contain ora_profile::database::asm_storage::udev
       $disk_devices.each |$device, $attributes| {
-        ora_profile::database::asm_storage::partition {$device:
+        ora_profile::database::asm_storage::partition { $device:
           raw_device => "/dev/${device}:1",
           table_type => 'gpt',
           before     => Class['ora_profile::database::asm_storage::asmlib'],
         }
       }
-      class {'ora_profile::database::asm_storage::asmlib':
+      class { 'ora_profile::database::asm_storage::asmlib':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
         scan_exclude    => $scan_exclude,
@@ -115,7 +117,7 @@ class ora_profile::database::asm_storage(
       unless ( $disk_devices ) {
         fail 'Parameters disk_devices should be specified'
       }
-      class {'ora_profile::database::asm_storage::udev':
+      class { 'ora_profile::database::asm_storage::udev':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
         disk_devices    => $disk_devices,
@@ -126,7 +128,7 @@ class ora_profile::database::asm_storage(
       unless ( $disk_devices ) {
         fail 'Parameters disk_devices should be specified'
       }
-      class {'ora_profile::database::asm_storage::udev':
+      class { 'ora_profile::database::asm_storage::udev':
         grid_user       => $grid_user,
         grid_admingroup => $grid_admingroup,
         disk_devices    => $disk_devices,

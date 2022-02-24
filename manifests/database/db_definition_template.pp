@@ -123,46 +123,48 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::db_definition_template(
-  Ora_Install::Version
-                      $version,
-  Stdlib::Absolutepath
-                      $oracle_home,
+class ora_profile::database::db_definition_template (
+# lint:ignore:strict_indent
+  Enum['enabled','disabled']
+                      $container_database,
+  String[1]           $data_file_destination,
+  Enum['SINGLE','RAC','RACONE']
+                      $db_conf_type,
+  Optional[String[1]] $dbdomain,
+  String[1]           $dbname,
+  Optional[Variant[String[1], Hash]]
+                      $init_params,
+  String[1]           $log_size,
+  Enum['AUTO','AUTO_SGA','CUSTOM_SGA']
+                      $memory_mgmt_type,
   Stdlib::Absolutepath
                       $oracle_base,
-  String[1]           $dbname,
-  String[1]           $template_name,
-  Enum['non-seed','seed']
-                      $template_type,
-  String[1]           $data_file_destination,
+  Stdlib::Absolutepath
+                      $oracle_home,
+  String[1]           $puppet_download_mnt_point,
   String[1]           $recovery_area_destination,
   Enum['TRUE','FALSE']
                       $sample_schema,
-  Enum['AUTO','AUTO_SGA','CUSTOM_SGA']
-                      $memory_mgmt_type,
   Enum['FS','CFS','ASM']
                       $storage_type,
-  String[1]           $puppet_download_mnt_point,
-  Easy_type::Password
-                      $system_password,
   Easy_Type::Password
                       $sys_password,
-  Enum['SINGLE','RAC','RACONE']
-                      $db_conf_type,
-  Enum['enabled','disabled']
-                      $container_database,
-  String[1]           $log_size,
-  Optional[String[1]] $dbdomain,
-  Optional[Variant[String[1], Hash]]
-                      $init_params,
+  Easy_type::Password
+                      $system_password,
+  String[1]           $template_name,
+  Enum['non-seed','seed']
+                      $template_type,
+  Ora_Install::Version
+                      $version,
   Variant[Boolean,Enum['on_failure']]
-                      $logoutput = lookup({name => 'logoutput', default_value => 'on_failure'}),
+                      $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure DB definition from template for database ${dbname} in ${oracle_home}":
+  echo { "Ensure DB definition from template for database ${dbname} in ${oracle_home}":
     withpath => false,
   }
 
@@ -177,8 +179,8 @@ class ora_profile::database::db_definition_template(
     $db_cluster_nodes = undef
   }
 
-  if ( $master_node == $facts['hostname'] ) {
-    ora_install::database{ $dbname:
+  if ( $master_node == $facts['networking']['hostname'] ) {
+    ora_install::database { $dbname:
       action                    => 'create',
       oracle_base               => $oracle_base,
       oracle_home               => $oracle_home,
@@ -207,15 +209,15 @@ class ora_profile::database::db_definition_template(
       before                    => Ora_setting[$db_instance_name],
     }
   } else {
-    exec{'add_instance':
+    exec { 'add_instance':
       user        => $os_user,
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO', "ORACLE_HOME=${oracle_home}"],
-      command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${::hostname}",
+      command     => "${oracle_home}/bin/srvctl add instance -d ${dbname} -i ${db_instance_name} -n ${facts['networking']['hostname']}",
       unless      => "${oracle_home}/bin/srvctl status instance -d ${dbname} -i ${db_instance_name}",
       logoutput   => $logoutput,
     }
 
-    -> exec{'start_instance':
+    -> exec { 'start_instance':
       user        => $os_user,
       environment => ["ORACLE_SID=${db_instance_name}", 'ORAENV_ASK=NO',"ORACLE_HOME=${oracle_home}"],
       command     => "${oracle_home}/bin/srvctl start instance -d ${dbname} -i ${db_instance_name}",
@@ -234,7 +236,7 @@ class ora_profile::database::db_definition_template(
     },
   }
 
-  -> ora_tab_entry{ $db_instance_name:
+  -> ora_tab_entry { $db_instance_name:
     ensure      => 'present',
     oracle_home => $oracle_home,
     startup     => 'N',
@@ -243,7 +245,7 @@ class ora_profile::database::db_definition_template(
   #
   # Database is done. Now start it
   #
-  -> db_control {'database started':
+  -> db_control { 'database started':
     ensure                  => 'start',
     provider                => $db_control_provider,
     instance_name           => $dbname,
@@ -254,7 +256,7 @@ class ora_profile::database::db_definition_template(
   if ( $is_rac ) {
     $cluster_nodes.each |$index, $node| {
       $inst_number = $index + 1
-      ora_profile::database::rac::instance {"${dbname}${inst_number}":
+      ora_profile::database::rac::instance { "${dbname}${inst_number}":
         on                => $db_instance_name,
         number            => $inst_number,
         thread            => $inst_number,

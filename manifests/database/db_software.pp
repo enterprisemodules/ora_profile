@@ -101,32 +101,34 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::db_software(
-  Ora_Install::Version
-            $version,
+class ora_profile::database::db_software (
+# lint:ignore:strict_indent
+  String    $bash_additions,
+  Boolean   $bash_profile,
   Enum['SE2', 'SE', 'EE', 'SEONE']
             $database_type,
+  String[1] $dba_group,
   Array[Stdlib::Absolutepath]
             $dirs,
-  String[1] $dba_group,
+  String[1] $file_name,
   String[1] $oper_group,
-  String[1] $os_user,
-  Boolean   $bash_profile,
-  String    $bash_additions,
   Stdlib::Absolutepath
             $oracle_base,
   Variant[Stdlib::Absolutepath, Hash]
             $oracle_home,
+  String[1] $os_user,
   String[1] $source,
-  String[1] $file_name,
+  Ora_Install::Version
+            $version
 ) inherits ora_profile::database::common {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   #
   # On non-windows systems , ensure the unzip package is installed
   #
-  if !defined(Package['unzip']) and $::kernel != 'Windows'  {
+  if !defined(Package['unzip']) and $facts['kernel'] != 'Windows' {
     package { 'unzip':
       ensure => 'present',
     }
@@ -140,13 +142,13 @@ class ora_profile::database::db_software(
     unless defined(File[$dir]) {
       case $facts['os']['family'] {
         'windows': {
-          file{$dir:
+          file { $dir:
             ensure => directory,
             owner  => $os_user,
           }
         }
         default: {
-          file{$dir:
+          file { $dir:
             ensure  => directory,
             owner   => $os_user,
             group   => $install_group,
@@ -158,8 +160,7 @@ class ora_profile::database::db_software(
     }
   }
 
-  if ( $master_node == $facts['hostname'] ) {
-
+  if ( $master_node == $facts['networking']['hostname'] ) {
     if ( $is_rac ) {
       $installdb_cluster_nodes = $master_node
     } else {
@@ -191,7 +192,7 @@ class ora_profile::database::db_software(
     }
     if ( $oracle_home =~ String ) {
       $install_homes = {
-        $oracle_home => deep_merge($oracle_home_defaults, {oracle_home => $oracle_home})
+        $oracle_home => deep_merge($oracle_home_defaults, { oracle_home => $oracle_home }),
       }
     } else {
       if ( $is_rac ) {
@@ -201,46 +202,42 @@ class ora_profile::database::db_software(
       }
     }
 
-    $install_homes.each |$_home, $home_props = {}| {
+    $install_homes.each | $_home, $home_props = {} | {
       $oracle_home_props = deep_merge($oracle_home_defaults, $home_props)
 
-      echo {"Ensure DB software ${oracle_home_props['version']} ${oracle_home_props['database_type']} in ${oracle_home_props['oracle_home']}":
+      echo { "Ensure DB software ${oracle_home_props['version']} ${oracle_home_props['database_type']} in ${oracle_home_props['oracle_home']}":
         withpath => false,
       }
 
       ora_install::installdb { $oracle_home_props['oracle_home']:
         * => $oracle_home_props,
       }
-    }
-
-
-  } else {
-
+  } } else {
     if ( $oracle_home =~ Hash ) {
       fail 'Multiple ORACLE_HOME\'s is not supported in a RAC environment yet'
     }
 
     unless $oracle_home in $facts['ora_install_homes']['product_version'].keys {
-      echo {"This is not the master node. Clone ORACLE_HOME from ${master_node}":
+      echo { "This is not the master node. Clone ORACLE_HOME from ${master_node}":
         withpath => false,
       }
 
       case $version {
         '12.2.0.1', '18.0.0.0', '19.0.0.0', '21.0.0.0': {
-          $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\""
+          $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['networking']['hostname']}}\""
         }
         '12.1.0.2': {
-          $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['hostname']}-vip}\""
+          $add_node_command = "${oracle_home}/addnode/addnode.sh -silent -ignorePrereq \"CLUSTER_NEW_NODES={${facts['networking']['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['networking']['hostname']}-vip}\""
         }
         '11.2.0.4': {
-          $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${oracle_home}/oui/bin/addNode.sh -ignorePrereq \"CLUSTER_NEW_NODES={${::hostname}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${::hostname}-vip}\""
+          $add_node_command = "IGNORE_PREADDNODE_CHECKS=Y ${oracle_home}/oui/bin/addNode.sh -ignorePrereq \"CLUSTER_NEW_NODES={${facts['networking']['hostname']}}\" \"CLUSTER_NEW_VIRTUAL_HOSTNAMES={${facts['networking']['hostname']}-vip}\""
         }
         default: {
           notice('Version not supported yet')
         }
       }
 
-      exec{'add_oracle_node':
+      exec { 'add_oracle_node':
         timeout => 0,
         user    => $os_user,
         umask   => '0022',
@@ -248,7 +245,7 @@ class ora_profile::database::db_software(
         creates => "${oracle_home}/root.sh",
       }
 
-      ~> exec{'register_oracle_node':
+      ~> exec { 'register_oracle_node':
         refreshonly => true,
         timeout     => 0,
         user        => 'root',
@@ -264,18 +261,17 @@ class ora_profile::database::db_software(
   }
 
   if ( $facts['os']['family'] == 'windows' ) {
-    file {"${oracle_base}\\admin":
+    file { "${oracle_base}\\admin":
       ensure => 'directory',
       owner  => $os_user,
     }
   } else {
-    file {"${oracle_base}/admin":
+    file { "${oracle_base}/admin":
       ensure => 'directory',
       owner  => $os_user,
       group  => $install_group,
       mode   => '0775',
     }
   }
-
 }
 # lint:endignore

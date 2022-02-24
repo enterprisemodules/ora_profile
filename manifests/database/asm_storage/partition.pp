@@ -28,7 +28,8 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-define ora_profile::database::asm_storage::partition(
+define ora_profile::database::asm_storage::partition (
+# lint:ignore:strict_indent
   Stdlib::Absolutepath
             $raw_device,
   Enum['gpt','msdos']
@@ -39,7 +40,7 @@ define ora_profile::database::asm_storage::partition(
   Optional[Easy_type::Size]
             $end             = undef,
 ) {
-
+# lint:endignore:strict_indent
   $device = split($raw_device,':')[0]
 
   easy_type::debug_evaluation() # Show local variable on extended debug
@@ -71,5 +72,4 @@ define ora_profile::database::asm_storage::partition(
     command     => '/sbin/udevadm control --reload-rules && /sbin/udevadm trigger',
     refreshonly => true,
   }
-
 }

@@ -4,7 +4,7 @@ describe 'ora_profile::database::asm_software' do
   on_supported_os(:facterversion => '2.4').each do |os, os_facts|
     context "on #{os}" do
       if os =~ /centos-8/
-        let(:facts) { os_facts }
+        let(:facts) { os_facts.merge({networking: {hostname: 'foo'}}) }
         let(:test_params) {{}}
         let(:params) {{
           asm_sys_password:       RSpec::Puppet::RawString.new("Sensitive('Welcome01!')"),
@@ -23,7 +23,7 @@ describe 'ora_profile::database::asm_software' do
           it { is_expected.to compile }
           it { is_expected.to contain_file('/install/add_node_foo.rsp')
             .with('path'    => '/install/add_node_foo.rsp')
-            .with('ensure'  => 'present')
+            .with('ensure'  => 'file')
             .with('content' => /INVENTORY_LOCATION=\/u01\/app\/oraInventory/ )
             .with('content' => /ORACLE_BASE=\/u01\/app\/grid\/admin/ )
             .with('content' => /oracle.install.crs.config.clusterName=cluster_name/ )
@@ -38,7 +38,7 @@ describe 'ora_profile::database::asm_software' do
           it { is_expected.to compile }
           it { is_expected.to contain_file('/install/add_node_foo.rsp')
             .with('path'    => '/install/add_node_foo.rsp')
-            .with('ensure'  => 'present')
+            .with('ensure'  => 'file')
             .with('content' => /INVENTORY_LOCATION=\/u01\/app\/oraInventory/ )
             .with('content' => /ORACLE_BASE=\/u01\/app\/grid\/admin/ )
             .with('content' => /oracle.install.crs.config.clusterName=cluster_name/ )

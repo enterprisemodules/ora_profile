@@ -28,16 +28,17 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::cis_controls(
+class ora_profile::database::cis_controls (
+# lint:ignore:strict_indent
   String[1]                   $dbname,
-  Optional[String[1]]         $product_version,
   Optional[String[1]]         $doc_version,
-  Optional[Array[String[1]]]  $skip_list,
+  Optional[String[1]]         $product_version,
+  Optional[Array[String[1]]]  $skip_list
 ) inherits ora_profile::database {
-
+# lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Making sure database ${dbname} is secured.":
+  echo { "Making sure database ${dbname} is secured.":
     withpath => false,
   }
 

@@ -28,12 +28,11 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::firewall::iptables(
-  Hash            $ports,
-  Boolean         $manage_service,
+class ora_profile::database::firewall::iptables (
   Optional[Array] $cluster_nodes,
+  Boolean         $manage_service,
+  Hash            $ports
 ) {
-
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   # Oracle recommends to disable firewalld for RAC installations
@@ -44,7 +43,7 @@ class ora_profile::database::firewall::iptables(
     }
   } else {
     unless defined(Package['iptables']) {
-      package {'iptables':
+      package { 'iptables':
         ensure => 'present',
       }
     }
@@ -52,7 +51,7 @@ class ora_profile::database::firewall::iptables(
     $defaults = {
       ensure => 'present',
       action => 'accept',
-      proto  => 'tcp'
+      proto  => 'tcp',
     }
     ensure_resources('firewall', $ports, $defaults)
 
@@ -67,9 +66,9 @@ class ora_profile::database::firewall::iptables(
 
     if $manage_service {
       service { 'iptables':
-          ensure    => true,
-          enable    => true,
-          hasstatus => true,
+        ensure    => true,
+        enable    => true,
+        hasstatus => true,
       }
     }
   }

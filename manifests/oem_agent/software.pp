@@ -77,33 +77,34 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::oem_agent::software(
-  String               $version,
+class ora_profile::oem_agent::software (
+# lint:ignore:strict_indent
+  Stdlib::Absolutepath $agent_base_dir,
+  Easy_type::Password  $agent_registration_password,
+  Stdlib::Absolutepath $download_dir,
+  Integer              $em_upload_port,
+  String               $install_group,
   String               $install_version,
   String               $oms_host,
   Integer              $oms_port,
-  Integer              $em_upload_port,
-  String               $sysman_user,
-  Easy_type::Password  $sysman_password,
-  Easy_type::Password  $agent_registration_password,
-  Stdlib::Absolutepath $agent_base_dir,
-  Stdlib::Absolutepath $oracle_base,
   Stdlib::Absolutepath $ora_inventory_dir,
+  Stdlib::Absolutepath $oracle_base,
   String               $os_user,
-  String               $install_group,
-  Stdlib::Absolutepath $download_dir,
+  Easy_type::Password  $sysman_password,
+  String               $sysman_user,
   Stdlib::Absolutepath $temp_dir,
-  Boolean              $install_agent = true,
+  String               $version,
+  Boolean              $install_agent = true
 ) inherits ora_profile::oem_agent {
-
+# lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   if ( $install_agent ) {
-    echo {"Ensure Enterprise Manager agent ${install_version} installation in ${agent_base_dir}/agent_${install_version}":
+    echo { "Ensure Enterprise Manager agent ${install_version} installation in ${agent_base_dir}/agent_${install_version}":
       withpath => false,
     }
 
-    ora_install::installem_agent{ 'install_emagent':
+    ora_install::installem_agent { 'install_emagent':
       version                     => $version,
       install_type                => 'agentPull',
       install_version             => $install_version,
@@ -127,7 +128,7 @@ class ora_profile::oem_agent::software(
       logoutput                   => true,
     }
 
-    -> exec{"/bin/rm ${download_dir}/em_agent.properties":
+    -> exec { "/bin/rm ${download_dir}/em_agent.properties":
       onlyif => "/bin/stat ${download_dir}/em_agent.properties",
     }
   }

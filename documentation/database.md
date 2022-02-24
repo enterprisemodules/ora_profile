@@ -151,6 +151,7 @@ Attribute Name                                                       | Short Des
 [after_limits](#database_after_limits)                               | The name of the class you want to execute directly **after** the `limits` class.                |
 [after_packages](#database_after_packages)                           | The name of the class you want to execute directly **after** the `packages` class.              |
 [after_sysctl](#database_after_sysctl)                               | The name of the class you want to execute directly **after** the `sysctl` class.                |
+[after_tmpfiles](#database_after_tmpfiles)                           | The name of the class you want to execute directly **after** the `tmpfiles` class.              |
 [asm_diskgroup](#database_asm_diskgroup)                             | Use this value if you want to skip or use your own class for stage `asm_diskgroup`.             |
 [asm_groups_and_users](#database_asm_groups_and_users)               | Use this value if you want to skip or use your own class for stage `asm_groups_and_users`.      |
 [asm_init_params](#database_asm_init_params)                         | Use this value if you want to skip or use your own class for stage `asm_init_params`.           |
@@ -192,6 +193,7 @@ Attribute Name                                                       | Short Des
 [before_limits](#database_before_limits)                             | The name of the class you want to execute directly **before** the `limits` class.               |
 [before_packages](#database_before_packages)                         | The name of the class you want to execute directly **before** the `packages` class.             |
 [before_sysctl](#database_before_sysctl)                             | The name of the class you want to execute directly **before** the `sysctl` class.               |
+[before_tmpfiles](#database_before_tmpfiles)                         | The name of the class you want to execute directly **before** the `tmpfiles` class.             |
 [cluster_nodes](#database_cluster_nodes)                             | An array with cluster node names for RAC.                                                       |
 [db_control_provider](#database_db_control_provider)                 | Which provider should be used for the type db_control.                                          |
 [db_definition](#database_db_definition)                             | Use this value if you want to skip or use your own class for stage `db_definition`.             |
@@ -229,6 +231,7 @@ Attribute Name                                                       | Short Des
 [storage](#database_storage)                                         | The type of storage used.                                                                       |
 [sysctl](#database_sysctl)                                           | Use this value if you want to skip or use your own class for stage `sysctl`.                    |
 [temp_dir](#database_temp_dir)                                       | Directory to use for temporary files.                                                           |
+[tmpfiles](#database_tmpfiles)                                       | Use this value if you want to skip or use your own class for stage `tmpfiles`.                  |
 [version](#database_version)                                         | The version of Oracle you want to install.                                                      |
 
 
@@ -480,7 +483,7 @@ To customize this consistently use the hiera key `ora_profile::database::master_
 
 Type: `Optional[String]`
 
-Default:`$facts['hostname']`
+Default:`$facts['networking']['hostname']`
 
 [Back to overview of database](#attributes)
 
@@ -831,6 +834,32 @@ You can use hiera to set this value. Here is an example:
 
 ```yaml
 ora_profile::database::firewall:  skip
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
+### tmpfiles<a name='database_tmpfiles'>
+
+Use this value if you want to skip or use your own class for stage `tmpfiles`.
+
+## Use your own class
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::tmpfiles:  my_module::my_class
+```
+
+## Skip
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::tmpfiles:  skip
 ```
 
 Type: `Optional[String]`
@@ -1463,6 +1492,22 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
+### before_tmpfiles<a name='database_before_tmpfiles'>
+
+The name of the class you want to execute directly **before** the `tmpfiles` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::before_tmpfiles:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
 ### before_asm_storage<a name='database_before_asm_storage'>
 
 The name of the class you want to execute directly **before** the `asm_storage` class.
@@ -1919,6 +1964,22 @@ You can use hiera to set this value. Here is an example:
 
 ```yaml
 ora_profile::database::after_firewall:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
+### after_tmpfiles<a name='database_after_tmpfiles'>
+
+The name of the class you want to execute directly **after** the `tmpfiles` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::after_tmpfiles:  my_module::my_class
 ```
 
 Type: `Optional[String]`

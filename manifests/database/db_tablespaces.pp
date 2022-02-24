@@ -14,14 +14,13 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::db_tablespaces(
+class ora_profile::database::db_tablespaces (
   Hash  $list,
 ) inherits ora_profile::database {
-
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   if $list.keys.size > 0 {
-    echo {"Ensure DB tablespace(s) ${list.keys.join(',')}":
+    echo { "Ensure DB tablespace(s) ${list.keys.join(',')}":
       withpath => false,
     }
   }

@@ -15,40 +15,37 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::db_services(
+class ora_profile::database::db_services (
+# lint:ignore:strict_indent
   String[1] $dbname,
   Optional[String[1]]
             $domain_name,
 ) inherits ora_profile::database {
+# lint:endignore:strict_indent
 # lint:ignore:variable_scope
 
   if $domain_name == undef { $service_name = "${dbname}_APP" } else { $service_name = "${dbname}_APP.${domain_name}" }
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  echo {"Ensure DB service(s) ${service_name}":
+  echo { "Ensure DB service(s) ${service_name}":
     withpath => false,
   }
 
   if $ora_profile::database::cluster_nodes {
-
     $preferred_instances = $ora_profile::database::cluster_nodes.map |$index, $_node| {
       $number = $index + 1
       "${dbname}${number}"
     }
 
-    ora_service {"${service_name}@${db_instance_name}":
+    ora_service { "${service_name}@${db_instance_name}":
       ensure              => 'present',
       preferred_instances => $preferred_instances,
     }
-
   } else {
-
-    ora_service {"${service_name}@${dbname}":
+    ora_service { "${service_name}@${dbname}":
       ensure => 'present',
     }
-
   }
-
 }
 # lint:endignore

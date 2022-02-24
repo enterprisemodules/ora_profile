@@ -28,13 +28,13 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_diskgroup(
+class ora_profile::database::asm_diskgroup (
   Hash    $disks         = {},
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
 
   $disk_list = $disks.keys
-  echo {"Ensure ASM diskgroup(s) ${disk_list.join(',')}":
+  echo { "Ensure ASM diskgroup(s) ${disk_list.join(',')}":
     withpath => false,
   }
 
@@ -44,7 +44,7 @@ class ora_profile::database::asm_diskgroup(
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  $diskgroups.each |String $diskgroup, Hash $diskgroup_props = {}| {
+  $diskgroups.each | String $diskgroup, Hash $diskgroup_props = {} | {
     ora_asm_diskgroup {
       default:
         ensure            => present,
@@ -54,11 +54,10 @@ class ora_profile::database::asm_diskgroup(
         compat_rdbms      => $asm_version,
         diskgroup_state   => 'MOUNTED',
         redundancy_type   => 'EXTERNAL',
-      ;
+        ;
       $diskgroup:
         * => $diskgroup_props,
     }
   }
-
 }
 # lint:endignore

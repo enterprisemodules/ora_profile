@@ -30,7 +30,7 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::asm_init_params(
+class ora_profile::database::asm_init_params (
   Hash    $parameters         = {},
 ) inherits ora_profile::database {
 # lint:ignore:variable_scope
@@ -38,12 +38,12 @@ class ora_profile::database::asm_init_params(
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   if $parameters.keys.size > 0 {
-    echo {"Ensure ASM init parameter(s) ${parameters.keys.join(',')}":
+    echo { "Ensure ASM init parameter(s) ${parameters.keys.join(',')}":
       withpath => false,
     }
   }
 
-  $parameters.each |String $param, Hash $param_props = {}| {
+  $parameters.each | String $param, Hash $param_props = {} | {
     if $param =~ '@' {
       $init_param = $param
     } else {
@@ -52,11 +52,10 @@ class ora_profile::database::asm_init_params(
     ora_init_param {
       default:
         ensure => present,
-      ;
+        ;
       $init_param:
         * => $param_props,
     }
   }
-
 }
 # lint:endignore

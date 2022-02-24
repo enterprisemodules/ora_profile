@@ -28,10 +28,10 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::firewall::firewalld(
-  Hash            $ports,
-  Boolean         $manage_service,
+class ora_profile::database::firewall::firewalld (
   Optional[Array] $cluster_nodes,
+  Boolean         $manage_service,
+  Hash            $ports
 ) {
 # lint:ignore:variable_scope
 
@@ -44,20 +44,18 @@ class ora_profile::database::firewall::firewalld(
       enable => false,
     }
   } else {
-
     class { 'firewalld':
       log_denied => 'all',
     }
 
-    contain ::firewalld
+    contain firewalld
 
     $defaults = {
       ensure   => 'present',
       zone     => 'public',
-      protocol => 'tcp'
+      protocol => 'tcp',
     }
     ensure_resources('firewalld_port', $ports, $defaults)
-
   }
 }
 # lint:endignore

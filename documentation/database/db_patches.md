@@ -156,6 +156,6 @@ Valid values are:
 
 Type: `Variant[Boolean,Enum['on_failure']]`
 
-Default:`lookup({name => 'logoutput', default_value => 'on_failure'})`
+Default:`lookup( { name => 'logoutput', default_value => 'on_failure' })`
 
 [Back to overview of database::db_patches](#attributes)

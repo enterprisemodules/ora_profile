@@ -17,49 +17,48 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-class ora_profile::database::firewall(
-  Hash    $ports,
+class ora_profile::database::firewall (
   Boolean $manage_service,
+  Hash    $ports
 ) {
-
   $cluster_nodes = lookup('ora_profile::database::cluster_nodes')
   if $cluster_nodes {
-    echo {'Ensure Firewall is disabled for RAC installation':
+    echo { 'Ensure Firewall is disabled for RAC installation':
       withpath => false,
     }
   } else {
-    echo {"Ensure Firewall port(s) ${ports.keys.join(',')} are open":
+    echo { "Ensure Firewall port(s) ${ports.keys.join(',')} are open":
       withpath => false,
     }
   }
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  case  $::operatingsystem {
+  case  $facts['os']['name'] {
     'RedHat', 'CentOS', 'OracleLinux': {
-      case ($::os['release']['major']) {
+      case ($facts['os']['release']['major']) {
         '4','5','6': {
-          class {'ora_profile::database::firewall::iptables':
+          class { 'ora_profile::database::firewall::iptables':
             ports          => $ports,
             manage_service => $manage_service,
             cluster_nodes  => $cluster_nodes,
           }
         }
         '7', '8': {
-          class {'ora_profile::database::firewall::firewalld':
+          class { 'ora_profile::database::firewall::firewalld':
             ports          => $ports,
             manage_service => $manage_service,
             cluster_nodes  => $cluster_nodes,
           }
         }
-        default: { fail 'unsupported OS version when checking firewall service'}
+        default: { fail 'unsupported OS version when checking firewall service' }
       }
     }
     'Solaris':{
       warning 'No firewall rules added on Solaris.'
     }
     default: {
-        fail "${::operatingsystem} is not supported."
+      fail "${facts['os']['name']} is not supported."
     }
   }
 }
