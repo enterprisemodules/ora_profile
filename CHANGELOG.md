@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.33.0
+
+
+**Bug fixes**
+
+- [db_definition_template] Add a sane for default init_params
+- [db_definition_template] Add init_params parameter and enable acceptance tests
+- [add_node] Add umask and remove gimr variables from templates
+
+**New Features**
+
+- [core] Implement fact caching
+- [asm/db_patches] Add JAN2022 PSU (#123)
+- [asm_patches/db_patches] Add support for OCT2021 patch levels (#120)
+- [db_patches] Exclude Oracle 21c from installing OJVM patches,they are included in RU/RUR
+
 ## Release 0.32.0
 
 **Bug fixes**
