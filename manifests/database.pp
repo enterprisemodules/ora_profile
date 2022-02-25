@@ -12,10 +12,12 @@
 # 
 # But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 # 
-# ## Stages
+# ## Steps
 # 
-# Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
+# Defining and starting an Oracle database on you system goes through several steps :
 # 
+# - `em_license`       (Enable and load the Enterprise Modules license files)
+# - `fact_caching`     (Enable Puppet fact caching for Oracle)
 # - `sysctl`           (Set all required sysctl parameters)
 # - `disable_thp`      (Disable Transparent HugePages)
 # - `limits`           (Set all required OS limits)
@@ -35,7 +37,7 @@
 # - `db_users`         (Define all required Oracle users)
 # - `db_startup`       (Make sure the database restarts after a reboot)
 # 
-# All these stages have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
+# All these steps have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
 # 
 # ## before classes
 # 
@@ -69,9 +71,9 @@
 # ora_profile::database::sysctl:   my_profile::my_own_implementation
 # ```
 # 
-# This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
+# This mechanism can be used for all named steps and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 # 
-# Look at the description of the stages and their properties.
+# Look at the description of the steps and their properties.
 # 
 # At this level you can also customize some generic settings. Check the settings for:
 # 
@@ -179,10 +181,6 @@
 # @param [Stdlib::Absolutepath] temp_dir
 #    Directory to use for temporary files.
 #
-# @param [Boolean] enable_fact_caching
-#    Enable fact caching for ora_config and ora_install modules.
-#    The default value is: `false`
-#
 # @param [Optional[String]] oracle_user_password
 #    The password for the oracle os user.
 #    Only applicable for Windows systems.
@@ -213,6 +211,19 @@
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
 #    ora_profile::database::em_license:  skip
+#    ```
+#
+# @param [Optional[String]] fact_caching
+#    Use this value if you want to skip or use your own class for stage `fact_caching`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::fact_caching:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::fact_caching:  skip
 #    ```
 #
 # @param [Optional[String]] asm_sysctl
@@ -599,6 +610,13 @@
 #    ora_profile::database::before_em_license:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] before_fact_caching
+#    The name of the class you want to execute directly **before** the `fact_caching` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_fact_caching:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] before_asm_sysctl
 #    The name of the class you want to execute directly **before** the `asm_sysctl` class.
 #    You can use hiera to set this value. Here is an example:
@@ -807,6 +825,13 @@
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
 #    ora_profile::database::after_em_license:  my_module::my_class
+#    ```
+#
+# @param [Optional[String]] after_fact_caching
+#    The name of the class you want to execute directly **after** the `fact_caching` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_fact_caching:  my_module::my_class
 #    ```
 #
 # @param [Optional[String]] after_asm_sysctl
@@ -1022,7 +1047,6 @@ class ora_profile::database (
   String[1] $dbname,
   Stdlib::Absolutepath
             $download_dir,
-  Boolean   $enable_fact_caching,
   String[1] $grid_admingroup,
   Stdlib::Absolutepath
             $grid_base,
@@ -1066,6 +1090,7 @@ class ora_profile::database (
   Optional[String] $after_db_users             = undef,
   Optional[String] $after_disable_thp          = undef,
   Optional[String] $after_em_license           = undef,
+  Optional[String] $after_fact_caching         = undef,
   Optional[String] $after_firewall             = undef,
   Optional[String] $after_groups_and_users     = undef,
   Optional[String] $after_limits               = undef,
@@ -1108,6 +1133,7 @@ class ora_profile::database (
   Optional[String] $before_db_users            = undef,
   Optional[String] $before_disable_thp         = undef,
   Optional[String] $before_em_license          = undef,
+  Optional[String] $before_fact_caching        = undef,
   Optional[String] $before_firewall            = undef,
   Optional[String] $before_groups_and_users    = undef,
   Optional[String] $before_limits              = undef,
@@ -1127,6 +1153,7 @@ class ora_profile::database (
   Optional[String] $db_users                   = undef,
   Optional[String] $disable_thp                = undef,
   Optional[String] $em_license                 = undef,
+  Optional[String] $fact_caching               = undef,
   Optional[String] $firewall                   = undef,
   Optional[String] $groups_and_users           = undef,
   Optional[String] $limits                     = undef,
@@ -1140,8 +1167,6 @@ class ora_profile::database (
   Optional[String] $tmpfiles = undef
 ) {
 # lint:endignore:strict_indent
-  class { 'ora_config::fact_caching':  enabled => $enable_fact_caching }
-  class { 'ora_install::fact_caching': enabled => $enable_fact_caching }
 
   $asm_instance_name         = set_param('instance_name', '+ASM', $cluster_nodes)
   $db_instance_name          = set_param('instance_name', $dbname, $cluster_nodes)
@@ -1159,6 +1184,7 @@ class ora_profile::database (
 
   easy_type::ordered_steps([
       'ora_profile::database::em_license',
+      'ora_profile::database::fact_caching',
       ['ora_profile::database::sysctl',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::sysctl' }],
       ['ora_profile::database::disable_thp',              { 'onlyif' => $is_linux }],
       ['ora_profile::database::limits',                   { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::limits' }],

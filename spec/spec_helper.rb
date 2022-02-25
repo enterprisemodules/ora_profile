@@ -4,6 +4,7 @@ end
 
 require 'puppetlabs_spec_helper/module_spec_helper'
 require 'rspec-puppet-facts'
+require 'puppet-catalog_rspec'
 # rubocop: disable Style/MixinUsage
 include RspecPuppetFacts
 # rubocop: enable Style/MixinUsage

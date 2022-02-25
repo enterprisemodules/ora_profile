@@ -1,0 +1,1 @@
+Boolean to determine if you want to enabled Puppet fact caching for the Oracle facts.

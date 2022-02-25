@@ -72,6 +72,7 @@ group :quality do
 end
 
 group :unit_test, :acceptance_test, :publish do
+  gem 'puppet-catalog_rspec'
   gem 'easy_type_helpers', :git => 'https://github.com/enterprisemodules/easy_type_helpers.git'
   gem 'puppetlabs_spec_helper'
 end

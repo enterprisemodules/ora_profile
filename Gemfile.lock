@@ -236,6 +236,7 @@ GEM
     puppet-blacksmith (6.1.1)
       puppet-modulebuilder (~> 0.2)
       rest-client (~> 2.0)
+    puppet-catalog_rspec (0.1.0)
     puppet-lint (2.5.2)
     puppet-lint-absolute_classname-check (3.0.1)
       puppet-lint (>= 1.0, < 3.0)
@@ -510,6 +511,7 @@ DEPENDENCIES
   pdk (> 1.9.0, < 1.14.0)
   puppet (= 7.1.0)
   puppet-blacksmith
+  puppet-catalog_rspec
   puppet-lint
   puppet-lint-absolute_template_path
   puppet-lint-appends-check

@@ -17,10 +17,12 @@ Is enough to get an Oracle 12.2 database running on your system.
 
 But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 
-## Stages
+## Steps
 
-Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
+Defining and starting an Oracle database on you system goes through several steps :
 
+- `em_license`       (Enable and load the Enterprise Modules license files)
+- `fact_caching`     (Enable Puppet fact caching for Oracle)
 - `sysctl`           (Set all required sysctl parameters)
 - `disable_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
@@ -40,7 +42,7 @@ Defining and starting an Oracle database on you system goes through several stag
 - `db_users`         (Define all required Oracle users)
 - `db_startup`       (Make sure the database restarts after a reboot)
 
-All these stages have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
+All these steps have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
 
 ## before classes
 
@@ -74,9 +76,9 @@ Or provide your own implementation:
 ora_profile::database::sysctl:   my_profile::my_own_implementation
 ```
 
-This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
+This mechanism can be used for all named steps and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 
-Look at the description of the stages and their properties.
+Look at the description of the steps and their properties.
 
 At this level you can also customize some generic settings. Check the settings for:
 
@@ -146,6 +148,7 @@ Attribute Name                                                       | Short Des
 [after_db_users](#database_after_db_users)                           | The name of the class you want to execute directly **after** the `db_users` class.              |
 [after_disable_thp](#database_after_disable_thp)                     | The name of the class you want to execute directly **after** the `disable_thp` class.           |
 [after_em_license](#database_after_em_license)                       | The name of the class you want to execute directly **after** the `em_license` class.            |
+[after_fact_caching](#database_after_fact_caching)                   | The name of the class you want to execute directly **after** the `fact_caching` class.          |
 [after_firewall](#database_after_firewall)                           | The name of the class you want to execute directly **after** the `firewall` class.              |
 [after_groups_and_users](#database_after_groups_and_users)           | The name of the class you want to execute directly **after** the `groups_and_users` class.      |
 [after_limits](#database_after_limits)                               | The name of the class you want to execute directly **after** the `limits` class.                |
@@ -188,6 +191,7 @@ Attribute Name                                                       | Short Des
 [before_db_users](#database_before_db_users)                         | The name of the class you want to execute directly **before** the `db_users` class.             |
 [before_disable_thp](#database_before_disable_thp)                   | The name of the class you want to execute directly **before** the `disable_thp` class.          |
 [before_em_license](#database_before_em_license)                     | The name of the class you want to execute directly **before** the `em_license` class.           |
+[before_fact_caching](#database_before_fact_caching)                 | The name of the class you want to execute directly **before** the `fact_caching` class.         |
 [before_firewall](#database_before_firewall)                         | The name of the class you want to execute directly **before** the `firewall` class.             |
 [before_groups_and_users](#database_before_groups_and_users)         | The name of the class you want to execute directly **before** the `groups_and_users` class.     |
 [before_limits](#database_before_limits)                             | The name of the class you want to execute directly **before** the `limits` class.               |
@@ -211,7 +215,7 @@ Attribute Name                                                       | Short Des
 [disable_thp](#database_disable_thp)                                 | Use this value if you want to skip or use your own class for stage `disable_thp`.               |
 [download_dir](#database_download_dir)                               | The directory where the Puppet software puts all downloaded files.                              |
 [em_license](#database_em_license)                                   | Use this value if you want to skip or use your own class for stage `em_license`.                |
-[enable_fact_caching](#database_enable_fact_caching)                 | Enable fact caching for ora_config and ora_install modules.                                     |
+[fact_caching](#database_fact_caching)                               | Use this value if you want to skip or use your own class for stage `fact_caching`.              |
 [firewall](#database_firewall)                                       | Use this value if you want to skip or use your own class for stage `firewall`.                  |
 [grid_admingroup](#database_grid_admingroup)                         | The OS group to use for ASM admin.                                                              |
 [grid_base](#database_grid_base)                                     | The ORACLE_BASE for the Grid Infrastructure installation.                                       |
@@ -450,17 +454,6 @@ Type: `Stdlib::Absolutepath`
 
 [Back to overview of database](#attributes)
 
-### enable_fact_caching<a name='database_enable_fact_caching'>
-
-Enable fact caching for ora_config and ora_install modules.
-
-The default value is: `false`
-
-Type: `Boolean`
-
-
-[Back to overview of database](#attributes)
-
 ### oracle_user_password<a name='database_oracle_user_password'>
 
 The password for the oracle os user.
@@ -522,6 +515,32 @@ You can use hiera to set this value. Here is an example:
 
 ```yaml
 ora_profile::database::em_license:  skip
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
+### fact_caching<a name='database_fact_caching'>
+
+Use this value if you want to skip or use your own class for stage `fact_caching`.
+
+## Use your own class
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::fact_caching:  my_module::my_class
+```
+
+## Skip
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::fact_caching:  skip
 ```
 
 Type: `Optional[String]`
@@ -1300,6 +1319,22 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
+### before_fact_caching<a name='database_before_fact_caching'>
+
+The name of the class you want to execute directly **before** the `fact_caching` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::before_fact_caching:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
 ### before_asm_sysctl<a name='database_before_asm_sysctl'>
 
 The name of the class you want to execute directly **before** the `asm_sysctl` class.
@@ -1772,6 +1807,22 @@ You can use hiera to set this value. Here is an example:
 
 ```yaml
 ora_profile::database::after_em_license:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
+### after_fact_caching<a name='database_after_fact_caching'>
+
+The name of the class you want to execute directly **after** the `fact_caching` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::after_fact_caching:  my_module::my_class
 ```
 
 Type: `Optional[String]`

@@ -8,10 +8,12 @@ Is enough to get an Oracle 12.2 database running on your system.
 
 But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 
-## Stages
+## Steps
 
-Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
+Defining and starting an Oracle database on you system goes through several steps :
 
+- `em_license`       (Enable and load the Enterprise Modules license files)
+- `fact_caching`     (Enable Puppet fact caching for Oracle)
 - `sysctl`           (Set all required sysctl parameters)
 - `disable_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
@@ -31,7 +33,7 @@ Defining and starting an Oracle database on you system goes through several stag
 - `db_users`         (Define all required Oracle users)
 - `db_startup`       (Make sure the database restarts after a reboot)
 
-All these stages have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
+All these steps have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
 
 ## before classes
 
@@ -65,9 +67,9 @@ Or provide your own implementation:
 ora_profile::database::sysctl:   my_profile::my_own_implementation
 ```
 
-This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
+This mechanism can be used for all named steps and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 
-Look at the description of the stages and their properties.
+Look at the description of the steps and their properties.
 
 At this level you can also customize some generic settings. Check the settings for:
 
@@ -113,11 +115,11 @@ Also check the set of [common parameters](./common) that is passed to this class
   :db_control_provider,
   :download_dir,
   :temp_dir,
-  :enable_fact_caching,
   :oracle_user_password,
   :master_node,
   :cluster_nodes,
   :em_license,
+  :fact_caching,
   :asm_sysctl,
   :asm_limits,
   :authenticated_nodes,
@@ -148,6 +150,7 @@ Also check the set of [common parameters](./common) that is passed to this class
   :db_users,
   :db_startup,
   :before_em_license,
+  :before_fact_caching,
   :before_asm_sysctl,
   :before_asm_limits,
   :before_authenticated_nodes,
@@ -178,6 +181,7 @@ Also check the set of [common parameters](./common) that is passed to this class
   :before_db_users,
   :before_db_startup,
   :after_em_license,
+  :after_fact_caching,
   :after_asm_sysctl,
   :after_asm_limits,
   :after_authenticated_nodes,
