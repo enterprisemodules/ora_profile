@@ -35,7 +35,7 @@ class ora_profile::database::firewall (
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   case  $facts['os']['name'] {
-    'RedHat', 'CentOS', 'OracleLinux': {
+    'CentOS', 'RedHat', 'OracleLinux', 'AlmaLinux', 'Rocky': {
       case ($facts['os']['release']['major']) {
         '4','5','6': {
           class { 'ora_profile::database::firewall::iptables':
