@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.34.0
+
+
+**Bug fixes**
+
+- [core] Fix asm support on EL8 systems
+- [em_license] Use license::activate instead of license::available
+
+**New Features**
+
+- [release] Add support for AlmaLinux and Rocky
+
 ## Release 0.33.0
 
 
