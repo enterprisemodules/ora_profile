@@ -54,6 +54,7 @@ Attribute Name                                                                  
          |
 [template_type](#database::db_definition_template_template_type)                         | What type of template is used for creating the database.           |
 [version](#database::db_definition_template_version)                                     | The version of Oracle you want to install.                         |
+[wallet_location](#database::db_definition_template_wallet_location)                     | The location where you want dbca to create a wallet.               |
 
 
 
@@ -197,7 +198,7 @@ Type: `String[1]`
 The `system` password to use for the database.
 
 The default value is: `Welcome01`
-Type: `Easy_type::Password`
+Type: `Optional[Easy_type::Password]`
 
 
 [Back to overview of database::db_definition_template](#attributes)
@@ -207,7 +208,17 @@ Type: `Easy_type::Password`
 The `sys` password to use for the database.
 
 The default value is: `Change_on_1nstall`
-Type: `Easy_Type::Password`
+Type: `Optional[Easy_Type::Password]`
+
+
+[Back to overview of database::db_definition_template](#attributes)
+
+### wallet_location<a name='database::db_definition_template_wallet_location'>
+
+The location where you want dbca to create a wallet. When you set this value, Puppet will automaically create passwords and put them in the specified wallet. 
+
+You are no longer allowed to specfify any password values.
+Type: `Optional[Stdlib::Absolutepath]`
 
 
 [Back to overview of database::db_definition_template](#attributes)

@@ -22,6 +22,7 @@ When these customizations aren't enough, you can replace the class with your own
   :puppet_download_mnt_point,
   :system_password,
   :sys_password,
+  :wallet_location,
   :db_conf_type,
   :container_database,
   :log_size,

@@ -66,13 +66,18 @@
 #    This is the module where the xml file for your template is stored as a puppet template(erb).
 #    The default value is `ora_profile`
 #
-# @param [Easy_type::Password] system_password
+# @param [Optional[Easy_type::Password]] system_password
 #    The `system` password to use for the database.
 #    The default value is: `Welcome01`
 #
-# @param [Easy_Type::Password] sys_password
+# @param [Optional[Easy_Type::Password]] sys_password
 #    The `sys` password to use for the database.
 #    The default value is: `Change_on_1nstall`
+#
+# @param [Optional[Stdlib::Absolutepath]] wallet_location
+#    The location where you want dbca to create a wallet.
+#    When you set this value, Puppet will automaically create passwords and put them in the specified wallet. 
+#    You are no longer allowed to specfify any password values.
 #
 # @param [Enum['SINGLE', 'RAC', 'RACONE']] db_conf_type
 #    The type of database that needs to be installed.
@@ -147,15 +152,17 @@ class ora_profile::database::db_definition_template (
                       $sample_schema,
   Enum['FS','CFS','ASM']
                       $storage_type,
-  Easy_Type::Password
+  Optional[Easy_Type::Password]
                       $sys_password,
-  Easy_type::Password
+  Optional[Easy_type::Password]
                       $system_password,
   String[1]           $template_name,
   Enum['non-seed','seed']
                       $template_type,
   Ora_Install::Version
                       $version,
+  Optional[Stdlib::Absolutepath]
+                      $wallet_location,
   Variant[Boolean,Enum['on_failure']]
                       $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database {
