@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## Release 0.35.0
+
+**New Features**
+
+- [db_software] Allow access to ora_install::installdb user_base_dir
+- [data] Add April 2022 PSU
+
+
 ## Release 0.34.0
 
 
