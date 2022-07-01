@@ -117,12 +117,12 @@ class ora_profile::database::db_software (
   String[1] $oper_group,
   Stdlib::Absolutepath
             $oracle_base,
-  Stdlib::Absolutepath
-            $user_base_dir,
   Variant[Stdlib::Absolutepath, Hash]
             $oracle_home,
   String[1] $os_user,
   String[1] $source,
+  Stdlib::Absolutepath
+            $user_base_dir,
   Ora_Install::Version
             $version
 ) inherits ora_profile::database::common {
