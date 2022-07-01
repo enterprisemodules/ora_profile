@@ -683,6 +683,7 @@ ora_profile::database::db_software::source:                               "%{loo
 ora_profile::database::db_software::file_name:                            linuxx64_12201_database
 ora_profile::database::db_software::bash_profile:                         true
 ora_profile::database::db_software::bash_additions:                       ''
+ora_profile::database::db_software::user_base_dir:                        /home
 
 
 # ------------------------------------------------------------------------------
