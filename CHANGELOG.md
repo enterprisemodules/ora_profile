@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.35.1
+
+**Bug fixes**
+
+- [db_software] Add sane default for user_base_dir
 
 ## Release 0.35.0
 
@@ -10,9 +15,7 @@ All notable changes to this project will be documented in this file.
 - [db_software] Allow access to ora_install::installdb user_base_dir
 - [data] Add April 2022 PSU
 
-
 ## Release 0.34.0
-
 
 **Bug fixes**
 
