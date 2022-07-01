@@ -40,6 +40,7 @@ Attribute Name                                          | Short Description     
 [oracle_home](#database::db_software_oracle_home)       | The home directory to use for the Oracle installation.            |
 [os_user](#database::db_software_os_user)               | The OS user to use for Oracle install.                            |
 [source](#database::db_software_source)                 | The location where the classes can find the software.             |
+[user_base_dir](#database::db_software_user_base_dir)   | The directory to use as base directory for the users.             |
 [version](#database::db_software_version)               | The version of Oracle you want to install.                        |
 
 
@@ -228,6 +229,15 @@ The text to add at the end of the bash_profile. This parameter will only be used
 The default value is an empty string.
 
 Type: `String`
+
+
+[Back to overview of database::db_software](#attributes)
+
+### user_base_dir<a name='database::db_software_user_base_dir'>
+
+The directory to use as base directory for the users.
+
+Type: `Stdlib::Absolutepath`
 
 
 [Back to overview of database::db_software](#attributes)

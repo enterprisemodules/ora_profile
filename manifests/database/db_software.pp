@@ -98,6 +98,9 @@
 #    This parameter will only be used when you have specified `true` for the parameter `bash_profile`
 #    The default value is an empty string.
 #
+# @param [Stdlib::Absolutepath] user_base_dir
+#    The directory to use as base directory for the users.
+#
 #
 # See the file "LICENSE" for the full license governing this code.
 #
@@ -114,6 +117,8 @@ class ora_profile::database::db_software (
   String[1] $oper_group,
   Stdlib::Absolutepath
             $oracle_base,
+  Stdlib::Absolutepath
+            $user_base_dir,
   Variant[Stdlib::Absolutepath, Hash]
             $oracle_home,
   String[1] $os_user,
@@ -184,6 +189,7 @@ class ora_profile::database::db_software (
       temp_dir                  => $temp_dir,
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
+      user_base_dir             => $user_base_dir,
       require                   => [
         File[$dirs],
         File[$download_dir],

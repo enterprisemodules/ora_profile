@@ -15,4 +15,5 @@ When these customizations aren't enough, you can replace the class with your own
   :file_name,
   :bash_profile,
   :bash_additions,
+  :user_base_dir,
 ]%>
