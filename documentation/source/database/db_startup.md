@@ -8,4 +8,5 @@ Also check the set of [common parameters](./common) that is passed to this class
   :oracle_home,
   :dbname,
   :db_type,
+  :limits,
 ]%>

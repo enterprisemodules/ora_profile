@@ -32,6 +32,7 @@ Attribute Name                                   | Short Description            
 ------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
 [db_type](#database::db_startup_db_type)         | The type of the database used to specify if the database should be started by an init script or srvctl. |
 [dbname](#database::db_startup_dbname)           | The name of the database.                                                                               |
+[limits](#database::db_startup_limits)           | The limits for the systemd service.                                                                     |
 [oracle_home](#database::db_startup_oracle_home) | The home directory to use for the Oracle installation.                                                  |
 
 
@@ -74,6 +75,33 @@ Valid values are:
 The default value is: 'database'
 
 Type: `Enum['database','grid']`
+
+
+[Back to overview of database::db_startup](#attributes)
+
+### limits<a name='database::db_startup_limits'>
+
+The limits for the systemd service.
+
+The default value is:
+
+```yaml
+ora_profile::database::db_startup::limits:
+  '*/nofile':
+    soft: 2048
+    hard: 8192
+  'oracle/nofile':
+    soft: 65536
+    hard: 65536
+  'oracle/nproc':
+    soft: 2048
+    hard: 16384
+  'oracle/stack':
+    soft: 10240
+    hard: 32768
+```
+
+Type: `Optional[Hash]`
 
 
 [Back to overview of database::db_startup](#attributes)
