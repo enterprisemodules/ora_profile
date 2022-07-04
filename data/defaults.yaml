@@ -1047,6 +1047,7 @@ ora_profile::database::db_users::list:                                    {}
 ora_profile::database::db_startup::dbname:                                "%{lookup('ora_profile::database::dbname')}"
 ora_profile::database::db_startup::oracle_home:                           "%{lookup('ora_profile::database::oracle_home')}"
 ora_profile::database::db_startup::db_type:                               database
+ora_profile::database::db_startup::limits:                                "%{alias('ora_profile::database::limits::list')}"
 
 
 # ------------------------------------------------------------------------------
