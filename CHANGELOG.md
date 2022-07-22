@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.36.0
+
+**New Features**
+
+- [db_startup] Pass limits to db_startup class
+
 ## Release 0.35.1
 
 **Bug fixes**
