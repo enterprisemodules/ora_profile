@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.37.0
+
+**Bug fixes**
+
+- [em_license] Fix for using EM profile classed together
 ## Release 0.36.0
 
 **New Features**
