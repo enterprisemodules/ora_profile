@@ -2,13 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.39.0
+
+**New Features**
+
+- [common] Make common settings puppet adjustable
+
 ## Release 0.38.0
 
 **New Features**
 
 - [patches] Add JUL2022 PSU
-
-## Release 0.36.0
 
 ## Release 0.37.0
 
