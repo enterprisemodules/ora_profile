@@ -308,6 +308,8 @@ lookup_options:
 #
 # ------------------------------------------------------------------------------
 ora_profile::database::fact_caching::enabled:    false
+
+
 # ------------------------------------------------------------------------------
 #
 # Settings for database::sysctl
@@ -1063,6 +1065,21 @@ ora_profile::database::db_startup::oracle_home:                           "%{loo
 ora_profile::database::db_startup::db_type:                               database
 ora_profile::database::db_startup::limits:                                "%{alias('ora_profile::database::limits::list')}"
 
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_monitoring
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_monitoring:                                     skip
+ora_profile::database::db_monitoring::facility:                           oswbb
+ora_profile::database::db_monitoring::file_name:                          oswbb840.tar
+ora_profile::database::db_monitoring::install_path:                       '/u01'
+ora_profile::database::db_monitoring::data_path:                          ~
+ora_profile::database::db_monitoring::os_user:                            "%{lookup('ora_profile::database::os_user')}"
+ora_profile::database::db_monitoring::oswbb_interval:                     30
+ora_profile::database::db_monitoring::oswbb_days:                         2
+ora_profile::database::db_monitoring::oswbb_compress:                     gzip
 
 # ------------------------------------------------------------------------------
 #

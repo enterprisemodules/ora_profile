@@ -139,6 +139,7 @@ Attribute Name                                                       | Short Des
 [after_db_definition](#database_after_db_definition)                 | The name of the class you want to execute directly **after** the `db_definition` class.         |
 [after_db_init_params](#database_after_db_init_params)               | The name of the class you want to execute directly **after** the `db_init_params` class.        |
 [after_db_listener](#database_after_db_listener)                     | The name of the class you want to execute directly **after** the `db_listener` class.           |
+[after_db_monitoring](#database_after_db_monitoring)                 | The name of the class you want to execute directly **after** the `db_monitoring` class.         |
 [after_db_patches](#database_after_db_patches)                       | The name of the class you want to execute directly **after** the `db_patches` class.            |
 [after_db_profiles](#database_after_db_profiles)                     | The name of the class you want to execute directly **after** the `db_profiles` class.           |
 [after_db_services](#database_after_db_services)                     | The name of the class you want to execute directly **after** the `db_services` class.           |
@@ -182,6 +183,7 @@ Attribute Name                                                       | Short Des
 [before_db_definition](#database_before_db_definition)               | The name of the class you want to execute directly **before** the `db_definition` class.        |
 [before_db_init_params](#database_before_db_init_params)             | The name of the class you want to execute directly **before** the `db_init_params` class.       |
 [before_db_listener](#database_before_db_listener)                   | The name of the class you want to execute directly **before** the `db_listener` class.          |
+[before_db_monitoring](#database_before_db_monitoring)               | The name of the class you want to execute directly **before** the `db_monitoring` class.        |
 [before_db_patches](#database_before_db_patches)                     | The name of the class you want to execute directly **before** the `db_patches` class.           |
 [before_db_profiles](#database_before_db_profiles)                   | The name of the class you want to execute directly **before** the `db_profiles` class.          |
 [before_db_services](#database_before_db_services)                   | The name of the class you want to execute directly **before** the `db_services` class.          |
@@ -203,6 +205,7 @@ Attribute Name                                                       | Short Des
 [db_definition](#database_db_definition)                             | Use this value if you want to skip or use your own class for stage `db_definition`.             |
 [db_init_params](#database_db_init_params)                           | Use this value if you want to skip or use your own class for stage `db_init_params`.            |
 [db_listener](#database_db_listener)                                 | Use this value if you want to skip or use your own class for stage `db_listener`.               |
+[db_monitoring](#database_db_monitoring)                             | Use this value if you want to skip or use your own class for stage `db_monitoring`.             |
 [db_patches](#database_db_patches)                                   | Use this value if you want to skip or use your own class for stage `db_patches`.                |
 [db_profiles](#database_db_profiles)                                 | Use this value if you want to skip or use your own class for stage `db_profiles`.               |
 [db_services](#database_db_services)                                 | Use this value if you want to skip or use your own class for stage `db_services`.               |
@@ -1147,6 +1150,32 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
+### db_monitoring<a name='database_db_monitoring'>
+
+Use this value if you want to skip or use your own class for stage `db_monitoring`.
+
+## Use your own class
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::db_monitoring:  my_module::my_class
+```
+
+## Skip
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::db_monitoring:  skip
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
 ### db_init_params<a name='database_db_init_params'>
 
 Use this value if you want to skip or use your own class for stage `db_init_params`.
@@ -1703,6 +1732,22 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
+### before_db_monitoring<a name='database_before_db_monitoring'>
+
+The name of the class you want to execute directly **before** the `db_monitoring` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::before_db_monitoring:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
 ### before_db_init_params<a name='database_before_db_init_params'>
 
 The name of the class you want to execute directly **before** the `db_init_params` class.
@@ -2192,6 +2237,22 @@ You can use hiera to set this value. Here is an example:
 
 ```yaml
 ora_profile::database::after_db_listener:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
+### after_db_monitoring<a name='database_after_db_monitoring'>
+
+The name of the class you want to execute directly **after** the `db_monitoring` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::after_db_monitoring:  my_module::my_class
 ```
 
 Type: `Optional[String]`

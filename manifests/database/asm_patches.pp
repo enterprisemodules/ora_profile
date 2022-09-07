@@ -43,14 +43,16 @@
 #
 class ora_profile::database::asm_patches (
 # lint:ignore:strict_indent
+# lint:ignore:lookup_in_parameter
   String[1] $level,
   String[1] $opversion,
   String[1] $patch_file,
   Hash      $patch_list,
   Variant[Boolean,Enum['on_failure']]
-            $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
+            $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent
+# lint:endignore:lookup_in_parameter
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
