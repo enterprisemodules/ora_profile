@@ -1,5 +1,5 @@
 #
-# ora_profile::database::common
+# ora_profile::database::common 
 #
 # @summary This class contains common variables used by more then one class.
 #

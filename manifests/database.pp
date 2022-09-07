@@ -525,6 +525,19 @@
 #    ora_profile::database::db_listener:  skip
 #    ```
 #
+# @param [Optional[String]] db_monitoring
+#    Use this value if you want to skip or use your own class for stage `db_monitoring`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::db_monitoring:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::db_monitoring:  skip
+#    ```
+#
 # @param [Optional[String]] db_init_params
 #    Use this value if you want to skip or use your own class for stage `db_init_params`.
 #    ## Use your own class
@@ -778,6 +791,13 @@
 #    ora_profile::database::before_db_listener:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] before_db_monitoring
+#    The name of the class you want to execute directly **before** the `db_monitoring` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_db_monitoring:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] before_db_init_params
 #    The name of the class you want to execute directly **before** the `db_init_params` class.
 #    You can use hiera to set this value. Here is an example:
@@ -995,6 +1015,13 @@
 #    ora_profile::database::after_db_listener:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] after_db_monitoring
+#    The name of the class you want to execute directly **after** the `db_monitoring` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_db_monitoring:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] after_db_init_params
 #    The name of the class you want to execute directly **after** the `db_init_params` class.
 #    You can use hiera to set this value. Here is an example:
@@ -1081,6 +1108,7 @@ class ora_profile::database (
   Optional[String] $after_db_definition        = undef,
   Optional[String] $after_db_init_params       = undef,
   Optional[String] $after_db_listener          = undef,
+  Optional[String] $after_db_monitoring        = undef,
   Optional[String] $after_db_patches           = undef,
   Optional[String] $after_db_profiles          = undef,
   Optional[String] $after_db_services          = undef,
@@ -1124,6 +1152,7 @@ class ora_profile::database (
   Optional[String] $before_db_definition       = undef,
   Optional[String] $before_db_init_params      = undef,
   Optional[String] $before_db_listener         = undef,
+  Optional[String] $before_db_monitoring       = undef,
   Optional[String] $before_db_patches          = undef,
   Optional[String] $before_db_profiles         = undef,
   Optional[String] $before_db_services         = undef,
@@ -1144,6 +1173,7 @@ class ora_profile::database (
   Optional[String] $db_definition              = undef,
   Optional[String] $db_init_params             = undef,
   Optional[String] $db_listener                = undef,
+  Optional[String] $db_monitoring              = undef,
   Optional[String] $db_patches                 = undef,
   Optional[String] $db_profiles                = undef,
   Optional[String] $db_services                = undef,
@@ -1217,5 +1247,6 @@ class ora_profile::database (
       'ora_profile::database::db_profiles',
       'ora_profile::database::db_users',
       ['ora_profile::database::db_startup',             { 'onlyif' => !$is_rac }],
+      'ora_profile::database::db_monitoring',
   ])
 }

@@ -69,6 +69,7 @@
 #
 class ora_profile::database::db_patches (
 # lint:ignore:strict_indent
+# lint:ignore:lookup_in_parameter
   Boolean   $include_ojvm,
   String[1] $level,
   String[1] $opversion,
@@ -81,6 +82,7 @@ class ora_profile::database::db_patches (
             $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent
+# lint:endignore:lookup_in_parameter
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug
@@ -175,7 +177,7 @@ class ora_profile::database::db_patches (
   $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list, 'db')
   # apply_patches is the hash without the OPatch details which can be given to ora_opatch
   $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce( {}) |$memo, $array| { $memo + $array }
-  $converted_apply_patch_list = ora_install::ora_physical_patches($apply_patches)
+  $converted_apply_patch_list = ora_install::ora_physical_patches($apply_patches).unique
   $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
 
   schedule { 'db_patchschedule':

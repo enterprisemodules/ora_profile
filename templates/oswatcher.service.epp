@@ -1,0 +1,25 @@
+<%- | String  $install_path,
+      String  $data_path,
+      String  $os_user,
+      Integer $oswbb_interval,
+      Integer $oswbb_days,
+      String  $oswbb_compress,
+| -%>
+[Unit]
+Description=OSWatcher Black Box
+
+[Install]
+WantedBy=multiuser.target
+
+[Service]
+Type=simple
+User=<%= $os_user %>
+Environment="OSWBB_ARCHIVE_DEST=<%= $data_path %>"
+WorkingDirectory=<%= $install_path %>/oswbb
+ExecStart=<%= $install_path %>/oswbb/OSWatcher.sh <%= $oswbb_interval %> <%= $oswbb_days * 24 %> <%= $oswbb_compress %> <%= $data_path %>
+ExecStop=<%= $install_path %>/oswbb/stopOSWbb.sh
+Restart=always
+# time to sleep before restarting a service
+RestartSec=3
+StandardOutput=journal
+SyslogIdentifier=oswatcher

@@ -137,6 +137,7 @@
 #
 class ora_profile::database::db_definition (
 # lint:ignore:strict_indent
+# lint:ignore:lookup_in_parameter
   Enum['enabled','disabled']
             $archivelog,
   Enum['enabled','disabled']
@@ -172,6 +173,7 @@ class ora_profile::database::db_definition (
             $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent
+# lint:endignore:lookup_in_parameter
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug

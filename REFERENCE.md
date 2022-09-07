@@ -26,6 +26,7 @@
 * [`ora_profile::database::db_definition_template`](#ora_profiledatabasedb_definition_template): This class contains the actual database definition using the `ora_install::database` class.
 * [`ora_profile::database::db_init_params`](#ora_profiledatabasedb_init_params): This class configures initialization parameters for the databases instance(s)
 * [`ora_profile::database::db_listener`](#ora_profiledatabasedb_listener): This class contains the definition of the Oracle listener process.
+* [`ora_profile::database::db_monitoring`](#ora_profiledatabasedb_monitoring): This class contains the definition of the db monitoring facility to install.
 * [`ora_profile::database::db_patches`](#ora_profiledatabasedb_patches): This class contains the definition for the Oracle patches.
 * [`ora_profile::database::db_profiles`](#ora_profiledatabasedb_profiles): This class contains the definition for all Oracle profiles you'd like on your system.
 * [`ora_profile::database::db_services`](#ora_profiledatabasedb_services): This class contains the definition of all the database services you'd like on your system.
@@ -35,6 +36,7 @@
 * [`ora_profile::database::db_users`](#ora_profiledatabasedb_users): This class contains the definition for all the database users you'd like on your system.
 * [`ora_profile::database::disable_thp`](#ora_profiledatabasedisable_thp): This class contains the definition of the Transparent HugePages settings required for running Oracle.
 * [`ora_profile::database::em_license`](#ora_profiledatabaseem_license): This class will deploy the Enterprise Modules license.
+* [`ora_profile::database::fact_caching`](#ora_profiledatabasefact_caching): This class will enable Oracle fact caching, when enabled.
 * [`ora_profile::database::firewall`](#ora_profiledatabasefirewall): This class contains the definition of the firewall settings you need for Oracle.
 * [`ora_profile::database::firewall::firewalld`](#ora_profiledatabasefirewallfirewalld): Open up ports for Oracle using the firewalld firewall
 * [`ora_profile::database::firewall::iptables`](#ora_profiledatabasefirewalliptables): Open up ports for Oracle using the iptables
@@ -492,10 +494,12 @@ Is enough to get an Oracle 12.2 database running on your system.
 
 But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 
-## Stages
+## Steps
 
-Defining and starting an Oracle database on you system goes through several stages(These are not puppet stages):
+Defining and starting an Oracle database on you system goes through several steps :
 
+- `em_license`       (Enable and load the Enterprise Modules license files)
+- `fact_caching`     (Enable Puppet fact caching for Oracle)
 - `sysctl`           (Set all required sysctl parameters)
 - `disable_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
@@ -515,7 +519,7 @@ Defining and starting an Oracle database on you system goes through several stag
 - `db_users`         (Define all required Oracle users)
 - `db_startup`       (Make sure the database restarts after a reboot)
 
-All these stages have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file.
+All these steps have a default implementation. This implementation is suitable to get started with. These classed all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file.
 
 ## before classes
 
@@ -549,9 +553,9 @@ Or provide your own implementation:
 ora_profile::database::sysctl:   my_profile::my_own_implementation
 ```
 
-This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
+This mechanism can be used for all named steps and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 
-Look at the description of the stages and their properties.
+Look at the description of the steps and their properties.
 
 At this level you can also customize some generic settings. Check the settings for:
 
@@ -601,11 +605,11 @@ The following parameters are available in the `ora_profile::database` class:
 * [`db_control_provider`](#db_control_provider)
 * [`download_dir`](#download_dir)
 * [`temp_dir`](#temp_dir)
-* [`enable_fact_caching`](#enable_fact_caching)
 * [`oracle_user_password`](#oracle_user_password)
 * [`master_node`](#master_node)
 * [`cluster_nodes`](#cluster_nodes)
 * [`em_license`](#em_license)
+* [`fact_caching`](#fact_caching)
 * [`asm_sysctl`](#asm_sysctl)
 * [`asm_limits`](#asm_limits)
 * [`authenticated_nodes`](#authenticated_nodes)
@@ -618,6 +622,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`packages`](#packages)
 * [`groups_and_users`](#groups_and_users)
 * [`firewall`](#firewall)
+* [`tmpfiles`](#tmpfiles)
 * [`asm_storage`](#asm_storage)
 * [`asm_software`](#asm_software)
 * [`asm_patches`](#asm_patches)
@@ -628,6 +633,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`db_patches`](#db_patches)
 * [`db_definition`](#db_definition)
 * [`db_listener`](#db_listener)
+* [`db_monitoring`](#db_monitoring)
 * [`db_init_params`](#db_init_params)
 * [`db_services`](#db_services)
 * [`db_tablespaces`](#db_tablespaces)
@@ -635,6 +641,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`db_users`](#db_users)
 * [`db_startup`](#db_startup)
 * [`before_em_license`](#before_em_license)
+* [`before_fact_caching`](#before_fact_caching)
 * [`before_asm_sysctl`](#before_asm_sysctl)
 * [`before_asm_limits`](#before_asm_limits)
 * [`before_authenticated_nodes`](#before_authenticated_nodes)
@@ -647,6 +654,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`before_packages`](#before_packages)
 * [`before_groups_and_users`](#before_groups_and_users)
 * [`before_firewall`](#before_firewall)
+* [`before_tmpfiles`](#before_tmpfiles)
 * [`before_asm_storage`](#before_asm_storage)
 * [`before_asm_software`](#before_asm_software)
 * [`before_asm_patches`](#before_asm_patches)
@@ -657,6 +665,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`before_db_patches`](#before_db_patches)
 * [`before_db_definition`](#before_db_definition)
 * [`before_db_listener`](#before_db_listener)
+* [`before_db_monitoring`](#before_db_monitoring)
 * [`before_db_init_params`](#before_db_init_params)
 * [`before_db_services`](#before_db_services)
 * [`before_db_tablespaces`](#before_db_tablespaces)
@@ -664,6 +673,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`before_db_users`](#before_db_users)
 * [`before_db_startup`](#before_db_startup)
 * [`after_em_license`](#after_em_license)
+* [`after_fact_caching`](#after_fact_caching)
 * [`after_asm_sysctl`](#after_asm_sysctl)
 * [`after_asm_limits`](#after_asm_limits)
 * [`after_authenticated_nodes`](#after_authenticated_nodes)
@@ -676,6 +686,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`after_packages`](#after_packages)
 * [`after_groups_and_users`](#after_groups_and_users)
 * [`after_firewall`](#after_firewall)
+* [`after_tmpfiles`](#after_tmpfiles)
 * [`after_asm_storage`](#after_asm_storage)
 * [`after_asm_software`](#after_asm_software)
 * [`after_asm_patches`](#after_asm_patches)
@@ -686,15 +697,13 @@ The following parameters are available in the `ora_profile::database` class:
 * [`after_db_patches`](#after_db_patches)
 * [`after_db_definition`](#after_db_definition)
 * [`after_db_listener`](#after_db_listener)
+* [`after_db_monitoring`](#after_db_monitoring)
 * [`after_db_init_params`](#after_db_init_params)
 * [`after_db_services`](#after_db_services)
 * [`after_db_tablespaces`](#after_db_tablespaces)
 * [`after_db_profiles`](#after_db_profiles)
 * [`after_db_users`](#after_db_users)
 * [`after_db_startup`](#after_db_startup)
-* [`tmpfiles`](#tmpfiles)
-* [`before_tmpfiles`](#before_tmpfiles)
-* [`after_tmpfiles`](#after_tmpfiles)
 
 ##### <a name="storage"></a>`storage`
 
@@ -828,13 +837,6 @@ Data type: `Stdlib::Absolutepath`
 
 Directory to use for temporary files.
 
-##### <a name="enable_fact_caching"></a>`enable_fact_caching`
-
-Data type: `Boolean`
-
-Enable fact caching for ora_config and ora_install modules.
-The default value is: `false`
-
 ##### <a name="oracle_user_password"></a>`oracle_user_password`
 
 Data type: `Optional[String]`
@@ -853,7 +855,7 @@ The first node in RAC.
 This  is the node where the other nodes will clone the software installations from.
 To customize this consistently use the hiera key `ora_profile::database::master_node`.
 
-Default value: `$facts['hostname']`
+Default value: `$facts['networking']['hostname']`
 
 ##### <a name="cluster_nodes"></a>`cluster_nodes`
 
@@ -883,6 +885,24 @@ ora_profile::database::em_license:  my_module::my_class
 You can use hiera to set this value. Here is an example:
 ```yaml
 ora_profile::database::em_license:  skip
+```
+
+Default value: ``undef``
+
+##### <a name="fact_caching"></a>`fact_caching`
+
+Data type: `Optional[String]`
+
+Use this value if you want to skip or use your own class for stage `fact_caching`.
+## Use your own class
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::fact_caching:  my_module::my_class
+```
+## Skip
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::fact_caching:  skip
 ```
 
 Default value: ``undef``
@@ -1103,6 +1123,24 @@ ora_profile::database::firewall:  skip
 
 Default value: ``undef``
 
+##### <a name="tmpfiles"></a>`tmpfiles`
+
+Data type: `Optional[String]`
+
+Use this value if you want to skip or use your own class for stage `tmpfiles`.
+## Use your own class
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::tmpfiles:  my_module::my_class
+```
+## Skip
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::tmpfiles:  skip
+```
+
+Default value: ``undef``
+
 ##### <a name="asm_storage"></a>`asm_storage`
 
 Data type: `Optional[String]`
@@ -1283,6 +1321,24 @@ ora_profile::database::db_listener:  skip
 
 Default value: ``undef``
 
+##### <a name="db_monitoring"></a>`db_monitoring`
+
+Data type: `Optional[String]`
+
+Use this value if you want to skip or use your own class for stage `db_monitoring`.
+## Use your own class
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::db_monitoring:  my_module::my_class
+```
+## Skip
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::db_monitoring:  skip
+```
+
+Default value: ``undef``
+
 ##### <a name="db_init_params"></a>`db_init_params`
 
 Data type: `Optional[String]`
@@ -1399,6 +1455,18 @@ The name of the class you want to execute directly **before** the `em_license` c
 You can use hiera to set this value. Here is an example:
 ```yaml
 ora_profile::database::before_em_license:  my_module::my_class
+```
+
+Default value: ``undef``
+
+##### <a name="before_fact_caching"></a>`before_fact_caching`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **before** the `fact_caching` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::before_fact_caching:  my_module::my_class
 ```
 
 Default value: ``undef``
@@ -1547,6 +1615,18 @@ ora_profile::database::before_firewall:  my_module::my_class
 
 Default value: ``undef``
 
+##### <a name="before_tmpfiles"></a>`before_tmpfiles`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **before** the `tmpfiles` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::before_tmpfiles:  my_module::my_class
+```
+
+Default value: ``undef``
+
 ##### <a name="before_asm_storage"></a>`before_asm_storage`
 
 Data type: `Optional[String]`
@@ -1667,6 +1747,18 @@ ora_profile::database::before_db_listener:  my_module::my_class
 
 Default value: ``undef``
 
+##### <a name="before_db_monitoring"></a>`before_db_monitoring`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **before** the `db_monitoring` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::before_db_monitoring:  my_module::my_class
+```
+
+Default value: ``undef``
+
 ##### <a name="before_db_init_params"></a>`before_db_init_params`
 
 Data type: `Optional[String]`
@@ -1747,6 +1839,18 @@ The name of the class you want to execute directly **after** the `em_license` cl
 You can use hiera to set this value. Here is an example:
 ```yaml
 ora_profile::database::after_em_license:  my_module::my_class
+```
+
+Default value: ``undef``
+
+##### <a name="after_fact_caching"></a>`after_fact_caching`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **after** the `fact_caching` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::after_fact_caching:  my_module::my_class
 ```
 
 Default value: ``undef``
@@ -1895,6 +1999,18 @@ ora_profile::database::after_firewall:  my_module::my_class
 
 Default value: ``undef``
 
+##### <a name="after_tmpfiles"></a>`after_tmpfiles`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **after** the `tmpfiles` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::after_tmpfiles:  my_module::my_class
+```
+
+Default value: ``undef``
+
 ##### <a name="after_asm_storage"></a>`after_asm_storage`
 
 Data type: `Optional[String]`
@@ -2015,6 +2131,18 @@ ora_profile::database::after_db_listener:  my_module::my_class
 
 Default value: ``undef``
 
+##### <a name="after_db_monitoring"></a>`after_db_monitoring`
+
+Data type: `Optional[String]`
+
+The name of the class you want to execute directly **after** the `db_monitoring` class.
+You can use hiera to set this value. Here is an example:
+```yaml
+ora_profile::database::after_db_monitoring:  my_module::my_class
+```
+
+Default value: ``undef``
+
 ##### <a name="after_db_init_params"></a>`after_db_init_params`
 
 Data type: `Optional[String]`
@@ -2084,30 +2212,6 @@ You can use hiera to set this value. Here is an example:
 ```yaml
 ora_profile::database::after_db_startup:  my_module::my_class
 ```
-
-Default value: ``undef``
-
-##### <a name="tmpfiles"></a>`tmpfiles`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_tmpfiles"></a>`before_tmpfiles`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_tmpfiles"></a>`after_tmpfiles`
-
-Data type: `Optional[String]`
-
-
 
 Default value: ``undef``
 
@@ -2310,7 +2414,7 @@ Valid values are:
 - `false`
 - `on_failure`
 
-Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
+Default value: `lookup( { name => 'logoutput', default_value => 'on_failure' })`
 
 ### <a name="ora_profiledatabaseasm_setup"></a>`ora_profile::database::asm_setup`
 
@@ -2319,16 +2423,6 @@ ora_profile::database::asm_setup
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-   The type of storage to use.
-   Valid values are:
-   - `ASM_STORAGE`          (versions = 11)
-   - `FILE_SYSTEM_STORAGE`  (versions <= 12.1)
-   - `LOCAL_ASM_STORAGE`    (versions >= 12.1)
-   - `CLIENT_ASM_STORAGE`   (versions >= 12.2)
-   - `FLEX_ASM_STORAGE`     (versions >= 12.1)
-   The default value is: `undef`
-
 
 See the file "LICENSE" for the full license governing this code.
 
@@ -2539,7 +2633,14 @@ The list of interfaces to use for RAC.The value should be a comma separated stri
 
 Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
 
-
+The type of storage to use.
+Valid values are:
+- `ASM_STORAGE`          (versions = 11)
+- `FILE_SYSTEM_STORAGE`  (versions <= 12.1)
+- `LOCAL_ASM_STORAGE`    (versions >= 12.1)
+- `CLIENT_ASM_STORAGE`   (versions >= 12.2)
+- `FLEX_ASM_STORAGE`     (versions >= 12.1)
+The default value is: `undef`
 
 ### <a name="ora_profiledatabaseasm_software"></a>`ora_profile::database::asm_software`
 
@@ -2548,16 +2649,6 @@ ora_profile::database::asm_software
 Here you can customize some of the attributes of your database.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-   The type of storage to use.
-   Valid values are:
-   - `ASM_STORAGE`          (versions = 11)
-   - `FILE_SYSTEM_STORAGE`  (versions <= 12.1)
-   - `LOCAL_ASM_STORAGE`    (versions >= 12.1)
-   - `CLIENT_ASM_STORAGE`   (versions >= 12.2)
-   - `FLEX_ASM_STORAGE`     (versions >= 12.1)
-   The default value is: `undef`
-
 
 See the file "LICENSE" for the full license governing this code.
 
@@ -2784,7 +2875,14 @@ The list of interfaces to use for RAC.The value should be a comma separated stri
 
 Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
 
-
+The type of storage to use.
+Valid values are:
+- `ASM_STORAGE`          (versions = 11)
+- `FILE_SYSTEM_STORAGE`  (versions <= 12.1)
+- `LOCAL_ASM_STORAGE`    (versions >= 12.1)
+- `CLIENT_ASM_STORAGE`   (versions >= 12.2)
+- `FLEX_ASM_STORAGE`     (versions >= 12.1)
+The default value is: `undef`
 
 ### <a name="ora_profiledatabaseasm_storage"></a>`ora_profile::database::asm_storage`
 
@@ -3455,7 +3553,7 @@ Valid values are:
 - `false`
 - `on_failure`
 
-Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
+Default value: `lookup( { name => 'logoutput', default_value => 'on_failure' })`
 
 ### <a name="ora_profiledatabasedb_definition_template"></a>`ora_profile::database::db_definition_template`
 
@@ -3666,7 +3764,7 @@ Valid values are:
 - `false`
 - `on_failure`
 
-Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
+Default value: `lookup( { name => 'logoutput', default_value => 'on_failure' })`
 
 ### <a name="ora_profiledatabasedb_init_params"></a>`ora_profile::database::db_init_params`
 
@@ -3781,6 +3879,103 @@ This parameter can also be defined as Hash in case you need multiple listeners.
 The keys of the hash are the database names, and for every key you can specify all valid parameters for the class.
 The defaults for all key(s) in the Hash are the ones given to the class.
 
+### <a name="ora_profiledatabasedb_monitoring"></a>`ora_profile::database::db_monitoring`
+
+ora_profile::database::db_monitoring
+
+When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+See the file "LICENSE" for the full license governing this code.
+
+#### Parameters
+
+The following parameters are available in the `ora_profile::database::db_monitoring` class:
+
+* [`data_path`](#data_path)
+* [`facility`](#facility)
+* [`file_name`](#file_name)
+* [`install_path`](#install_path)
+* [`os_user`](#os_user)
+* [`oswbb_compress`](#oswbb_compress)
+* [`oswbb_days`](#oswbb_days)
+* [`oswbb_interval`](#oswbb_interval)
+
+##### <a name="data_path"></a>`data_path`
+
+Data type: `Optional[Stdlib::Absolutepath]`
+
+The directory where you want to store the data of the facility.
+For oswbb this will default to the archive directory inside the directory that is extracted from the file_name.
+The default value is: undef
+
+Default value: ``undef``
+
+##### <a name="facility"></a>`facility`
+
+Data type: `Enum['oswbb','ahf']`
+
+The facility you want to install.
+Currrently only OSWatcher Black Box (oswbb) is supported, Autonomous Health Framework (ahf) soon to come.
+The default value is:
+```yaml
+ora_profile::database::db_monitoring::facility: oswbb
+```
+
+##### <a name="file_name"></a>`file_name`
+
+Data type: `String[1]`
+
+The file_name that contains the facility you want to install.
+The default value is:
+```yaml
+ora_profile::database::db_monitoring::file_name: oswbb840.tar
+```
+
+##### <a name="install_path"></a>`install_path`
+
+Data type: `Stdlib::Absolutepath`
+
+The directory where you want to install the facility.
+The default value is: '/u01'
+
+##### <a name="os_user"></a>`os_user`
+
+Data type: `String[1]`
+
+The OS user to use for Oracle install.
+The default is : `oracle`
+To customize this consistently use the hiera key `ora_profile::database::os_user`.
+
+##### <a name="oswbb_compress"></a>`oswbb_compress`
+
+Data type: `String[1]`
+
+The utility that will be used to compress the data.
+The default value is:
+```yaml
+ora_profile::database::db_monitoring::oswbb_compress: gzip
+```
+
+##### <a name="oswbb_days"></a>`oswbb_days`
+
+Data type: `Integer`
+
+The number of days the data will be kept in the data_path.
+The default value is:
+```yaml
+ora_profile::database::db_monitoring::oswbb_days: 2
+```
+
+##### <a name="oswbb_interval"></a>`oswbb_interval`
+
+Data type: `Integer`
+
+The interval at which the facility will gather a snapshot in seconds.
+The default value is:
+```yaml
+ora_profile::database::db_monitoring::oswbb_interval: 30
+```
+
 ### <a name="ora_profiledatabasedb_patches"></a>`ora_profile::database::db_patches`
 
 ora_profile::database::db_patches
@@ -3886,7 +4081,7 @@ Valid values are:
 - `false`
 - `on_failure`
 
-Default value: `lookup({name => 'logoutput', default_value => 'on_failure'})`
+Default value: `lookup( { name => 'logoutput', default_value => 'on_failure' })`
 
 ### <a name="ora_profiledatabasedb_profiles"></a>`ora_profile::database::db_profiles`
 
@@ -3965,6 +4160,7 @@ The following parameters are available in the `ora_profile::database::db_softwar
 * [`file_name`](#file_name)
 * [`bash_profile`](#bash_profile)
 * [`bash_additions`](#bash_additions)
+* [`user_base_dir`](#user_base_dir)
 
 ##### <a name="version"></a>`version`
 
@@ -4096,6 +4292,12 @@ The text to add at the end of the bash_profile.
 This parameter will only be used when you have specified `true` for the parameter `bash_profile`
 The default value is an empty string.
 
+##### <a name="user_base_dir"></a>`user_base_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The directory to use as base directory for the users.
+
 ### <a name="ora_profiledatabasedb_startup"></a>`ora_profile::database::db_startup`
 
 ora_profile::database::db_startup
@@ -4113,6 +4315,7 @@ The following parameters are available in the `ora_profile::database::db_startup
 * [`oracle_home`](#oracle_home)
 * [`dbname`](#dbname)
 * [`db_type`](#db_type)
+* [`limits`](#limits)
 
 ##### <a name="oracle_home"></a>`oracle_home`
 
@@ -4139,6 +4342,28 @@ Valid values are:
 - `grid`
 - `database`
 The default value is: 'database'
+
+##### <a name="limits"></a>`limits`
+
+Data type: `Optional[Hash]`
+
+The limits for the systemd service.
+The default value is:
+```yaml
+ora_profile::database::db_startup::limits:
+  '*/nofile':
+    soft: 2048
+    hard: 8192
+  'oracle/nofile':
+    soft: 65536
+    hard: 65536
+  'oracle/nproc':
+    soft: 2048
+    hard: 16384
+  'oracle/stack':
+    soft: 10240
+    hard: 32768
+```
 
 ### <a name="ora_profiledatabasedb_tablespaces"></a>`ora_profile::database::db_tablespaces`
 
@@ -4205,6 +4430,24 @@ See the file "LICENSE" for the full license governing this code.
 ora_profile::database::em_license
 
 See the file "LICENSE" for the full license governing this code.
+
+### <a name="ora_profiledatabasefact_caching"></a>`ora_profile::database::fact_caching`
+
+ora_profile::database::fact_caching
+
+See the file "LICENSE" for the full license governing this code.
+
+#### Parameters
+
+The following parameters are available in the `ora_profile::database::fact_caching` class:
+
+* [`enabled`](#enabled)
+
+##### <a name="enabled"></a>`enabled`
+
+Data type: `Boolean`
+
+Boolean to determine if you want to enabled Puppet fact caching for the Oracle facts.
 
 ### <a name="ora_profiledatabasefirewall"></a>`ora_profile::database::firewall`
 
@@ -4454,82 +4697,70 @@ ora_profile::database { 'database_name': }
 
 The following parameters are available in the `ora_profile::extracted_database` class:
 
-* [`version`](#version)
-* [`dbname`](#dbname)
-* [`os_user`](#os_user)
+* [`db_control_provider`](#db_control_provider)
 * [`dba_group`](#dba_group)
+* [`dbname`](#dbname)
+* [`download_dir`](#download_dir)
 * [`install_group`](#install_group)
-* [`source`](#source)
+* [`ora_inventory_dir`](#ora_inventory_dir)
 * [`oracle_base`](#oracle_base)
 * [`oracle_home`](#oracle_home)
-* [`ora_inventory_dir`](#ora_inventory_dir)
-* [`db_control_provider`](#db_control_provider)
-* [`download_dir`](#download_dir)
+* [`os_user`](#os_user)
+* [`source`](#source)
 * [`temp_dir`](#temp_dir)
-* [`oracle_user_password`](#oracle_user_password)
-* [`em_license`](#em_license)
-* [`authenticated_nodes`](#authenticated_nodes)
-* [`before_em_license`](#before_em_license)
-* [`after_em_license`](#after_em_license)
-* [`sysctl`](#sysctl)
-* [`before_sysctl`](#before_sysctl)
-* [`after_sysctl`](#after_sysctl)
-* [`limits`](#limits)
-* [`before_limits`](#before_limits)
-* [`after_limits`](#after_limits)
-* [`groups_and_users`](#groups_and_users)
-* [`before_groups_and_users`](#before_groups_and_users)
-* [`after_groups_and_users`](#after_groups_and_users)
-* [`packages`](#packages)
-* [`before_packages`](#before_packages)
-* [`after_packages`](#after_packages)
-* [`firewall`](#firewall)
-* [`before_firewall`](#before_firewall)
-* [`after_firewall`](#after_firewall)
-* [`tmpfiles`](#tmpfiles)
-* [`before_tmpfiles`](#before_tmpfiles)
-* [`after_tmpfiles`](#after_tmpfiles)
-* [`db_software`](#db_software)
-* [`before_db_software`](#before_db_software)
-* [`after_db_software`](#after_db_software)
-* [`db_patches`](#db_patches)
-* [`before_db_patches`](#before_db_patches)
+* [`version`](#version)
 * [`after_db_patches`](#after_db_patches)
-* [`extracted_database_definition`](#extracted_database_definition)
-* [`before_extracted_database_definition`](#before_extracted_database_definition)
-* [`after_extracted_database_definition`](#after_extracted_database_definition)
-* [`extracted_init_params`](#extracted_init_params)
-* [`before_extracted_init_params`](#before_extracted_init_params)
-* [`after_extracted_init_params`](#after_extracted_init_params)
-* [`extracted_services`](#extracted_services)
-* [`before_extracted_services`](#before_extracted_services)
-* [`after_extracted_services`](#after_extracted_services)
-* [`extracted_tablespaces`](#extracted_tablespaces)
-* [`before_extracted_tablespaces`](#before_extracted_tablespaces)
-* [`after_extracted_tablespaces`](#after_extracted_tablespaces)
-* [`extracted_profiles`](#extracted_profiles)
-* [`before_extracted_profiles`](#before_extracted_profiles)
-* [`after_extracted_profiles`](#after_extracted_profiles)
-* [`extracted_users`](#extracted_users)
-* [`before_extracted_users`](#before_extracted_users)
-* [`after_extracted_users`](#after_extracted_users)
-* [`db_startup`](#db_startup)
-* [`before_db_startup`](#before_db_startup)
+* [`after_db_software`](#after_db_software)
 * [`after_db_startup`](#after_db_startup)
+* [`after_em_license`](#after_em_license)
+* [`after_extracted_database_definition`](#after_extracted_database_definition)
+* [`after_extracted_init_params`](#after_extracted_init_params)
+* [`after_extracted_profiles`](#after_extracted_profiles)
+* [`after_extracted_services`](#after_extracted_services)
+* [`after_extracted_tablespaces`](#after_extracted_tablespaces)
+* [`after_extracted_users`](#after_extracted_users)
+* [`after_firewall`](#after_firewall)
+* [`after_groups_and_users`](#after_groups_and_users)
+* [`after_limits`](#after_limits)
+* [`after_packages`](#after_packages)
+* [`after_sysctl`](#after_sysctl)
+* [`after_tmpfiles`](#after_tmpfiles)
+* [`authenticated_nodes`](#authenticated_nodes)
+* [`before_db_patches`](#before_db_patches)
+* [`before_db_software`](#before_db_software)
+* [`before_db_startup`](#before_db_startup)
+* [`before_em_license`](#before_em_license)
+* [`before_extracted_database_definition`](#before_extracted_database_definition)
+* [`before_extracted_init_params`](#before_extracted_init_params)
+* [`before_extracted_profiles`](#before_extracted_profiles)
+* [`before_extracted_services`](#before_extracted_services)
+* [`before_extracted_tablespaces`](#before_extracted_tablespaces)
+* [`before_extracted_users`](#before_extracted_users)
+* [`before_firewall`](#before_firewall)
+* [`before_groups_and_users`](#before_groups_and_users)
+* [`before_limits`](#before_limits)
+* [`before_packages`](#before_packages)
+* [`before_sysctl`](#before_sysctl)
+* [`before_tmpfiles`](#before_tmpfiles)
+* [`db_patches`](#db_patches)
+* [`db_software`](#db_software)
+* [`db_startup`](#db_startup)
+* [`em_license`](#em_license)
+* [`extracted_database_definition`](#extracted_database_definition)
+* [`extracted_init_params`](#extracted_init_params)
+* [`extracted_profiles`](#extracted_profiles)
+* [`extracted_services`](#extracted_services)
+* [`extracted_tablespaces`](#extracted_tablespaces)
+* [`extracted_users`](#extracted_users)
+* [`firewall`](#firewall)
+* [`groups_and_users`](#groups_and_users)
+* [`limits`](#limits)
+* [`oracle_user_password`](#oracle_user_password)
+* [`packages`](#packages)
+* [`sysctl`](#sysctl)
+* [`tmpfiles`](#tmpfiles)
 
-##### <a name="version"></a>`version`
-
-Data type: `Ora_Install::Version`
-
-
-
-##### <a name="dbname"></a>`dbname`
-
-Data type: `String[1]`
-
-
-
-##### <a name="os_user"></a>`os_user`
+##### <a name="db_control_provider"></a>`db_control_provider`
 
 Data type: `String[1]`
 
@@ -4541,15 +4772,27 @@ Data type: `String[1]`
 
 
 
+##### <a name="dbname"></a>`dbname`
+
+Data type: `String[1]`
+
+
+
+##### <a name="download_dir"></a>`download_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
 ##### <a name="install_group"></a>`install_group`
 
 Data type: `String[1]`
 
 
 
-##### <a name="source"></a>`source`
+##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
 
-Data type: `String[1]`
+Data type: `Stdlib::Absolutepath`
 
 
 
@@ -4565,21 +4808,15 @@ Data type: `Stdlib::Absolutepath`
 
 
 
-##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-##### <a name="db_control_provider"></a>`db_control_provider`
+##### <a name="os_user"></a>`os_user`
 
 Data type: `String[1]`
 
 
 
-##### <a name="download_dir"></a>`download_dir`
+##### <a name="source"></a>`source`
 
-Data type: `Stdlib::Absolutepath`
+Data type: `String[1]`
 
 
 
@@ -4589,199 +4826,13 @@ Data type: `Stdlib::Absolutepath`
 
 
 
-##### <a name="oracle_user_password"></a>`oracle_user_password`
+##### <a name="version"></a>`version`
 
-Data type: `Optional[String]`
+Data type: `Ora_Install::Version`
 
 
 
-Default value: ``undef``
-
-##### <a name="em_license"></a>`em_license`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
-
-##### <a name="authenticated_nodes"></a>`authenticated_nodes`
-
-Data type: `Optional[String]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_em_license"></a>`before_em_license`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_em_license"></a>`after_em_license`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="sysctl"></a>`sysctl`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_sysctl"></a>`before_sysctl`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_sysctl"></a>`after_sysctl`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="limits"></a>`limits`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_limits"></a>`before_limits`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_limits"></a>`after_limits`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="groups_and_users"></a>`groups_and_users`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_groups_and_users"></a>`before_groups_and_users`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_groups_and_users"></a>`after_groups_and_users`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="packages"></a>`packages`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_packages"></a>`before_packages`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_packages"></a>`after_packages`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="firewall"></a>`firewall`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_firewall"></a>`before_firewall`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_firewall"></a>`after_firewall`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="tmpfiles"></a>`tmpfiles`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_tmpfiles"></a>`before_tmpfiles`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_tmpfiles"></a>`after_tmpfiles`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="db_software"></a>`db_software`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_db_software"></a>`before_db_software`
+##### <a name="after_db_patches"></a>`after_db_patches`
 
 Data type: `Optional[String[1]]`
 
@@ -4797,7 +4848,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### <a name="db_patches"></a>`db_patches`
+##### <a name="after_db_startup"></a>`after_db_startup`
 
 Data type: `Optional[String[1]]`
 
@@ -4805,31 +4856,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### <a name="before_db_patches"></a>`before_db_patches`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_db_patches"></a>`after_db_patches`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="extracted_database_definition"></a>`extracted_database_definition`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_extracted_database_definition"></a>`before_extracted_database_definition`
+##### <a name="after_em_license"></a>`after_em_license`
 
 Data type: `Optional[String[1]]`
 
@@ -4845,87 +4872,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### <a name="extracted_init_params"></a>`extracted_init_params`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_extracted_init_params"></a>`before_extracted_init_params`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
 ##### <a name="after_extracted_init_params"></a>`after_extracted_init_params`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="extracted_services"></a>`extracted_services`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_extracted_services"></a>`before_extracted_services`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_extracted_services"></a>`after_extracted_services`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="extracted_tablespaces"></a>`extracted_tablespaces`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_extracted_tablespaces"></a>`before_extracted_tablespaces`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="after_extracted_tablespaces"></a>`after_extracted_tablespaces`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="extracted_profiles"></a>`extracted_profiles`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: ``undef``
-
-##### <a name="before_extracted_profiles"></a>`before_extracted_profiles`
 
 Data type: `Optional[String[1]]`
 
@@ -4941,7 +4888,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### <a name="extracted_users"></a>`extracted_users`
+##### <a name="after_extracted_services"></a>`after_extracted_services`
 
 Data type: `Optional[String[1]]`
 
@@ -4949,7 +4896,7 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### <a name="before_extracted_users"></a>`before_extracted_users`
+##### <a name="after_extracted_tablespaces"></a>`after_extracted_tablespaces`
 
 Data type: `Optional[String[1]]`
 
@@ -4965,7 +4912,71 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### <a name="db_startup"></a>`db_startup`
+##### <a name="after_firewall"></a>`after_firewall`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="after_groups_and_users"></a>`after_groups_and_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="after_limits"></a>`after_limits`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="after_packages"></a>`after_packages`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="after_sysctl"></a>`after_sysctl`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="after_tmpfiles"></a>`after_tmpfiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="authenticated_nodes"></a>`authenticated_nodes`
+
+Data type: `Optional[String]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_db_patches"></a>`before_db_patches`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_db_software"></a>`before_db_software`
 
 Data type: `Optional[String[1]]`
 
@@ -4981,7 +4992,239 @@ Data type: `Optional[String[1]]`
 
 Default value: ``undef``
 
-##### <a name="after_db_startup"></a>`after_db_startup`
+##### <a name="before_em_license"></a>`before_em_license`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_extracted_database_definition"></a>`before_extracted_database_definition`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_extracted_init_params"></a>`before_extracted_init_params`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_extracted_profiles"></a>`before_extracted_profiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_extracted_services"></a>`before_extracted_services`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_extracted_tablespaces"></a>`before_extracted_tablespaces`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_extracted_users"></a>`before_extracted_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_firewall"></a>`before_firewall`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_groups_and_users"></a>`before_groups_and_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_limits"></a>`before_limits`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_packages"></a>`before_packages`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_sysctl"></a>`before_sysctl`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="before_tmpfiles"></a>`before_tmpfiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="db_patches"></a>`db_patches`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="db_software"></a>`db_software`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="db_startup"></a>`db_startup`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="em_license"></a>`em_license`
+
+Data type: `Optional[String]`
+
+
+
+Default value: ``undef``
+
+##### <a name="extracted_database_definition"></a>`extracted_database_definition`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="extracted_init_params"></a>`extracted_init_params`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="extracted_profiles"></a>`extracted_profiles`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="extracted_services"></a>`extracted_services`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="extracted_tablespaces"></a>`extracted_tablespaces`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="extracted_users"></a>`extracted_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="firewall"></a>`firewall`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="groups_and_users"></a>`groups_and_users`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="limits"></a>`limits`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="oracle_user_password"></a>`oracle_user_password`
+
+Data type: `Optional[String]`
+
+
+
+Default value: ``undef``
+
+##### <a name="packages"></a>`packages`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="sysctl"></a>`sysctl`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: ``undef``
+
+##### <a name="tmpfiles"></a>`tmpfiles`
 
 Data type: `Optional[String[1]]`
 
