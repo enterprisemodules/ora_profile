@@ -13,12 +13,12 @@ describe 'ora_profile::database::asm_patches' do
           }
         end
         it { is_expected.to compile }
-        it { is_expected.to contain_file('/install/patches/patch_grid_1.sh')
+        it { is_expected.to contain_file('/install/asm_patches/patch_grid_1.sh')
           .with('content' => /export ORACLE_HOME=path_home/)
           .with('content' => /export ORACLE_BASE=\/u01\/app\/grid\/admin/)
-          .with('content' => /path_home\/gridSetup\.sh -silent -applyOneOffs  2\>\&1 > \/install\/patches\/patch_grid_1.log/)
-          .with('content' => /if grep -q "Successfully applied the patch." \/install\/patches\/patch_grid_1\.log/)
-          .with('content' => /cat \/install\/patches\/patch_grid_1.log/)
+          .with('content' => /path_home\/gridSetup\.sh -silent -applyOneOffs  2\>\&1 > \/install\/asm_patches\/patch_grid_1.log/)
+          .with('content' => /if grep -q "Successfully applied the patch." \/install\/asm_patches\/patch_grid_1\.log/)
+          .with('content' => /cat \/install\/asm_patches\/patch_grid_1.log/)
         }
       end
     end
