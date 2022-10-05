@@ -42,6 +42,14 @@
 #        hard: 32768
 #    ```
 #
+# @param [Optional[String[1]]] systemd_template
+#    Use custom EPP template for systemd service
+#    The default value is: undef
+#
+# @param [Optional[Hash]] systemd_template_vars
+#    The variables to use when specifying a custom EPP template for systemd service
+#    The default value is: undef
+#
 #
 # See the file "LICENSE" for the full license governing this code.
 #
@@ -54,6 +62,10 @@ class ora_profile::database::db_startup (
             $limits,
   Stdlib::Absolutepath
             $oracle_home,
+  Optional[String[1]]
+            $systemd_template,
+  Optional[Hash]
+            $systemd_template_vars,
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
@@ -86,9 +98,11 @@ class ora_profile::database::db_startup (
   }
 
   ora_install::autostartdatabase { "autostart ${dbname}":
-    oracle_home => $oracle_home,
-    db_name     => $dbname,
-    db_type     => $db_type,
-    limits      => $limits,
+    oracle_home           => $oracle_home,
+    db_name               => $dbname,
+    db_type               => $db_type,
+    limits                => $limits,
+    systemd_template      => $systemd_template,
+    systemd_template_vars => $systemd_template_vars,
   }
 }

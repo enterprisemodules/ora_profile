@@ -1064,6 +1064,8 @@ ora_profile::database::db_startup::dbname:                                "%{loo
 ora_profile::database::db_startup::oracle_home:                           "%{lookup('ora_profile::database::oracle_home')}"
 ora_profile::database::db_startup::db_type:                               database
 ora_profile::database::db_startup::limits:                                "%{alias('ora_profile::database::limits::list')}"
+ora_profile::database::db_startup::systemd_template:                      ~
+ora_profile::database::db_startup::systemd_template_vars:                 ~
 
 
 # ------------------------------------------------------------------------------

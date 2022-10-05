@@ -28,12 +28,16 @@ If you want to play and experiment with Puppet and Oracle, please take a look at
 
 
 
-Attribute Name                                   | Short Description                                                                                       |
------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-[db_type](#database::db_startup_db_type)         | The type of the database used to specify if the database should be started by an init script or srvctl. |
-[dbname](#database::db_startup_dbname)           | The name of the database.                                                                               |
-[limits](#database::db_startup_limits)           | The limits for the systemd service.                                                                     |
-[oracle_home](#database::db_startup_oracle_home) | The home directory to use for the Oracle installation.                                                  |
+Attribute Name                                                       | Short Description                                                                                       |
+-------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+[db_type](#database::db_startup_db_type)                             | The type of the database used to specify if the database should be started by an init script or srvctl. |
+[dbname](#database::db_startup_dbname)                               | The name of the database.                                                                               |
+[limits](#database::db_startup_limits)                               | The limits for the systemd service.                                                                     |
+[oracle_home](#database::db_startup_oracle_home)                     | The home directory to use for the Oracle installation.                                                  |
+[systemd_template](#database::db_startup_systemd_template)           | Use custom EPP template for systemd service
+                                                            |
+[systemd_template_vars](#database::db_startup_systemd_template_vars) | The variables to use when specifying a custom EPP template for systemd service
+                         |
 
 
 
@@ -100,6 +104,28 @@ ora_profile::database::db_startup::limits:
     soft: 10240
     hard: 32768
 ```
+
+Type: `Optional[Hash]`
+
+
+[Back to overview of database::db_startup](#attributes)
+
+### systemd_template<a name='database::db_startup_systemd_template'>
+
+Use custom EPP template for systemd service
+
+The default value is: undef
+
+Type: `Optional[String[1]]`
+
+
+[Back to overview of database::db_startup](#attributes)
+
+### systemd_template_vars<a name='database::db_startup_systemd_template_vars'>
+
+The variables to use when specifying a custom EPP template for systemd service
+
+The default value is: undef
 
 Type: `Optional[Hash]`
 

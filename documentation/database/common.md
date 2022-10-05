@@ -54,6 +54,9 @@ The default is : `12.2.0.1`
 
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::version', Ora_Install::Version)`
 
 [Back to overview of database::common](#attributes)
 
@@ -67,6 +70,9 @@ The default value is: `/install`
 
 To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::download_dir', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -78,6 +84,9 @@ The default is : `oinstall`
 
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::install_group', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -88,6 +97,9 @@ This  is the node where the other nodes will clone the software installations fr
 
 To customize this consistently use the hiera key `ora_profile::database::master_node`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::master_node', Optional[String[1]], undef, $facts['networking']['hostname'])`
 
 [Back to overview of database::common](#attributes)
 
@@ -99,6 +111,9 @@ The default value is: `/oracle_base/oraInventory`
 
 To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::ora_inventory_dir', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -110,6 +125,9 @@ The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
 
 To customize this consistently use the hiera key `ora_profile::database::grid_home`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::grid_home', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -121,6 +139,9 @@ The default is : `/u01/app/grid/admin`
 
 To customize this consistently use the hiera key `ora_profile::database::grid_base`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::grid_base', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -129,6 +150,9 @@ To customize this consistently use the hiera key `ora_profile::database::grid_ba
 The name of the user that owns the Grid Infrastructure installation.
 
 The default value is: `grid`.
+Type: `Any`
+
+Default:`lookup('ora_profile::database::grid_user', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -136,6 +160,9 @@ The default value is: `grid`.
 
 Directory to use for temporary files.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::temp_dir', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -149,6 +176,9 @@ The default is : `puppet:///modules/software/`
 
 To customize this consistently use the hiera key `ora_profile::database::source`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::source', String[1])`
 
 [Back to overview of database::common](#attributes)
 
@@ -163,6 +193,9 @@ ora_profile::database::cluster_nodes:
 - node2
 ```
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::cluster_nodes', Optional[Array])`
 
 [Back to overview of database::common](#attributes)
 
@@ -173,6 +206,9 @@ Only applicable for Windows systems.
 
 To customize this consistently use the hiera key `ora_profile::database::oracle_user_password`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::oracle_user_password', Optional[String[1]], undef, undef)`
 
 [Back to overview of database::common](#attributes)
 
@@ -184,6 +220,9 @@ The default value is: `sqlplus`
 
 To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::db_control_provider', Optional[String[1]])`
 
 [Back to overview of database::common](#attributes)
 
@@ -195,6 +234,9 @@ an example on how to use this is:
 
         patch_window => '2:00 - 4:00'
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::patch_window', Optional[String[1]])`
 
 [Back to overview of database::common](#attributes)
 
@@ -222,5 +264,8 @@ ora_profile::database::patch_levels:
 
 ```
 
+Type: `Any`
+
+Default:`lookup('ora_profile::database::patch_levels', Hash)`
 
 [Back to overview of database::common](#attributes)

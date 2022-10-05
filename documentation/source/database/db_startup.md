@@ -9,4 +9,6 @@ Also check the set of [common parameters](./common) that is passed to this class
   :dbname,
   :db_type,
   :limits,
+  :systemd_template,
+  :systemd_template_vars,
 ]%>

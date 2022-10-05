@@ -3210,67 +3210,112 @@ The following parameters are available in the `ora_profile::database::common` cl
 * [`db_control_provider`](#db_control_provider)
 * [`patch_window`](#patch_window)
 * [`patch_levels`](#patch_levels)
+* [`is_linux`](#is_linux)
+* [`is_rac`](#is_rac)
+* [`is_windows`](#is_windows)
 
 ##### <a name="version"></a>`version`
+
+Data type: `Any`
 
 The version of Oracle you want to install.
 The default is : `12.2.0.1`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
+Default value: `lookup('ora_profile::database::version', Ora_Install::Version)`
+
 ##### <a name="download_dir"></a>`download_dir`
+
+Data type: `Any`
 
 The directory where the Puppet software puts all downloaded files.
 Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
 The default value is: `/install`
 To customize this consistently use the hiera key `ora_profile::database::download_dir`.
 
+Default value: `lookup('ora_profile::database::download_dir', String[1])`
+
 ##### <a name="install_group"></a>`install_group`
+
+Data type: `Any`
 
 The group to use for Oracle install.
 The default is : `oinstall`
 To customize this consistently use the hiera key `ora_profile::database::install_group`.
 
+Default value: `lookup('ora_profile::database::install_group', String[1])`
+
 ##### <a name="master_node"></a>`master_node`
+
+Data type: `Any`
 
 The first node in RAC.
 This  is the node where the other nodes will clone the software installations from.
 To customize this consistently use the hiera key `ora_profile::database::master_node`.
 
+Default value: `lookup('ora_profile::database::master_node', Optional[String[1]], undef, $facts['networking']['hostname'])`
+
 ##### <a name="ora_inventory_dir"></a>`ora_inventory_dir`
+
+Data type: `Any`
 
 The directory that contains the oracle inventory.
 The default value is: `/oracle_base/oraInventory`
 To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
 
+Default value: `lookup('ora_profile::database::ora_inventory_dir', String[1])`
+
 ##### <a name="grid_home"></a>`grid_home`
+
+Data type: `Any`
 
 The ORACLE_HOME for the Grid Infrastructure installation.
 The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
 To customize this consistently use the hiera key `ora_profile::database::grid_home`.
 
+Default value: `lookup('ora_profile::database::grid_home', String[1])`
+
 ##### <a name="grid_base"></a>`grid_base`
+
+Data type: `Any`
 
 The ORACLE_BASE for the Grid Infrastructure installation.
 The default is : `/u01/app/grid/admin`
 To customize this consistently use the hiera key `ora_profile::database::grid_base`.
 
+Default value: `lookup('ora_profile::database::grid_base', String[1])`
+
 ##### <a name="grid_user"></a>`grid_user`
+
+Data type: `Any`
 
 The name of the user that owns the Grid Infrastructure installation.
 The default value is: `grid`.
 
+Default value: `lookup('ora_profile::database::grid_user', String[1])`
+
 ##### <a name="temp_dir"></a>`temp_dir`
+
+Data type: `Any`
 
 Directory to use for temporary files.
 
+Default value: `lookup('ora_profile::database::temp_dir', String[1])`
+
 ##### <a name="source"></a>`source`
+
+Data type: `Any`
 
 The location where the classes can find the software.
 You can specify a local directory, a Puppet url or an http url.
 The default is : `puppet:///modules/software/`
 To customize this consistently use the hiera key `ora_profile::database::source`.
 
+Default value: `lookup('ora_profile::database::source', String[1])`
+
 ##### <a name="cluster_nodes"></a>`cluster_nodes`
+
+Data type: `Any`
 
 An array with cluster node names for RAC.
 Example:
@@ -3280,26 +3325,42 @@ ora_profile::database::cluster_nodes:
 - node2
 ```
 
+Default value: `lookup('ora_profile::database::cluster_nodes', Optional[Array])`
+
 ##### <a name="oracle_user_password"></a>`oracle_user_password`
+
+Data type: `Any`
 
 The password for the oracle os user.
 Only applicable for Windows systems.
 To customize this consistently use the hiera key `ora_profile::database::oracle_user_password`.
 
+Default value: `lookup('ora_profile::database::oracle_user_password', Optional[String[1]], undef, undef)`
+
 ##### <a name="db_control_provider"></a>`db_control_provider`
+
+Data type: `Any`
 
 Which provider should be used for the type db_control.
 The default value is: `sqlplus`
 To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
 
+Default value: `lookup('ora_profile::database::db_control_provider', Optional[String[1]])`
+
 ##### <a name="patch_window"></a>`patch_window`
+
+Data type: `Any`
 
 The patch window in which you want to do the patching.
 Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
 an example on how to use this is:
         patch_window => '2:00 - 4:00'
 
+Default value: `lookup('ora_profile::database::patch_window', Optional[String[1]])`
+
 ##### <a name="patch_levels"></a>`patch_levels`
+
+Data type: `Any`
 
 Defines all the patch levels for both database and grid infrastructure formost common versions 12.
 2, 18c and 19c.
@@ -3319,6 +3380,32 @@ ora_profile::database::patch_levels:
         db_sub_patches:        ['31771877','31772784']
         grid_sub_patches:      ['31771877','31772784','31773437','31780966']
 ```
+
+Default value: `lookup('ora_profile::database::patch_levels', Hash)`
+
+##### <a name="is_linux"></a>`is_linux`
+
+Data type: `Any`
+
+
+
+Default value: `==`
+
+##### <a name="is_rac"></a>`is_rac`
+
+Data type: `Any`
+
+
+
+Default value: `!`
+
+##### <a name="is_windows"></a>`is_windows`
+
+Data type: `Any`
+
+
+
+Default value: `==`
 
 ### <a name="ora_profiledatabasedb_definition"></a>`ora_profile::database::db_definition`
 
@@ -4316,6 +4403,8 @@ The following parameters are available in the `ora_profile::database::db_startup
 * [`dbname`](#dbname)
 * [`db_type`](#db_type)
 * [`limits`](#limits)
+* [`systemd_template`](#systemd_template)
+* [`systemd_template_vars`](#systemd_template_vars)
 
 ##### <a name="oracle_home"></a>`oracle_home`
 
@@ -4364,6 +4453,20 @@ ora_profile::database::db_startup::limits:
     soft: 10240
     hard: 32768
 ```
+
+##### <a name="systemd_template"></a>`systemd_template`
+
+Data type: `Optional[String[1]]`
+
+Use custom EPP template for systemd service
+The default value is: undef
+
+##### <a name="systemd_template_vars"></a>`systemd_template_vars`
+
+Data type: `Optional[Hash]`
+
+The variables to use when specifying a custom EPP template for systemd service
+The default value is: undef
 
 ### <a name="ora_profiledatabasedb_tablespaces"></a>`ora_profile::database::db_tablespaces`
 
