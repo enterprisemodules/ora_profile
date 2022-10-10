@@ -26,3 +26,4 @@ fixtures:
     limits:                 saz/limits
     firewall:               puppetlabs-firewall
     firewalld:              puppet-firewalld
+    systemd:                puppet-systemd

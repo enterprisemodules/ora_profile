@@ -1,10 +1,59 @@
 #
-# ora_profile::database::common 
+# ora_profile::database::common
 #
 # @summary This class contains common variables used by more then one class.
 #
 #
-# @param cluster_nodes
+# @param [Any] version
+#    The version of Oracle you want to install.
+#    The default is : `12.2.0.1`
+#    To customize this consistently use the hiera key `ora_profile::database::version`.
+#
+# @param [Any] download_dir
+#    The directory where the Puppet software puts all downloaded files.
+#    Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
+#    The default value is: `/install`
+#    To customize this consistently use the hiera key `ora_profile::database::download_dir`.
+#
+# @param [Any] install_group
+#    The group to use for Oracle install.
+#    The default is : `oinstall`
+#    To customize this consistently use the hiera key `ora_profile::database::install_group`.
+#
+# @param [Any] master_node
+#    The first node in RAC.
+#    This  is the node where the other nodes will clone the software installations from.
+#    To customize this consistently use the hiera key `ora_profile::database::master_node`.
+#
+# @param [Any] ora_inventory_dir
+#    The directory that contains the oracle inventory.
+#    The default value is: `/oracle_base/oraInventory`
+#    To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
+#
+# @param [Any] grid_home
+#    The ORACLE_HOME for the Grid Infrastructure installation.
+#    The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
+#    To customize this consistently use the hiera key `ora_profile::database::grid_home`.
+#
+# @param [Any] grid_base
+#    The ORACLE_BASE for the Grid Infrastructure installation.
+#    The default is : `/u01/app/grid/admin`
+#    To customize this consistently use the hiera key `ora_profile::database::grid_base`.
+#
+# @param [Any] grid_user
+#    The name of the user that owns the Grid Infrastructure installation.
+#    The default value is: `grid`.
+#
+# @param [Any] temp_dir
+#    Directory to use for temporary files.
+#
+# @param [Any] source
+#    The location where the classes can find the software.
+#    You can specify a local directory, a Puppet url or an http url.
+#    The default is : `puppet:///modules/software/`
+#    To customize this consistently use the hiera key `ora_profile::database::source`.
+#
+# @param [Any] cluster_nodes
 #    An array with cluster node names for RAC.
 #    Example:
 #    ```yaml
@@ -12,43 +61,24 @@
 #    - node1
 #    - node2
 #    ```
-# @param db_control_provider
-#    Which provider should be used for the type db_control.
-#    The default value is: `sqlplus`
-#    To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
-# @param download_dir
-#    The directory where the Puppet software puts all downloaded files.
-#    Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
-#    The default value is: `/install`
-#    To customize this consistently use the hiera key `ora_profile::database::download_dir`.
-# @param grid_base
-#    The ORACLE_BASE for the Grid Infrastructure installation.
-#    The default is : `/u01/app/grid/admin`
-#    To customize this consistently use the hiera key `ora_profile::database::grid_base`.
-# @param grid_home
-#    The ORACLE_HOME for the Grid Infrastructure installation.
-#    The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
-#    To customize this consistently use the hiera key `ora_profile::database::grid_home`.
-# @param grid_user
-#    The name of the user that owns the Grid Infrastructure installation.
-#    The default value is: `grid`.
-# @param install_group
-#    The group to use for Oracle install.
-#    The default is : `oinstall`
-#    To customize this consistently use the hiera key `ora_profile::database::install_group`.
-# @param master_node
-#    The first node in RAC.
-#    This  is the node where the other nodes will clone the software installations from.
-#    To customize this consistently use the hiera key `ora_profile::database::master_node`.
-# @param ora_inventory_dir
-#    The directory that contains the oracle inventory.
-#    The default value is: `/oracle_base/oraInventory`
-#    To customize this consistently use the hiera key `ora_profile::database::ora_inventory_dir`.
-# @param oracle_user_password
+#
+# @param [Any] oracle_user_password
 #    The password for the oracle os user.
 #    Only applicable for Windows systems.
 #    To customize this consistently use the hiera key `ora_profile::database::oracle_user_password`.
-# @param patch_levels
+#
+# @param [Any] db_control_provider
+#    Which provider should be used for the type db_control.
+#    The default value is: `sqlplus`
+#    To customize this consistently use the hiera key `ora_profile::database::db_control_provider`.
+#
+# @param [Any] patch_window
+#    The patch window in which you want to do the patching.
+#    Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
+#    an example on how to use this is:
+#            patch_window => '2:00 - 4:00'
+#
+# @param [Any] patch_levels
 #    Defines all the patch levels for both database and grid infrastructure formost common versions 12.
 #    2, 18c and 19c.
 #    The default values look like the example below.
@@ -67,22 +97,6 @@
 #            db_sub_patches:        ['31771877','31772784']
 #            grid_sub_patches:      ['31771877','31772784','31773437','31780966']
 #    ```
-# @param patch_window
-#    The patch window in which you want to do the patching.
-#    Every time puppet runs outside of this patcn windows, puppet will detect the patches are not installed, but puppet will not shutdown the database and apply the patches.
-#    an example on how to use this is:
-#            patch_window => '2:00 - 4:00'
-# @param source
-#    The location where the classes can find the software.
-#    You can specify a local directory, a Puppet url or an http url.
-#    The default is : `puppet:///modules/software/`
-#    To customize this consistently use the hiera key `ora_profile::database::source`.
-# @param temp_dir
-#    Directory to use for temporary files.
-# @param version
-#    The version of Oracle you want to install.
-#    The default is : `12.2.0.1`
-#    To customize this consistently use the hiera key `ora_profile::database::version`.
 #
 #
 # See the file "LICENSE" for the full license governing this code.
