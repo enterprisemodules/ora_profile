@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.40.0
+
+**New Features**
+
+- [autostartdatabase] Implement custom template for systemd service (#135)
+- [db_monitoring] Initial implementation with OSWatcher
+
 ## Release 0.39.0
 
 **New Features**
