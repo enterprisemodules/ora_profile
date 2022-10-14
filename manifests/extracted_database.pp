@@ -87,10 +87,10 @@ class ora_profile::extracted_database (
 
   easy_type::ordered_steps([
       'ora_profile::database::em_license',
-      ['ora_profile::database::sysctl',                   { 'implementation' => 'easy_type::profile::sysctl' }],
-      ['ora_profile::database::limits',                   { 'implementation' => 'easy_type::profile::limits' }],
-      ['ora_profile::database::groups_and_users',         { 'implementation' => 'easy_type::profile::groups_and_users' }],
-      ['ora_profile::database::packages',                 { 'implementation' => 'easy_type::profile::packages' }],
+      ['ora_profile::database::sysctl', { 'implementation' => 'easy_type::profile::sysctl' }],
+      ['ora_profile::database::limits', { 'implementation' => 'easy_type::profile::limits' }],
+      ['ora_profile::database::groups_and_users', { 'implementation' => 'easy_type::profile::groups_and_users' }],
+      ['ora_profile::database::packages', { 'implementation' => 'easy_type::profile::packages' }],
       #
       # Although there is an easy_type::profile::firewall implementation, it doesn't fit here. We are doing more here
       #
@@ -99,11 +99,11 @@ class ora_profile::extracted_database (
       'ora_profile::database::db_software',
       'ora_profile::database::db_patches',
       ['ora_profile::database::extracted_database_definition', { 'implementation' => 'easy_type::profile::resources' }],
-      ['ora_profile::database::extracted_init_params',         { 'implementation' => 'easy_type::profile::resources' }],
-      ['ora_profile::database::extracted_services',            { 'implementation' => 'easy_type::profile::resources' }],
-      ['ora_profile::database::extracted_tablespaces',         { 'implementation' => 'easy_type::profile::resources' }],
-      ['ora_profile::database::extracted_profiles',            { 'implementation' => 'easy_type::profile::resources' }],
-      ['ora_profile::database::extracted_users',               { 'implementation' => 'easy_type::profile::resources' }],
+      ['ora_profile::database::extracted_init_params', { 'implementation' => 'easy_type::profile::resources' }],
+      ['ora_profile::database::extracted_services', { 'implementation' => 'easy_type::profile::resources' }],
+      ['ora_profile::database::extracted_tablespaces', { 'implementation' => 'easy_type::profile::resources' }],
+      ['ora_profile::database::extracted_profiles', { 'implementation' => 'easy_type::profile::resources' }],
+      ['ora_profile::database::extracted_users', { 'implementation' => 'easy_type::profile::resources' }],
       'ora_profile::database::db_startup',
   ])
 }

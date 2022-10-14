@@ -297,12 +297,12 @@ class ora_profile::oem_server (
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   easy_type::ordered_steps([
-      ['ora_profile::database::em_license',       { 'onlyif' => $standalone }],
-      ['ora_profile::database::sysctl',           { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],
+      ['ora_profile::database::em_license', { 'onlyif' => $standalone }],
+      ['ora_profile::database::sysctl', { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::sysctl' }],
       ['ora_profile::database::groups_and_users', { 'onlyif' => $standalone, 'implementation' => 'easy_type::profile::groups_and_users' }],
-      ['ora_profile::database::firewall',         { 'onlyif' => $standalone }],
-      ['ora_profile::oem_server::limits',         { 'implementation' => 'easy_type::profile::limits' }],
-      ['ora_profile::oem_server::packages',       { 'implementation' => 'easy_type::profile::packages' }],
+      ['ora_profile::database::firewall', { 'onlyif' => $standalone }],
+      ['ora_profile::oem_server::limits', { 'implementation' => 'easy_type::profile::limits' }],
+      ['ora_profile::oem_server::packages', { 'implementation' => 'easy_type::profile::packages' }],
       'ora_profile::oem_server::software',
   ])
 }

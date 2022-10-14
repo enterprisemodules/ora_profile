@@ -49,7 +49,7 @@ class ora_profile::database::asm_patches (
   String[1] $patch_file,
   Hash      $patch_list,
   Variant[Boolean,Enum['on_failure']]
-            $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' }),
+            $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent
 # lint:endignore:lookup_in_parameter
@@ -103,7 +103,7 @@ class ora_profile::database::asm_patches (
         "${grid_home}:${split($patch_name,'-')[0]}" => ($patch_details + $patch_type + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file'),
       }
       $current_patch
-    }.reduce( {}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
+    }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
     $patch_bundle_id = split($patch_level_list.keys[0],':')[1]
   } else {
     fail "Patchlevel '${level}' not defined for ASM version '${asm_version}'"
@@ -172,7 +172,7 @@ class ora_profile::database::asm_patches (
           $patch_name => ($patch_details + $provider - 'sub_patches' - 'type'),
         }
         $current_patch
-      }.reduce( {}) |$memo, $hash| { $memo + $hash } # Turn Array of Hashes into Hash
+      }.reduce({}) |$memo, $hash| { $memo + $hash } # Turn Array of Hashes into Hash
 
       echo { "Apply ASM patch(es) ${apply_patches.keys.join(',')} CAUSING DOWNTIME ON THIS NODE":
         withpath => false,
@@ -327,7 +327,7 @@ class ora_profile::database::asm_patches (
           owner   => $grid_user,
           group   => $install_group,
           mode    => '0744',
-          content => epp('ora_profile/patch_grid.sh.epp',{
+          content => epp('ora_profile/patch_grid.sh.epp', {
               'home'          => $home,
               'grid_base'     => $grid_base,
               'download_dir'  => $download_dir,

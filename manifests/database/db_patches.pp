@@ -79,7 +79,7 @@ class ora_profile::database::db_patches (
   String[1] $patch_file,
   Hash      $patch_list,
   Variant[Boolean,Enum['on_failure']]
-            $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' })
+            $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent
 # lint:endignore:lookup_in_parameter
@@ -132,7 +132,7 @@ class ora_profile::database::db_patches (
         "${oracle_home}:${patch_name}" => ($patch_details + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file' - 'type'),
       }
       $current_patch
-    }.reduce( {}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
+    }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
   } else {
     fail "Patchlevel '${level}' not defined for database version '${db_version}'"
   }
@@ -176,7 +176,7 @@ class ora_profile::database::db_patches (
   # patch_list_to_apply is the hash with homes and their specified patch details of which at least one need to be applied
   $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list, 'db')
   # apply_patches is the hash without the OPatch details which can be given to ora_opatch
-  $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce( {}) |$memo, $array| { $memo + $array }
+  $apply_patches = $patch_list_to_apply.map |$patch, $details| {{ $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
   $converted_apply_patch_list = ora_install::ora_physical_patches($apply_patches).unique
   $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
 

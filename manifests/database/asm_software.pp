@@ -268,7 +268,7 @@ class ora_profile::database::asm_software (
           $ora_inventory = "${ora_inventory_dir}/oraInventory"
           file { $add_node_rsp:
             ensure  => file,
-            content => epp("ora_profile/grid_addnode_${version}.rsp.epp",{
+            content => epp("ora_profile/grid_addnode_${version}.rsp.epp", {
                 'ora_inventory'          => $ora_inventory,
                 'grid_base'              => $grid_base,
                 'cluster_name'           => $cluster_name,

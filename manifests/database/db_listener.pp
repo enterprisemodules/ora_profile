@@ -79,7 +79,7 @@ class ora_profile::database::db_listener (
         withpath => false,
       }
     }
-    $listener = $dbname.map |$db, $db_props| { { $db => deep_merge($listener_defaults, $db_props) } }.reduce( {}) |$memo, $array| { $memo + $array }
+    $listener = $dbname.map |$db, $db_props| {{ $db => deep_merge($listener_defaults, $db_props) } }.reduce({}) |$memo, $array| { $memo + $array }
   }
 
   $listener.each |$lsnr, $lsnr_props| {

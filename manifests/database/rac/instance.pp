@@ -85,7 +85,7 @@ define ora_profile::database::rac::instance (
       ensure  => file,
       owner   => $ora_profile::database::os_user,
       group   => $ora_profile::database::install_group,
-      content => epp('ora_profile/add_logfiles.sql.epp',{
+      content => epp('ora_profile/add_logfiles.sql.epp', {
           'thread'   => $thread,
           'log_size' => $log_size,
       }),

@@ -158,7 +158,7 @@ class ora_profile::database::db_definition_template (
   Ora_Install::Version
                       $version,
   Variant[Boolean,Enum['on_failure']]
-                      $logoutput = lookup( { name => 'logoutput', default_value => 'on_failure' }),
+                      $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent
 # lint:endignore:lookup_in_parameter

@@ -50,7 +50,7 @@ class ora_profile::database::asm_storage::asmlib (
     owner   => root,
     group   => root,
     mode    => '0775',
-    content => epp('ora_profile/oracleasm-_dev_oracleasm.epp',{
+    content => epp('ora_profile/oracleasm-_dev_oracleasm.epp', {
         'grid_user'       => $grid_user,
         'grid_admingroup' => $grid_admingroup,
         'scan_exclude'    => $scan_exclude,

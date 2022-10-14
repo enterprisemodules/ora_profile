@@ -42,7 +42,7 @@ class ora_profile::database::asm_storage::udev (
 
   file { '/etc/udev/rules.d/99-oracle-asmdevices.rules':
     ensure  => file,
-    content => epp("ora_profile/99-oracle-asmdevices-el${facts['os']['release']['major']}.rules.epp",{
+    content => epp("ora_profile/99-oracle-asmdevices-el${facts['os']['release']['major']}.rules.epp", {
         'grid_user'       => $grid_user,
         'grid_admingroup' => $grid_admingroup,
         'disk_devices'    => $disk_devices,

@@ -109,7 +109,7 @@ class ora_profile::database::db_monitoring (
       }
       include 'systemd'
       systemd::unit_file { 'oswatcher.service':
-        content => epp('ora_profile/oswatcher.service.epp',{
+        content => epp('ora_profile/oswatcher.service.epp', {
             install_path   => $install_path,
             data_path      => $data_path_var,
             os_user        => $os_user,
