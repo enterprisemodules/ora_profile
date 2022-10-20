@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.41.1
+
+**Bug fixes**
+
+- [core] Update to use latest version of versioned_data hiera backend
 ## Release 0.41.0
 
 **New Features**
