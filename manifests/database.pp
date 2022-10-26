@@ -512,6 +512,24 @@
 #    ora_profile::database::db_definition:  skip
 #    ```
 #
+# @param [Optional[String]] rman_config
+#    Use this value if you want to use your own class, skip or enable for stage `rman_config`.
+#    ## Use your own class
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::rman_config:  my_module::my_class
+#    ```
+#    ## Skip
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::rman_config:  skip
+#    ```
+#    This is the default from the ora_profile module.
+#    To enable the rman configuration class define the variable as `undef`:
+#    ```yaml
+#    ora_profile::database::rman_config:  ~
+#    ```
+#
 # @param [Optional[String]] db_listener
 #    Use this value if you want to skip or use your own class for stage `db_listener`.
 #    ## Use your own class
@@ -784,6 +802,13 @@
 #    ora_profile::database::before_db_definition:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] before_rman_config
+#    The name of the class you want to execute directly **before** the `rman_config` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::before_rman_config:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] before_db_listener
 #    The name of the class you want to execute directly **before** the `db_listener` class.
 #    You can use hiera to set this value. Here is an example:
@@ -1008,6 +1033,13 @@
 #    ora_profile::database::after_db_definition:  my_module::my_class
 #    ```
 #
+# @param [Optional[String]] after_rman_config
+#    The name of the class you want to execute directly **after** the `rman_config` class.
+#    You can use hiera to set this value. Here is an example:
+#    ```yaml
+#    ora_profile::database::after_rman_config:  my_module::my_class
+#    ```
+#
 # @param [Optional[String]] after_db_listener
 #    The name of the class you want to execute directly **after** the `db_listener` class.
 #    You can use hiera to set this value. Here is an example:
@@ -1123,6 +1155,7 @@ class ora_profile::database (
   Optional[String] $after_groups_and_users     = undef,
   Optional[String] $after_limits               = undef,
   Optional[String] $after_packages             = undef,
+  Optional[String] $after_rman_config          = undef,
   Optional[String] $after_sysctl               = undef,
   Optional[String] $after_tmpfiles             = undef,
   Optional[String] $asm_diskgroup              = undef,
@@ -1167,6 +1200,7 @@ class ora_profile::database (
   Optional[String] $before_groups_and_users    = undef,
   Optional[String] $before_limits              = undef,
   Optional[String] $before_packages            = undef,
+  Optional[String] $before_rman_config         = undef,
   Optional[String] $before_sysctl              = undef,
   Optional[String] $before_tmpfiles            = undef,
   Optional[Array]  $cluster_nodes              = undef,
@@ -1188,13 +1222,11 @@ class ora_profile::database (
   Optional[String] $groups_and_users           = undef,
   Optional[String] $limits                     = undef,
   Optional[String] $master_node                = $facts['networking']['hostname'],
-  #
-  # Optional settings
-  #
-  Optional[String] $oracle_user_password = undef,
-  Optional[String] $packages = undef,
-  Optional[String] $sysctl = undef,
-  Optional[String] $tmpfiles = undef
+  Optional[String] $oracle_user_password       = undef,
+  Optional[String] $packages                   = undef,
+  Optional[String] $rman_config                = undef,
+  Optional[String] $sysctl                     = undef,
+  Optional[String] $tmpfiles                   = undef
 ) {
 # lint:endignore:strict_indent
 
@@ -1239,6 +1271,7 @@ class ora_profile::database (
       'ora_profile::database::db_software',
       'ora_profile::database::db_patches',
       'ora_profile::database::db_definition',
+      'ora_profile::database::rman_config',
       ['ora_profile::database::db_listener', { 'onlyif' => !$use_asm }],
       ['ora_profile::database::asm_listener', { 'onlyif' => $use_asm }],
       'ora_profile::database::db_init_params',

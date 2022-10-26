@@ -987,6 +987,24 @@ ora_profile::database::db_definition_template::container_database:        disabl
 
 # ------------------------------------------------------------------------------
 #
+#  Settings for database::rman_config
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::rman_config:                                       skip
+ora_profile::database::rman_config::settings:
+  "%{lookup('ora_profile::database::dbname')}":
+    archivelog_backup_copies:
+      DISK: '1'
+    backup_optimization: 'on'
+    controlfile_autobackup: 'on'
+    controlfile_autobackup_format:
+      DISK: "%{lookup('ora_profile::database::dbname')}_%F"
+    device:
+      DISK: 'PARALLELISM 2 BACKUP TYPE TO COMPRESSED BACKUPSET'
+
+
+# ------------------------------------------------------------------------------
+#
 #  Settings for database::db_listener
 #
 # ------------------------------------------------------------------------------
