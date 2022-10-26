@@ -188,7 +188,7 @@ class ora_profile::database::asm_patches (
         ora_opatch {
           default:
             ensure   => present,
-            tmp_dir  => "${download_dir}/patches", # always use subdir, the whole directory will be removed when done
+            tmp_dir  => "${download_dir}/asm_patches", # always use subdir, the whole directory will be removed when done
             schedule => $schedule,
             tag      => 'asm_patches',
             ;
@@ -215,7 +215,7 @@ class ora_profile::database::asm_patches (
           ora_opatch {
             default:
               ensure   => present,
-              tmp_dir  => "${download_dir}/patches", # always use subdir, the whole directory will be removed when done
+              tmp_dir  => "${download_dir}/asm_patches", # always use subdir, the whole directory will be removed when done
               schedule => $schedule,
               tag      => 'asm_patches',
               require  => [
@@ -251,7 +251,7 @@ class ora_profile::database::asm_patches (
     # ORACLE_HOME is not registered in oraInventory so we will install the patch using gridSetup.sh on master_node
     if ( $master_node == $facts['networking']['hostname'] ) {
       # lint:ignore:world_writable_files
-      file { "${download_dir}/patches":
+      file { "${download_dir}/asm_patches":
         ensure => directory,
         mode   => '0777',
       }
@@ -265,16 +265,16 @@ class ora_profile::database::asm_patches (
         archive { "${download_dir}/${file_name}":
           ensure       => present,
           cleanup      => true,
-          creates      => "${download_dir}/patches/${patch_num}",
+          creates      => "${download_dir}/asm_patches/${patch_num}",
           extract      => true,
-          extract_path => "${download_dir}/patches",
+          extract_path => "${download_dir}/asm_patches",
           group        => $install_group,
           user         => $grid_user,
           source       => $props['source'],
           before       => Exec["Apply ${props['type']} patch(es) ${patch_num} to ${home}"],
           notify       => Exec["Apply ${props['type']} patch(es) ${patch_num} to ${home}"],
           require      => [
-            File["${download_dir}/patches"],
+            File["${download_dir}/asm_patches"],
             Ora_install::Opatchupgrade["ASM OPatch upgrade to ${opversion}"],
           ],
         }
@@ -282,12 +282,12 @@ class ora_profile::database::asm_patches (
         $sub_patches = $props['sub_patches'].map |$sp| {
           if ( $sp == $patch_num ) {
             if ( $props['type'] == 'psu' ) {
-              "${download_dir}/patches/${patch_num}/${sp}"
+              "${download_dir}/asm_patches/${patch_num}/${sp}"
             } else {
-              "${download_dir}/patches/${patch_num}"
+              "${download_dir}/asm_patches/${patch_num}"
             }
           } else {
-            "${download_dir}/patches/${patch_num}/${sp}"
+            "${download_dir}/asm_patches/${patch_num}/${sp}"
           }
         }
 
@@ -304,7 +304,7 @@ class ora_profile::database::asm_patches (
                 fail ("Version ${asm_version} doesn't support patching this way")
               }
             }
-            $apply_patches = "${download_dir}/patches/${patch_num}"
+            $apply_patches = "${download_dir}/asm_patches/${patch_num}"
           }
           'one-off': {
             case $asm_version {
@@ -322,7 +322,7 @@ class ora_profile::database::asm_patches (
           }
         }
 
-        file { "${download_dir}/patches/patch_grid_${patch_num}.sh":
+        file { "${download_dir}/asm_patches/patch_grid_${patch_num}.sh":
           ensure  => file,
           owner   => $grid_user,
           group   => $install_group,
@@ -338,18 +338,18 @@ class ora_profile::database::asm_patches (
         }
 
         exec { "Apply ${props['type']} patch(es) ${patch_num} to ${home}":
-          command     => "${download_dir}/patches/patch_grid_${patch_num}.sh",
+          command     => "${download_dir}/asm_patches/patch_grid_${patch_num}.sh",
           refreshonly => true,
           timeout     => 0,
           user        => $grid_user,
           group       => $install_group,
-          notify      => Exec["Cleanup ${download_dir}/patches/${patch_num}"],
-          require     => File["${download_dir}/patches/patch_grid_${patch_num}.sh"],
+          notify      => Exec["Cleanup ${download_dir}/asm_patches/${patch_num}"],
+          require     => File["${download_dir}/asm_patches/patch_grid_${patch_num}.sh"],
           logoutput   => $logoutput,
         }
 
-        exec { "Cleanup ${download_dir}/patches/${patch_num}":
-          command     => "/bin/rm -rf ${download_dir}/patches/${patch_num}",
+        exec { "Cleanup ${download_dir}/asm_patches/${patch_num}":
+          command     => "/bin/rm -rf ${download_dir}/asm_patches/${patch_num}",
           refreshonly => true,
         }
       }
