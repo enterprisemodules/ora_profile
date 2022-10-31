@@ -154,6 +154,7 @@ Attribute Name                                                       | Short Des
 [after_groups_and_users](#database_after_groups_and_users)           | The name of the class you want to execute directly **after** the `groups_and_users` class.      |
 [after_limits](#database_after_limits)                               | The name of the class you want to execute directly **after** the `limits` class.                |
 [after_packages](#database_after_packages)                           | The name of the class you want to execute directly **after** the `packages` class.              |
+[after_rman_config](#database_after_rman_config)                     | The name of the class you want to execute directly **after** the `rman_config` class.           |
 [after_sysctl](#database_after_sysctl)                               | The name of the class you want to execute directly **after** the `sysctl` class.                |
 [after_tmpfiles](#database_after_tmpfiles)                           | The name of the class you want to execute directly **after** the `tmpfiles` class.              |
 [asm_diskgroup](#database_asm_diskgroup)                             | Use this value if you want to skip or use your own class for stage `asm_diskgroup`.             |
@@ -198,6 +199,7 @@ Attribute Name                                                       | Short Des
 [before_groups_and_users](#database_before_groups_and_users)         | The name of the class you want to execute directly **before** the `groups_and_users` class.     |
 [before_limits](#database_before_limits)                             | The name of the class you want to execute directly **before** the `limits` class.               |
 [before_packages](#database_before_packages)                         | The name of the class you want to execute directly **before** the `packages` class.             |
+[before_rman_config](#database_before_rman_config)                   | The name of the class you want to execute directly **before** the `rman_config` class.          |
 [before_sysctl](#database_before_sysctl)                             | The name of the class you want to execute directly **before** the `sysctl` class.               |
 [before_tmpfiles](#database_before_tmpfiles)                         | The name of the class you want to execute directly **before** the `tmpfiles` class.             |
 [cluster_nodes](#database_cluster_nodes)                             | An array with cluster node names for RAC.                                                       |
@@ -234,6 +236,7 @@ Attribute Name                                                       | Short Des
 [oracle_user_password](#database_oracle_user_password)               | The password for the oracle os user.                                                            |
 [os_user](#database_os_user)                                         | The OS user to use for Oracle install.                                                          |
 [packages](#database_packages)                                       | Use this value if you want to skip or use your own class for stage `packages`.                  |
+[rman_config](#database_rman_config)                                 | Use this value if you want to use your own class, skip or enable for stage `rman_config`.       |
 [source](#database_source)                                           | The location where the classes can find the software.                                           |
 [storage](#database_storage)                                         | The type of storage used.                                                                       |
 [sysctl](#database_sysctl)                                           | Use this value if you want to skip or use your own class for stage `sysctl`.                    |
@@ -1124,6 +1127,39 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
+### rman_config<a name='database_rman_config'>
+
+Use this value if you want to use your own class, skip or enable for stage `rman_config`.
+
+## Use your own class
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::rman_config:  my_module::my_class
+```
+
+## Skip
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::rman_config:  skip
+```
+
+This is the default from the ora_profile module.
+To enable the rman configuration class define the variable as `undef`:
+
+```yaml
+ora_profile::database::rman_config:  ~
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
 ### db_listener<a name='database_db_listener'>
 
 Use this value if you want to skip or use your own class for stage `db_listener`.
@@ -1716,6 +1752,22 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
+### before_rman_config<a name='database_before_rman_config'>
+
+The name of the class you want to execute directly **before** the `rman_config` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::before_rman_config:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
 ### before_db_listener<a name='database_before_db_listener'>
 
 The name of the class you want to execute directly **before** the `db_listener` class.
@@ -2221,6 +2273,22 @@ You can use hiera to set this value. Here is an example:
 
 ```yaml
 ora_profile::database::after_db_definition:  my_module::my_class
+```
+
+Type: `Optional[String]`
+
+Default:`undef`
+
+[Back to overview of database](#attributes)
+
+### after_rman_config<a name='database_after_rman_config'>
+
+The name of the class you want to execute directly **after** the `rman_config` class.
+
+You can use hiera to set this value. Here is an example:
+
+```yaml
+ora_profile::database::after_rman_config:  my_module::my_class
 ```
 
 Type: `Optional[String]`

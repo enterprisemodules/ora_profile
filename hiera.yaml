@@ -46,6 +46,15 @@ hierarchy:
         - '>= 19'
         - '< 20'
 
+  - name: "Version data for all version 21 versions."
+    lookup_key: 'easy_type::versioned_data'
+    path: oracle_versions/21.yaml
+    options:
+      version_key: ora_profile::database::common::version
+      specification:
+        - '>= 21'
+        - '< 22'
+
   - name: "ora_profile class parameter defaults"
     path: "defaults.yaml"
 
