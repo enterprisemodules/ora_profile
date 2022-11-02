@@ -96,7 +96,7 @@ The [`ora_profile`](https://www.enterprisemodules.com/shop/products/puppet-ora_c
 - Puppet module [`enterprisemodules-easy_type`](https://forge.puppet.com/enterprisemodules/easy_type) installed.
 - Puppet module [`enterprisemodules/ora_secured`](https://forge.puppet.com/enterprisemodules/ora_secured) installed.
 - Puppet module [`ipcrm-echo`](https://forge.puppet.com/ipcrm/echo) installed.
-- Puppet module [`herculesteam-augeasproviders_core`](https://forge.puppet.com/herculesteam/augeasproviders_core) installed.
+- Puppet module [`puppet-augeasproviders_core`](https://forge.puppet.com/herculesteam/augeasproviders_core) installed.
 - Puppet module [`herculesteam-augeasproviders_sysctl`](https://forge.puppet.com/herculesteam/augeasproviders_sysctl) installed.
 - Puppet module [`saz-limits`](https://forge.puppet.com/saz/limits) installed.
 - Puppet module [`puppetlabs-firewall`](https://forge.puppet.com/puppetlabs/firewall) installed.
