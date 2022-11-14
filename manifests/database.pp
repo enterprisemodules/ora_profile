@@ -8,7 +8,7 @@
 # contain ::ora_profile::database
 # ```
 # 
-# Is enough to get an Oracle 12.2 database running on your system. 
+# Is enough to get an Oracle 19c database running on your system. 
 # 
 # But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 # 
@@ -106,7 +106,7 @@
 #
 # @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
-#    The default is : `12.2.0.1`
+#    The default is : `19.0.0.0`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
 #
 # @param [String[1]] dbname
@@ -165,7 +165,7 @@
 #
 # @param [Stdlib::Absolutepath] grid_home
 #    The oracle home directory to use for the GRID software.
-#    The default value is: `/u01/app/grid/product/12.2.0.1/grid_home1`
+#    The default value is: `/u01/app/grid/product/19.0.0.0/grid_home1`
 #
 # @param [String[1]] db_control_provider
 #    Which provider should be used for the type db_control.
@@ -1121,7 +1121,7 @@ class ora_profile::database (
             $oracle_home,
   String[1] $os_user,
   String[1] $source,
-  Enum['local','asm']  $storage,
+  Enum['local', 'asm']  $storage,
   Stdlib::Absolutepath
             $temp_dir,
   Ora_Install::Version $version,

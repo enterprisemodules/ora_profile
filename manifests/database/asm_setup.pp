@@ -8,7 +8,7 @@
 #
 # @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
-#    The default is : `12.2.0.1`
+#    The default is : `19.0.0.0`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
 #
 # @param [Array[Stdlib::Absolutepath]] dirs
@@ -153,12 +153,12 @@ class ora_profile::database::asm_setup (
   Array[Stdlib::Absolutepath]
             $dirs,
   String[1] $disk_discovery_string,
-  Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']
+  Enum['EXTENDED', 'EXTERNAL', 'FLEX', 'HIGH', 'NORMAL']
             $disk_redundancy,
   Optional[String[1]]
             $disks_failgroup_names,
   String[1] $file_name,
-  Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']
+  Enum['CRS_CONFIG', 'HA_CONFIG', 'UPGRADE', 'CRS_SWONLY', 'HA_SWONLY']
             $grid_type,
   String[1] $group,
   Optional[String[1]]
@@ -168,7 +168,7 @@ class ora_profile::database::asm_setup (
             $scan_name,
   Optional[Integer]
             $scan_port,
-  Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]
+  Optional[Enum['FLEX_ASM_STORAGE', 'CLIENT_ASM_STORAGE', 'LOCAL_ASM_STORAGE', 'FILE_SYSTEM_STORAGE', 'ASM_STORAGE']]
             $storage_option,
   Ora_Install::Version
             $version

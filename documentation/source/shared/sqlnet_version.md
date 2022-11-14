@@ -1,3 +1,3 @@
 The SQLnet version to use.
 
-The default is: 12.2
+The default is: 19.0

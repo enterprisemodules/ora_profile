@@ -1,18 +1,19 @@
 
 [![Enterprise Modules](https://raw.githubusercontent.com/enterprisemodules/public_images/master/banner1.jpg)](https://www.enterprisemodules.com)
 
-#### Table of Contents
+## Table of Contents
 
-1. [Overview](#overview)
-2. [Experience the Power of Puppet for Oracle databases](#experience-the-power-of-puppet-for-oracle-databases)
-3. [License](#license)
-4. [Description - What the module does and why it is useful](#description)
-5. [Setup](#setup)
-  * [Requirements](#requirements)
-  * [Installing the ora_profile module](#installing-the-ora_profile-module)
-6. [Usage - Configuration options and additional functionality](#usage)
-7. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-8. [Limitations - OS compatibility, etc.](#limitations)
+- [Table of Contents](#table-of-contents)
+- [Overview](#overview)
+- [Experience the Power of Puppet for Oracle databases](#experience-the-power-of-puppet-for-oracle-databases)
+- [License](#license)
+- [Description](#description)
+- [Setup](#setup)
+  - [Requirements](#requirements)
+  - [Installing the ora_profile module](#installing-the-ora_profile-module)
+- [Usage](#usage)
+- [Reference](#reference)
+- [Limitations](#limitations)
 
 ## Overview
 
@@ -26,10 +27,9 @@ This module support Oracle 10, 11, 12, 18, 19 and 21
 
 ## Experience the Power of Puppet for Oracle databases
 
-Managing the configuration of your Oracle databases can be hard. With Puppet at your side, you get super-powers when installing and managing Oracle Databases. If you want to play and experiment with this [please take a look at our playgrounds](https://www.enterprisemodules.com/playgrounds#oracle). 
+Managing the configuration of your Oracle databases can be hard. With Puppet at your side, you get super-powers when installing and managing Oracle Databases. If you want to play and experiment with this [please take a look at our playgrounds](https://www.enterprisemodules.com/playgrounds#oracle).
 
 [![Experience the Power](https://raw.githubusercontent.com/enterprisemodules/public_images/master/superpowers-33-blanc.jpg)](https://www.enterprisemodules.com/playgrounds#oracle)
-
 
 ## License
 
@@ -62,8 +62,9 @@ All these stages have a default implementation. This implementation is suitable 
 But sometimes this is not enough and you would like to add some extra definitions, you can, for example, add a Puppet class to be executed after the `systctl` stage is done and before the `limits` is done. You can do this by adding the next line to your yaml data:
 
 ```yaml
-ora_profile::database::before_sysctl:   my_profile::my_extra_class
+ora_profile::database::before_sysctl:  my_profile::my_extra_class
 ```
+
 or after:
 
 ```yaml
@@ -73,13 +74,13 @@ ora_profile::database::after_sysctl:   my_profile::my_extra_class
 If you want to, you can also skip this provided class:
 
 ```yaml
-ora_profile::database::sysctl:   skip
+ora_profile::database::sysctl:         skip
 ```
 
 Or provide your own implementation:
 
 ```yaml
-ora_profile::database::sysctl:   my_profile::my_own_implementation
+ora_profile::database::sysctl:         my_profile::my_own_implementation
 ```
 
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
@@ -91,17 +92,21 @@ Check [here](https://www.enterprisemodules.com/docs/ora_profile/description.html
 ### Requirements
 
 The [`ora_profile`](https://www.enterprisemodules.com/shop/products/puppet-ora_config-module) module requires:
+
 - Puppet module [`enterprisemodules-ora_config`](https://forge.puppet.com/enterprisemodules/ora_config) installed.
 - Puppet module [`enterprisemodules-ora_install`](https://forge.puppet.com/enterprisemodules/ora_install) installed.
 - Puppet module [`enterprisemodules-easy_type`](https://forge.puppet.com/enterprisemodules/easy_type) installed.
 - Puppet module [`enterprisemodules/ora_secured`](https://forge.puppet.com/enterprisemodules/ora_secured) installed.
+- Puppet module [`enterprisemodules/partition`](https://forge.puppet.com/enterprisemodules/partition) installed.
 - Puppet module [`ipcrm-echo`](https://forge.puppet.com/ipcrm/echo) installed.
-- Puppet module [`puppet-augeasproviders_core`](https://forge.puppet.com/herculesteam/augeasproviders_core) installed.
+- Puppet module [`puppet-augeasproviders_core`](https://forge.puppet.com/modules/puppet/augeasproviders_core) installed.
 - Puppet module [`herculesteam-augeasproviders_sysctl`](https://forge.puppet.com/herculesteam/augeasproviders_sysctl) installed.
+- Puppet module [`puppet-augeasproviders_grub`](https://forge.puppet.com/modules/puppet/augeasproviders_grub) installed.
 - Puppet module [`saz-limits`](https://forge.puppet.com/saz/limits) installed.
 - Puppet module [`puppetlabs-firewall`](https://forge.puppet.com/puppetlabs/firewall) installed.
-- Puppet module [`crayfishx-firewalld`](https://forge.puppet.com/crayfishx/firewalld) installed.
+- Puppet module [`puppet-firewalld`](https://forge.puppet.com/modules/puppet/firewalld) installed.
 - Puppet module [`puppetlabs-stdlib`](https://forge.puppet.com/puppetlabs/stdlib) installed.
+- Puppet module [`puppet-systemd`](https://forge.puppet.com/modules/puppet/systemd) installed.
 - Puppet version 4.0 or higher. Can be Puppet Enterprise or Puppet Open Source
 - Oracle 11 higher
 - A valid Oracle license
@@ -114,15 +119,15 @@ The [`ora_profile`](https://www.enterprisemodules.com/shop/products/puppet-ora_c
 
 To install these modules, you can use a `Puppetfile`
 
-```
-mod 'enterprisemodules/ora_profile'               ,'0.1.0'
+```ruby
+mod 'enterprisemodules/ora_profile', '0.1.0'
 ```
 
 Then use the `librarian-puppet` or `r10K` to install the software.
 
 You can also install the software using the `puppet module`  command:
 
-```
+```bash
 puppet module install enterprisemodules-ora_profile
 ```
 
@@ -130,21 +135,19 @@ puppet module install enterprisemodules-ora_profile
 
 To get started, include the `ora_profile::database` class in your role, make sure you have a module called `software` that has a folder `files` and that directory contains the the next files:
 
-- linuxx64_12201_database.zip
-- p6880880_122010_Linux-x86-64_12.2.0.1.12.zip (OPatch)
-- p27468969_122010_Linux-x86-64.zip (GI APR 2018 RELEASE UPDATE 12.2.0.1.180417)
+- LINUX.X64_193000_db_home.zip
+- p6880880_190000_Linux-x86-64.zip (OPatch version 12.2.0.1.33)
 
 If you also want to install ASM, the file below also needs to be placed in the `files` directory:
 
-- linuxx64_12201_grid_home
+- LINUX.X64_193000_grid_home.zip
 
 You can download these files from
 [here](http://support.oracle.com)
 or
 [here](http://www.oracle.com/technetwork/database/enterprise-edition/downloads/oracle12c-linux-12201-3608234.html)
 
-
-Run Puppet and you have a running Oracle 12.2 database called DB01
+Run Puppet and you have a running Oracle 19c database called DB01
 
 ## Reference
 
@@ -153,14 +156,23 @@ Here you can find some more information regarding this puppet module:
 - [The `ora_profile` documentation](https://www.enterprisemodules.com/docs/ora_profile/description.html)
 
 Here are related blog posts:
+
 - [How to ensure you only use Oracle features you paid for](https://www.enterprisemodules.com/blog/2017/09/how-to-ensure-you-only-use-oracle-features-you-paid-for/)
+
 - [Oracle 12.2 support added to our Oracle modules](https://www.enterprisemodules.com/blog/2017/03/oracle12-2-support/)
+
 - [Secure your Oracle Database](https://www.enterprisemodules.com/blog/2017/02/secure-your-oracle-database/)
+
 - [Manage Oracle containers with Puppet](https://www.enterprisemodules.com/blog/2017/01/manage-oracle-containers-with-puppet/)
+
 - [Manage your oracle users with Puppet](https://www.enterprisemodules.com/blog/2016/10/manage-oracle-users-with-puppet/)
+
 - [Reaching into your Oracle Database with Puppet](https://www.enterprisemodules.com/blog/2015/12/reaching-into-your-oracle-database-with-puppet/)
+
 - [Manage your Oracle database schemas with Puppet](https://www.enterprisemodules.com/blog/2015/12/manage-your-oracle-database-schemas-with-puppet/)
+
 - [Managing your Oracle database size with Puppet](https://www.enterprisemodules.com/blog/2015/11/managing-your-oracle-database-size-with-puppet/)
+
 - [Using Puppet to manage Oracle](https://www.enterprisemodules.com/blog/2014/02/using-puppet-to-manage-oracle/)
 
 ## Limitations

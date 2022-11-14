@@ -43,9 +43,9 @@
 #    If it is not installed, Puppet will install the specfied version.
 #    If you have defined patches for multiple homes, this version of the OPatch utility will be installed
 #    in all of these homes from the patch_file specified. Recent versions of the OPatch utility are exactly
-#    the same for Oracle versions 12.1 through 19, so it doesn't matter for which Oracle version you have
+#    the same for Oracle versions 12.1 through 21, so it doesn't matter for which Oracle version you have
 #    downloaded it.
-#    The default value is: `12.2.0.1.13`
+#    The default value is: `12.2.0.1.33`
 #
 # @param [String[1]] os_user
 #    The OS user to use for Oracle install.
@@ -78,7 +78,7 @@ class ora_profile::database::db_patches (
   String[1] $os_user,
   String[1] $patch_file,
   Hash      $patch_list,
-  Variant[Boolean,Enum['on_failure']]
+  Variant[Boolean, Enum['on_failure']]
             $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent

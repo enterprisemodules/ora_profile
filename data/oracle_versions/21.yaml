@@ -1,4 +1,7 @@
 ---
 ora_profile::database::db_software::file_name:                            LINUX.X64_213000_db_home
 ora_profile::database::db_listener::sqlnet_version:                       '21.0'
+ora_profile::database::db_patches::include_ojvm:                          false
+ora_profile::database::db_definition::container_database:                 enabled
+ora_profile::database::db_definition_template::container_database:        enabled
 ...
