@@ -28,7 +28,7 @@
 #
 # @param [Ora_install::ShortVersion] sqlnet_version
 #    The SQLnet version to use.
-#    The default is: 12.2
+#    The default is: 19.0
 #
 # @param [Variant[String[1], Hash]] dbname
 #    The name of the database.

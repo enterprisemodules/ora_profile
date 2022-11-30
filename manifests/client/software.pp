@@ -92,25 +92,25 @@
 # See the file "LICENSE" for the full license governing this code.
 #
 class ora_profile::client::software (
-  Boolean                             $allow_insecure,
-  Boolean                             $bash_profile,
-  Integer                             $db_port,
-  Stdlib::Absolutepath                $download_dir,
-  String[1]                           $file,
-  String[1]                           $group,
-  String[1]                           $group_install,
-  Optional[Array[String]]             $install_options,
-  Enum['Administrator','Runtime','InstantClient','Custom']
+  Boolean                              $allow_insecure,
+  Boolean                              $bash_profile,
+  Integer                              $db_port,
+  Stdlib::Absolutepath                 $download_dir,
+  String[1]                            $file,
+  String[1]                            $group,
+  String[1]                            $group_install,
+  Optional[Array[String]]              $install_options,
+  Enum['Administrator', 'Runtime', 'InstantClient', 'Custom']
   $install_type,
-  Variant[Boolean,Enum['on_failure']] $logoutput,
-  Optional[Stdlib::Absolutepath]      $ora_inventory_dir,
-  Stdlib::Absolutepath                $oracle_base,
-  Stdlib::Absolutepath                $oracle_home,
-  Optional[String[1]]                 $puppet_download_mnt_point,
-  Stdlib::Absolutepath                $temp_dir,
-  String[1]                           $user,
-  Stdlib::Absolutepath                $user_base_dir,
-  Ora_install::Version                $version
+  Variant[Boolean, Enum['on_failure']] $logoutput,
+  Optional[Stdlib::Absolutepath]       $ora_inventory_dir,
+  Stdlib::Absolutepath                 $oracle_base,
+  Stdlib::Absolutepath                 $oracle_home,
+  Optional[String[1]]                  $puppet_download_mnt_point,
+  Stdlib::Absolutepath                 $temp_dir,
+  String[1]                            $user,
+  Stdlib::Absolutepath                 $user_base_dir,
+  Ora_install::Version                 $version
 ) {
   easy_type::debug_evaluation() # Show local variable on extended debug
 

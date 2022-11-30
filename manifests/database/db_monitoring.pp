@@ -59,7 +59,7 @@
 #
 class ora_profile::database::db_monitoring (
 # lint:ignore:strict_indent
-  Enum['oswbb','ahf']
+  Enum['oswbb', 'ahf']
             $facility,
   String[1] $file_name,
   Stdlib::Absolutepath

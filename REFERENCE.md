@@ -421,7 +421,7 @@ Directory to use for temporary files.
 
 ##### <a name="-ora_profile--client--software--install_type"></a>`install_type`
 
-Data type: `Enum['Administrator','Runtime','InstantClient','Custom']`
+Data type: `Enum['Administrator', 'Runtime', 'InstantClient', 'Custom']`
 
 Which type of client software should be installed.
 
@@ -466,7 +466,7 @@ The default value is: `/oracle_base/oraInventory`
 
 ##### <a name="-ora_profile--client--software--logoutput"></a>`logoutput`
 
-Data type: `Variant[Boolean,Enum['on_failure']]`
+Data type: `Variant[Boolean, Enum['on_failure']]`
 
 log the outputs of Puppet exec or not.
 When you specify `true` Puppet will log all output of `exec` types.
@@ -491,7 +491,7 @@ In it's core just adding:
 contain ::ora_profile::database
 ```
 
-Is enough to get an Oracle 12.2 database running on your system.
+Is enough to get an Oracle 19c database running on your system.
 
 But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 
@@ -711,7 +711,7 @@ The following parameters are available in the `ora_profile::database` class:
 
 ##### <a name="-ora_profile--database--storage"></a>`storage`
 
-Data type: `Enum['local','asm']`
+Data type: `Enum['local', 'asm']`
 
 The type of storage used.
 The default is `local`
@@ -721,7 +721,7 @@ The default is `local`
 Data type: `Ora_Install::Version`
 
 The version of Oracle you want to install.
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
 ##### <a name="-ora_profile--database--dbname"></a>`dbname`
@@ -816,7 +816,7 @@ To customize this consistently use the hiera key `ora_profile::database::grid_ba
 Data type: `Stdlib::Absolutepath`
 
 The oracle home directory to use for the GRID software.
-The default value is: `/u01/app/grid/product/12.2.0.1/grid_home1`
+The default value is: `/u01/app/grid/product/19.0.0.0/grid_home1`
 
 ##### <a name="-ora_profile--database--db_control_provider"></a>`db_control_provider`
 
@@ -2388,7 +2388,7 @@ To customize this consistently use the hiera key `ora_profile::database::install
 Data type: `Ora_install::ShortVersion`
 
 The SQLnet version to use.
-The default is: 12.2
+The default is: 19.0
 
 ##### <a name="-ora_profile--database--asm_listener--dbname"></a>`dbname`
 
@@ -2445,7 +2445,7 @@ Data type: `String[1]`
 
 The version of OPatch that is needed.
 If it is not installed, Puppet will install the specfied version.
-The default value is: `12.2.0.1.13`
+The default value is: `12.2.0.1.33`
 
 ##### <a name="-ora_profile--database--asm_patches--patch_list"></a>`patch_list`
 
@@ -2456,7 +2456,7 @@ The default value is : `{}`
 
 ##### <a name="-ora_profile--database--asm_patches--logoutput"></a>`logoutput`
 
-Data type: `Variant[Boolean,Enum['on_failure']]`
+Data type: `Variant[Boolean, Enum['on_failure']]`
 
 log the outputs of Puppet exec or not.
 When you specify `true` Puppet will log all output of `exec` types.
@@ -2508,7 +2508,7 @@ The following parameters are available in the `ora_profile::database::asm_setup`
 Data type: `Ora_Install::Version`
 
 The version of Oracle you want to install.
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
 ##### <a name="-ora_profile--database--asm_setup--dirs"></a>`dirs`
@@ -2598,7 +2598,7 @@ To customize this consistently use the hiera key `ora_profile::database::asm_sof
 
 ##### <a name="-ora_profile--database--asm_setup--grid_type"></a>`grid_type`
 
-Data type: `Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']`
+Data type: `Enum['CRS_CONFIG', 'HA_CONFIG', 'UPGRADE', 'CRS_SWONLY', 'HA_SWONLY']`
 
 The type of grid.
 Valid values are:
@@ -2612,7 +2612,7 @@ To customize this consistently use the hiera key `ora_profile::database::asm_sof
 
 ##### <a name="-ora_profile--database--asm_setup--disk_redundancy"></a>`disk_redundancy`
 
-Data type: `Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']`
+Data type: `Enum['EXTENDED', 'EXTERNAL', 'FLEX', 'HIGH', 'NORMAL']`
 
 The disk redundancy for the initial diskgroup to setup ASM.
 Valid values are:
@@ -2682,7 +2682,7 @@ The list of interfaces to use for RAC.The value should be a comma separated stri
 
 ##### <a name="-ora_profile--database--asm_setup--storage_option"></a>`storage_option`
 
-Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
+Data type: `Optional[Enum['FLEX_ASM_STORAGE', 'CLIENT_ASM_STORAGE', 'LOCAL_ASM_STORAGE', 'FILE_SYSTEM_STORAGE', 'ASM_STORAGE']]`
 
 The type of storage to use.
 Valid values are:
@@ -2736,7 +2736,7 @@ The following parameters are available in the `ora_profile::database::asm_softwa
 Data type: `Ora_Install::Version`
 
 The version of Oracle Grid Infrastructure you want to install.
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 To customize this consistently use the hiera key `ora_profile::database::asm_software::version`.
 
 ##### <a name="-ora_profile--database--asm_software--dirs"></a>`dirs`
@@ -2826,7 +2826,7 @@ To customize this consistently use the hiera key `ora_profile::database::asm_sof
 
 ##### <a name="-ora_profile--database--asm_software--grid_type"></a>`grid_type`
 
-Data type: `Enum['CRS_CONFIG','HA_CONFIG','UPGRADE','CRS_SWONLY','HA_SWONLY']`
+Data type: `Enum['CRS_CONFIG', 'HA_CONFIG', 'UPGRADE', 'CRS_SWONLY', 'HA_SWONLY']`
 
 The type of grid.
 Valid values are:
@@ -2840,7 +2840,7 @@ To customize this consistently use the hiera key `ora_profile::database::asm_sof
 
 ##### <a name="-ora_profile--database--asm_software--disk_redundancy"></a>`disk_redundancy`
 
-Data type: `Enum['EXTENDED','EXTERNAL','FLEX','HIGH','NORMAL']`
+Data type: `Enum['EXTENDED', 'EXTERNAL', 'FLEX', 'HIGH', 'NORMAL']`
 
 The disk redundancy for the initial diskgroup to setup ASM.
 Valid values are:
@@ -2853,7 +2853,7 @@ The default value is: `EXTERNAL`
 
 ##### <a name="-ora_profile--database--asm_software--install_task"></a>`install_task`
 
-Data type: `Enum['ALL','EXTRACT']`
+Data type: `Enum['ALL', 'EXTRACT']`
 
 The installation task that should be executed.
 
@@ -2924,7 +2924,7 @@ The list of interfaces to use for RAC.The value should be a comma separated stri
 
 ##### <a name="-ora_profile--database--asm_software--storage_option"></a>`storage_option`
 
-Data type: `Optional[Enum['FLEX_ASM_STORAGE','CLIENT_ASM_STORAGE','LOCAL_ASM_STORAGE','FILE_SYSTEM_STORAGE','ASM_STORAGE']]`
+Data type: `Optional[Enum['FLEX_ASM_STORAGE', 'CLIENT_ASM_STORAGE', 'LOCAL_ASM_STORAGE', 'FILE_SYSTEM_STORAGE', 'ASM_STORAGE']]`
 
 The type of storage to use.
 Valid values are:
@@ -2958,7 +2958,7 @@ The following parameters are available in the `ora_profile::database::asm_storag
 
 ##### <a name="-ora_profile--database--asm_storage--storage_type"></a>`storage_type`
 
-Data type: `Enum['nfs','asmlib','afd','raw', 'none']`
+Data type: `Enum['nfs', 'asmlib', 'afd', 'raw', 'none']`
 
 The type of ASM storage to use.
 Valid values are:
@@ -3242,8 +3242,6 @@ ora_profile::database::common
 
 See the file "LICENSE" for the full license governing this code.
 
-lint:ignore:parameter_types lint:ignore:parameter_documentation lint:ignore:class_parameter
-
 #### Parameters
 
 The following parameters are available in the `ora_profile::database::common` class:
@@ -3272,7 +3270,7 @@ The following parameters are available in the `ora_profile::database::common` cl
 Data type: `Any`
 
 The version of Oracle you want to install.
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
 Default value: `lookup('ora_profile::database::version', Ora_Install::Version)`
@@ -3323,7 +3321,7 @@ Default value: `lookup('ora_profile::database::ora_inventory_dir', String[1])`
 Data type: `Any`
 
 The ORACLE_HOME for the Grid Infrastructure installation.
-The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
+The default is : `/u01/app/grid/product/19.0.0.0/grid_home1`
 To customize this consistently use the hiera key `ora_profile::database::grid_home`.
 
 Default value: `lookup('ora_profile::database::grid_home', String[1])`
@@ -3503,7 +3501,7 @@ The following parameters are available in the `ora_profile::database::db_definit
 Data type: `Ora_Install::Version`
 
 The version of Oracle you want to install.
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
 ##### <a name="-ora_profile--database--db_definition--oracle_home"></a>`oracle_home`
@@ -3607,7 +3605,7 @@ The default value is: `Change_on_1nstall`
 
 ##### <a name="-ora_profile--database--db_definition--container_database"></a>`container_database`
 
-Data type: `Enum['enabled','disabled']`
+Data type: `Enum['enabled', 'disabled']`
 
 Database is a container for pluggable databases.
 When you want to add pluggable database to this database, specify a value of `enabled`.
@@ -3615,7 +3613,7 @@ The default value is: `disabled`
 
 ##### <a name="-ora_profile--database--db_definition--archivelog"></a>`archivelog`
 
-Data type: `Enum['enabled','disabled']`
+Data type: `Enum['enabled', 'disabled']`
 
 The database should be running in archivelog mode.
 
@@ -3684,7 +3682,7 @@ The default is `$facts['networking']['domain']`
 
 ##### <a name="-ora_profile--database--db_definition--logoutput"></a>`logoutput`
 
-Data type: `Variant[Boolean,Enum['on_failure']]`
+Data type: `Variant[Boolean, Enum['on_failure']]`
 
 log the outputs of Puppet exec or not.
 When you specify `true` Puppet will log all output of `exec` types.
@@ -3740,7 +3738,7 @@ The following parameters are available in the `ora_profile::database::db_definit
 Data type: `Ora_Install::Version`
 
 The version of Oracle you want to install.
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
 ##### <a name="-ora_profile--database--db_definition_template--oracle_home"></a>`oracle_home`
@@ -3776,7 +3774,7 @@ The default value is `General_Purpose.${version}`
 
 ##### <a name="-ora_profile--database--db_definition_template--template_type"></a>`template_type`
 
-Data type: `Enum['non-seed','seed']`
+Data type: `Enum['non-seed', 'seed']`
 
 What type of template is used for creating the database.
 The default value is `seed`
@@ -3799,21 +3797,21 @@ The default value is `+RECO`
 
 ##### <a name="-ora_profile--database--db_definition_template--sample_schema"></a>`sample_schema`
 
-Data type: `Enum['TRUE','FALSE']`
+Data type: `Enum['TRUE', 'FALSE']`
 
 Specify if you want the sample schemas installed in your database.
 The default value is `FALSE`
 
 ##### <a name="-ora_profile--database--db_definition_template--memory_mgmt_type"></a>`memory_mgmt_type`
 
-Data type: `Enum['AUTO','AUTO_SGA','CUSTOM_SGA']`
+Data type: `Enum['AUTO', 'AUTO_SGA', 'CUSTOM_SGA']`
 
 How the database memory should be managed.
 The default value is `AUTO_SGA`
 
 ##### <a name="-ora_profile--database--db_definition_template--storage_type"></a>`storage_type`
 
-Data type: `Enum['FS','CFS','ASM']`
+Data type: `Enum['FS', 'CFS', 'ASM']`
 
 What type of storage is used for your database.
 The default value is `ASM`
@@ -3842,7 +3840,7 @@ The default value is: `Change_on_1nstall`
 
 ##### <a name="-ora_profile--database--db_definition_template--db_conf_type"></a>`db_conf_type`
 
-Data type: `Enum['SINGLE','RAC','RACONE']`
+Data type: `Enum['SINGLE', 'RAC', 'RACONE']`
 
 The type of database that needs to be installed.
 Valid values are:
@@ -3853,7 +3851,7 @@ The default value is `SINGLE`
 
 ##### <a name="-ora_profile--database--db_definition_template--container_database"></a>`container_database`
 
-Data type: `Enum['enabled','disabled']`
+Data type: `Enum['enabled', 'disabled']`
 
 Database is a container for pluggable databases.
 When you want to add pluggable database to this database, specify a value of `enabled`.
@@ -3895,7 +3893,7 @@ ora_profile::database::db_definition_template::init_params:
 
 ##### <a name="-ora_profile--database--db_definition_template--logoutput"></a>`logoutput`
 
-Data type: `Variant[Boolean,Enum['on_failure']]`
+Data type: `Variant[Boolean, Enum['on_failure']]`
 
 log the outputs of Puppet exec or not.
 When you specify `true` Puppet will log all output of `exec` types.
@@ -4006,7 +4004,7 @@ To customize this consistently use the hiera key `ora_profile::database::dba_gro
 Data type: `Ora_install::ShortVersion`
 
 The SQLnet version to use.
-The default is: 12.2
+The default is: 19.0
 
 ##### <a name="-ora_profile--database--db_listener--dbname"></a>`dbname`
 
@@ -4052,7 +4050,7 @@ Default value: `undef`
 
 ##### <a name="-ora_profile--database--db_monitoring--facility"></a>`facility`
 
-Data type: `Enum['oswbb','ahf']`
+Data type: `Enum['oswbb', 'ahf']`
 
 The facility you want to install.
 Currrently only OSWatcher Black Box (oswbb) is supported, Autonomous Health Framework (ahf) soon to come.
@@ -4191,9 +4189,9 @@ The version of OPatch that is needed.
 If it is not installed, Puppet will install the specfied version.
 If you have defined patches for multiple homes, this version of the OPatch utility will be installed
 in all of these homes from the patch_file specified. Recent versions of the OPatch utility are exactly
-the same for Oracle versions 12.1 through 19, so it doesn't matter for which Oracle version you have
+the same for Oracle versions 12.1 through 21, so it doesn't matter for which Oracle version you have
 downloaded it.
-The default value is: `12.2.0.1.13`
+The default value is: `12.2.0.1.33`
 
 ##### <a name="-ora_profile--database--db_patches--os_user"></a>`os_user`
 
@@ -4212,7 +4210,7 @@ The default value is : `{}`
 
 ##### <a name="-ora_profile--database--db_patches--logoutput"></a>`logoutput`
 
-Data type: `Variant[Boolean,Enum['on_failure']]`
+Data type: `Variant[Boolean, Enum['on_failure']]`
 
 log the outputs of Puppet exec or not.
 When you specify `true` Puppet will log all output of `exec` types.
@@ -4307,7 +4305,7 @@ The following parameters are available in the `ora_profile::database::db_softwar
 Data type: `Ora_Install::Version`
 
 The version of Oracle you want to install.
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
 ##### <a name="-ora_profile--database--db_software--database_type"></a>`database_type`
@@ -4477,7 +4475,7 @@ To customize this consistently use the hiera key `ora_profile::database::dbname`
 
 ##### <a name="-ora_profile--database--db_startup--db_type"></a>`db_type`
 
-Data type: `Enum['database','grid']`
+Data type: `Enum['database', 'grid']`
 
 The type of the database used to specify if the database should be started by an init script or srvctl.
 Valid values are:
@@ -6505,7 +6503,7 @@ To customize this consistently use the hiera key `ora_profile::database::asm_sof
 
 ##### <a name="-ora_profile--oem_server--software--logoutput"></a>`logoutput`
 
-Data type: `Variant[Boolean,Enum['on_failure']]`
+Data type: `Variant[Boolean, Enum['on_failure']]`
 
 log the outputs of Puppet exec or not.
 When you specify `true` Puppet will log all output of `exec` types.
@@ -6660,7 +6658,7 @@ The device that needs to be partitioned.
 
 ##### <a name="-ora_profile--database--asm_storage--partition--table_type"></a>`table_type`
 
-Data type: `Enum['gpt','msdos']`
+Data type: `Enum['gpt', 'msdos']`
 
 The type of partition table.
 
@@ -6722,7 +6720,9 @@ Default value: `['localhost']`
 ora_profile::database::rac::instance
 
 Here is an example:
+```puppet
   ora_profile::database::rac::instance{'instance_name'}
+```
 
 See the file "LICENSE" for the full license governing this code.
 
@@ -6778,7 +6778,7 @@ The size of the next extent for the Undo tablesapce of the instance.
 
 ##### <a name="-ora_profile--database--rac--instance--undo_autoextend"></a>`undo_autoextend`
 
-Data type: `Enum['on','off']`
+Data type: `Enum['on', 'off']`
 
 Auto extensibility of the Undo tablespace for the instance.
 

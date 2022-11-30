@@ -13,7 +13,7 @@ This is a highly customizable Puppet profile class to define an Oracle database 
 contain ::ora_profile::database
 ```
 
-Is enough to get an Oracle 12.2 database running on your system. 
+Is enough to get an Oracle 19c database running on your system. 
 
 But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 
@@ -262,7 +262,7 @@ Type: `Enum['local','asm']`
 
 The version of Oracle you want to install.
 
-The default is : `12.2.0.1`
+The default is : `19.0.0.0`
 
 To customize this consistently use the hiera key `ora_profile::database::version`.
 
@@ -416,7 +416,7 @@ Type: `Stdlib::Absolutepath`
 
 The oracle home directory to use for the GRID software.
 
-The default value is: `/u01/app/grid/product/12.2.0.1/grid_home1`
+The default value is: `/u01/app/grid/product/19.0.0.0/grid_home1`
 
 Type: `Stdlib::Absolutepath`
 

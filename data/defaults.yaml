@@ -12,7 +12,7 @@ ora_profile::database::install_group:                                     oinsta
 ora_profile::database::grid_user:                                         grid
 ora_profile::database::grid_admingroup:                                   asmadmin
 ora_profile::database::grid_base:                                         /u01/app/grid/admin
-ora_profile::database::grid_home:                                         /u01/app/grid/product/12.2.0.1/grid_home1
+ora_profile::database::grid_home:                                         /u01/app/grid/product/19.0.0.0/grid_home1
 ora_profile::database::source:                                            puppet:///modules/software
 ora_profile::database::oracle_base:                                       /u01/app/oracle
 ora_profile::database::oracle_home:                                       /u01/app/oracle/product/%{lookup('ora_profile::database::version')}/db_home1
@@ -567,7 +567,7 @@ ora_profile::database::asm_storage::scan_exclude:                         ~
 #  Settings for database::asm_software
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_software::version:                             12.2.0.1
+ora_profile::database::asm_software::version:                             19.0.0.0
 ora_profile::database::asm_software::dirs:
   - /u01
   - /u01/app/grid
@@ -575,7 +575,7 @@ ora_profile::database::asm_software::dirs:
   - /u01/app/grid/product
   - "/u01/app/grid/product/%{lookup('ora_profile::database::asm_software::version')}"
 ora_profile::database::asm_software::grid_home:                           "%{ora_profile::database::grid_home}"
-ora_profile::database::asm_software::file_name:                           linuxx64_12201_grid_home
+ora_profile::database::asm_software::file_name:                           LINUX.X64_193000_grid_home
 ora_profile::database::asm_software::asm_diskgroup:                       DATA
 ora_profile::database::asm_software::grid_type:                           HA_CONFIG
 ora_profile::database::asm_software::cluster_node_types:                  ~
@@ -702,7 +702,7 @@ ora_profile::database::db_software::database_type:                        EE
 ora_profile::database::db_software::oracle_base:                          "%{lookup('ora_profile::database::oracle_base')}"
 ora_profile::database::db_software::oracle_home:                          "%{lookup('ora_profile::database::oracle_home')}"
 ora_profile::database::db_software::source:                               "%{lookup('ora_profile::database::source')}"
-ora_profile::database::db_software::file_name:                            linuxx64_12201_database
+ora_profile::database::db_software::file_name:                            LINUX.X64_193000_db_home
 ora_profile::database::db_software::bash_profile:                         true
 ora_profile::database::db_software::bash_additions:                       ''
 ora_profile::database::db_software::user_base_dir:                        /home
@@ -715,8 +715,8 @@ ora_profile::database::db_software::user_base_dir:                        /home
 # ------------------------------------------------------------------------------
 ora_profile::database::db_patches::level:                                 NONE
 ora_profile::database::db_patches::include_ojvm:                          false
-ora_profile::database::db_patches::patch_file:                            p6880880_122010_Linux-x86-64
-ora_profile::database::db_patches::opversion:                             12.2.0.1.23
+ora_profile::database::db_patches::patch_file:                            p6880880_190000_Linux-x86-64
+ora_profile::database::db_patches::opversion:                             12.2.0.1.33
 ora_profile::database::db_patches::install_group:                         "%{lookup('ora_profile::database::install_group')}"
 ora_profile::database::db_patches::os_user:                               "%{lookup('ora_profile::database::os_user')}"
 ora_profile::database::db_patches::source:                                "%{lookup('ora_profile::database::source')}"
@@ -1011,7 +1011,7 @@ ora_profile::database::rman_config::settings:
 ora_profile::database::db_listener::dbname:                               "%{lookup('ora_profile::database::dbname')}"
 ora_profile::database::db_listener::oracle_base:                          "%{lookup('ora_profile::database::oracle_base')}"
 ora_profile::database::db_listener::oracle_home:                          "%{lookup('ora_profile::database::oracle_home')}"
-ora_profile::database::db_listener::sqlnet_version:                       '12.2'
+ora_profile::database::db_listener::sqlnet_version:                       '19.0'
 ora_profile::database::db_listener::os_user:                              "%{lookup('ora_profile::database::os_user')}"
 ora_profile::database::db_listener::dba_group:                            "%{lookup('ora_profile::database::dba_group')}"
 
@@ -1024,7 +1024,7 @@ ora_profile::database::db_listener::dba_group:                            "%{loo
 ora_profile::database::asm_listener::dbname:                              "%{lookup('ora_profile::database::dbname')}"
 ora_profile::database::asm_listener::oracle_home:                         "%{lookup('ora_profile::database::grid_home')}"
 ora_profile::database::asm_listener::oracle_base:                         "%{lookup('ora_profile::database::oracle_base')}"
-ora_profile::database::asm_listener::sqlnet_version:                      '12.2'
+ora_profile::database::asm_listener::sqlnet_version:                      '19.0'
 
 
 # ------------------------------------------------------------------------------

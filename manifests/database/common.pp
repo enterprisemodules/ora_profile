@@ -6,7 +6,7 @@
 #
 # @param [Any] version
 #    The version of Oracle you want to install.
-#    The default is : `12.2.0.1`
+#    The default is : `19.0.0.0`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
 #
 # @param [Any] download_dir
@@ -32,7 +32,7 @@
 #
 # @param [Any] grid_home
 #    The ORACLE_HOME for the Grid Infrastructure installation.
-#    The default is : `/u01/app/grid/product/12.2.0.1/grid_home1`
+#    The default is : `/u01/app/grid/product/19.0.0.0/grid_home1`
 #    To customize this consistently use the hiera key `ora_profile::database::grid_home`.
 #
 # @param [Any] grid_base

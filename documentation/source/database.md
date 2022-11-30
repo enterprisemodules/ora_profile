@@ -4,7 +4,7 @@ This is a highly customizable Puppet profile class to define an Oracle database 
 contain ::ora_profile::database
 ```
 
-Is enough to get an Oracle 12.2 database running on your system. 
+Is enough to get an Oracle 19c database running on your system. 
 
 But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 

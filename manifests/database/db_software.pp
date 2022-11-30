@@ -6,7 +6,7 @@
 #
 # @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
-#    The default is : `12.2.0.1`
+#    The default is : `19.0.0.0`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
 #
 # @param [Enum['SE2', 'SE', 'EE', 'SEONE']] database_type

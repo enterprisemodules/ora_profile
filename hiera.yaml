@@ -12,7 +12,7 @@ hierarchy:
 
   - name: "Version data for all version 12.1 versions."
     lookup_key: 'easy_type::versioned_data'
-    path: oracle_versions/121.yaml
+    path: oracle_versions/12.1.yaml
     options:
       version_key: ora_profile::database::common::version
       specification:
@@ -21,7 +21,7 @@ hierarchy:
 
   - name: "Version data for all version 12.2 versions."
     lookup_key: 'easy_type::versioned_data'
-    path: oracle_versions/122.yaml
+    path: oracle_versions/12.2.yaml
     options:
       version_key: ora_profile::database::common::version
       specification:

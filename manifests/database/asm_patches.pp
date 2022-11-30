@@ -24,7 +24,7 @@
 # @param [String[1]] opversion
 #    The version of OPatch that is needed.
 #    If it is not installed, Puppet will install the specfied version.
-#    The default value is: `12.2.0.1.13`
+#    The default value is: `12.2.0.1.33`
 #
 # @param [Hash] patch_list
 #    The list of patches to apply.
@@ -48,7 +48,7 @@ class ora_profile::database::asm_patches (
   String[1] $opversion,
   String[1] $patch_file,
   Hash      $patch_list,
-  Variant[Boolean,Enum['on_failure']]
+  Variant[Boolean, Enum['on_failure']]
             $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent

@@ -13,7 +13,7 @@
 #
 # @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
-#    The default is : `12.2.0.1`
+#    The default is : `19.0.0.0`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
 #
 # @param [Stdlib::Absolutepath] oracle_home
@@ -126,17 +126,17 @@
 class ora_profile::database::db_definition_template (
 # lint:ignore:strict_indent
 # lint:ignore:lookup_in_parameter
-  Enum['enabled','disabled']
+  Enum['enabled', 'disabled']
                       $container_database,
   String[1]           $data_file_destination,
-  Enum['SINGLE','RAC','RACONE']
+  Enum['SINGLE', 'RAC', 'RACONE']
                       $db_conf_type,
   Optional[String[1]] $dbdomain,
   String[1]           $dbname,
   Optional[Variant[String[1], Hash]]
                       $init_params,
   String[1]           $log_size,
-  Enum['AUTO','AUTO_SGA','CUSTOM_SGA']
+  Enum['AUTO', 'AUTO_SGA', 'CUSTOM_SGA']
                       $memory_mgmt_type,
   Stdlib::Absolutepath
                       $oracle_base,
@@ -144,20 +144,20 @@ class ora_profile::database::db_definition_template (
                       $oracle_home,
   String[1]           $puppet_download_mnt_point,
   String[1]           $recovery_area_destination,
-  Enum['TRUE','FALSE']
+  Enum['TRUE', 'FALSE']
                       $sample_schema,
-  Enum['FS','CFS','ASM']
+  Enum['FS', 'CFS', 'ASM']
                       $storage_type,
   Easy_Type::Password
                       $sys_password,
   Easy_type::Password
                       $system_password,
   String[1]           $template_name,
-  Enum['non-seed','seed']
+  Enum['non-seed', 'seed']
                       $template_type,
   Ora_Install::Version
                       $version,
-  Variant[Boolean,Enum['on_failure']]
+  Variant[Boolean, Enum['on_failure']]
                       $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent

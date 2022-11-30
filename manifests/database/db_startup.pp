@@ -55,7 +55,7 @@
 #
 class ora_profile::database::db_startup (
 # lint:ignore:strict_indent
-  Enum['database','grid']
+  Enum['database', 'grid']
             $db_type,
   String[1] $dbname,
   Optional[Hash]

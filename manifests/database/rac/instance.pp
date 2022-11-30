@@ -3,7 +3,9 @@
 #
 # @summary Add Undo tablespace, Thread and init parameters for RAC instances
 # Here is an example:
+# ```puppet
 #   ora_profile::database::rac::instance{'instance_name'}
+# ```
 #
 # @param [String[1]] on
 #    The instance for which it should be executed.
@@ -36,15 +38,15 @@
 # See the file "LICENSE" for the full license governing this code.
 #
 define ora_profile::database::rac::instance (
-  String[1]        $on,
-  Integer          $number,
-  Integer          $thread,
-  String[1]        $datafile,
-  Easy_type::Size  $undo_initial_size,
-  Easy_type::Size  $undo_next,
-  Enum['on','off'] $undo_autoextend,
-  Easy_type::Size  $undo_max_size,
-  Easy_type::Size  $log_size,
+  String[1]         $on,
+  Integer           $number,
+  Integer           $thread,
+  String[1]         $datafile,
+  Easy_type::Size   $undo_initial_size,
+  Easy_type::Size   $undo_next,
+  Enum['on', 'off'] $undo_autoextend,
+  Easy_type::Size   $undo_max_size,
+  Easy_type::Size   $log_size,
 ) {
   $download_dir = lookup('ora_profile::database::download_dir')
 

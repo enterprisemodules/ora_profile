@@ -59,7 +59,7 @@ class ora_profile::database::asm_storage (
             $nfs_server,
   Optional[String[1]]
             $scan_exclude,
-  Enum['nfs','asmlib','afd','raw', 'none']
+  Enum['nfs', 'asmlib', 'afd', 'raw', 'none']
             $storage_type
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent

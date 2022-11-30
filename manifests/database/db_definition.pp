@@ -8,7 +8,7 @@
 #
 # @param [Ora_Install::Version] version
 #    The version of Oracle you want to install.
-#    The default is : `12.2.0.1`
+#    The default is : `19.0.0.0`
 #    To customize this consistently use the hiera key `ora_profile::database::version`.
 #
 # @param [Stdlib::Absolutepath] oracle_home
@@ -138,9 +138,9 @@
 class ora_profile::database::db_definition (
 # lint:ignore:strict_indent
 # lint:ignore:lookup_in_parameter
-  Enum['enabled','disabled']
+  Enum['enabled', 'disabled']
             $archivelog,
-  Enum['enabled','disabled']
+  Enum['enabled', 'disabled']
             $container_database,
   String[1] $data_file_destination,
   String[1] $db_recovery_file_dest,
@@ -169,7 +169,7 @@ class ora_profile::database::db_definition (
   String[1] $user_tablespace_size,
   Ora_Install::Version
             $version,
-  Variant[Boolean,Enum['on_failure']]
+  Variant[Boolean, Enum['on_failure']]
             $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' })
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent

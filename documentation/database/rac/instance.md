@@ -10,7 +10,9 @@ toc: false
 Add Undo tablespace, Thread and init parameters for RAC instances
 
 Here is an example:
+```puppet
   ora_profile::database::rac::instance{'instance_name'}
+```
 
 
 

@@ -32,7 +32,7 @@ define ora_profile::database::asm_storage::partition (
 # lint:ignore:strict_indent
   Stdlib::Absolutepath
             $raw_device,
-  Enum['gpt','msdos']
+  Enum['gpt', 'msdos']
             $table_type      = 'msdos',
   Boolean   $wait_for_device = false,
   Optional[Easy_type::Size]
