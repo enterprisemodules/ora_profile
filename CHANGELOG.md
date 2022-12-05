@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.42.0
+
+**New Features**
+
+- [asm_patches/db_patches] Add October 2022 PSU (#136)
+
+**Bug fixes**
+
+- [core] Set Oracle 19c as default (#138)
+- [release] Update dependencies
+- [asm_patches] Use different tmp_dir for asm patches then for db_patches (#134)
+
+
 ## Release 0.41.1
 
 **Bug fixes**
