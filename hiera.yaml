@@ -14,7 +14,9 @@ hierarchy:
     lookup_key: 'easy_type::versioned_data'
     path: oracle_versions/12.1.yaml
     options:
-      version_key: ora_profile::database::common::version
+      version_key:
+        - ora_profile::database::common::version
+        - ora_profile::database::version
       specification:
         - '>= 12.1'
         - '< 12.2'
@@ -23,7 +25,9 @@ hierarchy:
     lookup_key: 'easy_type::versioned_data'
     path: oracle_versions/12.2.yaml
     options:
-      version_key: ora_profile::database::common::version
+      version_key:
+        - ora_profile::database::common::version
+        - ora_profile::database::version
       specification:
         - '>= 12.2'
         - '< 12.3'
@@ -32,7 +36,9 @@ hierarchy:
     lookup_key: 'easy_type::versioned_data'
     path: oracle_versions/18.yaml
     options:
-      version_key: ora_profile::database::common::version
+      version_key:
+        - ora_profile::database::common::version
+        - ora_profile::database::version
       specification:
         - '>= 18'
         - '< 19'
@@ -41,7 +47,9 @@ hierarchy:
     lookup_key: 'easy_type::versioned_data'
     path: oracle_versions/19.yaml
     options:
-      version_key: ora_profile::database::common::version
+      version_key:
+        - ora_profile::database::common::version
+        - ora_profile::database::version
       specification:
         - '>= 19'
         - '< 20'
@@ -50,7 +58,9 @@ hierarchy:
     lookup_key: 'easy_type::versioned_data'
     path: oracle_versions/21.yaml
     options:
-      version_key: ora_profile::database::common::version
+      version_key:
+        - ora_profile::database::common::version
+        - ora_profile::database::version
       specification:
         - '>= 21'
         - '< 22'

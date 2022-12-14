@@ -1,4 +1,34 @@
 ---
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_software::file_name:                           p13390677_112040_Linux-x86-64_3of7.zip
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_listener
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_listener::oracle_home:                         "%{::ora_profile::database::grid_home}"
+ora_profile::database::asm_listener::oracle_base:                         "%{::ora_profile::database::oracle_base}"
+ora_profile::database::asm_listener::sqlnet_version:                      '11.2'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_software
+#
+# ------------------------------------------------------------------------------
 ora_profile::database::db_software::file_name:                            p13390677_112040_Linux-x86-64
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_listener
+#
+# ------------------------------------------------------------------------------
 ora_profile::database::db_listener::sqlnet_version:                       '11.2'
 ...

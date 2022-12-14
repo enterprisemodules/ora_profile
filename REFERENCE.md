@@ -6002,7 +6002,7 @@ ora_profile::oem_server
 
 In it's core just adding:
 
-```
+```puppet
 contain ::ora_profile::oem_server
 ```
 
@@ -6059,6 +6059,7 @@ ora_profile::oem_server::packages:   my_profile::my_own_implementation
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 
 Here is an example:
+
 ```puppet
 contain ::ora_profile::oem_server
 ```

@@ -3,18 +3,9 @@
 # Settings for database::packages
 #
 # ------------------------------------------------------------------------------
-lookup_options:
-  "ora_profile::database::packages::list":
-    merge:
-      strategy: first
-  "ora_profile::database::asm_packages::list":
-    merge:
-      strategy: first
-
 ora_profile::database::packages::list:
   bc: {}
   binutils: {}
-  elfutils-libelf.x86_64: {}
   compat-libcap1: {}
   compat-libstdc++-33.x86_64: {}
   e2fsprogs.x86_64: {}
