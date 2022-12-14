@@ -7,14 +7,6 @@ ora_profile::database::tmpfiles:                                          skip  
 # Settings for database::packages
 #
 # ------------------------------------------------------------------------------
-lookup_options:
-  "ora_profile::database::packages::list":
-    merge:
-      strategy: first
-  "ora_profile::database::asm_packages::list":
-    merge:
-      strategy: first
-
 ora_profile::database::packages::list:
   bc: {}
   binutils: {}

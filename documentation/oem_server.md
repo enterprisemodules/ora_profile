@@ -9,11 +9,11 @@ toc: false
 
 This is a highly customizable Puppet profile class to define an Oracle Enterprise Manager installation on your system. In it's core just adding:
 
-```
+```puppet
 contain ::ora_profile::oem_server
 ```
 
-Is enough to get Oracle Enterprise Manager installed on your system. 
+Is enough to get Oracle Enterprise Manager installed on your system.
 
 But sometimes you have specific uses cases that are not handled well by the standard classes. This profile class allows you to add your own code to the execution.
 
@@ -29,7 +29,7 @@ Defining and starting an Oracle Enterprise Manager installation on you system go
 - `packages`           (Install all required packages)
 - `software`           (Install the Oracle Enterprise Manager software)
 
-All these stages have a default implementation. This implementation is suitable to get started with. These classes all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file. 
+All these stages have a default implementation. This implementation is suitable to get started with. These classes all have parameters you can customize through hiera values. The defaults are specified in the module's `data/default.yaml` file.
 
 ## before classes
 
@@ -66,11 +66,10 @@ ora_profile::oem_server::packages:   my_profile::my_own_implementation
 This mechanism can be used for all named stages and makes it easy to move from an easy setup with a running standard database to a fully customized setup using a lot of your own classes plugged in.
 
 Here is an example:
+
 ```puppet
 contain ::ora_profile::oem_server
 ```
-
-
 
 
 

@@ -1,4 +1,42 @@
 ---
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_software::file_name:                           linuxx64_12201_grid_home
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_listener
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_listener::oracle_home:                         "%{::ora_profile::database::grid_home}"
+ora_profile::database::asm_listener::oracle_base:                         "%{::ora_profile::database::oracle_base}"
+ora_profile::database::asm_listener::sqlnet_version:                      '12.2'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_software
+#
+# ------------------------------------------------------------------------------
 ora_profile::database::db_software::file_name:                            linuxx64_12201_database
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_listener
+#
+# ------------------------------------------------------------------------------
 ora_profile::database::db_listener::sqlnet_version:                       '12.2'
+
+
+# ------------------------------------------------------------------------------
+#
+# CIS parameters
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::cis_controls::db_version:                          db12c
 ...
