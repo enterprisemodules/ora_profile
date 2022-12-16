@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.42.1
+
+**Bug fixes**
+
+
 ## Release 0.42.0
 
 **New Features**
