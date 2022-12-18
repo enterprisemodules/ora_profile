@@ -2,10 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## Release 0.42.2
+
+**Bug fixes**
+
+- [data] Fix lookups for specific versions
+
 ## Release 0.42.1
 
 **Bug fixes**
 
+[core] Implement oracle version hiera lookup based on additional key (#139) and move data to appropriate version file.
 
 ## Release 0.42.0
 
