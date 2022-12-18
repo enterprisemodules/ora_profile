@@ -12,8 +12,6 @@ ora_profile::database::asm_software::file_name:                           LINUX.
 #  Settings for database::asm_listener
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::asm_listener::oracle_home:                         "%{::ora_profile::database::grid_home}"
-ora_profile::database::asm_listener::oracle_base:                         "%{::ora_profile::database::oracle_base}"
 ora_profile::database::asm_listener::sqlnet_version:                      '18.0'
 
 
