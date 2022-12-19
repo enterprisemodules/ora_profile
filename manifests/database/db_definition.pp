@@ -323,7 +323,12 @@ class ora_profile::database::db_definition (
       } else {
         $cdb_prop = { container_database => $container_database }
       }
-      $init_ora = { init_ora_content => epp($init_ora_template, $db_props['init_ora_params'] + $cdb_prop) }
+      if ( has_key($db_props, 'oracle_base') ) {
+        $oracle_base_prop = { oracle_base => $db_props['oracle_base'] }
+      } else {
+        $oracle_base_prop = { oracle_base => $oracle_base }
+      }
+      $init_ora = { init_ora_content => epp($init_ora_template, $db_props['init_ora_params'] + $cdb_prop + $oracle_base_prop) }
       # Add init_ora_content to hash and remove init_ora_params, which is only needed for the init_ora_content
       $all_db_props = $db_props + $init_ora - init_ora_params
 
