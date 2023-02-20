@@ -126,10 +126,15 @@ class ora_profile::database::db_patches (
       } else {
         fail "patch_levels Hash is missing 'file' key"
       }
+      if ( has_key($patch_details, 'required_opversion') ) {
+        if ( versioncmp($patch_details['required_opversion'], $opversion) == 1 ) {
+          fail("Used Opatch version (${opversion}) is lower than required Opatch version (${patch_details['required_opversion']}) for patch level ${level}")
+        }
+      }
       $current_patch = {
         # Add sub_patches and source
         # Remove db_sub_patches, grid_sub_patches and type
-        "${oracle_home}:${patch_name}" => ($patch_details + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file' - 'type'),
+        "${oracle_home}:${patch_name}" => ($patch_details + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file' - 'type' - 'required_opversion'),
       }
       $current_patch
     }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
@@ -176,7 +181,11 @@ class ora_profile::database::db_patches (
   # patch_list_to_apply is the hash with homes and their specified patch details of which at least one need to be applied
   $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list, 'db')
   # apply_patches is the hash without the OPatch details which can be given to ora_opatch
-  $apply_patches = $patch_list_to_apply.map |$patch, $details| {{ $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
+  # lint:ignore:manifest_whitespace_closing_brace_before
+  # lint:ignore:manifest_whitespace_opening_brace_before
+  $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
+  # lint:endignore:manifest_whitespace_closing_brace_before
+  # lint:endignore:manifest_whitespace_opening_brace_before
   $converted_apply_patch_list = ora_install::ora_physical_patches($apply_patches).unique
   $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
 

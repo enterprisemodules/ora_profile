@@ -99,8 +99,13 @@ class ora_profile::database::asm_patches (
       } else {
         fail "patch_levels Hash is missing 'file' key for patch ${patch_name}"
       }
+      if ( has_key($patch_details, 'required_opversion') ) {
+        if ( versioncmp($patch_details['required_opversion'], $opversion) == 1 ) {
+          fail("Used Opatch version (${opversion}) is lower than required Opatch version (${patch_details['required_opversion']}) for patch level ${level}")
+        }
+      }
       $current_patch = {
-        "${grid_home}:${split($patch_name,'-')[0]}" => ($patch_details + $patch_type + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file'),
+        "${grid_home}:${split($patch_name,'-')[0]}" => ($patch_details + $patch_type + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file' - 'required_opversion'),
       }
       $current_patch
     }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
