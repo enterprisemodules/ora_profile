@@ -5,6 +5,8 @@ shared_examples "a database installer" do | settings|
 
   before do
     used_hiera_values = {
+      'ora_profile::database::cis_controls::product_version'                     => 'db19c',
+      'ora_profile::database::cis_controls::doc_version'                         => 'V1.0.0',
       'easy_type::generate_password_mode'                                        => 'development',
       'ora_profile::database::version'                                           => version,
       'ora_profile::database::source'                                            => '/software',
@@ -13,8 +15,8 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::disable_thp'                                       => 'skip',
       'ora_profile::database::firewall'                                          => 'skip',
       'ora_profile::database::db_patches'                                        => 'skip',
-      'ora_profile::database::cis_controls::product_version'                     => 'db12c',  # This works on all versions
-      'ora_profile::database::cis_controls::doc_version'                         => 'V3.0.0',
+      # 'ora_profile::database::cis_controls::product_version'                     => 'db12c',  # This works on all versions
+      # 'ora_profile::database::cis_controls::doc_version'                         => 'V3.0.0',
       'ora_profile::database::cis_controls::skip_list'                           => ['create_user_action_audit_is_enabled'],
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
       'ora_profile::database::db_definition_template::recovery_area_destination' => '/u03/fast_recovery_area',
