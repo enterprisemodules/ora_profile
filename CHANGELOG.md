@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.43.0
+
+- [release] Fix dependencies
+- [db_definition] Pull oracle_base parameter into init_params
+- [asm_patches/db_patches] Add JAN2023RU
+- [asm_patches/db_patches] Add check for required OPatch version [sc-1202]
 
 ## Release 0.42.2
 
