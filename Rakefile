@@ -9,11 +9,10 @@ def optional_require(file)
   end
 end
 
-import '../easy_type/lib/tasks/docs.rake' if File.exists?('../easy_type/lib/tasks/docs.rake')
+import '../easy_type/lib/tasks/docs.rake' if File.exist?('../easy_type/lib/tasks/docs.rake')
 optional_require 'puppet-lint/tasks/puppet-lint'
 optional_require 'puppet-syntax/tasks/puppet-syntax'
 optional_require 'puppetlabs_spec_helper/rake_tasks'
-optional_require 'puppet_blacksmith/rake_tasks'
 optional_require 'puppet_litmus'
 optional_require 'puppet_litmus/rake_tasks'
 optional_require 'bolt_spec/run'
