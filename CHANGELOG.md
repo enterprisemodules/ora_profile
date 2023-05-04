@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.44.0
+
+**new features**
+
+- [core] Added support for Puppet 8 and Ruby 3
+
 ## Release 0.43.0
 
 - [release] Fix dependencies
