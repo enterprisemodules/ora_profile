@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.44.1
+
+**Bug fixes**
+
+- [release] Update version info of some dependencies
+- [core] Replace deprecated has_key functions
+
 ## Release 0.44.0
 
 **new features**
