@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/enterprisemodules/em_tasks.git
-  revision: a450942a5ebca5fb6774e2a14968d4593955d9ba
+  revision: cd90d16253990d60b174786e5f692fccca62899d
   specs:
     em_tasks (0.1.0)
 
@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: https://github.com/puppetlabs/pdk.git
-  revision: cb5a8a7fffb9b486030ba701b7ec4d10f0afddf4
+  revision: f602322714e828d5d1e74f2e76bdcb84fcc4a22b
   ref: main
   specs:
     pdk (3.0.0.pre)
@@ -50,14 +50,14 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.759.0)
-    aws-sdk-core (3.171.0)
+    aws-partitions (1.775.0)
+    aws-sdk-core (3.174.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-ec2 (1.378.0)
-      aws-sdk-core (~> 3, >= 3.165.0)
+    aws-sdk-ec2 (1.382.0)
+      aws-sdk-core (~> 3, >= 3.174.0)
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.5.2)
       aws-eventstream (~> 1, >= 1.0.2)
@@ -85,7 +85,7 @@ GEM
       terminal-table (~> 3.0)
       winrm (~> 2.0)
       winrm-fs (~> 1.3)
-    brakeman (5.4.1)
+    brakeman (6.0.0)
     builder (3.2.4)
     bundle-audit (0.1.0)
       bundler-audit
@@ -97,7 +97,7 @@ GEM
     colored2 (3.1.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.10)
-    connection_pool (2.4.0)
+    connection_pool (2.4.1)
     cri (2.15.11)
     deep_merge (1.2.2)
     dependency_checker (1.0.0)
@@ -109,8 +109,6 @@ GEM
     docker-api (2.2.0)
       excon (>= 0.47.0)
       multi_json
-    domain_name (0.5.20190701)
-      unf (>= 0.0.5, < 1.0.0)
     erubi (1.12.0)
     excon (0.99.0)
     facter (4.4.0)
@@ -149,9 +147,6 @@ GEM
       colorize (~> 0.7)
       ruby_parser (>= 3.19.1)
     ffi (1.15.5)
-    ffi-compiler (1.0.1)
-      ffi (>= 1.0.0)
-      rake
     forwardable (1.3.3)
     gettext (3.4.3)
       erubi
@@ -167,23 +162,13 @@ GEM
     gyoku (1.4.0)
       builder (>= 2.1.2)
       rexml (~> 3.0)
-    hiera-eyaml (3.3.0)
+    hiera-eyaml (3.4.0)
       highline
       optimist
     hiera-puppet-helper (1.0.1)
     highline (2.1.0)
     hitimes (2.0.0)
     hocon (1.4.0)
-    honeycomb-beeline (2.11.0)
-      libhoney (>= 1.14.2)
-    http (5.1.1)
-      addressable (~> 2.8)
-      http-cookie (~> 1.0)
-      http-form_data (~> 2.2)
-      llhttp-ffi (~> 0.4.0)
-    http-cookie (1.0.5)
-      domain_name (~> 0.5)
-    http-form_data (2.3.0)
     httpclient (2.8.3)
     iniparse (1.5.0)
     jgrep (1.5.4)
@@ -194,14 +179,7 @@ GEM
     json_pure (2.6.3)
     jwt (2.2.3)
     kwalify (0.7.2)
-    libhoney (2.2.0)
-      addressable (~> 2.0)
-      excon
-      http (>= 2.0, < 6.0)
     little-plugger (1.1.4)
-    llhttp-ffi (0.4.0)
-      ffi-compiler (~> 1.0)
-      rake (~> 13.0)
     locale (2.1.3)
     log4r (1.1.10)
     logging (2.3.1)
@@ -234,7 +212,7 @@ GEM
       iniparse (~> 1.4)
       rexml (~> 3.2)
     parallel (1.23.0)
-    parallel_tests (4.2.0)
+    parallel_tests (4.2.1)
       parallel
     parser (3.2.2.1)
       ast (~> 2.4.1)
@@ -246,17 +224,6 @@ GEM
       singleton
     public_suffix (5.0.1)
     puppet (8.0.1)
-      concurrent-ruby (~> 1.0, < 1.2.0)
-      deep_merge (~> 1.0)
-      facter (>= 4.3.0, < 5)
-      fast_gettext (>= 2.1, < 3)
-      locale (~> 2.1)
-      multi_json (~> 1.13)
-      puppet-resource_api (~> 1.5)
-      scanf (~> 1.0)
-      semantic_puppet (~> 1.0)
-    puppet (8.0.1-universal-darwin)
-      CFPropertyList (~> 2.2)
       concurrent-ruby (~> 1.0, < 1.2.0)
       deep_merge (~> 1.0)
       facter (>= 4.3.0, < 5)
@@ -316,15 +283,13 @@ GEM
       faraday_middleware (~> 1.0)
       minitar
       semantic_puppet (~> 1.0)
-    puppet_litmus (1.0.2)
+    puppet_litmus (1.0.3)
       bolt (~> 3.0)
       docker-api (>= 1.34, < 3.0.0)
-      honeycomb-beeline
       parallel
       puppet-modulebuilder (>= 0.3.0)
       retryable (~> 3.0)
       rspec
-      rspec_honeycomb_formatter
       tty-spinner (>= 0.5.0, < 1.0.0)
     puppetfile-resolver (0.6.2)
       molinillo (~> 0.6)
@@ -389,10 +354,7 @@ GEM
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
     rspec-support (3.12.0)
-    rspec_honeycomb_formatter (0.2.1)
-      honeycomb-beeline
-      rspec-core (~> 3.0)
-    rubocop (1.50.2)
+    rubocop (1.52.0)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.2.0.0)
@@ -402,19 +364,22 @@ GEM
       rubocop-ast (>= 1.28.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.28.1)
+    rubocop-ast (1.29.0)
       parser (>= 3.2.1.0)
     rubocop-capybara (2.18.0)
       rubocop (~> 1.41)
-    rubocop-performance (1.17.1)
+    rubocop-factory_bot (2.23.1)
+      rubocop (~> 1.33)
+    rubocop-performance (1.18.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
-    rubocop-rspec (2.20.0)
+    rubocop-rspec (2.22.0)
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
+      rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    ruby_parser (3.20.0)
+    ruby_parser (3.20.1)
       sexp_processor (~> 4.16)
     ruby_smb (1.1.0)
       bindata
@@ -433,7 +398,7 @@ GEM
     sfl (2.3)
     singleton (0.1.1)
     spdx-licenses (1.3.0)
-    specinfra (2.85.0)
+    specinfra (2.85.1)
       net-scp
       net-ssh (>= 2.7)
       net-telnet (= 0.1.1)
@@ -441,7 +406,7 @@ GEM
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
     text (1.3.1)
-    thor (1.2.1)
+    thor (1.2.2)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
     tty-prompt (0.23.1)
@@ -455,9 +420,6 @@ GEM
     tty-spinner (0.9.3)
       tty-cursor (~> 0.7)
     tty-which (0.5.0)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.8.2)
     unicode-display_width (2.4.2)
     voxpupuli-puppet-lint-plugins (5.0.0)
       puppet-lint (~> 4.0)
@@ -497,7 +459,6 @@ GEM
     yard (0.9.34)
 
 PLATFORMS
-  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES

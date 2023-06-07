@@ -318,12 +318,12 @@ class ora_profile::database::db_definition (
 
   if ( $master_node == $facts['networking']['hostname'] ) {
     $database.each |$db, $db_props| {
-      if ( has_key($db_props, 'container_database') ) {
+      if ( 'container_database' in $db_props ) {
         $cdb_prop = { container_database => $db_props['container_database'] }
       } else {
         $cdb_prop = { container_database => $container_database }
       }
-      if ( has_key($db_props, 'oracle_base') ) {
+      if ( 'oracle_base' in $db_props ) {
         $oracle_base_prop = { oracle_base => $db_props['oracle_base'] }
       } else {
         $oracle_base_prop = { oracle_base => $oracle_base }

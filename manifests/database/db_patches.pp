@@ -114,19 +114,19 @@ class ora_profile::database::db_patches (
   $sub_patch_type = 'db'
   if ( $level == 'NONE' ) {
     $patch_level_list = {}
-  } elsif ( has_key($patch_levels[$db_version], $level) ) {
+  } elsif ( $level in $patch_levels[$db_version] ) {
     $patch_level_list = $patch_levels[$db_version][$level].map |$patch_name, $patch_details| {
-      if ( has_key($patch_details, "${sub_patch_type}_sub_patches") ) {
+      if ( "${sub_patch_type}_sub_patches" in $patch_details ) {
         $sub_patches = { 'sub_patches' => $patch_details["${sub_patch_type}_sub_patches"] }
       } else {
         fail "patch_levels Hash is missing '${sub_patch_type}_sub_patches' key"
       }
-      if ( has_key($patch_details, 'file') ) {
+      if ( 'file' in $patch_details ) {
         $patch_source = { 'source' => "${source}/${patch_details['file']}" }
       } else {
         fail "patch_levels Hash is missing 'file' key"
       }
-      if ( has_key($patch_details, 'required_opversion') ) {
+      if ( 'required_opversion' in $patch_details ) {
         if ( versioncmp($patch_details['required_opversion'], $opversion) == 1 ) {
           fail("Used Opatch version (${opversion}) is lower than required Opatch version (${patch_details['required_opversion']}) for patch level ${level}")
         }
@@ -148,7 +148,7 @@ class ora_profile::database::db_patches (
       $ojvm_patch_levels = lookup('ora_profile::database::db_patches::ojvm_patch_levels', Hash)
       if ( $level == 'NONE' ) {
         $ojvm_patch_list = {}
-      } elsif ( has_key($ojvm_patch_levels[$db_version], $level) ) {
+      } elsif ( $level in $ojvm_patch_levels[$db_version] ) {
         $ojvm_patch_list = $ojvm_patch_levels[$db_version][$level]
       } else {
         fail "OJVM patchlevel '${level}' not defined for database version '${db_version}'"
@@ -236,7 +236,7 @@ class ora_profile::database::db_patches (
         }
 
         $homes_to_be_patched.each |$patch_home| {
-          if ( has_key($ora_install_homes['running_processes'], $patch_home) ) {
+          if ( $patch_home in $ora_install_homes['running_processes'] ) {
             $running_sids = $ora_install_homes['running_processes'][$patch_home]['sids'].keys
             $running_listeners = $ora_install_homes['running_processes'][$patch_home]['listeners']
           } else {
@@ -307,7 +307,7 @@ class ora_profile::database::db_patches (
       #
       unless ( $is_rac ) {
         $homes_to_be_patched.each |$patch_home| {
-          if ( has_key($ora_install_homes['running_processes'], $patch_home) ) {
+          if ( $patch_home in $ora_install_homes['running_processes'] ) {
             $running_sids = $ora_install_homes['running_processes'][$patch_home]['sids'].keys
             $running_listeners = $ora_install_homes['running_processes'][$patch_home]['listeners']
           } else {
