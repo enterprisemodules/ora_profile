@@ -911,6 +911,10 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:34786990-OJVM-19.18.0.0.230117":
         source:                "%{lookup('ora_profile::database::source')}/p34786990_190000_Linux-x86-64.zip"
         sub_patches:           ['34786990']
+    APR2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35050341-OJVM-19.19.0.0.230418":
+        source:                "%{lookup('ora_profile::database::source')}/p35050341_190000_Linux-x86-64.zip"
+        sub_patches:           ['35050341']
 
 
 # ------------------------------------------------------------------------------
