@@ -273,7 +273,7 @@ ora_profile::database::patch_levels:
       "35037840-GIRU-19.19.0.0.230418":
         file:                  "p35037840_190000_Linux-x86-64.zip"
         db_sub_patches:        ['35042068','35050331']
-        grid_sub_patches:      ['35050325','35107512','33575402']
+        grid_sub_patches:      ['35042068','35050331','35050325','35107512','33575402']
         required_opversion:    12.2.0.1.36
   '21.0.0.0':
     OCT2021RU:
