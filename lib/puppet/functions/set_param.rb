@@ -41,7 +41,7 @@ Puppet::Functions.create_function(:set_param) do
 
   def set_string_param_cluster(param_name, dbname, cluster_nodes)
     scope = closure_scope
-    hostname = scope['hostname']
+    hostname = scope['networking']['hostname']
     case param_name
     # instance_name
     when 'instance_name'
