@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.44.2
+
+**Bug fixes**
+
+- [set_param] Fix unknown variable on Puppet 8
+
 ## Release 0.44.1
 
 **Bug fixes**
