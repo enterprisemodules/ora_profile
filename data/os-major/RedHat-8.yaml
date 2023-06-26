@@ -37,3 +37,58 @@ ora_profile::database::asm_packages::list:
   python3-six: {}
   targetcli: {}
   unzip.x86_64: {}
+ora_profile::client::packages::list:
+  bc:
+    ensure: present
+  binutils:
+    ensure: present
+  elfutils-libelf: 
+    ensure: present
+  elfutils-libelf-devel: 
+    ensure: present
+  fontconfig-devel:
+    ensure: present
+  glibc: 
+    ensure: present
+  glibc-devel: 
+    ensure: present
+  ksh: 
+    ensure: present
+  libaio:
+    ensure: present
+  libaio-devel:
+    ensure: present
+  libXrender:
+    ensure: present
+  libX11:
+    ensure: present
+  libXau:
+    ensure: present
+  libXi: 
+    ensure: present
+  libXtst: 
+    ensure: present
+  libgcc:
+    ensure: present
+  libnsl:
+    ensure: present
+  librdmacm: 
+    ensure: present
+  libstdc++: 
+    ensure: present
+  libstdc++-devel: 
+    ensure: present
+  libxcb:
+    ensure: present
+  libibverbs:
+    ensure: present
+  make:
+    ensure: present
+  policycoreutils: 
+    ensure: present
+  policycoreutils-python-utils:
+    ensure: present
+  smartmontools: 
+    ensure: present
+  sysstat: 
+    ensure: present
