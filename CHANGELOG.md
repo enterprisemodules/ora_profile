@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## Release 0.44.3
+
+**Bug fixes**
+
+- [release] Update dependecies for augueas_core and augeas_grub
+- [client] Fix packages for client on Redhat 8
+
 ## Release 0.44.2
 
 **Bug fixes**
