@@ -190,11 +190,18 @@ class ora_profile::database::db_software (
       cluster_nodes             => $installdb_cluster_nodes,
       ora_inventory_dir         => $ora_inventory_dir,
       user_base_dir             => $user_base_dir,
-      require                   => [
-        File[$dirs],
-        File[$download_dir],
-        Package['unzip'],
-      ],
+      require                   => if $facts['os']['family'] == 'windows' {
+        [
+          File[$dirs],
+          File[$download_dir],
+        ]
+      } else {
+        [
+          File[$dirs],
+          File[$download_dir],
+          Package['unzip'],
+        ]
+      },
     }
     if ( $oracle_home =~ String ) {
       $install_homes = {

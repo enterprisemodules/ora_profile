@@ -10,8 +10,9 @@ describe 'ora_profile::database::utility::update_after_patching' do
       let(:test_facts) {{}}
       let(:facts) { os_facts.merge(test_facts) }
       let(:params) {{
-        'os_user'  => 'oracle',
-        'schedule' => 'db_schedule'
+        'os_user'      => 'oracle',
+        'schedule'     => 'db_schedule',
+        'download_dir' => '/install'
       }}
 
       it { is_expected.to compile.with_all_deps }

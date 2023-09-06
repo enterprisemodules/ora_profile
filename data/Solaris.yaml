@@ -1,0 +1,100 @@
+---
+ora_profile::database::patch_levels:
+  '11.2.0.1': {}
+  '11.2.0.3': {}
+  '11.2.0.4': {}
+  '12.1.0.1': {}
+  '12.1.0.2': {}
+  '12.2.0.1': {}
+  '18.0.0.0': {}
+  '19.0.0.0':
+    APR2019RU: {}
+    JUL2019RU: {}
+    OCT2019RU: {}
+    JAN2020RU: {}
+    APR2020RU: {}
+    JUL2020RU: {}
+    OCT2020RU: {}
+    JAN2021RU: {}
+    APR2021RU: {}
+    JUL2021RU: {}
+    OCT2021RU: {}
+    JAN2022RU: {}
+    APR2022RU: {}
+    JUL2022RU: {}
+    OCT2022RU:
+      "34416665-GIRU-19.17.0.0.221018":
+        file:                  "p34416665_190000_Solaris86-64.zip"
+        db_sub_patches:        ['34419443','34444834']
+        grid_sub_patches:      ['34419443','34444834','34428761','34580338','33575402']
+        required_opversion:    12.2.0.1.32
+    JAN2023RU:
+      "34762026-GIRU-19.18.0.0.230117":
+        file:                  "p34762026_190000_Solaris86-64.zip"
+        db_sub_patches:        ['34765931','34768559']
+        grid_sub_patches:      ['34765931','34768559','34768569','34863894','33575402']
+        required_opversion:    12.2.0.1.34
+    APR2023RU:
+      "35037840-GIRU-19.19.0.0.230418":
+        file:                  "p35037840_190000_Solaris86-64.zip"
+        db_sub_patches:        ['35042068','35050331']
+        grid_sub_patches:      ['35042068','35050331','35050325','35107512','33575402']
+        required_opversion:    12.2.0.1.36
+    JUL2023RU:
+      "35319490-GIRU-19.20.0.0.230718":
+        file:                  "p35319490_190000_Solaris86-64.zip"
+        db_sub_patches:        ['35320081','35320149']
+        grid_sub_patches:      ['35320081','35320149','35332537','35553096','33575402']
+        required_opversion:    12.2.0.1.37
+    OCT2023RU:
+      "35642822-GIRU-19.21.0.0.231017":
+        file:                  "p35642822_190000_Solaris86-64.zip"
+        db_sub_patches:        ['35643107','35655527']
+        grid_sub_patches:      ['35643107','35655527','35652062','35553096','33575402']
+        required_opversion:    12.2.0.1.37
+    JAN2024RU:
+      "35940989-GIRU-19.22.0.0.230116":
+        file:                  "p35940989_190000_Solaris86-64.zip"
+        db_sub_patches:        ['35943157','35967489']
+        grid_sub_patches:      ['35943157','35967489','35956421','35986576','33575402']
+        required_opversion:    12.2.0.1.40
+
+ora_profile::database::db_patches::ojvm_patch_levels:
+    APR2019RU: {}
+    JUL2019RU: {}
+    OCT2019RU: {}
+    JAN2020RU: {}
+    APR2020RU: {}
+    JUL2020RU: {}
+    OCT2020RU: {}
+    JAN2021RU: {}
+    APR2021RU: {}
+    JUL2021RU: {}
+    OCT2021RU: {}
+    JAN2022RU: {}
+    APR2022RU: {}
+    JUL2022RU: {}
+    OCT2022RU:
+      "%{lookup('ora_profile::database::oracle_home')}:34411846-OJVM-19.17.0.0.221018":
+        source:                "%{lookup('ora_profile::database::source')}/p34411846_190000_Solaris86-64.zip"
+        sub_patches:           ['34411846']
+    JAN2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:34786990-OJVM-19.18.0.0.230117":
+        source:                "%{lookup('ora_profile::database::source')}/p34786990_190000_Solaris86-64.zip"
+        sub_patches:           ['34786990']
+    APR2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35050341-OJVM-19.19.0.0.230418":
+        source:                "%{lookup('ora_profile::database::source')}/p35050341_190000_Solaris86-64.zip"
+        sub_patches:           ['35050341']
+    JUL2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35354406-OJVM-19.20.0.0.230718":
+        source:                "%{lookup('ora_profile::database::source')}/p35354406_190000_Solaris86-64.zip"
+        sub_patches:           ['35354406']
+    OCT2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35648110-OJVM-19.21.0.0.230718":
+        source:                "%{lookup('ora_profile::database::source')}/p35648110_190000_Solaris86-64.zip"
+        sub_patches:           ['35648110']
+    JAN2024RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35926646-OJVM-19.22.0.0.240116":
+        source:                "%{lookup('ora_profile::database::source')}/p35926646_190000_Solaris86-64.zip"
+        sub_patches:           ['35926646']

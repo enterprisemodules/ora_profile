@@ -153,6 +153,7 @@
 # See the file "LICENSE" for the full license governing this code.
 #
 class ora_profile::database::db_definition (
+# lint:ignore:manifest_whitespace_opening_brace_before
 # lint:ignore:strict_indent
 # lint:ignore:lookup_in_parameter
   Enum['enabled', 'disabled']
@@ -364,7 +365,7 @@ class ora_profile::database::db_definition (
         * => $all_db_props,
       }
 
-      if ( $db_props['ensure'] == present ) {
+      if ( $db_props['ensure'] == present and $db_props['contained_by'] == Undef) {
         #
         # Database is done. Now start it
         #
@@ -413,6 +414,14 @@ class ora_profile::database::db_definition (
             }
             default: {
               false
+            }
+          },
+          daemonized  => case $is_windows {
+            true: {
+              false
+            }
+            default: {
+              true
             }
           },
         }

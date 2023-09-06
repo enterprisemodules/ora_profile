@@ -79,7 +79,9 @@ class ora_profile::database::db_listener (
         withpath => false,
       }
     }
-    $listener = $dbname.map |$db, $db_props| {{ $db => deep_merge($listener_defaults, $db_props) } }.reduce({}) |$memo, $array| { $memo + $array }
+    # lint:ignore:manifest_whitespace_opening_brace_before
+    $listener = $dbname.map |$db, $db_props| { { $db => deep_merge($listener_defaults, $db_props) } }.reduce({}) |$memo, $array| { $memo + $array }
+    # lint:endignore:manifest_whitespace_opening_brace_before
   }
 
   $listener.each |$lsnr, $lsnr_props| {
