@@ -42,8 +42,7 @@
 # See the file "LICENSE" for the full license governing this code.
 #
 class ora_profile::database::asm_patches (
-# lint:ignore:strict_indent
-# lint:ignore:lookup_in_parameter
+# lint:ignore:strict_indent lint:ignore:lookup_in_parameter lint:ignore:manifest_whitespace_opening_brace_before
   String[1] $level,
   String[1] $opversion,
   String[1] $patch_file,
@@ -51,9 +50,8 @@ class ora_profile::database::asm_patches (
   Variant[Boolean, Enum['on_failure']]
             $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database::common {
-# lint:endignore:strict_indent
-# lint:endignore:lookup_in_parameter
-# lint:ignore:variable_scope
+# lint:endignore
+# lint:ignore:variable_scope lint:ignore:manifest_whitespace_opening_brace_before
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 

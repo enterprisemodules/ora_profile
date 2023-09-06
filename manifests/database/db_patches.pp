@@ -68,8 +68,7 @@
 # See the file "LICENSE" for the full license governing this code.
 #
 class ora_profile::database::db_patches (
-# lint:ignore:strict_indent
-# lint:ignore:lookup_in_parameter
+# lint:ignore:lookup_in_parameter lint:ignore:manifest_whitespace_opening_brace_before lint:ignore:strict_indent
   Boolean   $include_ojvm,
   Variant[String[1], Hash] $level,
   String[1] $opversion,
@@ -79,11 +78,10 @@ class ora_profile::database::db_patches (
   String[1] $patch_file,
   Hash      $patch_list,
   Variant[Boolean, Enum['on_failure']]
-            $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' })
+            $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database::common {
-# lint:endignore:strict_indent
-# lint:endignore:lookup_in_parameter
-# lint:ignore:variable_scope
+# lint:endignore
+# lint:ignore:variable_scope lint:ignore:manifest_whitespace_opening_brace_before
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
@@ -132,7 +130,11 @@ class ora_profile::database::db_patches (
   # lint:endignore:manifest_whitespace_closing_brace_before
   # lint:endignore:manifest_whitespace_opening_brace_before
   $converted_apply_patch_list = ora_install::ora_physical_patches($apply_patches).unique
-  $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
+  if $facts['kernel'] == 'Windows' {
+    $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { "${patch.split(':')[0]}:${patch.split(':')[1]}" }.unique
+  } else {
+    $homes_to_be_patched = $converted_apply_patch_list.map |$patch| { $patch.split(':')[0] }.unique
+  }
   $running_system = ora_profile::oracle_running() or ora_profile::ocm_running()
 
   # The flow is as follows:
@@ -245,9 +247,10 @@ class ora_profile::database::db_patches (
           }
 
           -> ora_profile::database::utility::update_after_patching { $homes_to_be_patched:
-            os_user   => $os_user,
-            logoutput => $logoutput,
-            schedule  => $schedule,
+            os_user      => $os_user,
+            logoutput    => $logoutput,
+            schedule     => $schedule,
+            download_dir => $download_dir,
           }
         }
       }

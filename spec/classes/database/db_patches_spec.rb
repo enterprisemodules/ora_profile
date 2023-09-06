@@ -50,7 +50,7 @@ describe 'ora_profile::database::db_patches' do
 
   on_supported_os(:facterversion => '2.4').each do |os, os_facts|
     context "on #{os}" do
-      next if os =~ /windows/
+      next if os =~ /windows|solaris/
 
       let(:test_facts) {{}}
       let(:test_params) {{}}

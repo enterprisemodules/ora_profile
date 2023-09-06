@@ -22,7 +22,7 @@ fixtures:
     augeas_core:            puppetlabs-augeas_core
     augeasproviders_core:   puppet-augeasproviders_core
     augeasproviders_grub:   puppet-augeasproviders_grub
-    augeasproviders_sysctl: herculesteam-augeasproviders_sysctl
+    augeasproviders_sysctl: puppet-augeasproviders_sysctl
     limits:                 saz/limits
     firewall:               puppetlabs-firewall
     firewalld:              puppet-firewalld
