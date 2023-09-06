@@ -1251,7 +1251,7 @@ class ora_profile::database (
       ['ora_profile::database::disable_thp', { 'onlyif' => $is_linux }],
       ['ora_profile::database::limits', { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::limits' }],
       ['ora_profile::database::groups_and_users', { 'onlyif' => !$use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
-      ['ora_profile::database::packages', { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::packages' }],
+      ['ora_profile::database::packages', { 'implementation' => 'easy_type::profile::packages' }],
       #
       # Although there is an easy_type::profile::firewall implementation, it doesn't fit here. We are doing more here
       #

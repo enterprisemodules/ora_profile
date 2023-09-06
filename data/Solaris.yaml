@@ -1,0 +1,55 @@
+---
+ora_profile::database::patch_levels:
+  '11.2.0.1': {}
+  '11.2.0.3': {}
+  '11.2.0.4': {}
+  '12.1.0.1': {}
+  '12.1.0.2': {}
+  '12.2.0.1': {}
+  '18.0.0.0': {}
+  '19.0.0.0':
+    APR2019RU: {}
+    JUL2019RU: {}
+    OCT2019RU: {}
+    JAN2020RU: {}
+    APR2020RU: {}
+    JUL2020RU: {}
+    OCT2020RU: {}
+    JAN2021RU: {}
+    APR2021RU: {}
+    JUL2021RU: {}
+    OCT2021RU: {}
+    JAN2022RU: {}
+    APR2022RU: {}
+    JUL2022RU: {}
+    OCT2022RU:
+      "34416665-GIRU-19.17.0.0.221018":
+        file:                  "p34416665_190000_Solaris86-64.zip"
+        db_sub_patches:        ['34419443','34444834']
+        grid_sub_patches:      ['34419443','34444834','34428761','34580338','33575402']
+    JAN2023RU: {}
+    APR2023RU: {}
+    JUL2023RU: {}
+
+ora_profile::database::db_patches::ojvm_patch_levels:
+    APR2019RU: {}
+    JUL2019RU: {}
+    OCT2019RU: {}
+    JAN2020RU: {}
+    APR2020RU: {}
+    JUL2020RU: {}
+    OCT2020RU: {}
+    JAN2021RU: {}
+    APR2021RU: {}
+    JUL2021RU: {}
+    OCT2021RU: {}
+    JAN2022RU: {}
+    APR2022RU: {}
+    JUL2022RU: {}
+    OCT2022RU:
+      "%{lookup('ora_profile::database::oracle_home')}:34449117-OJVM-19.17.0.0.221018":
+        source:                "%{lookup('ora_profile::database::source')}/p34449117_190000_SOLARIS64.zip"
+        sub_patches:           ['34449117']
+    JAN2023RU: {}
+    APR2023RU: {}
+    JUL2023RU: {}

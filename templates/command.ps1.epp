@@ -1,0 +1,60 @@
+<%- | String $user_password,
+      String $user,
+      String $command,
+      String $command_args,
+      String $oracle_home,
+      String $oracle_sid,
+| -%>
+$ErrorActionPreference = 'Stop'
+
+$oracle_home = [System.Environment]::GetEnvironmentVariable("ORACLE_HOME", "Machine")
+if (!$oracle_home) {
+    [System.Environment]::SetEnvironmentVariable("ORACLE_HOME", "<%= $oracle_home %>", "Machine")
+    $oracle_home_set = $true
+} elseif ($oracle_home -ne "<%= $oracle_home %>") {
+    [System.Environment]::SetEnvironmentVariable("ORACLE_HOME", "<%= $oracle_home %>", "Machine")
+    $oracle_home_set = $true
+} else {
+    $oracle_home_set = $false
+}
+
+$oracle_sid = [System.Environment]::GetEnvironmentVariable("ORACLE_SID", "Machine")
+if (!$oracle_sid) {
+    [System.Environment]::SetEnvironmentVariable("ORACLE_SID", "<%= $oracle_sid %>", "Machine")
+    $oracle_sid_set = $true
+} elseif ($oracle_sid -ne "<%= $oracle_sid %>") {
+    [System.Environment]::SetEnvironmentVariable("ORACLE_SID", "<%= $oracle_sid %>", "Machine")
+    $oracle_sid_set = $true
+} else {
+    $oracle_sid_set = $false
+}
+
+$stdOutTempFile = "$env:TEMP\$((New-Guid).Guid)"
+$stdErrTempFile = "$env:TEMP\$((New-Guid).Guid)"
+$password = ConvertTo-SecureString "<%= $user_password %>" -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential("<%= $user %>", $password)
+
+$command = Start-Process -FilePath "<%= $command -%>" -Credential $cred -ArgumentList "<%= $command_args -%>" -PassThru -RedirectStandardError $stdErrTempFile -RedirectStandardOutput $stdOutTempFile -Wait -WindowStyle hidden
+
+$cmdOutput = Get-Content -Path $stdOutTempFile,$stdErrTempFile -Raw
+ if ([string]::IsNullOrEmpty($cmdOutput) -eq $false) {
+    $failure = Select-String "ORA-","KUP-", "SP2-","PLS-","PDB_PLUG_IN_VIOLATIONS","DBD ERROR" -Path $stdOutTempFile -Quiet
+    if ($failure -eq $false -Or $command.ExitCode -eq 0) {
+        $rc = 0
+    } else {
+        $rc = 1
+    }
+    Write-Output -InputObject $cmdOutput
+}
+
+if ($oracle_home_set -eq $true) {
+    [System.Environment]::SetEnvironmentVariable("ORACLE_HOME", $oracle_home, [System.EnvironmentVariableTarget]::Machine)
+}
+if ($oracle_sid_set -eq $true) {
+    [System.Environment]::SetEnvironmentVariable("ORACLE_SID", $oracle_sid, [System.EnvironmentVariableTarget]::Machine)
+}
+
+Remove-Item $stdOutTempFile
+Remove-Item $stdErrTempFile
+
+exit $rc

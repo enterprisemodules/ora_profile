@@ -42,7 +42,7 @@ open_cursors=<%= $open_cursors %>
 ###########################################
 # Database Identification
 ###########################################
-<% if $dbdomain { -%>
+<% unless $dbdomain =~ Undef or $dbdomain == '.' or $dbdomain == '' { -%>
 db_domain=<%= $dbdomain %>
 <% } -%>
 db_name=<%= $dbname %>
