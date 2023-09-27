@@ -48,12 +48,14 @@ class ora_profile::database::firewall::iptables (
       }
     }
 
+    $fw_ports = $ports.map | $name, $props | { Hash( $name => $props.each |$_k, $v| { Hash ('dport' => $v ) }[0]) }[0]
+
     $defaults = {
       ensure => 'present',
-      action => 'accept',
+      jump   => 'accept',
       proto  => 'tcp',
     }
-    ensure_resources('firewall', $ports, $defaults)
+    ensure_resources('firewall', $fw_ports, $defaults)
 
     firewall { '900 log dropped input chain':
       chain      => 'INPUT',

@@ -132,6 +132,23 @@
 #    - `false`
 #    - `on_failure`
 #
+# @param [Array[Enum['OWM', 'JServer', 'CTX', 'ORD', 'IM', 'OLAP', 'SDO', 'OLS', 'Sample', 'APEX', 'DV']]] options
+#    The options that need to be installed in the database.
+#    Default value: []
+#    Valid values are:
+#    - APEX
+#    - CTX
+#    - DV
+#    - IM
+#    - JServer
+#    - OLAP
+#    - OLS
+#    - ORD
+#    - OWM
+#    - SDO
+#    - Sample
+#    The default value is `[]`
+#
 #
 # See the file "LICENSE" for the full license governing this code.
 #
@@ -167,10 +184,14 @@ class ora_profile::database::db_definition (
   String[1] $temporary_tablespace_size,
   String[1] $undo_tablespace_size,
   String[1] $user_tablespace_size,
+  Array[Enum['OWM','JServer','CTX','ORD','IM','OLAP','SDO','OLS','Sample','APEX','DV']]
+            $options,
   Ora_Install::Version
             $version,
+# lint:ignore:manifest_whitespace_opening_brace_before
   Variant[Boolean, Enum['on_failure']]
-            $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' })
+            $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
+# lint:endignore:manifest_whitespace_opening_brace_before
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent
 # lint:endignore:lookup_in_parameter
@@ -313,7 +334,9 @@ class ora_profile::database::db_definition (
       }
     }
   } else {
-    $database = $dbname.map |$db, $db_props| {{ $db => deep_merge($dbname_defaults, $db_props) } }.reduce({}) |$memo, $array| { $memo + $array }
+    # lint:ignore:manifest_whitespace_opening_brace_before
+    $database = $dbname.map |$db, $db_props| { { $db => deep_merge($dbname_defaults, $db_props) } }.reduce({}) |$memo, $array| { $memo + $array }
+    # lint:endignore:manifest_whitespace_opening_brace_before
   }
 
   if ( $master_node == $facts['networking']['hostname'] ) {
@@ -328,9 +351,14 @@ class ora_profile::database::db_definition (
       } else {
         $oracle_base_prop = { oracle_base => $oracle_base }
       }
+      if ( 'options' in $db_props ) {
+        $options_prop = { options => $db_props['options'] }
+      } else {
+        $options_prop = { options => $options }
+      }
       $init_ora = { init_ora_content => epp($init_ora_template, $db_props['init_ora_params'] + $cdb_prop + $oracle_base_prop) }
       # Add init_ora_content to hash and remove init_ora_params, which is only needed for the init_ora_content
-      $all_db_props = $db_props + $init_ora - init_ora_params
+      $all_db_props = $db_props + $options_prop + $init_ora - init_ora_params
 
       ora_database { $db:
         * => $all_db_props,

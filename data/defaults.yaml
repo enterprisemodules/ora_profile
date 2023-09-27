@@ -961,7 +961,7 @@ ora_profile::database::db_definition::db_recovery_file_dest:              /u03/f
 ora_profile::database::db_definition::archivelog:                         disabled
 ora_profile::database::db_definition::ora_database_override:              {}
 ora_profile::database::db_definition::dbdomain:                           "%{facts.networking.domain}"
-
+ora_profile::database::db_definition::options:                            []
 
 # ------------------------------------------------------------------------------
 #

@@ -3495,6 +3495,7 @@ The following parameters are available in the `ora_profile::database::db_definit
 * [`ora_database_override`](#-ora_profile--database--db_definition--ora_database_override)
 * [`dbdomain`](#-ora_profile--database--db_definition--dbdomain)
 * [`logoutput`](#-ora_profile--database--db_definition--logoutput)
+* [`options`](#-ora_profile--database--db_definition--options)
 
 ##### <a name="-ora_profile--database--db_definition--version"></a>`version`
 
@@ -3692,6 +3693,26 @@ Valid values are:
 - `on_failure`
 
 Default value: `lookup({ name => 'logoutput', default_value => 'on_failure' })`
+
+##### <a name="-ora_profile--database--db_definition--options"></a>`options`
+
+Data type: `Array[Enum['OWM','JServer','CTX','ORD','IM','OLAP','SDO','OLS','Sample','APEX','DV']]`
+
+The options that need to be installed in the database.
+Default value: []
+Valid values are:
+- APEX
+- CTX
+- DV
+- IM
+- JServer
+- OLAP
+- OLS
+- ORD
+- OWM
+- SDO
+- Sample
+The default value is `[]`
 
 ### <a name="ora_profile--database--db_definition_template"></a>`ora_profile::database::db_definition_template`
 
