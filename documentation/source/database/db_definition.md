@@ -26,4 +26,5 @@ When these customizations aren't enough, you can replace the class with your own
   :ora_database_override,
   :dbdomain,
   :logoutput,
+  :options,
 ]%>
