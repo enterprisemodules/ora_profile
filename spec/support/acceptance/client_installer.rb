@@ -19,6 +19,9 @@ shared_examples "a client installer" do | settings|
     # end
   
     manifest = <<-MANIFEST
+      package {'unzip':
+        ensure => 'present',
+      }
       include ora_profile::client
     MANIFEST
   
