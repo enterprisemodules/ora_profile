@@ -9,8 +9,9 @@ ora_profile::database::os_user_password:                mysecretpassword
 ora_profile::database::grid_user_password:              mysecretpassword
 ora_profile::database::db_definition::system_password:  mysecretpassword
 ora_profile::database::db_definition::sys_password:     mysecretpassword
-ora_profile::database::db_patches::level:               JUL2020RU
+ora_profile::database::db_patches::level:               APR2023RU
 ora_profile::database::cis_controls::dbname:            DB1
 ora_profile::database::cis_controls::product_version:   db19c
 ora_profile::database::cis_controls::doc_version:       V1.0.0
-
+ora_profile::database::db_patches::opversion:           12.2.0.1.36
+ora_profile::database::patch_window:                    ~

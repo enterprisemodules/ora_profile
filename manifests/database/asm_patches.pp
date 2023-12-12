@@ -74,52 +74,17 @@ class ora_profile::database::asm_patches (
   }
 
   $asm_version = lookup('ora_profile::database::asm_software::version', String)
-  $sub_patch_type = 'grid'
-  if ( $level == 'NONE' ) {
-    $patch_level_list = {}
-    $patch_bundle_id = 'n/a'
-  } elsif ( $level in $patch_levels[$asm_version] ) {
-    $patch_level_list = $patch_levels[$asm_version][$level].map |$patch_name, $patch_details| {
-      if ( 'type' in $patch_details ) {
-        if ( member(['psu', 'one-off'], $patch_details['type']) ) {
-          $patch_type = { 'type' => $patch_details['type'] }
-        } else {
-          fail "wrong 'type' specified for patch_levels patch ${patch_name}, '${patch_details['type']}' given, expected 'psu' or 'one-off'"
-        }
-      } else {
-        $patch_type = { 'type' => 'psu' }
-      }
-      if ( "${sub_patch_type}_sub_patches" in $patch_details ) {
-        $sub_patches = { 'sub_patches' => $patch_details["${sub_patch_type}_sub_patches"] }
-      } else {
-        fail "patch_levels Hash is missing '${sub_patch_type}_sub_patches' key for patch ${patch_name}"
-      }
-      if ( 'file' in $patch_details ) {
-        $patch_source = { 'source' => "${source}/${patch_details['file']}" }
-      } else {
-        fail "patch_levels Hash is missing 'file' key for patch ${patch_name}"
-      }
-      if ( 'required_opversion' in $patch_details ) {
-        if ( versioncmp($patch_details['required_opversion'], $opversion) == 1 ) {
-          fail("Used Opatch version (${opversion}) is lower than required Opatch version (${patch_details['required_opversion']}) for patch level ${level}")
-        }
-      }
-      $current_patch = {
-        "${grid_home}:${split($patch_name,'-')[0]}" => ($patch_details + $patch_type + $sub_patches + $patch_source - 'db_sub_patches' - 'grid_sub_patches' - 'file' - 'required_opversion'),
-      }
-      $current_patch
-    }.reduce({}) |$memo, $array| { $memo + $array } # Turn Array of Hashes into Hash
-    $patch_bundle_id = split($patch_level_list.keys[0],':')[1]
-  } else {
-    fail "Patchlevel '${level}' not defined for ASM version '${asm_version}'"
-  }
+
+  $patch_level_list = ora_profile::level_to_patches( $level, $source, $opversion, $grid_home, $asm_version, 'grid' )
+  $patch_bundle_id = ora_profile::level_to_bundle( $level, $asm_version )
+
   $complete_patch_list = ($patch_level_list + $patch_list)
 
   schedule { 'asm_patchschedule':
     range  => $patch_window,
   }
 
-  if ( $::facts['ora_version'] ) {
+  if ( $facts['ora_version'] ) {
     echo { "Ensure ASM patch(es) in patch window: ${patch_window}":
       withpath => false,
     }

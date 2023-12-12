@@ -2,6 +2,7 @@
 require: rubocop-performance
 AllCops:
   NewCops: enable
+  SuggestExtensions: false
 
   Include:
   - "**/*.rb"
@@ -19,6 +20,8 @@ AllCops:
   - lib/1.8.7/csv.rb
   - pkg/**/*
   - bin/*
+Metrics:
+  Enabled: false
 Layout/HeredocIndentation:
   Enabled: false
 Security/Eval:

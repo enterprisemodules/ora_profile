@@ -209,7 +209,11 @@ class ora_profile::database::db_software (
     }
 
     $install_homes.each | $_home, $home_props = {} | {
-      $oracle_home_props = deep_merge($oracle_home_defaults, $home_props)
+      # To allow ora_profile::database::db_software::oracle_home to be a full definition
+      # of the home incuding patch level, we remove the level key here. This is because 
+      # ora_install::installdb doesn't know what to do with it and throws an error
+      # if it is available.
+      $oracle_home_props = deep_merge($oracle_home_defaults, $home_props.delete('level'))
 
       echo { "Ensure DB software ${oracle_home_props['version']} ${oracle_home_props['database_type']} in ${oracle_home_props['oracle_home']}":
         withpath => false,

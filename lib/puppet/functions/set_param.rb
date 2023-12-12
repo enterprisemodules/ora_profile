@@ -7,10 +7,6 @@
 # - instance_number
 # - thread_number
 #
-# rubocop: disable Metrics/AbcSize
-# rubocop: disable Metrics/CyclomaticComplexity
-# rubocop: disable Metrics/PerceivedComplexity
-# rubocop: disable Metrics/MethodLength
 
 Puppet::Functions.create_function(:set_param) do
   dispatch :set_string_param do

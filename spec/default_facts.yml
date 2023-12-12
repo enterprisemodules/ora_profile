@@ -19,13 +19,15 @@ ora_install_homes:
   defined_sids:
     /oracle/product/11.2/db: ['TEST']
   running_processes:
-    /oracle/product/11.2/db:  []
-  running_sids:
     /oracle/product/11.2/db:
+      conn_mgrs: []
       sids:
         TEST:
           open_mode: READ_WRITE
           database_role: PRIMARY
+      listeners:
+        - LISTENER1
+        - LISTENER2
 puppet_confdir:       /etc/puppetlabs/puppet
 dmi:
   product:

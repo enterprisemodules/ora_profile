@@ -20,6 +20,7 @@ default_module_facts_path = File.expand_path(File.join(File.dirname(__FILE__), '
 default_facts.merge!(YAML.safe_load(File.read(default_facts_path))) if File.exist?(default_facts_path) && File.readable?(default_facts_path)
 
 default_facts.merge!(YAML.safe_load(File.read(default_module_facts_path))) if File.exist?(default_module_facts_path) && File.readable?(default_module_facts_path)
+require_relative 'support/unit/shared_examples'
 
 RSpec.configure do |c|
   c.default_facts = default_facts
