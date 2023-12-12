@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## Release 0.45.0
+
+**new features**
+
+- [asm_patches, db_patches] Add support for multi levels patching
+- [db_definition] Add 'options' parameter
+
+**Maintenance fixes**
+
+- [release] Update dependencies
+
 ## Release 0.44.4
 
 **Bug fixes**
