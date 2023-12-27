@@ -125,7 +125,7 @@ Puppet::Functions.create_function(:'ora_profile::level_to_patches') do
   end
 
   def level_exists?(level, version, definition)
-    definition[version]&.keys&.include?(level)
+    definition[version]&.key?(level)
   end
 
   def db_patch_levels
