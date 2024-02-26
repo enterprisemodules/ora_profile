@@ -448,12 +448,14 @@ GEM
 
 PLATFORMS
   x86_64-darwin-22
+  x86_64-darwin-23
 
 DEPENDENCIES
   bolt
   brakeman
   bundle-audit
   byebug
+  concurrent-ruby (< 1.2.0)
   dependency_checker
   easy_type_helpers!
   em_tasks!
