@@ -64,6 +64,20 @@ ora_profile::database::patch_levels:
         grid_sub_patches:      ['35348034']
         required_opversion:    12.2.0.1.37
         remove_patches_before: ['33808367','34086870','34411846','34786990','35050341']
+    OCT2023RU:
+      "35681552-RU-19.21.0.0.231017":
+        file:                  "p35681552_190000_MSWIN-x86-64.zip"
+        db_sub_patches:        ['35681552']
+        grid_sub_patches:      ['35681552']
+        required_opversion:    12.2.0.1.37
+        remove_patches_before: ['33808367','34086870','34411846','34786990','35050341','35354406']
+    JAN2024RU:
+      "35681552-RU-19.22.0.0.230116":
+        file:                  "p35681552_190000_MSWIN-x86-64.zip"
+        db_sub_patches:        ['35681552']
+        grid_sub_patches:      ['35681552']
+        required_opversion:    12.2.0.1.37
+        remove_patches_before: ['33808367','34086870','34411846','34786990','35050341','35354406','35648110']
 
 
 # ------------------------------------------------------------------------------
@@ -109,6 +123,15 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:35354406-OJVM-19.20.0.0.230418":
         source:                "%{lookup('ora_profile::database::source')}/p35354406_190000_MSWIN-x86-64.zip"
         sub_patches:           ['35354406']
+    OCT2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35648110-OJVM-19.21.0.0.230718":
+        source:                "%{lookup('ora_profile::database::source')}/p35648110_190000_MSWIN-x86-64.zip"
+        sub_patches:           ['35648110']
+    JAN2024RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35926646-OJVM-19.22.0.0.240116":
+        source:                "%{lookup('ora_profile::database::source')}/p35926646_190000_MSWIN-x86-64.zip"
+        sub_patches:           ['35926646']
+
 
 # ------------------------------------------------------------------------------
 #

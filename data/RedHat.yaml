@@ -251,6 +251,24 @@ ora_profile::database::patch_levels:
         db_sub_patches:        ['35042068','35050331']
         grid_sub_patches:      ['35042068','35050331','35050325','35107512','33575402']
         required_opversion:    12.2.0.1.36
+    JUL2023RU:
+      "35319490-GIRU-19.20.0.0.230718":
+        file:                  "p35319490_190000_Linux-x86-64.zip"
+        db_sub_patches:        ['35320081','35320149']
+        grid_sub_patches:      ['35320081','35320149','35332537','35553096','33575402']
+        required_opversion:    12.2.0.1.37
+    OCT2023RU:
+      "35642822-GIRU-19.21.0.0.231017":
+        file:                  "p35642822_190000_Linux-x86-64.zip"
+        db_sub_patches:        ['35643107','35655527']
+        grid_sub_patches:      ['35643107','35655527','35652062','35553096','33575402']
+        required_opversion:    12.2.0.1.37
+    JAN2024RU:
+      "35940989-GIRU-19.22.0.0.230116":
+        file:                  "p35940989_190000_Linux-x86-64.zip"
+        db_sub_patches:        ['35943157','35967489']
+        grid_sub_patches:      ['35943157','35967489','35956421','36115038','33575402']
+        required_opversion:    12.2.0.1.40
   '21.0.0.0':
     OCT2021RU:
       "33250101-GIRU-21.4.0.0.211019":
@@ -288,6 +306,30 @@ ora_profile::database::patch_levels:
         db_sub_patches:        ['34839741','34843608']
         grid_sub_patches:      ['34839741','34843608','34843676','34843663','34863879','34901232']
         required_opversion:    12.2.0.1.34
+    APR2023RU:
+      "35132566-GIRU-21.10.0.0.230418":
+        file:                  "p35132566_210000_Linux-x86-64.zip"
+        db_sub_patches:        ['35134934','35134943']
+        grid_sub_patches:      ['35134934','35134943','35132583','35149778','35222143','35226235']
+        required_opversion:    12.2.0.1.36
+    JUL2023RU:
+      "35427907-GIRU-21.11.0.0.230718":
+        file:                  "p35427907_210000_Linux-x86-64.zip"
+        db_sub_patches:        ['35428978','35442022']
+        grid_sub_patches:      ['35428978','35442022','35442014','35442029','35550598','35589155']
+        required_opversion:    12.2.0.1.37
+    OCT2023RU:
+      "35738010-GIRU-21.12.0.0.231017":
+        file:                  "p35738010_210000_Linux-x86-64.zip"
+        db_sub_patches:        ['35740258','35740265']
+        grid_sub_patches:      ['35740258','35740265','35740270','35744289','35550598','35790201']
+        required_opversion:    12.2.0.1.37
+    JAN2024RU:
+      "36031790-GIRU-21.13.0.0.240116":
+        file:                  "p36031790_210000_Linux-x86-64.zip"
+        db_sub_patches:        ['36041222','36031897']
+        grid_sub_patches:      ['36041222','36031897','36080534','36031881','36115660','36115667']
+        required_opversion:    12.2.0.1.40
 
 ora_profile::database::db_patches::ojvm_patch_levels:
   '11.2.0.1': {}
@@ -487,3 +529,15 @@ ora_profile::database::db_patches::ojvm_patch_levels:
       "%{lookup('ora_profile::database::oracle_home')}:35050341-OJVM-19.19.0.0.230418":
         source:                "%{lookup('ora_profile::database::source')}/p35050341_190000_Linux-x86-64.zip"
         sub_patches:           ['35050341']
+    JUL2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35354406-OJVM-19.20.0.0.230718":
+        source:                "%{lookup('ora_profile::database::source')}/p35354406_190000_Linux-x86-64.zip"
+        sub_patches:           ['35354406']
+    OCT2023RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35648110-OJVM-19.21.0.0.231017":
+        source:                "%{lookup('ora_profile::database::source')}/p35648110_190000_Linux-x86-64.zip"
+        sub_patches:           ['35648110']
+    JAN2024RU:
+      "%{lookup('ora_profile::database::oracle_home')}:35926646-OJVM-19.22.0.0.240116":
+        source:                "%{lookup('ora_profile::database::source')}/p35926646_190000_Linux-x86-64.zip"
+        sub_patches:           ['35926646']
