@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.46.0
+
+**new features**
+
+- [patches] Add patchlevels for Linux, Solaris and Windows
+- [release] Update dependencies
+- [core] Add better support for Windows
 
 ## Release 0.45.0
 
