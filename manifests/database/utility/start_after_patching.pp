@@ -46,16 +46,18 @@ define ora_profile::database::utility::start_after_patching (
       }
     }
     if ora_profile::ocm_running_in_homes($homes_to_be_patched) {
-      # 
-      # For now this is hard-coded into one service. So we assume the one exec
-      # starts all available connection managers. But.... this might not be the
-      # case for all users. Maybe we need to make this more configurable
-      # TODO: Add support for starting multiple connection managers
-      # 
-      exec { "Starting OCM after applying DB patches on ${patch_home}" :
-        command  => '/bin/systemctl start ocm',
-        onlyif   => '/bin/test -e /etc/rc.d/init.d/ocm',
-        schedule => $schedule,
+      unless $facts['kernel'] == 'Windows' {
+        #
+        # For now this is hard-coded into one service. So we assume the one exec
+        # starts all available connection managers. But.... this might not be the
+        # case for all users. Maybe we need to make this more configurable
+        # TODO: Add support for starting multiple connection managers
+        #
+        exec { "Starting OCM after applying DB patches on ${patch_home}" :
+          command  => '/bin/systemctl start ocm',
+          onlyif   => '/bin/test -e /etc/rc.d/init.d/ocm',
+          schedule => $schedule,
+        }
       }
     }
 
@@ -76,34 +78,24 @@ define ora_profile::database::utility::start_after_patching (
           schedule                => $schedule,
         }
 
-        if ( $facts['ora_install_homes']['running_processes'][$patch_home]['sids'][$dbname]['open_mode'] == 'READ_WRITE' ) {
-          exec { "Datapatch for ${dbname}":
-            cwd         => "${patch_home}/OPatch",
-            command     => "/bin/sh -c 'unset ORACLE_PATH SQLPATH TWO_TASK TNS_ADMIN; ${patch_home}/OPatch/datapatch -verbose'",
-            environment => [
-              "PATH=/usr/bin:/bin:${patch_home}/bin",
-              "ORACLE_SID=${dbname}",
-              "ORACLE_HOME=${patch_home}",
-            ],
-            user        => $os_user,
-            logoutput   => $logoutput,
-            timeout     => 3600,
-            schedule    => $schedule,
-            require     => Db_control["database start ${dbname}"],
+        if $facts['kernel'] == 'Windows' {
+          unless ora_profile::windows_svc_disabled('OracleRemExecServiceV2') {
+            exec { 'Start OracleRemExecServiceV2':
+              command  => 'Set-Service -Name OracleRemExecServiceV2 -Status Running -PassThru',
+              provider => 'powershell',
+            }
           }
-
-          -> exec { "SQLPlus UTLRP ${dbname}":
-            cwd         => $patch_home,
-            command     => "/bin/sh -c 'unset TWO_TASK TNS_ADMIN; ${patch_home}/bin/sqlplus / as sysdba @?/rdbms/admin/utlrp'",
-            environment => [
-              "PATH=/usr/bin:/bin:${patch_home}/bin",
-              "ORACLE_SID=${dbname}",
-              "ORACLE_HOME=${patch_home}",
-            ],
-            user        => $os_user,
-            logoutput   => $logoutput,
-            timeout     => 3600,
-            schedule    => $schedule,
+          unless ora_profile::windows_svc_disabled("OracleJobScheduler${dbname}") {
+            exec { "Start OracleJobScheduler${dbname}":
+              command  => "Set-Service -Name OracleJobScheduler${dbname} -Status Running -PassThru",
+              provider => 'powershell',
+            }
+          }
+          unless ora_profile::windows_svc_disabled("OracleVssWriter${dbname}") {
+            exec { "Start OracleVssWriter${dbname}":
+              command  => "Set-Service -Name OracleVssWriter${dbname} -Status Running -PassThru",
+              provider => 'powershell',
+            }
           }
         }
       }
