@@ -50,20 +50,22 @@ define ora_profile::database::utility::stop_for_patching (
       }
     }
     if ora_profile::ocm_running_in_homes($homes_to_be_patched) {
-      echo { "Stopping and starting OCM to apply DB patches on ${patch_home}":
-        withpath => false,
-        schedule => $schedule,
-      }
-      # 
-      # For now this is hard-coded into one service. So we assume the one exec
-      # stops all available connection managers. But.... this might not be the
-      # case for all users. Maybe we need to make this more configurable
-      # TODO: Add support for stopping multiple connection managers
-      # 
-      exec { "stop OCM for patching on ${patch_home}" :
-        command  => '/bin/systemctl stop ocm',
-        onlyif   => '/bin/test -e /etc/rc.d/init.d/ocm',
-        schedule => $schedule,
+      unless $facts['kernel'] == 'Windows' {
+        echo { "Stopping and starting OCM to apply DB patches on ${patch_home}":
+          withpath => false,
+          schedule => $schedule,
+        }
+        #
+        # For now this is hard-coded into one service. So we assume the one exec
+        # stops all available connection managers. But.... this might not be the
+        # case for all users. Maybe we need to make this more configurable
+        # TODO: Add support for stopping multiple connection managers
+        #
+        exec { "stop OCM for patching on ${patch_home}" :
+          command  => '/bin/systemctl stop ocm',
+          onlyif   => '/bin/test -e /etc/rc.d/init.d/ocm',
+          schedule => $schedule,
+        }
       }
     }
     if $running_sids.length > 0 {
@@ -73,6 +75,27 @@ define ora_profile::database::utility::stop_for_patching (
       }
 
       $running_sids.each |$dbname| {
+        if $facts['kernel'] == 'Windows' {
+          if ora_profile::windows_svc_running('OracleRemExecServiceV2') {
+            exec { 'Stop OracleRemExecServiceV2':
+              command  => 'Set-Service -Name OracleRemExecServiceV2 -Status Stopped -PassThru',
+              provider => 'powershell',
+            }
+          }
+          if ora_profile::windows_svc_running("OracleJobScheduler${dbname}") {
+            exec { "Stop OracleJobScheduler${dbname}":
+              command  => "Set-Service -Name OracleJobScheduler${dbname} -Status Stopped -PassThru",
+              provider => 'powershell',
+            }
+          }
+          if ora_profile::windows_svc_running("OracleVssWriter${dbname}") {
+            exec { "Stop OracleVssWriter${dbname}":
+              command  => "Set-Service -Name OracleVssWriter${dbname} -Status Stopped -PassThru",
+              provider => 'powershell',
+            }
+          }
+        }
+
         db_control { "database stop ${dbname}":
           ensure                  => 'stop',
           instance_name           => $dbname,
