@@ -1,6 +1,6 @@
 {
   "name": "enterprisemodules-ora_profile",
-  "version": "0.46.0",
+  "version": "0.46.1",
   "author": "Enterprise Modules",
   "summary": "Puppet profiles for installing Oracle Database software and creating and managing  databases",
   "license": "proprietary",

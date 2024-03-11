@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.46.1
+
+**Bug fixes**
+
+- [db_patches] Bugfixes for Windows
+
 ## Release 0.46.0
 
 **new features**
