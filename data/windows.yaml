@@ -72,11 +72,11 @@ ora_profile::database::patch_levels:
         required_opversion:    12.2.0.1.37
         remove_patches_before: ['33808367','34086870','34411846','34786990','35050341','35354406']
     JAN2024RU:
-      "35681552-RU-19.22.0.0.230116":
-        file:                  "p35681552_190000_MSWIN-x86-64.zip"
-        db_sub_patches:        ['35681552']
-        grid_sub_patches:      ['35681552']
-        required_opversion:    12.2.0.1.37
+      "35962832-RU-19.22.0.0.240116":
+        file:                  "p35962832_190000_MSWIN-x86-64.zip"
+        db_sub_patches:        ['35962832']
+        grid_sub_patches:      ['35962832']
+        required_opversion:    12.2.0.1.40
         remove_patches_before: ['33808367','34086870','34411846','34786990','35050341','35354406','35648110']
 
 
