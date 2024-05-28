@@ -25,3 +25,4 @@ fixtures:
     firewall:               puppetlabs-firewall
     firewalld:              puppet-firewalld
     systemd:                puppet-systemd
+    concat:                 puppetlabs-concat
