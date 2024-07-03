@@ -141,6 +141,7 @@ class ora_profile::database::db_software (
   unless defined(File[$download_dir]) {
     file { $download_dir:
       ensure => 'directory',
+      mode   => '0777',
     }
   }
   $dirs.each |$dir| {
