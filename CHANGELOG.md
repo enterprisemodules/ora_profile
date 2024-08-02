@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.47.0
+
+**Bug fixes**
+
+- [db_software] Set correct mode when creating the download_dir
+- [db_patches] Fix wrongly defined JAN2024RU hieradata for Windows
+
+**new features**
+
+- [release] Add support for EL 9 releases and update dependencies
+
 ## Release 0.46.1
 
 **Bug fixes**
