@@ -129,15 +129,15 @@ Puppet::Functions.create_function(:'ora_profile::level_to_patches') do
   end
 
   def db_patch_levels
-    @db_patch_levels ||= call_function('lookup', 'ora_profile::database::patch_levels', data_type('Hash'), 'first')
+    call_function('lookup', 'ora_profile::database::patch_levels', data_type('Hash'), 'first')
   end
 
   def ojvm_patch_levels
-    @ojvm_patch_levels ||= call_function('lookup', 'ora_profile::database::db_patches::ojvm_patch_levels', data_type('Hash'), 'first')
+    call_function('lookup', 'ora_profile::database::db_patches::ojvm_patch_levels', data_type('Hash'), 'first')
   end
 
   def db_version
-    @db_version ||= call_function('lookup', 'ora_profile::database::db_software::version', data_type('Hash'), 'first')
+    call_function('lookup', 'ora_profile::database::db_software::version', data_type('Hash'), 'first')
   end
 
   def data_type(string)
