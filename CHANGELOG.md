@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.47.1
+
+**Bug fixes**
+
+- [db_patches,asm_patches] Use lookup directly instead of caching the value
+
 ## Release 0.47.0
 
 **Bug fixes**
