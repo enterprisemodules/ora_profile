@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.47.2
+
+**Bug fixes**
+
+- [asm_patches] Fix in determining patch number
+
 ## Release 0.47.1
 
 **Bug fixes**
