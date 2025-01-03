@@ -227,7 +227,7 @@ class ora_profile::database::asm_patches (
 
       $complete_patch_list.each |$patch, $props| {
         $home = split($patch, ':')[0]
-        $patch_num = split($patch, ':')[1]
+        $patch_num = split($patch, ':')[1].split('-')[0]
         $file_name = split($props['source'], '/')[-1]
 
         archive { "${download_dir}/${file_name}":
