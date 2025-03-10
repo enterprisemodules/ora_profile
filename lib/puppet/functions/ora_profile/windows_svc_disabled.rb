@@ -9,7 +9,7 @@ Puppet::Functions.create_function(:'ora_profile::windows_svc_disabled') do
     return_type 'Boolean'
   end
 
-  def windows_svc_disabled(svc)
+  def windows_svc_disabled(svc) # rubocop:disable Naming/PredicateMethod
     service_state = `sc qc #{svc}`.scan(/START_TYPE *:.*(DISABLED)/).flatten.first
     service_state == 'DISABLED'
   end

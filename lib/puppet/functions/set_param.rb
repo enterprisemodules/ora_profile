@@ -47,7 +47,7 @@ Puppet::Functions.create_function(:set_param) do
           index += 1
           index if node == hostname
         end
-        return_value = "#{dbname}#{instance_number.flatten.join}"
+        return_value = "#{dbname}#{instance_number.join}"
       elsif dbname
         return_value = dbname
       else
@@ -61,7 +61,7 @@ Puppet::Functions.create_function(:set_param) do
           index += 1
           index if node == hostname
         end
-        return_value = instance_number.flatten.join
+        return_value = instance_number.join
       elsif dbname
         return_value = ''
       else
