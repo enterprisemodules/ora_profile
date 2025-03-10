@@ -171,7 +171,7 @@ class ora_profile::database::db_patches (
       }
 
       schedule { 'db_patchschedule':
-        range  => $patch_window,
+        range => $patch_window,
       }
     }
   }

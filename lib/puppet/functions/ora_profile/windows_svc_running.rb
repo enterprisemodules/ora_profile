@@ -9,7 +9,7 @@ Puppet::Functions.create_function(:'ora_profile::windows_svc_running') do
     return_type 'Boolean'
   end
 
-  def windows_svc_running(svc)
+  def windows_svc_running(svc) # rubocop:disable Naming/PredicateMethod
     service_state = `sc query #{svc}`.scan(/STATE *:.*(RUNNING)/).flatten.first
     service_state == 'RUNNING'
   end

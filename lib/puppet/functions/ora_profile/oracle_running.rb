@@ -10,9 +10,11 @@ Puppet::Functions.create_function(:'ora_profile::oracle_running') do
     return_type 'Boolean'
   end
 
+  # rubocop:disable Naming/PredicateMethod
   def oracle_running
     !!variable('ora_version')
   end
+  # rubocop:enable Naming/PredicateMethod
 
   private
 

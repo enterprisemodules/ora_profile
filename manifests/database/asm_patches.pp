@@ -79,7 +79,7 @@ class ora_profile::database::asm_patches (
   $complete_patch_list = ($patch_level_list + $patch_list)
 
   schedule { 'asm_patchschedule':
-    range  => $patch_window,
+    range => $patch_window,
   }
 
   if ( $facts['ora_version'] ) {
