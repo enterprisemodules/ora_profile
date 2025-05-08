@@ -34,7 +34,7 @@
 * [`ora_profile::database::db_startup`](#ora_profile--database--db_startup): This class contains the definition for the auto startup of Oracle after a system reboot.
 * [`ora_profile::database::db_tablespaces`](#ora_profile--database--db_tablespaces): This class contains the definition for all the tablespaces you'd like on your system.
 * [`ora_profile::database::db_users`](#ora_profile--database--db_users): This class contains the definition for all the database users you'd like on your system.
-* [`ora_profile::database::disable_thp`](#ora_profile--database--disable_thp): This class contains the definition of the Transparent HugePages settings required for running Oracle.
+* [`ora_profile::database::manage_thp`](#ora_profile--database--manage_thp): This class contains the definition of the Transparent HugePages settings required for running Oracle.
 * [`ora_profile::database::em_license`](#ora_profile--database--em_license): This class will deploy the Enterprise Modules license.
 * [`ora_profile::database::fact_caching`](#ora_profile--database--fact_caching): This class will enable Oracle fact caching, when enabled.
 * [`ora_profile::database::firewall`](#ora_profile--database--firewall): This class contains the definition of the firewall settings you need for Oracle.
@@ -502,7 +502,7 @@ Defining and starting an Oracle database on you system goes through several step
 - `em_license`       (Enable and load the Enterprise Modules license files)
 - `fact_caching`     (Enable Puppet fact caching for Oracle)
 - `sysctl`           (Set all required sysctl parameters)
-- `disable_thp`      (Disable Transparent HugePages)
+- `manage_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
@@ -618,7 +618,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`asm_packages`](#-ora_profile--database--asm_packages)
 * [`asm_listener`](#-ora_profile--database--asm_listener)
 * [`sysctl`](#-ora_profile--database--sysctl)
-* [`disable_thp`](#-ora_profile--database--disable_thp)
+* [`manage_thp`](#-ora_profile--database--manage_thp)
 * [`limits`](#-ora_profile--database--limits)
 * [`packages`](#-ora_profile--database--packages)
 * [`groups_and_users`](#-ora_profile--database--groups_and_users)
@@ -651,7 +651,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`before_asm_packages`](#-ora_profile--database--before_asm_packages)
 * [`before_asm_listener`](#-ora_profile--database--before_asm_listener)
 * [`before_sysctl`](#-ora_profile--database--before_sysctl)
-* [`before_disable_thp`](#-ora_profile--database--before_disable_thp)
+* [`before_manage_thp`](#-ora_profile--database--before_manage_thp)
 * [`before_limits`](#-ora_profile--database--before_limits)
 * [`before_packages`](#-ora_profile--database--before_packages)
 * [`before_groups_and_users`](#-ora_profile--database--before_groups_and_users)
@@ -684,7 +684,7 @@ The following parameters are available in the `ora_profile::database` class:
 * [`after_asm_packages`](#-ora_profile--database--after_asm_packages)
 * [`after_asm_listener`](#-ora_profile--database--after_asm_listener)
 * [`after_sysctl`](#-ora_profile--database--after_sysctl)
-* [`after_disable_thp`](#-ora_profile--database--after_disable_thp)
+* [`after_manage_thp`](#-ora_profile--database--after_manage_thp)
 * [`after_limits`](#-ora_profile--database--after_limits)
 * [`after_packages`](#-ora_profile--database--after_packages)
 * [`after_groups_and_users`](#-ora_profile--database--after_groups_and_users)
@@ -1037,20 +1037,20 @@ ora_profile::database::sysctl:  skip
 
 Default value: `undef`
 
-##### <a name="-ora_profile--database--disable_thp"></a>`disable_thp`
+##### <a name="-ora_profile--database--manage_thp"></a>`manage_thp`
 
 Data type: `Optional[String]`
 
-Use this value if you want to skip or use your own class for stage `disable_thp`.
+Use this value if you want to skip or use your own class for stage `manage_thp`.
 ## Use your own class
 You can use hiera to set this value. Here is an example:
 ```yaml
-ora_profile::database::disable_thp:  my_module::my_class
+ora_profile::database::manage_thp:  my_module::my_class
 ```
 ## Skip
 You can use hiera to set this value. Here is an example:
 ```yaml
-ora_profile::database::disable_thp:  skip
+ora_profile::database::manage_thp:  skip
 ```
 
 Default value: `undef`
@@ -1582,14 +1582,14 @@ ora_profile::database::before_sysctl:  my_module::my_class
 
 Default value: `undef`
 
-##### <a name="-ora_profile--database--before_disable_thp"></a>`before_disable_thp`
+##### <a name="-ora_profile--database--before_manage_thp"></a>`before_manage_thp`
 
 Data type: `Optional[String]`
 
-The name of the class you want to execute directly **before** the `disable_thp` class.
+The name of the class you want to execute directly **before** the `manage_thp` class.
 You can use hiera to set this value. Here is an example:
 ```yaml
-ora_profile::database::before_disable_thp:  my_module::my_class
+ora_profile::database::before_manage_thp:  my_module::my_class
 ```
 
 Default value: `undef`
@@ -1978,14 +1978,14 @@ ora_profile::database::after_sysctl:  my_module::my_class
 
 Default value: `undef`
 
-##### <a name="-ora_profile--database--after_disable_thp"></a>`after_disable_thp`
+##### <a name="-ora_profile--database--after_manage_thp"></a>`after_manage_thp`
 
 Data type: `Optional[String]`
 
-The name of the class you want to execute directly **after** the `disable_thp` class.
+The name of the class you want to execute directly **after** the `manage_thp` class.
 You can use hiera to set this value. Here is an example:
 ```yaml
-ora_profile::database::after_disable_thp:  my_module::my_class
+ora_profile::database::after_manage_thp:  my_module::my_class
 ```
 
 Default value: `undef`
@@ -4588,9 +4588,9 @@ The default value is: `{}`
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
 
-### <a name="ora_profile--database--disable_thp"></a>`ora_profile::database::disable_thp`
+### <a name="ora_profile--database--manage_thp"></a>`ora_profile::database::manage_thp`
 
-ora_profile::database::disable_thp
+ora_profile::database::manage_thp
 
 As documented in Oracle support ALERT <https://support.oracle.com/epmos/faces/DocumentDisplay?id=1557478.1>,
 the class will disable Transparent HugePages on RedHat os family starting with version 6.

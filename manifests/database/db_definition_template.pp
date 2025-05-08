@@ -184,6 +184,7 @@ class ora_profile::database::db_definition_template (
   }
 
   if ( $master_node == $facts['networking']['hostname'] ) {
+    # Todo: test this for after 23ai is released, pre-release testing is failing
     ora_install::database { $dbname:
       action                    => 'create',
       oracle_base               => $oracle_base,
