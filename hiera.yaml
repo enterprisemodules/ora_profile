@@ -65,6 +65,17 @@ hierarchy:
         - '>= 21'
         - '< 22'
 
+  - name: "Version data for all version 23 versions."
+    lookup_key: 'easy_type::versioned_data'
+    path: oracle_versions/23.yaml
+    options:
+      version_key:
+        - ora_profile::database::common::version
+        - ora_profile::database::version
+      specification:
+        - '>= 23'
+        - '< 24'
+
   - name: "ora_profile class parameter defaults"
     path: "defaults.yaml"
 
@@ -76,7 +87,7 @@ hierarchy:
         'ora_profile::.*::grid_user_password':             'aA1.12'
         'ora_profile::.*::system_password':                'aA1#.12'
         'ora_profile::.*::sys_password':                   'aA1#.12'
-        'ora_profile::.*::asm_sys_password':               'aA1#.12'
+        'ora_profile::.*::asm_sys_password':               'aA1.12'
         'ora_profile::.*::weblogic_password':              'aA1.12'
         'ora_profile::.*::sysman_password':                'aA1.12' # For 12.1 at least
         'ora_profile::.*::agent_registration_password':    'aA1.12'
