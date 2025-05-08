@@ -15,7 +15,7 @@ Defining and starting an Oracle database on you system goes through several step
 - `em_license`       (Enable and load the Enterprise Modules license files)
 - `fact_caching`     (Enable Puppet fact caching for Oracle)
 - `sysctl`           (Set all required sysctl parameters)
-- `disable_thp`      (Disable Transparent HugePages)
+- `manage_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
@@ -127,7 +127,7 @@ Also check the set of [common parameters](./common) that is passed to this class
   :asm_packages,
   :asm_listener,
   :sysctl,
-  :disable_thp,
+  :manage_thp,
   :limits,
   :packages,
   :groups_and_users,
@@ -160,7 +160,7 @@ Also check the set of [common parameters](./common) that is passed to this class
   :before_asm_packages,
   :before_asm_listener,
   :before_sysctl,
-  :before_disable_thp,
+  :before_manage_thp,
   :before_limits,
   :before_packages,
   :before_groups_and_users,
@@ -193,7 +193,7 @@ Also check the set of [common parameters](./common) that is passed to this class
   :after_asm_packages,
   :after_asm_listener,
   :after_sysctl,
-  :after_disable_thp,
+  :after_manage_thp,
   :after_limits,
   :after_packages,
   :after_groups_and_users,
