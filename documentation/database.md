@@ -24,7 +24,7 @@ Defining and starting an Oracle database on you system goes through several step
 - `em_license`       (Enable and load the Enterprise Modules license files)
 - `fact_caching`     (Enable Puppet fact caching for Oracle)
 - `sysctl`           (Set all required sysctl parameters)
-- `disable_thp`      (Disable Transparent HugePages)
+- `manage_thp`      (Disable Transparent HugePages)
 - `limits`           (Set all required OS limits)
 - `packages`         (Install all required packages)
 - `groups_and_users` (Create required groups and users)
@@ -147,7 +147,7 @@ Attribute Name                                                       | Short Des
 [after_db_startup](#database_after_db_startup)                       | The name of the class you want to execute directly **after** the `db_startup` class.            |
 [after_db_tablespaces](#database_after_db_tablespaces)               | The name of the class you want to execute directly **after** the `db_tablespaces` class.        |
 [after_db_users](#database_after_db_users)                           | The name of the class you want to execute directly **after** the `db_users` class.              |
-[after_disable_thp](#database_after_disable_thp)                     | The name of the class you want to execute directly **after** the `disable_thp` class.           |
+[after_manage_thp](#database_after_manage_thp)                     | The name of the class you want to execute directly **after** the `manage_thp` class.           |
 [after_em_license](#database_after_em_license)                       | The name of the class you want to execute directly **after** the `em_license` class.            |
 [after_fact_caching](#database_after_fact_caching)                   | The name of the class you want to execute directly **after** the `fact_caching` class.          |
 [after_firewall](#database_after_firewall)                           | The name of the class you want to execute directly **after** the `firewall` class.              |
@@ -192,7 +192,7 @@ Attribute Name                                                       | Short Des
 [before_db_startup](#database_before_db_startup)                     | The name of the class you want to execute directly **before** the `db_startup` class.           |
 [before_db_tablespaces](#database_before_db_tablespaces)             | The name of the class you want to execute directly **before** the `db_tablespaces` class.       |
 [before_db_users](#database_before_db_users)                         | The name of the class you want to execute directly **before** the `db_users` class.             |
-[before_disable_thp](#database_before_disable_thp)                   | The name of the class you want to execute directly **before** the `disable_thp` class.          |
+[before_manage_thp](#database_before_manage_thp)                   | The name of the class you want to execute directly **before** the `manage_thp` class.          |
 [before_em_license](#database_before_em_license)                     | The name of the class you want to execute directly **before** the `em_license` class.           |
 [before_fact_caching](#database_before_fact_caching)                 | The name of the class you want to execute directly **before** the `fact_caching` class.         |
 [before_firewall](#database_before_firewall)                         | The name of the class you want to execute directly **before** the `firewall` class.             |
@@ -217,7 +217,7 @@ Attribute Name                                                       | Short Des
 [db_users](#database_db_users)                                       | Use this value if you want to skip or use your own class for stage `db_users`.                  |
 [dba_group](#database_dba_group)                                     | The group to use for Oracle DBA users.                                                          |
 [dbname](#database_dbname)                                           | The name of the database.                                                                       |
-[disable_thp](#database_disable_thp)                                 | Use this value if you want to skip or use your own class for stage `disable_thp`.               |
+[manage_thp](#database_manage_thp)                                 | Use this value if you want to skip or use your own class for stage `manage_thp`.               |
 [download_dir](#database_download_dir)                               | The directory where the Puppet software puts all downloaded files.                              |
 [em_license](#database_em_license)                                   | Use this value if you want to skip or use your own class for stage `em_license`.                |
 [fact_caching](#database_fact_caching)                               | Use this value if you want to skip or use your own class for stage `fact_caching`.              |
@@ -737,16 +737,16 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
-### disable_thp<a name='database_disable_thp'>
+### manage_thp<a name='database_manage_thp'>
 
-Use this value if you want to skip or use your own class for stage `disable_thp`.
+Use this value if you want to skip or use your own class for stage `manage_thp`.
 
 ## Use your own class
 
 You can use hiera to set this value. Here is an example:
 
 ```yaml
-ora_profile::database::disable_thp:  my_module::my_class
+ora_profile::database::manage_thp:  my_module::my_class
 ```
 
 ## Skip
@@ -754,7 +754,7 @@ ora_profile::database::disable_thp:  my_module::my_class
 You can use hiera to set this value. Here is an example:
 
 ```yaml
-ora_profile::database::disable_thp:  skip
+ora_profile::database::manage_thp:  skip
 ```
 
 Type: `Optional[String]`
@@ -1512,14 +1512,14 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
-### before_disable_thp<a name='database_before_disable_thp'>
+### before_manage_thp<a name='database_before_manage_thp'>
 
-The name of the class you want to execute directly **before** the `disable_thp` class.
+The name of the class you want to execute directly **before** the `manage_thp` class.
 
 You can use hiera to set this value. Here is an example:
 
 ```yaml
-ora_profile::database::before_disable_thp:  my_module::my_class
+ora_profile::database::before_manage_thp:  my_module::my_class
 ```
 
 Type: `Optional[String]`
@@ -2040,14 +2040,14 @@ Default:`undef`
 
 [Back to overview of database](#attributes)
 
-### after_disable_thp<a name='database_after_disable_thp'>
+### after_manage_thp<a name='database_after_manage_thp'>
 
-The name of the class you want to execute directly **after** the `disable_thp` class.
+The name of the class you want to execute directly **after** the `manage_thp` class.
 
 You can use hiera to set this value. Here is an example:
 
 ```yaml
-ora_profile::database::after_disable_thp:  my_module::my_class
+ora_profile::database::after_manage_thp:  my_module::my_class
 ```
 
 Type: `Optional[String]`

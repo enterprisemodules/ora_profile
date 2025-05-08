@@ -357,9 +357,9 @@ class ora_profile::database::db_definition (
       } else {
         $options_prop = { options => $options }
       }
-      $init_ora = { init_ora_content => epp($init_ora_template, $db_props['init_ora_params'] + $cdb_prop + $oracle_base_prop) }
+      $init_ora = { init_ora_content => epp($init_ora_template, $db_props['init_ora_params'] + $cdb_prop + $oracle_base_prop + { version => $version }) }
       # Add init_ora_content to hash and remove init_ora_params, which is only needed for the init_ora_content
-      $all_db_props = $db_props + $options_prop + $init_ora - init_ora_params
+      $all_db_props = $db_props + $options_prop + $init_ora - init_ora_params - { version => $version }
 
       ora_database { $db:
         * => $all_db_props,

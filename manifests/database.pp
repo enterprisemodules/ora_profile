@@ -19,7 +19,7 @@
 # - `em_license`       (Enable and load the Enterprise Modules license files)
 # - `fact_caching`     (Enable Puppet fact caching for Oracle)
 # - `sysctl`           (Set all required sysctl parameters)
-# - `disable_thp`      (Disable Transparent HugePages)
+# - `manage_thp`       (Disable Transparent HugePages)
 # - `limits`           (Set all required OS limits)
 # - `packages`         (Install all required packages)
 # - `groups_and_users` (Create required groups and users)
@@ -317,17 +317,17 @@
 #    ora_profile::database::sysctl:  skip
 #    ```
 #
-# @param [Optional[String]] disable_thp
-#    Use this value if you want to skip or use your own class for stage `disable_thp`.
+# @param [Optional[String]] manage_thp
+#    Use this value if you want to skip or use your own class for stage `manage_thp`.
 #    ## Use your own class
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
-#    ora_profile::database::disable_thp:  my_module::my_class
+#    ora_profile::database::manage_thp:  my_module::my_class
 #    ```
 #    ## Skip
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
-#    ora_profile::database::disable_thp:  skip
+#    ora_profile::database::manage_thp:  skip
 #    ```
 #
 # @param [Optional[String]] limits
@@ -697,11 +697,11 @@
 #    ora_profile::database::before_sysctl:  my_module::my_class
 #    ```
 #
-# @param [Optional[String]] before_disable_thp
-#    The name of the class you want to execute directly **before** the `disable_thp` class.
+# @param [Optional[String]] before_manage_thp
+#    The name of the class you want to execute directly **before** the `manage_thp` class.
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
-#    ora_profile::database::before_disable_thp:  my_module::my_class
+#    ora_profile::database::before_manage_thp:  my_module::my_class
 #    ```
 #
 # @param [Optional[String]] before_limits
@@ -928,11 +928,11 @@
 #    ora_profile::database::after_sysctl:  my_module::my_class
 #    ```
 #
-# @param [Optional[String]] after_disable_thp
-#    The name of the class you want to execute directly **after** the `disable_thp` class.
+# @param [Optional[String]] after_manage_thp
+#    The name of the class you want to execute directly **after** the `manage_thp` class.
 #    You can use hiera to set this value. Here is an example:
 #    ```yaml
-#    ora_profile::database::after_disable_thp:  my_module::my_class
+#    ora_profile::database::after_manage_thp:  my_module::my_class
 #    ```
 #
 # @param [Optional[String]] after_limits
@@ -1148,7 +1148,7 @@ class ora_profile::database (
   Optional[String] $after_db_startup           = undef,
   Optional[String] $after_db_tablespaces       = undef,
   Optional[String] $after_db_users             = undef,
-  Optional[String] $after_disable_thp          = undef,
+  Optional[String] $after_manage_thp           = undef,
   Optional[String] $after_em_license           = undef,
   Optional[String] $after_fact_caching         = undef,
   Optional[String] $after_firewall             = undef,
@@ -1193,7 +1193,7 @@ class ora_profile::database (
   Optional[String] $before_db_startup          = undef,
   Optional[String] $before_db_tablespaces      = undef,
   Optional[String] $before_db_users            = undef,
-  Optional[String] $before_disable_thp         = undef,
+  Optional[String] $before_manage_thp          = undef,
   Optional[String] $before_em_license          = undef,
   Optional[String] $before_fact_caching        = undef,
   Optional[String] $before_firewall            = undef,
@@ -1215,7 +1215,7 @@ class ora_profile::database (
   Optional[String] $db_startup                 = undef,
   Optional[String] $db_tablespaces             = undef,
   Optional[String] $db_users                   = undef,
-  Optional[String] $disable_thp                = undef,
+  Optional[String] $manage_thp                 = undef,
   Optional[String] $em_license                 = undef,
   Optional[String] $fact_caching               = undef,
   Optional[String] $firewall                   = undef,
@@ -1248,7 +1248,7 @@ class ora_profile::database (
       'ora_profile::database::em_license',
       'ora_profile::database::fact_caching',
       ['ora_profile::database::sysctl', { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::sysctl' }],
-      ['ora_profile::database::disable_thp', { 'onlyif' => $is_linux }],
+      ['ora_profile::database::manage_thp', { 'onlyif' => $is_linux }],
       ['ora_profile::database::limits', { 'onlyif' => $is_linux, 'implementation' => 'easy_type::profile::limits' }],
       ['ora_profile::database::groups_and_users', { 'onlyif' => !$use_asm, 'implementation' => 'easy_type::profile::groups_and_users' }],
       ['ora_profile::database::packages', { 'implementation' => 'easy_type::profile::packages' }],
