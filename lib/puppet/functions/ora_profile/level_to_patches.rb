@@ -20,7 +20,7 @@ Puppet::Functions.create_function(:'ora_profile::level_to_patches') do
     param 'String[1]',                            :opversion
     param 'Optional[String[1]]',                  :oracle_home
     param 'Optional[String[1]]',                  :version
-    param 'Optional[Enum["ojvm", "db","grid"]]',  :patch_type
+    param 'Optional[Enum["ojvm", "db", "grid"]]', :patch_type
     return_type 'Hash'
   end
 
