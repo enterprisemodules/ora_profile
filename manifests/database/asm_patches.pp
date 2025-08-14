@@ -51,7 +51,7 @@ class ora_profile::database::asm_patches (
             $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database::common {
 # lint:endignore
-# lint:ignore:variable_scope lint:ignore:manifest_whitespace_opening_brace_before
+# lint:ignore:variable_scope lint:ignore:manifest_whitespace_opening_brace_before lint:ignore:strict_indent
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 

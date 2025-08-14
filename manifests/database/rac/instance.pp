@@ -48,6 +48,7 @@ define ora_profile::database::rac::instance (
   Easy_type::Size   $undo_max_size,
   Easy_type::Size   $log_size,
 ) {
+# lint:ignore:strict_indent
   $download_dir = lookup('ora_profile::database::download_dir')
 
   easy_type::debug_evaluation() # Show local variable on extended debug
@@ -107,3 +108,4 @@ define ora_profile::database::rac::instance (
     ],
   }
 }
+# lint:endignore

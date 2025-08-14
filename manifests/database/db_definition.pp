@@ -189,13 +189,12 @@ class ora_profile::database::db_definition (
             $options,
   Ora_Install::Version
             $version,
-# lint:ignore:manifest_whitespace_opening_brace_before
   Variant[Boolean, Enum['on_failure']]
             $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
-# lint:endignore:manifest_whitespace_opening_brace_before
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent
 # lint:endignore:lookup_in_parameter
+# lint:endignore:manifest_whitespace_opening_brace_before
 # lint:ignore:variable_scope
 
   easy_type::debug_evaluation() # Show local variable on extended debug

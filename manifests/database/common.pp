@@ -101,8 +101,8 @@
 #
 # See the file "LICENSE" for the full license governing this code.
 #
-# lint:ignore:parameter_types lint:ignore:parameter_documentation lint:ignore:class_parameter
 class ora_profile::database::common (
+# lint:ignore:parameter_documentation lint:ignore:parameter_types
   $version              = lookup('ora_profile::database::version', Ora_Install::Version),
   $cluster_nodes        = lookup('ora_profile::database::cluster_nodes', Optional[Array]),
   $db_control_provider  = lookup('ora_profile::database::db_control_provider', Optional[String[1]]),

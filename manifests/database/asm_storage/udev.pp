@@ -36,7 +36,7 @@ class ora_profile::database::asm_storage::udev (
   String[1] $grid_admingroup,
   String[1] $grid_user
 ) inherits ora_profile::database {
-# lint:ignore:template_file_extension
+# lint:ignore:template_file_extension lint:ignore:strict_indent
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
@@ -53,5 +53,5 @@ class ora_profile::database::asm_storage::udev (
     command     => '/sbin/udevadm control --reload-rules && /sbin/udevadm trigger',
     refreshonly => true,
   }
-# lint:endignore:template_file_extension
 }
+# lint:endignore

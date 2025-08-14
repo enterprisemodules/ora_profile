@@ -337,7 +337,7 @@ Valid values are:
 - `false`
 - `on_failure`
 
-Type: `lint:ignore:manifest_whitespace_opening_brace_beforeVariant[Boolean,Enum['on_failure']]`
+Type: `Variant[Boolean,Enum['on_failure']]`
 
 Default:`lookup({ name => 'logoutput', default_value => 'on_failure' })`
 
@@ -350,17 +350,17 @@ Default value: []
 
 Valid values are:
 
-- OWM
-- JServer
-- CTX
-- ORD
-- IM
-- OLAP
-- SDO
-- OLS
-- Sample
 - APEX
+- CTX
 - DV
+- IM
+- JServer
+- OLAP
+- OLS
+- ORD
+- OWM
+- SDO
+- Sample
 
 The default value is `[]`
 

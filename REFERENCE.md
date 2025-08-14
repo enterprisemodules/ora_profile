@@ -34,12 +34,12 @@
 * [`ora_profile::database::db_startup`](#ora_profile--database--db_startup): This class contains the definition for the auto startup of Oracle after a system reboot.
 * [`ora_profile::database::db_tablespaces`](#ora_profile--database--db_tablespaces): This class contains the definition for all the tablespaces you'd like on your system.
 * [`ora_profile::database::db_users`](#ora_profile--database--db_users): This class contains the definition for all the database users you'd like on your system.
-* [`ora_profile::database::manage_thp`](#ora_profile--database--manage_thp): This class contains the definition of the Transparent HugePages settings required for running Oracle.
 * [`ora_profile::database::em_license`](#ora_profile--database--em_license): This class will deploy the Enterprise Modules license.
 * [`ora_profile::database::fact_caching`](#ora_profile--database--fact_caching): This class will enable Oracle fact caching, when enabled.
 * [`ora_profile::database::firewall`](#ora_profile--database--firewall): This class contains the definition of the firewall settings you need for Oracle.
 * [`ora_profile::database::firewall::firewalld`](#ora_profile--database--firewall--firewalld): Open up ports for Oracle using the firewalld firewall
 * [`ora_profile::database::firewall::iptables`](#ora_profile--database--firewall--iptables): Open up ports for Oracle using the iptables
+* [`ora_profile::database::manage_thp`](#ora_profile--database--manage_thp): This class contains the definition of the Transparent HugePages settings required for running Oracle.
 * [`ora_profile::database::rac::authenticated_nodes`](#ora_profile--database--rac--authenticated_nodes): Setup authentication for the cluster nodes.
 * [`ora_profile::database::rman_config`](#ora_profile--database--rman_config): This class contains the definition for all the tablespaces you'd like on your system.
 * [`ora_profile::database::tmpfiles`](#ora_profile--database--tmpfiles): This class contains the definition all the required OS limit settings on your system.
@@ -55,9 +55,21 @@
 * [`ora_profile::database::asm_storage::partition`](#ora_profile--database--asm_storage--partition): This class adds partition table and partitions to specified device.
 * [`ora_profile::database::authenticated_nodes::user_equivalence`](#ora_profile--database--authenticated_nodes--user_equivalence): Setup user equivalence for the specified user on specified nodes.
 * [`ora_profile::database::rac::instance`](#ora_profile--database--rac--instance): Add Undo tablespace, Thread and init parameters for RAC instances
+* [`ora_profile::database::utility::start_after_patching`](#ora_profile--database--utility--start_after_patching): Sart Oracle entites (e.g. database SIDS, Listeners and OCM's) in homes after they are patched  See the file "LICENSE" for the full license go
+* [`ora_profile::database::utility::stop_for_patching`](#ora_profile--database--utility--stop_for_patching): Stop Oracle entites (e.g. database SIDS, Listeners and OCM's) in homes to be patches  See the file "LICENSE" for the full license governing t
+* [`ora_profile::database::utility::update_after_patching`](#ora_profile--database--utility--update_after_patching): This defined type excutes all required update actions after a database has been patched  See the file "LICENSE" for the full license governin
 
 ### Functions
 
+* [`ora_profile::get_opatch_details`](#ora_profile--get_opatch_details): See the file "LICENSE" for the full license governing this code.  This function returns the OPatch zipfile and OPatch version if specified in
+* [`ora_profile::level_to_bundle`](#ora_profile--level_to_bundle): See the file "LICENSE" for the full license governing this code.  This function determines the patch bundle id based on the specified level. 
+* [`ora_profile::level_to_messages`](#ora_profile--level_to_messages): See the file "LICENSE" for the full license governing this code.  This function translates the possible ways of specifying the patches in a u
+* [`ora_profile::level_to_patches`](#ora_profile--level_to_patches): See the file "LICENSE" for the full license governing this code.  This function translates the possible ways of specifying the patches in a u
+* [`ora_profile::ocm_running`](#ora_profile--ocm_running): See the file "LICENSE" for the full license governing this code.   This function checks if an Oracle connection manager is running. It does t
+* [`ora_profile::ocm_running_in_homes`](#ora_profile--ocm_running_in_homes): See the file "LICENSE" for the full license governing this code.   This function checks if an Oracle connection manager is running. It does t
+* [`ora_profile::oracle_running`](#ora_profile--oracle_running): See the file "LICENSE" for the full license governing this code.  This function checks if an instance of Oracle is running. It does this by c
+* [`ora_profile::windows_svc_disabled`](#ora_profile--windows_svc_disabled): See the file "LICENSE" for the full license governing this code.   This function checks if an Oracle Service is disabled on Windows.
+* [`ora_profile::windows_svc_running`](#ora_profile--windows_svc_running): See the file "LICENSE" for the full license governing this code.   This function checks if an Oracle Service is running on Windows.
 * [`set_param`](#set_param): See the file "LICENSE" for the full license governing this code.  Returns the value for requested parameter. Currently supported parameters: 
 
 ## Classes
@@ -4170,15 +4182,32 @@ The following parameters are available in the `ora_profile::database::db_patches
 
 ##### <a name="-ora_profile--database--db_patches--level"></a>`level`
 
-Data type: `String[1]`
+Data type: `Variant[String[1], Hash]`
 
 The patch level the database or grid infrastructure should be patched to.
 Default value is: `NONE`
-Valid values depend on your database/grid version, but it should like like below:
-- `OCT2018RU`
-- `JAN2019RU`
-- `APR2019RU`
-- etc...
+The value can be a String or a Hash. When the value is a string, the current selected Oracle version (e.g. `ora_profile::database::version`) and the current selected oracle home (e.g. `ora_profile::database::oracle_home`) are used to apply the patch.
+When you specify a Hash, it must have the following format:
+```
+ora_profile::database::db_patches::level:
+  21cDEFAULT_HOME:
+    version:     21.0.0.0
+    oracle_home: /u01/app/oracle/product/21.0.0.0/db_home1
+    level:       OCT2022RU
+  19cDEFAULT_HOME:
+    version:     19.0.0.0
+    oracle_home: /u01/app/oracle/product/19.0.0.0/db_home1
+    level:       OCT2022RU
+  18cADDITIONAL_HOME:
+    version:     18.0.0.0
+    oracle_home: /u01/app/oracle/product/18.0.0.0/db_home1
+    level:       APR2021RU
+  12cR2ADDITIONAL_HOME:
+    version:     12.2.0.1
+    oracle_home: /u01/app/oracle/product/12.2.0.1/db_home1
+    level:       JAN2022RU
+```
+When no level is specified, the level `NONE` is inferred and no level of patches are applied. You can alywas use `patch_list` to specify a specific list of patches to be applied.
 
 ##### <a name="-ora_profile--database--db_patches--include_ojvm"></a>`include_ojvm`
 
@@ -4189,10 +4218,29 @@ Default value is: `false`
 
 ##### <a name="-ora_profile--database--db_patches--patch_file"></a>`patch_file`
 
-Data type: `String[1]`
+Data type: `Variant[String[1], Hash[Stdlib::Absolutepath, Struct[{ patch_file => String[1], opversion => Optional[String[1]] }]]]`
 
 The file containing the required Opatch version.
 The default value is: `p6880880_122010_Linux-x86-64`
+The value can be a String or a Hash. When the value is a string, the file specified will be used to upgrade OPatch in every ORACLE_HOME on the system.
+If you want to install different versions in different ORACLE_HOME's you can specify a patch_file per ORACLE_HOME like below.
+When you specify a Hash, it must have the following format:
+```yaml
+ora_profile::database::db_patches::patch_file:
+  /u01/app/oracle/product/23.0.0.0/db_home1:
+    patch_file: p6880880_230000_Linux-x86-64-12.2.0.1.48
+  /u01/app/oracle/product/21.0.0.0/db_home1:
+    patch_file: p6880880_210000_Linux-x86-64
+    opversion:  12.2.0.1.35
+  /u01/app/oracle/product/19.0.0.0/db_home1
+    patch_file: p6880880_190000_Linux-x86-64
+    opversion:  12.2.0.1.37
+  /u01/app/oracle/product/18.0.0.0/db_home1
+    patch_file: p6880880_180000_Linux-x86-64
+  /u01/app/oracle/product/12.2.0.1/db_home1:
+    patch_file: p6880880_122010_Linux-x86-64-12.2.0.1.21
+    opversion:  12.2.0.1.21
+```
 
 ##### <a name="-ora_profile--database--db_patches--oracle_home"></a>`oracle_home`
 
@@ -4588,18 +4636,6 @@ The default value is: `{}`
 This is a simple way to get started. It is easy to get started, but soon your hiera yaml become a nigtmare. Our advise is when you need to let puppet manage your Oracle profiles, to override this class and  add your own puppet implementation. This is much better maintainable
 and adds more consistency.
 
-### <a name="ora_profile--database--manage_thp"></a>`ora_profile::database::manage_thp`
-
-ora_profile::database::manage_thp
-
-As documented in Oracle support ALERT <https://support.oracle.com/epmos/faces/DocumentDisplay?id=1557478.1>,
-the class will disable Transparent HugePages on RedHat os family starting with version 6.
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
-
-
-See the file "LICENSE" for the full license governing this code.
-
 ### <a name="ora_profile--database--em_license"></a>`ora_profile::database::em_license`
 
 ora_profile::database::em_license
@@ -4746,6 +4782,18 @@ ora_profile::database::cluster_nodes:
 - node1
 - node2
 ```
+
+### <a name="ora_profile--database--manage_thp"></a>`ora_profile::database::manage_thp`
+
+ora_profile::database::manage_thp
+
+As documented in Oracle support ALERT <https://support.oracle.com/epmos/faces/DocumentDisplay?id=1557478.1>,
+the class will disable Transparent HugePages on RedHat os family starting with version 6.
+
+When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
+
+
+See the file "LICENSE" for the full license governing this code.
 
 ### <a name="ora_profile--database--rac--authenticated_nodes"></a>`ora_profile::database::rac::authenticated_nodes`
 
@@ -6816,7 +6864,440 @@ Data type: `Easy_type::Size`
 
 The size of the redolog files of the instance.
 
+### <a name="ora_profile--database--utility--start_after_patching"></a>`ora_profile::database::utility::start_after_patching`
+
+Sart Oracle entites (e.g. database SIDS, Listeners and OCM's) in homes after they are patched
+
+See the file "LICENSE" for the full license governing this code.
+
+#### Parameters
+
+The following parameters are available in the `ora_profile::database::utility::start_after_patching` defined type:
+
+* [`os_user`](#-ora_profile--database--utility--start_after_patching--os_user)
+* [`logoutput`](#-ora_profile--database--utility--start_after_patching--logoutput)
+
+##### <a name="-ora_profile--database--utility--start_after_patching--os_user"></a>`os_user`
+
+Data type: `String[1]`
+
+The OS user to use for Oracle install.
+The default is : `oracle`
+To customize this consistently use the hiera key `ora_profile::database::os_user`.
+
+##### <a name="-ora_profile--database--utility--start_after_patching--logoutput"></a>`logoutput`
+
+Data type: `Variant[Boolean, Enum['on_failure']]`
+
+log the outputs of Puppet exec or not.
+When you specify `true` Puppet will log all output of `exec` types.
+Valid values are:
+- `true`
+- `false`
+- `on_failure`
+
+Default value: `lookup({ name => 'logoutput', default_value => 'on_failure' })`
+
+### <a name="ora_profile--database--utility--stop_for_patching"></a>`ora_profile::database::utility::stop_for_patching`
+
+Stop Oracle entites (e.g. database SIDS, Listeners and OCM's) in homes to be patches
+
+See the file "LICENSE" for the full license governing this code.
+
+#### Parameters
+
+The following parameters are available in the `ora_profile::database::utility::stop_for_patching` defined type:
+
+* [`os_user`](#-ora_profile--database--utility--stop_for_patching--os_user)
+* [`logoutput`](#-ora_profile--database--utility--stop_for_patching--logoutput)
+
+##### <a name="-ora_profile--database--utility--stop_for_patching--os_user"></a>`os_user`
+
+Data type: `String[1]`
+
+The OS user to use for Oracle install.
+The default is : `oracle`
+To customize this consistently use the hiera key `ora_profile::database::os_user`.
+
+##### <a name="-ora_profile--database--utility--stop_for_patching--logoutput"></a>`logoutput`
+
+Data type: `Variant[Boolean, Enum['on_failure']]`
+
+log the outputs of Puppet exec or not.
+When you specify `true` Puppet will log all output of `exec` types.
+Valid values are:
+- `true`
+- `false`
+- `on_failure`
+
+Default value: `lookup({ name => 'logoutput', default_value => 'on_failure' })`
+
+### <a name="ora_profile--database--utility--update_after_patching"></a>`ora_profile::database::utility::update_after_patching`
+
+This defined type excutes all required update actions after a database has been patched
+
+See the file "LICENSE" for the full license governing this code.
+
+#### Parameters
+
+The following parameters are available in the `ora_profile::database::utility::update_after_patching` defined type:
+
+* [`os_user`](#-ora_profile--database--utility--update_after_patching--os_user)
+* [`download_dir`](#-ora_profile--database--utility--update_after_patching--download_dir)
+* [`logoutput`](#-ora_profile--database--utility--update_after_patching--logoutput)
+
+##### <a name="-ora_profile--database--utility--update_after_patching--os_user"></a>`os_user`
+
+Data type: `String[1]`
+
+The OS user to use for Oracle install.
+The default is : `oracle`
+To customize this consistently use the hiera key `ora_profile::database::os_user`.
+
+##### <a name="-ora_profile--database--utility--update_after_patching--download_dir"></a>`download_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+The directory where the Puppet software puts all downloaded files.
+The default value is: `/install`
+Before Puppet can actually use remote files, they must be downloaded first. Puppet uses this directory to put all files in.
+
+##### <a name="-ora_profile--database--utility--update_after_patching--logoutput"></a>`logoutput`
+
+Data type: `Variant[Boolean, Enum['on_failure']]`
+
+log the outputs of Puppet exec or not.
+When you specify `true` Puppet will log all output of `exec` types.
+Valid values are:
+- `true`
+- `false`
+- `on_failure`
+
+Default value: `lookup({ name => 'logoutput', default_value => 'on_failure' })`
+
 ## Functions
+
+### <a name="ora_profile--get_opatch_details"></a>`ora_profile::get_opatch_details`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+This function returns the OPatch zipfile and OPatch version if specified in a Hash.
+
+#### `ora_profile::get_opatch_details(Variant[String[1], Hash] $patch_file, String $oracle_home, String $opversion)`
+
+See the file "LICENSE" for the full license governing this code.
+
+This function returns the OPatch zipfile and OPatch version if specified in a Hash.
+
+Returns: `Struct[{ patch_file => String[1], opversion => String[1] }]`
+
+##### `patch_file`
+
+Data type: `Variant[String[1], Hash]`
+
+
+
+##### `oracle_home`
+
+Data type: `String`
+
+
+
+##### `opversion`
+
+Data type: `String`
+
+
+
+### <a name="ora_profile--level_to_bundle"></a>`ora_profile::level_to_bundle`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+This function determines the patch bundle id based on the specified level.
+
+There are no checks for validity in this code, because it is **ALWAYS** called **AFTER**
+`ora_profile::level_to_bundle`, that does all the checking.
+
+In contrast with level_to_patches, this function doesn't support a Hash level. That is
+because we don't support multiple grid versions on 1 system.
+
+#### `ora_profile::level_to_bundle(Optional[String[1]] $level, Optional[String[1]] $version)`
+
+See the file "LICENSE" for the full license governing this code.
+
+This function determines the patch bundle id based on the specified level.
+
+There are no checks for validity in this code, because it is **ALWAYS** called **AFTER**
+`ora_profile::level_to_bundle`, that does all the checking.
+
+In contrast with level_to_patches, this function doesn't support a Hash level. That is
+because we don't support multiple grid versions on 1 system.
+
+Returns: `String`
+
+##### `level`
+
+Data type: `Optional[String[1]]`
+
+
+
+##### `version`
+
+Data type: `Optional[String[1]]`
+
+
+
+### <a name="ora_profile--level_to_messages"></a>`ora_profile::level_to_messages`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+This function translates the possible ways of specifying the patches in a universal output that can be processed by ora_opatdh.
+The ways are:
+1) Specifying an Oracle home and and a patch level string. In this case The content (e.g. the patches in this level)of the level is looked up
+   and applied to the specified Oracle home.
+
+2) The patch level contains a Hash with the designated oracle home and a patch level:
+    ```
+    {
+      '/oracle_home_1':   'LEVEL_1'
+      '/oracle_home_2':   'LEVEL_2'
+    ```
+
+#### `ora_profile::level_to_messages(Variant[Undef, String[1],Hash] $level, Boolean $include_ojvm, Hash $patch_list, Optional[String[1]] $oracle_home, Optional[String[1]] $version)`
+
+See the file "LICENSE" for the full license governing this code.
+
+This function translates the possible ways of specifying the patches in a universal output that can be processed by ora_opatdh.
+The ways are:
+1) Specifying an Oracle home and and a patch level string. In this case The content (e.g. the patches in this level)of the level is looked up
+   and applied to the specified Oracle home.
+
+2) The patch level contains a Hash with the designated oracle home and a patch level:
+    ```
+    {
+      '/oracle_home_1':   'LEVEL_1'
+      '/oracle_home_2':   'LEVEL_2'
+    ```
+
+Returns: `Variant[String[1],Array[String]]`
+
+##### `level`
+
+Data type: `Variant[Undef, String[1],Hash]`
+
+
+
+##### `include_ojvm`
+
+Data type: `Boolean`
+
+
+
+##### `patch_list`
+
+Data type: `Hash`
+
+
+
+##### `oracle_home`
+
+Data type: `Optional[String[1]]`
+
+
+
+##### `version`
+
+Data type: `Optional[String[1]]`
+
+
+
+### <a name="ora_profile--level_to_patches"></a>`ora_profile::level_to_patches`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+This function translates the possible ways of specifying the patches in a universal output that can be processed by ora_opatdh.
+The ways are:
+1) Specifying an Oracle home and and a patch level string. In this case The content (e.g. the patches in this level)of the level is looked up
+   and applied to the specified Oracle home.
+
+2) The patch level contains a Hash with the designated oracle home and a patch level:
+    ```
+    {
+      '/oracle_home_1':   'LEVEL_1'
+      '/oracle_home_2':   'LEVEL_2'
+    ```
+
+#### `ora_profile::level_to_patches(Variant[Undef, String[1],Hash] $level, String[1] $source, String[1] $opversion, Optional[String[1]] $oracle_home, Optional[String[1]] $version, Optional[Enum["ojvm", "db", "grid"]] $patch_type)`
+
+See the file "LICENSE" for the full license governing this code.
+
+This function translates the possible ways of specifying the patches in a universal output that can be processed by ora_opatdh.
+The ways are:
+1) Specifying an Oracle home and and a patch level string. In this case The content (e.g. the patches in this level)of the level is looked up
+   and applied to the specified Oracle home.
+
+2) The patch level contains a Hash with the designated oracle home and a patch level:
+    ```
+    {
+      '/oracle_home_1':   'LEVEL_1'
+      '/oracle_home_2':   'LEVEL_2'
+    ```
+
+Returns: `Hash`
+
+##### `level`
+
+Data type: `Variant[Undef, String[1],Hash]`
+
+
+
+##### `source`
+
+Data type: `String[1]`
+
+
+
+##### `opversion`
+
+Data type: `String[1]`
+
+
+
+##### `oracle_home`
+
+Data type: `Optional[String[1]]`
+
+
+
+##### `version`
+
+Data type: `Optional[String[1]]`
+
+
+
+##### `patch_type`
+
+Data type: `Optional[Enum["ojvm", "db", "grid"]]`
+
+
+
+### <a name="ora_profile--ocm_running"></a>`ora_profile::ocm_running`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle connection manager is running. It does this by checking
+ in the ora_install_homes fact for conn_mgrs in the running_processes section. If somewhere
+ a connection manager is detected, it returns a true.
+
+#### `ora_profile::ocm_running()`
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle connection manager is running. It does this by checking
+ in the ora_install_homes fact for conn_mgrs in the running_processes section. If somewhere
+ a connection manager is detected, it returns a true.
+
+Returns: `Boolean`
+
+### <a name="ora_profile--ocm_running_in_homes"></a>`ora_profile::ocm_running_in_homes`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle connection manager is running. It does this by checking
+ in the ora_install_homes fact for conn_mgrs in the running_processes section. If somewhere
+ a connection manager is detected, it returns a true.
+
+#### `ora_profile::ocm_running_in_homes(Variant[Array[String[1]], String[1]] $homes)`
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle connection manager is running. It does this by checking
+ in the ora_install_homes fact for conn_mgrs in the running_processes section. If somewhere
+ a connection manager is detected, it returns a true.
+
+Returns: `Boolean`
+
+##### `homes`
+
+Data type: `Variant[Array[String[1]], String[1]]`
+
+
+
+### <a name="ora_profile--oracle_running"></a>`ora_profile::oracle_running`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+This function checks if an instance of Oracle is running. It does this by checking
+for the fact ora_version. This fict is **ony** filled when at least one database instance
+is running
+
+#### `ora_profile::oracle_running()`
+
+See the file "LICENSE" for the full license governing this code.
+
+This function checks if an instance of Oracle is running. It does this by checking
+for the fact ora_version. This fict is **ony** filled when at least one database instance
+is running
+
+Returns: `Boolean`
+
+### <a name="ora_profile--windows_svc_disabled"></a>`ora_profile::windows_svc_disabled`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle Service is disabled on Windows.
+
+#### `ora_profile::windows_svc_disabled(String[1] $svc)`
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle Service is disabled on Windows.
+
+Returns: `Boolean`
+
+##### `svc`
+
+Data type: `String[1]`
+
+
+
+### <a name="ora_profile--windows_svc_running"></a>`ora_profile::windows_svc_running`
+
+Type: Ruby 4.x API
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle Service is running on Windows.
+
+#### `ora_profile::windows_svc_running(String[1] $svc)`
+
+See the file "LICENSE" for the full license governing this code.
+
+ This function checks if an Oracle Service is running on Windows.
+
+Returns: `Boolean`
+
+##### `svc`
+
+Data type: `String[1]`
+
+
 
 ### <a name="set_param"></a>`set_param`
 
@@ -6829,11 +7310,6 @@ Currently supported parameters:
 - instance_name
 - instance_number
 - thread_number
-
-rubocop: disable Metrics/AbcSize
-rubocop: disable Metrics/CyclomaticComplexity
-rubocop: disable Metrics/PerceivedComplexity
-rubocop: disable Metrics/MethodLength
 
 #### `set_param(String $param_name, String $dbname, Optional[Undef] $cluster_nodes)`
 

@@ -286,7 +286,6 @@ class ora_profile::oem_agent (
   Optional[Boolean] $standalone              = undef,
   Optional[String]  $sysctl                  = undef
 ) {
-# lint:endignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   easy_type::ordered_steps([
@@ -299,3 +298,4 @@ class ora_profile::oem_agent (
       'ora_profile::oem_agent::software',
   ])
 }
+# lint:endignore

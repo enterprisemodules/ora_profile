@@ -31,7 +31,7 @@
 class ora_profile::database::asm_diskgroup (
   Hash    $disks         = {},
 ) inherits ora_profile::database {
-# lint:ignore:variable_scope
+# lint:ignore:variable_scope lint:ignore:strict_indent
 
   $disk_list = $disks.keys
   echo { "Ensure ASM diskgroup(s) ${disk_list.join(',')}":
