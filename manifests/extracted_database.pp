@@ -9,8 +9,7 @@
 #++--++
 #--++--
 class ora_profile::extracted_database (
-# lint:ignore:parameter_documentation
-# lint:ignore:strict_indent
+# lint:ignore:parameter_documentation lint:ignore:strict_indent
   String[1] $db_control_provider,
   String[1] $dba_group,
   String[1] $dbname,
@@ -82,7 +81,8 @@ class ora_profile::extracted_database (
   Optional[String[1]] $sysctl =undef,
   Optional[String[1]] $tmpfiles =undef
 ) inherits ora_profile::database::common {
-# lint:endignore:strict_indent
+# lint:endignore
+# lint:ignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   easy_type::ordered_steps([
@@ -107,4 +107,4 @@ class ora_profile::extracted_database (
       'ora_profile::database::db_startup',
   ])
 }
-# lint:endignore:parameter_documentation
+# lint:endignore

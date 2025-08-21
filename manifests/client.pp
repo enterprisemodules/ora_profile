@@ -186,10 +186,12 @@ class ora_profile::client (
   Optional[String] $packages                = undef,
   Optional[String] $software                = undef
 ) {
+# lint:ignore:strict_indent
   easy_type::ordered_steps([
       'ora_profile::database::em_license',
       ['ora_profile::database::groups_and_users', { 'implementation' => 'easy_type::profile::groups_and_users' }],
       ['ora_profile::client::packages', { 'implementation' => 'easy_type::profile::packages' }],
       'ora_profile::client::software',
   ])
+# lint:endignore:strict_indent
 }

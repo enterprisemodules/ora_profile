@@ -33,7 +33,7 @@
 class ora_profile::database::asm_init_params (
   Hash    $parameters         = {},
 ) inherits ora_profile::database {
-# lint:ignore:variable_scope
+# lint:ignore:variable_scope lint:ignore:strict_indent
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 

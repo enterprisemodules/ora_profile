@@ -72,7 +72,7 @@ class ora_profile::database::db_monitoring (
             $data_path = undef,
 ) inherits ora_profile::database::common {
 # lint:endignore:strict_indent
-# lint:ignore:variable_scope
+# lint:ignore:variable_scope lint:ignore:strict_indent
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
@@ -134,5 +134,5 @@ class ora_profile::database::db_monitoring (
       }
     }
   }
-# lint:endignore:variable_scope
 }
+# lint:endignore

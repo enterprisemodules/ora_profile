@@ -43,6 +43,7 @@ class ora_profile::database::asm_storage::asmlib (
             $scan_exclude
 ) inherits ora_profile::database {
 # lint:endignore:strict_indent
+# lint:ignore:strict_indent
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   file { '/etc/sysconfig/oracleasm-_dev_oracleasm':
@@ -80,3 +81,4 @@ class ora_profile::database::asm_storage::asmlib (
     }
   }
 }
+# lint:endignore

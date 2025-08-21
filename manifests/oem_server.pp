@@ -287,7 +287,6 @@ class ora_profile::oem_server (
   Optional[Boolean] $standalone              = undef,
   Optional[String]  $sysctl                  = undef
 ) {
-# lint:endignore:strict_indent
   unless ( $standalone ) {
     contain ora_profile::database
 
@@ -307,3 +306,4 @@ class ora_profile::oem_server (
       'ora_profile::oem_server::software',
   ])
 }
+# lint:endignore

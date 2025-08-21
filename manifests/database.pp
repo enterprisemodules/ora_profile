@@ -19,7 +19,7 @@
 # - `em_license`       (Enable and load the Enterprise Modules license files)
 # - `fact_caching`     (Enable Puppet fact caching for Oracle)
 # - `sysctl`           (Set all required sysctl parameters)
-# - `manage_thp`       (Disable Transparent HugePages)
+# - `manage_thp`      (Disable Transparent HugePages)
 # - `limits`           (Set all required OS limits)
 # - `packages`         (Install all required packages)
 # - `groups_and_users` (Create required groups and users)
@@ -1244,6 +1244,7 @@ class ora_profile::database (
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
+  # lint:ignore:strict_indent
   easy_type::ordered_steps([
       'ora_profile::database::em_license',
       'ora_profile::database::fact_caching',
@@ -1282,4 +1283,5 @@ class ora_profile::database (
       ['ora_profile::database::db_startup', { 'onlyif' => !$is_rac }],
       'ora_profile::database::db_monitoring',
   ])
+# lint:endignore:strict_indent
 }

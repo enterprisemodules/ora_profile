@@ -16,22 +16,58 @@
 # 
 # Also check the set of [common parameters](./common) that is passed to this class.
 #
-# @param [String[1]] level
+# @param [Variant[String[1], Hash]] level
 #    The patch level the database or grid infrastructure should be patched to.
 #    Default value is: `NONE`
-#    Valid values depend on your database/grid version, but it should like like below:
-#    - `OCT2018RU`
-#    - `JAN2019RU`
-#    - `APR2019RU`
-#    - etc...
+#    The value can be a String or a Hash. When the value is a string, the current selected Oracle version (e.g. `ora_profile::database::version`) and the current selected oracle home (e.g. `ora_profile::database::oracle_home`) are used to apply the patch.
+#    When you specify a Hash, it must have the following format:
+#    ```
+#    ora_profile::database::db_patches::level:
+#      21cDEFAULT_HOME:
+#        version:     21.0.0.0
+#        oracle_home: /u01/app/oracle/product/21.0.0.0/db_home1
+#        level:       OCT2022RU
+#      19cDEFAULT_HOME:
+#        version:     19.0.0.0
+#        oracle_home: /u01/app/oracle/product/19.0.0.0/db_home1
+#        level:       OCT2022RU
+#      18cADDITIONAL_HOME:
+#        version:     18.0.0.0
+#        oracle_home: /u01/app/oracle/product/18.0.0.0/db_home1
+#        level:       APR2021RU
+#      12cR2ADDITIONAL_HOME:
+#        version:     12.2.0.1
+#        oracle_home: /u01/app/oracle/product/12.2.0.1/db_home1
+#        level:       JAN2022RU
+#    ```
+#    When no level is specified, the level `NONE` is inferred and no level of patches are applied. You can alywas use `patch_list` to specify a specific list of patches to be applied.
 #
 # @param [Boolean] include_ojvm
 #    Specify if the OJVM patch for the patch level should also be installed.
 #    Default value is: `false`
 #
-# @param [String[1]] patch_file
+# @param [Variant[String[1], Hash[Stdlib::Absolutepath, Struct[{patch_file=>String[1], opversion=>Optional[String[1]]}]]]] patch_file
 #    The file containing the required Opatch version.
 #    The default value is: `p6880880_122010_Linux-x86-64`
+#    The value can be a String or a Hash. When the value is a string, the file specified will be used to upgrade OPatch in every ORACLE_HOME on the system.
+#    If you want to install different versions in different ORACLE_HOME's you can specify a patch_file per ORACLE_HOME like below.
+#    When you specify a Hash, it must have the following format:
+#    ```yaml
+#    ora_profile::database::db_patches::patch_file:
+#      /u01/app/oracle/product/23.0.0.0/db_home1:
+#        patch_file: p6880880_230000_Linux-x86-64-12.2.0.1.48
+#      /u01/app/oracle/product/21.0.0.0/db_home1:
+#        patch_file: p6880880_210000_Linux-x86-64
+#        opversion:  12.2.0.1.35
+#      /u01/app/oracle/product/19.0.0.0/db_home1
+#        patch_file: p6880880_190000_Linux-x86-64
+#        opversion:  12.2.0.1.37
+#      /u01/app/oracle/product/18.0.0.0/db_home1
+#        patch_file: p6880880_180000_Linux-x86-64
+#      /u01/app/oracle/product/12.2.0.1/db_home1:
+#        patch_file: p6880880_122010_Linux-x86-64-12.2.0.1.21
+#        opversion:  12.2.0.1.21
+#    ```
 #
 # @param [Stdlib::Absolutepath] oracle_home
 #    The home directory to use for the Oracle installation.
@@ -75,13 +111,14 @@ class ora_profile::database::db_patches (
   Stdlib::Absolutepath
             $oracle_home,
   String[1] $os_user,
-  String[1] $patch_file,
+  Variant[String[1], Hash[Stdlib::Absolutepath, Struct[{ patch_file => String[1], opversion => Optional[String[1]] }]]]
+            $patch_file,
   Hash      $patch_list,
   Variant[Boolean, Enum['on_failure']]
             $logoutput = lookup({ name => 'logoutput', default_value => 'on_failure' }),
 ) inherits ora_profile::database::common {
 # lint:endignore
-# lint:ignore:variable_scope lint:ignore:manifest_whitespace_opening_brace_before
+# lint:ignore:variable_scope lint:ignore:manifest_whitespace_opening_brace_before lint:ignore:strict_indent
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
@@ -179,15 +216,20 @@ class ora_profile::database::db_patches (
   # Opatchupgrade in all homes that are in the catalog
   (easy_type::resources_in_catalog('Ora_install::Installdb') + easy_type::resources_in_catalog('Ora_install::Client')).map |$resource| {
     $home = $resource['oracle_home']
-    Ora_install::Opatchupgrade["DB OPatch upgrade to ${opversion} in ${home}"] -> Ora_opatch <| tag == 'db_patches' |>
-    ora_install::opatchupgrade { "DB OPatch upgrade to ${opversion} in ${home}":
-      oracle_home               => $home,
-      patch_file                => "${patch_file}.zip",
-      opversion                 => $opversion,
-      user                      => $os_user,
-      group                     => $install_group,
-      puppet_download_mnt_point => $source,
-      download_dir              => $download_dir,
+    $opatch_details = ora_profile::get_opatch_details($patch_file, $home, $opversion)
+    unless $opatch_details['patch_file'] == 'n/a' {
+      $opatch_file = $opatch_details['patch_file']
+      $opatch_version = $opatch_details['opversion']
+      Ora_install::Opatchupgrade["DB OPatch upgrade to ${opatch_version} in ${home}"] -> Ora_opatch <| tag == 'db_patches' |>
+      ora_install::opatchupgrade { "DB OPatch upgrade to ${opatch_version} in ${home}":
+        oracle_home               => $home,
+        patch_file                => $opatch_file,
+        opversion                 => $opatch_version,
+        user                      => $os_user,
+        group                     => $install_group,
+        puppet_download_mnt_point => $source,
+        download_dir              => $download_dir,
+      }
     }
   }
 
