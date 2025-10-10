@@ -3,3 +3,4 @@
 --no-140chars
 --no-lookup_in_parameter
 --no-params_empty_string_assignment
+--no-exec_idempotency
