@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## Release 0.48.0
+
+**Maintenance fixes**
+
+- [release] Update dependencies
+
+**new features**
+
+- [db_patches] Add ability to specify different OPatch versions (#152)
+- [core] Add support for Oracle23ai
+
+
 ## Release 0.47.2
 
 **Bug fixes**
