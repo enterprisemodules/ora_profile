@@ -188,7 +188,7 @@ class ora_profile::database::asm_patches (
               tag      => 'asm_patches',
               require  => [
                 Exec["root${facility}.sh -prepatch"],
-                Ora_opatch[$psu_patches.keys]
+                Ora_opatch[$psu_patches.keys],
               ],
               before   => Exec['rootadd_rdbms.sh'],
               ;
@@ -210,7 +210,7 @@ class ora_profile::database::asm_patches (
           logoutput   => $logoutput,
           require     => [
             Exec['rootadd_rdbms.sh'],
-            Ora_opatch[$psu_patches.keys]
+            Ora_opatch[$psu_patches.keys],
           ],
         }
       }
