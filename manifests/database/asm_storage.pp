@@ -94,7 +94,7 @@ class ora_profile::database::asm_storage (
         disk_devices    => $disk_devices,
         before          => [
           Class['ora_profile::database::asm_storage::asmlib'],
-          Ora_profile::Database::Asm_storage::Partition[$disk_devices.keys]
+          Ora_profile::Database::Asm_storage::Partition[$disk_devices.keys],
         ],
       }
       contain ora_profile::database::asm_storage::udev
