@@ -1,0 +1,31 @@
+# Local-development fixtures: point the commercial Enterprise Modules at
+# the sibling checkouts next to ora_profile/. Use with:
+#
+#   FIXTURES_YML=.fixtures_local.yml bundle exec rake spec
+#
+# Or export FIXTURES_YML in your shell once per session.
+---
+fixtures:
+  repositories:
+    facts:                  https://github.com/puppetlabs/puppetlabs-facts.git
+    puppet_agent:           https://github.com/puppetlabs/puppetlabs-puppet_agent.git
+    provision:              https://github.com/puppetlabs/provision.git
+    easy_type:              https://github.com/enterprisemodules/easy_type_src.git
+    ora_install:            https://github.com/enterprisemodules/ora_install.git
+    ora_config:             https://github.com/enterprisemodules/ora_config.git
+  forge_modules:
+    partition:              enterprisemodules-partition
+    pwshlib:                puppetlabs/pwshlib
+    powershell:             puppetlabs/powershell
+    stdlib:                 puppetlabs/stdlib
+    echo:                   ipcrm/echo
+    archive:                puppet/archive
+    augeas_core:            puppetlabs-augeas_core
+    augeasproviders_core:   puppet-augeasproviders_core
+    augeasproviders_grub:   puppet-augeasproviders_grub
+    augeasproviders_sysctl: puppet-augeasproviders_sysctl
+    limits:                 saz/limits
+    firewall:               puppetlabs-firewall
+    firewalld:              puppet-firewalld
+    systemd:                puppet-systemd
+    concat:                 puppetlabs-concat
