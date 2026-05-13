@@ -11,7 +11,6 @@ fixtures:
     partition:              enterprisemodules-partition
     ora_install:            enterprisemodules-ora_install
     ora_config:             enterprisemodules-ora_config
-    ora_secured:            enterprisemodules-ora_secured
     pwshlib:                puppetlabs/pwshlib
     powershell:             puppetlabs/powershell
     stdlib:                 puppetlabs/stdlib

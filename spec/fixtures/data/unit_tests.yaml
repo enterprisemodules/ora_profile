@@ -10,8 +10,14 @@ ora_profile::database::grid_user_password:              mysecretpassword
 ora_profile::database::db_definition::system_password:  mysecretpassword
 ora_profile::database::db_definition::sys_password:     mysecretpassword
 ora_profile::database::db_patches::level:               APR2023RU
-ora_profile::database::cis_controls::dbname:            DB1
-ora_profile::database::cis_controls::product_version:   db19c
-ora_profile::database::cis_controls::doc_version:       V1.0.0
 ora_profile::database::db_patches::opversion:           12.2.0.1.36
 ora_profile::database::patch_window:                    ~
+# OEM agent/server pull their *::software class in via easy_type::ordered_steps,
+# so the required passwords/host must be reachable from hiera before any
+# pre_condition class declaration registers. Provide unit-test fillers here.
+ora_profile::oem_agent::software::oms_host:                     oms.example.com
+ora_profile::oem_agent::software::sysman_password:              mysecretpassword
+ora_profile::oem_agent::software::agent_registration_password:  mysecretpassword
+ora_profile::oem_server::software::agent_registration_password: mysecretpassword
+ora_profile::oem_server::software::sysman_password:             mysecretpassword
+ora_profile::oem_server::software::weblogic_password:           mysecretpassword

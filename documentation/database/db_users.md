@@ -15,13 +15,6 @@ When these customizations aren't enough, you can replace the class with your own
 
 
 
-## Experience the Power of Puppet for Oracle
-
-If you want to play and experiment with Puppet and Oracle, please take a look at our playgrounds. At our playgrounds, we provide you with a pre-installed environment, where you experiment fast and easy.
-
-{% include super_hero.html title="For Oracle" ref="/playgrounds#oracle" %}
-
-
 ## Attributes
 
 

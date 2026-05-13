@@ -5,8 +5,6 @@ shared_examples "a database installer" do | settings|
 
   before do
     used_hiera_values = {
-      'ora_profile::database::cis_controls::product_version'                     => 'db19c',
-      'ora_profile::database::cis_controls::doc_version'                         => 'V1.0.0',
       'easy_type::generate_password_mode'                                        => 'development',
       'ora_profile::database::version'                                           => version,
       'ora_profile::database::source'                                            => '/software',
@@ -15,9 +13,6 @@ shared_examples "a database installer" do | settings|
       'ora_profile::database::manage_thp'                                        => 'skip',
       'ora_profile::database::firewall'                                          => 'skip',
       'ora_profile::database::db_patches'                                        => 'skip',
-      # 'ora_profile::database::cis_controls::product_version'                     => 'db12c',  # This works on all versions
-      # 'ora_profile::database::cis_controls::doc_version'                         => 'V3.0.0',
-      'ora_profile::database::cis_controls::skip_list'                           => ['create_user_action_audit_is_enabled'],
       'ora_profile::database::db_definition_template::data_file_destination'     => '/u02/oradata',
       'ora_profile::database::db_definition_template::recovery_area_destination' => '/u03/fast_recovery_area',
       'ora_profile::database::db_definition_template::storage_type'              => 'FS',
@@ -66,11 +61,8 @@ shared_examples "a database installer" do | settings|
         }
       }
     }
-    version_21_hiera_values = {
-      'ora_profile::database::cis_controls::skip_list'                           => [
-        'remote_os_authent_is_set_to_false',
-        'sec_case_sensitive_logon_is_set_to_true',
-      ],
+    cdb_only_versions = ['21.0.0.0', '23.0.0.0', '26.0.0.0']
+    cdb_hiera_values = {
       'ora_profile::database::db_definition_template::container_database'        => 'enabled',
       'ora_profile::database::db_definition_template::memory_mgmt_type'          => 'CUSTOM_SGA',
       'ora_profile::database::db_definition_template::init_params'               => 'sga_max_size=1024m,java_pool_size=64m,shared_pool_size=512m',
@@ -107,9 +99,11 @@ shared_examples "a database installer" do | settings|
         }
       }
     }
-    used_hiera_values.delete('ora_profile::database::db_profiles::list') if version == '21.0.0.0'
-    used_hiera_values.delete('ora_profile::database::db_users::list') if version == '21.0.0.0'
-    used_hiera_values.merge!(version_21_hiera_values) if version == '21.0.0.0'
+    if cdb_only_versions.include?(version)
+      used_hiera_values.delete('ora_profile::database::db_profiles::list')
+      used_hiera_values.delete('ora_profile::database::db_users::list')
+      used_hiera_values.merge!(cdb_hiera_values)
+    end
     hiera_values_on_sut(used_hiera_values)
   end
 
@@ -151,12 +145,6 @@ shared_examples "a database installer" do | settings|
   end
 
   it 'is idempotent on next run' do
-    #
-    # ora_secured::ensure_cis needs some more run's before it is idempotent.
-    #
-    if klass == 'ora_profile::secured_database'
-      apply_manifest(manifest, :expect_changes => true)
-    end
     apply_manifest(manifest, :expect_changes => false)
   end
 end

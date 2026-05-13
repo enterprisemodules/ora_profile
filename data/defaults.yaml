@@ -82,7 +82,7 @@ ora_profile::database::sysctl::list:
   'kernel.sem':
     value:  '250 32000 100 128'
   'net.ipv4.ip_local_port_range':
-    value:  '9000 65500'
+    value:  '9000 65535'
   'net.core.rmem_default':
     value:  262144
   'net.core.rmem_max':
@@ -113,6 +113,9 @@ ora_profile::database::limits::list:
   "%{lookup('ora_profile::database::os_user')}/stack":
     soft: 10240
     hard: 32768
+  "%{lookup('ora_profile::database::os_user')}/memlock":
+    soft: 3145728
+    hard: 3145728
 
 
 # ------------------------------------------------------------------------------
@@ -630,20 +633,6 @@ ora_profile::database::db_monitoring::os_user:                            "%{loo
 ora_profile::database::db_monitoring::oswbb_interval:                     30
 ora_profile::database::db_monitoring::oswbb_days:                         2
 ora_profile::database::db_monitoring::oswbb_compress:                     gzip
-
-# ------------------------------------------------------------------------------
-#
-#  Settings for database::cis_controls
-#
-# ------------------------------------------------------------------------------
-ora_profile::database::cis_controls::skip_list:
-  - secure_control_is_set_in_listener_ora
-  - extproc_is_not_present_in_listener_ora
-  - admin_restrictions_is_set_to_on
-  - secure_register_is_set_to_tcps_or_ipc
-ora_profile::database::cis_controls::dbname:                                 "%{lookup('ora_profile::database::dbname')}"
-ora_profile::database::cis_controls::product_version:                        ~
-ora_profile::database::cis_controls::doc_version:                            ~
 
 # ------------------------------------------------------------------------------
 #

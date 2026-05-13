@@ -20,7 +20,6 @@
 * [`ora_profile::database::asm_storage::asmlib`](#ora_profile--database--asm_storage--asmlib): This class configures ASMLib devices.
 * [`ora_profile::database::asm_storage::nfs`](#ora_profile--database--asm_storage--nfs): This class will create the specified mountpoint and mount the nfs share there.
 * [`ora_profile::database::asm_storage::udev`](#ora_profile--database--asm_storage--udev): This class will apply udev rules to specified disk devices.
-* [`ora_profile::database::cis_controls`](#ora_profile--database--cis_controls): This class contains the actual code secureing the database.
 * [`ora_profile::database::common`](#ora_profile--database--common): This class contains common variables used by more then one class.
 * [`ora_profile::database::db_definition`](#ora_profile--database--db_definition): This class contains the actual database definition using the `ora_database` type.
 * [`ora_profile::database::db_definition_template`](#ora_profile--database--db_definition_template): This class contains the actual database definition using the `ora_install::database` class.
@@ -38,7 +37,6 @@
 * [`ora_profile::database::fact_caching`](#ora_profile--database--fact_caching): This class will enable Oracle fact caching, when enabled.
 * [`ora_profile::database::firewall`](#ora_profile--database--firewall): This class contains the definition of the firewall settings you need for Oracle.
 * [`ora_profile::database::firewall::firewalld`](#ora_profile--database--firewall--firewalld): Open up ports for Oracle using the firewalld firewall
-* [`ora_profile::database::firewall::iptables`](#ora_profile--database--firewall--iptables): Open up ports for Oracle using the iptables
 * [`ora_profile::database::manage_thp`](#ora_profile--database--manage_thp): This class contains the definition of the Transparent HugePages settings required for running Oracle.
 * [`ora_profile::database::rac::authenticated_nodes`](#ora_profile--database--rac--authenticated_nodes): Setup authentication for the cluster nodes.
 * [`ora_profile::database::rman_config`](#ora_profile--database--rman_config): This class contains the definition for all the tablespaces you'd like on your system.
@@ -48,7 +46,6 @@
 * [`ora_profile::oem_agent::software`](#ora_profile--oem_agent--software): Installs Oracle Enterprse Manager Agent.
 * [`ora_profile::oem_server`](#ora_profile--oem_server): This is a highly customizable Puppet profile class to define an Oracle Enterprise Manager installation on your system.
 * [`ora_profile::oem_server::software`](#ora_profile--oem_server--software): Installs Oracle Enterprse Manager.
-* [`ora_profile::secured_database`](#ora_profile--secured_database): This is a highly customizable Puppet profile class to define an Secured Oracle database on your system.
 
 ### Defined types
 
@@ -3198,56 +3195,6 @@ ora_profile::database::asm_storage::disk_devices:
     label: 'DATA1'
 ```
 
-### <a name="ora_profile--database--cis_controls"></a>`ora_profile::database::cis_controls`
-
-ora_profile::database::cis_controls
-
-Here you ca customise the securtiy by specifying the CIS rules you *don't* want to apply.
-
-
-When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::secured_database](./secured_database.html) for an explanation on how to do this.
-
-See the file "LICENSE" for the full license governing this code.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::cis_controls` class:
-
-* [`dbname`](#-ora_profile--database--cis_controls--dbname)
-* [`product_version`](#-ora_profile--database--cis_controls--product_version)
-* [`doc_version`](#-ora_profile--database--cis_controls--doc_version)
-* [`skip_list`](#-ora_profile--database--cis_controls--skip_list)
-
-##### <a name="-ora_profile--database--cis_controls--dbname"></a>`dbname`
-
-Data type: `String[1]`
-
-The name of the database.
-The default is `DB01`
-To customize this consistently use the hiera key `ora_profile::database::dbname`.
-
-##### <a name="-ora_profile--database--cis_controls--product_version"></a>`product_version`
-
-Data type: `Optional[String[1]]`
-
-The database version of the CIS benchmark you want to apply.
-Although not very logical, you **can** apply an older (or newer) database version to your database.
-If you also don't specify a `db_version`, Puppet will detect the version of Oracle running and use this to determine the `db_version`. There is, however, one issue with the detection. On an initial run Puppet canot determine what the Oracle version is. In that case, the ora_secured::ensure_cis defined type will skip applying the CIS benchmark and wait until (hopefully) the next run the version of Oracle for specified sid is available.
-
-##### <a name="-ora_profile--database--cis_controls--doc_version"></a>`doc_version`
-
-Data type: `Optional[String[1]]`
-
-The version of the CIS benchmark you want to apply to your database.
-When you don't specify the `doc_version`, puppet automatically uses the latest version for your current `product_version`.
-
-##### <a name="-ora_profile--database--cis_controls--skip_list"></a>`skip_list`
-
-Data type: `Optional[Array[String[1]]]`
-
-This is the list of controls that you want to skip.
-By default this value is empty, meaning `ora_secured::ensure_cis` will apply **ALL** controls. You must specify the name of the control.
-
 ### <a name="ora_profile--database--common"></a>`ora_profile::database::common`
 
 ora_profile::database::common
@@ -4664,7 +4611,7 @@ Boolean to determine if you want to enabled Puppet fact caching for the Oracle f
 
 ora_profile::database::firewall
 
-When you are using a Redhat flavored version lower then release 7, this module uses the `puppetlabs-firewall` module to manage the `iptables` settings. When using a version 7 or higher, the puppet module `crayfishx-firewalld` to manage the `firewalld daemon`.
+On Redhat-family releases 7 and up, the puppet module `crayfishx-firewalld` is used to manage the `firewalld daemon`.
 
 When these customizations aren't enough, you can replace the class with your own class. See [ora_profile::database](./database.html) for an explanation on how to do this.
 
@@ -4726,52 +4673,6 @@ Using this setting you can specify if you want this module to manage the firewal
 The default value is `true` and will make sure the firewall service is started and enabled.
 
 ##### <a name="-ora_profile--database--firewall--firewalld--cluster_nodes"></a>`cluster_nodes`
-
-Data type: `Optional[Array]`
-
-An array with cluster node names for RAC.
-Example:
-```yaml
-ora_profile::database::cluster_nodes:
-- node1
-- node2
-```
-
-### <a name="ora_profile--database--firewall--iptables"></a>`ora_profile::database::firewall::iptables`
-
-ora_profile::database::firewall::iptables
-
-Here is an example:
-
-```puppet
-  include ora_profile::database::firewall::iptables
-```
-
-See the file "LICENSE" for the full license governing this code.
-
-#### Parameters
-
-The following parameters are available in the `ora_profile::database::firewall::iptables` class:
-
-* [`ports`](#-ora_profile--database--firewall--iptables--ports)
-* [`manage_service`](#-ora_profile--database--firewall--iptables--manage_service)
-* [`cluster_nodes`](#-ora_profile--database--firewall--iptables--cluster_nodes)
-
-##### <a name="-ora_profile--database--firewall--iptables--ports"></a>`ports`
-
-Data type: `Hash`
-
-A list of TCP ports to open in the firewall.
-The default value is: `[1521]`
-
-##### <a name="-ora_profile--database--firewall--iptables--manage_service"></a>`manage_service`
-
-Data type: `Boolean`
-
-Using this setting you can specify if you want this module to manage the firewall service.
-The default value is `true` and will make sure the firewall service is started and enabled.
-
-##### <a name="-ora_profile--database--firewall--iptables--cluster_nodes"></a>`cluster_nodes`
 
 Data type: `Optional[Array]`
 
@@ -6676,23 +6577,6 @@ Data type: `Boolean`
 The specified source file is a zip file that needs te be extracted.
 When you specify a value of false, the source attribute must contain a reference to a directory instead of a zip file.
 The default value is: `true`
-
-### <a name="ora_profile--secured_database"></a>`ora_profile::secured_database`
-
-ora_profile::secured_database
-
-In it's core just adding:
-
-```
-contain ora_profile::secured_database
-```
-
-Is enough to get a secured Oracle database running on your system.
-
-This profile class is based on the more generic [`ora_profile::database`](./database.html) class, but extends this class with securing the database conforming to the Oracle Center for Internet Security (CIS) rules.
-
-
-See the file "LICENSE" for the full license governing this code.
 
 ## Defined types
 

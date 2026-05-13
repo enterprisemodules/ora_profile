@@ -60,5 +60,4 @@ ora_profile::database::db_listener::sqlnet_version:                       '21.0'
 # CIS parameters
 #
 # ------------------------------------------------------------------------------
-ora_profile::database::cis_controls::db_version:                          db19c
 ...
