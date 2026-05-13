@@ -59,6 +59,6 @@ class ora_profile::database::asm_storage::nfs (
     remounts    => true,
     atboot      => true,
     nfs_v4      => false,
-    options_nfs => '_netdev,rw,bg,hard,nointr,rsize=65536,wsize=65536,tcp,timeo=600,noatime',
+    options_nfs => '_netdev,rw,bg,hard,nointr,rsize=32768,wsize=32768,tcp,vers=3,actimeo=0,timeo=600',
   }
 }
