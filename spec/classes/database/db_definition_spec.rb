@@ -11,7 +11,7 @@ describe 'ora_profile::database::db_definition' do
     """
   }
 
-  on_supported_os(:facterversion => '2.4').each do |os, os_facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       next if os =~ /windows/
       let(:facts) { os_facts }

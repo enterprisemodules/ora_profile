@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'ora_profile::database::asm_patches' do
 
 
-  on_supported_os(:facterversion => '2.4').each do |os, os_facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       if os =~ /centos-8/
         let(:facts) { os_facts.merge({networking: {hostname: 'not_foo'}}) }
