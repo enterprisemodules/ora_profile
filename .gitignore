@@ -26,3 +26,8 @@
 /.gem
 /.byebug_history
 /.vscode/
+/.claude/
+/CLAUDE.md
+/data/CLAUDE.md
+/data/oracle_versions/CLAUDE.md
+/manifests/database/CLAUDE.md
