@@ -1,6 +1,6 @@
 source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
-puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "#{ENV['PUPPET_GEM_VERSION']}" : '8.0.1'
+puppetversion = ENV.key?('PUPPET_GEM_VERSION') ? "#{ENV['PUPPET_GEM_VERSION']}" : '8.10.0'
 
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
 gem 'rake'
@@ -19,6 +19,8 @@ group :unit_test do
   gem 'gettext'
   gem 'rspec-expectations'
   gem 'concurrent-ruby', '< 1.2.0'
+  # macOS libc crypt(3) only supports DES; stdlib pw_hash needs SHA-512 ($6$).
+  gem 'unix-crypt'
 end
 
 group :acceptance_test do
