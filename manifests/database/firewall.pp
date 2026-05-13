@@ -35,16 +35,9 @@ class ora_profile::database::firewall (
   easy_type::debug_evaluation() # Show local variable on extended debug
 
   case  $facts['os']['name'] {
-    'CentOS', 'RedHat', 'OracleLinux', 'AlmaLinux', 'Rocky': {
+    'RedHat', 'OracleLinux', 'AlmaLinux', 'Rocky': {
       case ($facts['os']['release']['major']) {
-        '4','5','6': {
-          class { 'ora_profile::database::firewall::iptables':
-            ports          => $ports,
-            manage_service => $manage_service,
-            cluster_nodes  => $cluster_nodes,
-          }
-        }
-        '7', '8': {
+        '7', '8', '9', '10': {
           class { 'ora_profile::database::firewall::firewalld':
             ports          => $ports,
             manage_service => $manage_service,
