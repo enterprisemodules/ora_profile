@@ -160,7 +160,7 @@ class ora_profile::database::db_patches (
   $converted_patch_list = ora_install::ora_physical_patches($complete_patch_list)
   # patch_list_to_apply is the hash with homes and their specified patch details of which at least one need to be applied
   $patch_list_to_apply = ora_install::ora_patches_missing($complete_patch_list, 'db')
-  # apply_patches is the hash without the OPatch details which can be given to ora_opatch
+  # apply_patches is the hash without the OPatch details which can be given to ora_install::opatch
   # lint:ignore:manifest_whitespace_closing_brace_before
   # lint:ignore:manifest_whitespace_opening_brace_before
   $apply_patches = $patch_list_to_apply.map |$patch, $details| { { $patch => $details } }.reduce({}) |$memo, $array| { $memo + $array }
@@ -262,7 +262,7 @@ class ora_profile::database::db_patches (
       # Some patches need to be installed
       #
       $apply_patches.each | String $patch, Hash $patch_properties = {} | {
-        ora_opatch {
+        ora_install::opatch {
           default:
             ensure   => present,
             tmp_dir  => "${download_dir}/patches", # always use subdir, the whole directory will be removed when done
