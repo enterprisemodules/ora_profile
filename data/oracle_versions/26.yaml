@@ -1,0 +1,159 @@
+---
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_software::file_name:                           LINUX.X64_2326100_grid_home
+ora_profile::database::asm_software::version:                             26.0.0.0
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::asm_listener
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_listener::sqlnet_version:                      '26.0'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_software
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_software::file_name:                            LINUX.X64_2326100_db_home
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_patches
+#
+# OPatch for the 23.x / 26ai branch. RU 23.26.x ships with OPatch 12.2.0.1.51
+# (April 2026). The zip is p6880880_230000_Linux-x86-64.zip on MOS.
+# ------------------------------------------------------------------------------
+ora_profile::database::db_patches::include_ojvm:                          false
+ora_profile::database::db_patches::patch_file:                            p6880880_230000_Linux-x86-64
+ora_profile::database::db_patches::opversion:                             12.2.0.1.51
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_definition
+#
+# The 26ai installer (LINUX.X64_2326100_db_home.zip) is the 23.x binary
+# line (RU 23.26.10). The default compatible= would be 26.0.0.0 which the
+# binary rejects, so we pin to 23.6.0 — that enables the full 26ai feature
+# set (features introduced from RU 23.6 onward) while still being a value
+# the binary accepts.
+#
+# Note: the seed-based path (db_definition_template / Seed_Database.dfb)
+# does NOT work with this binary distribution: the bundled seed is stamped
+# 23.6.0.0.0 but the binary's internal version is 23.4.0.0.0, producing
+#   ORA-00201: control file version 23.6.0.0.0 incompatible with ORACLE
+#   version 23.4.0.0.0
+# during DBCA's seed restore. Use the default db_definition (SQL-based
+# CREATE DATABASE), not db_definition_template, for 26ai.
+# ------------------------------------------------------------------------------
+ora_profile::database::db_definition::container_database:                 enabled
+ora_profile::database::db_definition::init_ora_params:
+  compatible: '23.6.0'
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_definition_template
+#
+# Defaults for any node that explicitly chooses the seed-based path.
+# Note: this path is incompatible with the 26ai binary distribution
+# (see comment under db_definition above).
+# ------------------------------------------------------------------------------
+ora_profile::database::db_definition_template::container_database:        enabled
+
+
+# ------------------------------------------------------------------------------
+#
+#  Settings for database::db_listener
+#
+# ------------------------------------------------------------------------------
+ora_profile::database::db_listener::sqlnet_version:                       '26.0'
+
+
+# ------------------------------------------------------------------------------
+#
+# CIS parameters
+#
+# ------------------------------------------------------------------------------
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for database::sysctl
+#
+# 26ai-specific overrides aligned with the Oracle AI Database 26ai
+# preinstall RPM (oracle-ai-database-server-26ai-preinstall) and the
+# 26 Linux installation guide.
+# ------------------------------------------------------------------------------
+ora_profile::database::sysctl::list:
+  kernel.shmall:
+    value:  1073741824
+  net.ipv4.ip_local_port_range:
+    value:  '9000 65500'
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for database::asm_sysctl
+#
+# Grid Infrastructure 26ai networking requirements. rp_filter must be set
+# to "loose" mode (2) on private interconnect interfaces; setting it as the
+# default avoids per-interface tweaks for single-instance ASM.
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_sysctl::list:
+  net.ipv4.conf.all.rp_filter:
+    value:  2
+  net.ipv4.conf.default.rp_filter:
+    value:  2
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for database::limits
+#
+# 26ai oracle-user shell limits aligned with the preinstall RPM
+# (/etc/security/limits.d/oracle-ai-database-preinstall-26ai.conf).
+# ------------------------------------------------------------------------------
+ora_profile::database::limits::list:
+  "%{lookup('ora_profile::database::os_user')}/nproc":
+    soft: 16384
+    hard: 16384
+  "%{lookup('ora_profile::database::os_user')}/memlock":
+    soft: 134217728
+    hard: 134217728
+  "%{lookup('ora_profile::database::os_user')}/data":
+    soft: unlimited
+    hard: unlimited
+
+
+# ------------------------------------------------------------------------------
+#
+# Settings for database::asm_limits
+#
+# Grid 26ai shell limits for the grid user. Same set as the oracle user
+# per the 26ai preinstall RPM.
+# ------------------------------------------------------------------------------
+ora_profile::database::asm_limits::list:
+  "%{lookup('ora_profile::database::grid_user')}/nofile":
+    soft: 1024
+    hard: 65536
+  "%{lookup('ora_profile::database::grid_user')}/nproc":
+    soft: 16384
+    hard: 16384
+  "%{lookup('ora_profile::database::grid_user')}/stack":
+    soft: 10240
+    hard: 32768
+  "%{lookup('ora_profile::database::grid_user')}/memlock":
+    soft: 134217728
+    hard: 134217728
+  "%{lookup('ora_profile::database::grid_user')}/data":
+    soft: unlimited
+    hard: unlimited

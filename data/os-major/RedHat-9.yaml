@@ -2,31 +2,33 @@
 #
 # Settings for database::packages
 #
+# Required RPMs for Oracle AI Database 26ai on Oracle Linux 9 / RHEL 9.
+# See: https://docs.oracle.com/en/database/oracle/oracle-database/26/ladbi/
+#      supported-oracle-linux-9-distributions-for-x86-64.html
+#
 # ------------------------------------------------------------------------------
 ora_profile::database::packages::list:
   bc: {}
   binutils.x86_64: {}
-  compat-openssl10: {}
+  compat-openssl11: {}
   elfutils-libelf: {}
   fontconfig: {}
   glibc.x86_64: {}
   glibc-devel.x86_64: {}
+  glibc-headers: {}
   ksh: {}
   libaio.x86_64: {}
-  libaio-devel.x86_64: {}
-  libasan: {}
   libgcc.x86_64: {}
   libibverbs: {}
-  liblsan: {}
-  librdmacm: {}
   libstdc++.x86_64: {}
-  libstdc++-devel.x86_64: {}
+  libvirt-libs: {}
   libX11: {}
   libXau: {}
   libxcb: {}
   libXi.x86_64: {}
   libXrender: {}
   libXtst.x86_64: {}
+  libxcrypt-compat: {}
   make.x86_64: {}
   policycoreutils: {}
   policycoreutils-python-utils: {}
@@ -34,13 +36,15 @@ ora_profile::database::packages::list:
   sysstat.x86_64: {}
   unzip.x86_64: {}
   psmisc: {}
-  libnsl: {}
-  libnsl2: {}
 
 # ------------------------------------------------------------------------------
 #
 # Settings for database::asm_packages
 #
+# Required RPMs for Oracle Grid Infrastructure 26ai on Oracle Linux 9.
+# libxcrypt-compat is mandatory: the perl shipped inside grid_home is linked
+# against libcrypt.so.1 and needs the XCRYPT_2.0 symbol. Without it
+# gridSetup.sh aborts with "version `XCRYPT_2.0' not found".
 # ------------------------------------------------------------------------------
 ora_profile::database::asm_packages::list:
   nfs-utils.x86_64: {}
@@ -52,58 +56,92 @@ ora_profile::database::asm_packages::list:
   python3-six: {}
   targetcli: {}
   unzip.x86_64: {}
+  libxcrypt-compat: {}
+  libnsl: {}
+  libnsl2: {}
+  libaio.x86_64: {}
+  ksh: {}
+  bc: {}
+  binutils.x86_64: {}
+  elfutils-libelf: {}
+  glibc.x86_64: {}
+  glibc-devel.x86_64: {}
+  libgcc.x86_64: {}
+  libstdc++.x86_64: {}
+  libibverbs: {}
+  libX11: {}
+  libXau: {}
+  libxcb: {}
+  libXi.x86_64: {}
+  libXrender: {}
+  libXtst.x86_64: {}
+  make.x86_64: {}
+  policycoreutils: {}
+  policycoreutils-python-utils: {}
+  sysstat.x86_64: {}
+  psmisc: {}
+
+# ------------------------------------------------------------------------------
+#
+# Settings for client::packages
+#
+# ------------------------------------------------------------------------------
 ora_profile::client::packages::list:
   bc:
     ensure: present
   binutils:
     ensure: present
-  elfutils-libelf: 
+  compat-openssl11:
     ensure: present
-  elfutils-libelf-devel: 
+  elfutils-libelf:
     ensure: present
-  fontconfig-devel:
+  fontconfig:
     ensure: present
-  glibc: 
+  glibc:
     ensure: present
-  glibc-devel: 
+  glibc-devel:
     ensure: present
-  ksh: 
+  glibc-headers:
+    ensure: present
+  ksh:
     ensure: present
   libaio:
     ensure: present
-  libaio-devel:
+  libgcc:
     ensure: present
-  libXrender:
+  libibverbs:
+    ensure: present
+  libnsl:
+    ensure: present
+  libnsl2:
+    ensure: present
+  libnsl2-devel:
+    ensure: present
+  libstdc++:
+    ensure: present
+  libvirt-libs:
     ensure: present
   libX11:
     ensure: present
   libXau:
     ensure: present
-  libXi: 
-    ensure: present
-  libXtst: 
-    ensure: present
-  libgcc:
-    ensure: present
-  libnsl:
-    ensure: present
-  librdmacm: 
-    ensure: present
-  libstdc++: 
-    ensure: present
-  libstdc++-devel: 
-    ensure: present
   libxcb:
     ensure: present
-  libibverbs:
+  libXi:
+    ensure: present
+  libXrender:
+    ensure: present
+  libXtst:
+    ensure: present
+  libxcrypt-compat:
     ensure: present
   make:
     ensure: present
-  policycoreutils: 
+  policycoreutils:
     ensure: present
   policycoreutils-python-utils:
     ensure: present
-  smartmontools: 
+  smartmontools:
     ensure: present
-  sysstat: 
+  sysstat:
     ensure: present

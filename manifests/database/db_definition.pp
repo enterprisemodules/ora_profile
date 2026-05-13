@@ -199,7 +199,7 @@ class ora_profile::database::db_definition (
 
   easy_type::debug_evaluation() # Show local variable on extended debug
 
-  if ( $version == '21.0.0.0' ) {
+  if ( $version in ['21.0.0.0', '26.0.0.0'] ) {
     unless ( $container_database == 'enabled' ) {
       fail "Oracle version ${version} only supports container_database='enabled', container_database='${container_database}' specified"
     }
