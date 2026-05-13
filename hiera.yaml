@@ -4,6 +4,10 @@ defaults:  # Used for any hierarchy level that omits these keys.
   datadir: data         # This path is relative to hiera.yaml's directory.
   data_hash: yaml_data  # Use the built-in YAML backend.
 hierarchy:
+  # OS-specific data is keyed on os.family (NOT os.name), so EL clones share
+  # one set of files: RedHat, OracleLinux, AlmaLinux, Rocky and CentOS all
+  # resolve to the same RedHat[-N].yaml. Add a per-distro file here only when
+  # genuine differences need to override the family defaults.
   - name: "OS specific defaults"
     path: "%{facts.os.family}.yaml"
 

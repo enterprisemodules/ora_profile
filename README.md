@@ -21,9 +21,8 @@ The `ora_profile` module allows an easy path from first simple installation to a
 
 - [ora_install](https://www.enterprisemodules.com/shop/products/puppet-ora_install-module) For installing an Oracle database and other database related Oracle products
 - [ora_config](https://www.enterprisemodules.com/shop/products/puppet-ora_config-module) For configuring every aspect of your Oracle database
-- [ora_secured](https://www.enterprisemodules.com/shop/products/puppet-oracle-security-module) To secure your databases according to the CIS benchmarks or STIG documents.
 
-This module support Oracle 10, 11, 12, 18, 19 and 21
+This module supports Oracle 11, 12, 18, 19, 21, 23ai and 26ai.
 
 ## Experience the Power of Puppet for Oracle databases
 
@@ -34,6 +33,16 @@ Managing the configuration of your Oracle databases can be hard. With Puppet at 
 ## License
 
 Most of the [Enterprise Modules](https://www.enterprisemodules.com) modules are commercial modules. This one is **NOT**. It is an Open Source module. You are free to use it any way you like. It, however, is based on our commercial Puppet Oracle modules.
+
+### Commercial dependencies
+
+`ora_profile` itself is open source, but it is a thin orchestration layer over the Enterprise Modules family. To get a working Oracle installation from this profile you also need:
+
+- [`enterprisemodules-ora_install`](https://www.enterprisemodules.com/shop/products/puppet-ora_install-module) — installs the Oracle database and related products. **Commercial.**
+- [`enterprisemodules-ora_config`](https://www.enterprisemodules.com/shop/products/puppet-ora_config-module) — manages Oracle database objects (users, tablespaces, profiles, …). **Commercial.**
+- [`enterprisemodules-easy_type`](https://forge.puppet.com/enterprisemodules/easy_type) — shared type/provider framework used by the modules above. **Commercial.**
+
+These modules are available from the [Enterprise Modules shop](https://www.enterprisemodules.com/shop) under a per-node subscription. A subscription includes access to the Puppet Forge releases and ongoing support. The remaining dependencies listed under [Requirements](#requirements) are all open-source modules from the Puppet Forge.
 
 ## Description
 
@@ -96,7 +105,6 @@ The [`ora_profile`](https://www.enterprisemodules.com/shop/products/puppet-ora_c
 - Puppet module [`enterprisemodules-ora_config`](https://forge.puppet.com/enterprisemodules/ora_config) installed.
 - Puppet module [`enterprisemodules-ora_install`](https://forge.puppet.com/enterprisemodules/ora_install) installed.
 - Puppet module [`enterprisemodules-easy_type`](https://forge.puppet.com/enterprisemodules/easy_type) installed.
-- Puppet module [`enterprisemodules/ora_secured`](https://forge.puppet.com/enterprisemodules/ora_secured) installed.
 - Puppet module [`enterprisemodules/partition`](https://forge.puppet.com/enterprisemodules/partition) installed.
 - Puppet module [`ipcrm-echo`](https://forge.puppet.com/ipcrm/echo) installed.
 - Puppet module [`puppet-augeasproviders_core`](https://forge.puppet.com/modules/puppet/augeasproviders_core) installed.
